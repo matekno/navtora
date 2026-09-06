@@ -39,3 +39,25 @@ button,
 [role="button"] {
   touch-action: manipulation;
 }
+
+/* línea de luz que recorre la foto mientras se lee */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1100%);
+  }
+}
+
+.scanline {
+  background: linear-gradient(to bottom, transparent, rgba(245, 196, 81, 0.35) 50%, rgba(245, 196, 81, 0.9) 85%, transparent);
+  box-shadow: 0 0 24px rgba(245, 196, 81, 0.5);
+  animation: scanline 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanline {
+    animation-duration: 6s;
+  }
+}

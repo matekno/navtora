@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { canvasToJpeg, captureFrame, meanLuminance } from "@/lib/image";
 import { OCR_MODELS, type OcrModelId } from "@/lib/models";
+import { ScanProgress } from "./ScanProgress";
 
 interface Props {
   busy: boolean;
@@ -14,13 +15,16 @@ interface Props {
 
 type CamState = "starting" | "ready" | "denied" | "unavailable";
 
+/** duración típica medida por modelo, para el ritmo de la barra de progreso */
+const EXPECTED_MS: Record<OcrModelId, number> = { "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
+
 export function Camera({ busy, model, onModelChange, onCapture, onManual }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CamState>("starting");
   const [lowLight, setLowLight] = useState(false);
   const [torch, setTorch] = useState<{ supported: boolean; on: boolean }>({ supported: false, on: false });
-  const [elapsed, setElapsed] = useState(0);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -60,27 +64,28 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
     };
   }, []);
 
+  // la foto congelada se libera al salir o al volver a la cámara
+  useEffect(() => {
+    if (!busy && photoUrl) {
+      URL.revokeObjectURL(photoUrl);
+      setPhotoUrl(null);
+      void videoRef.current?.play().catch(() => undefined);
+    }
+  }, [busy, photoUrl]);
+  useEffect(() => () => {
+    if (photoUrl) URL.revokeObjectURL(photoUrl);
+  }, [photoUrl]);
+
   // medición de luz cada segundo, sin subir nada
   useEffect(() => {
-    if (state !== "ready") return;
+    if (state !== "ready" || busy) return;
     const id = window.setInterval(() => {
       const v = videoRef.current;
       if (!v || v.readyState < 2) return;
       setLowLight(meanLuminance(v) < 60);
     }, 1000);
     return () => window.clearInterval(id);
-  }, [state]);
-
-  // contador de segundos mientras se lee
-  useEffect(() => {
-    if (!busy) {
-      setElapsed(0);
-      return;
-    }
-    const t0 = Date.now();
-    const id = window.setInterval(() => setElapsed(Math.round((Date.now() - t0) / 1000)), 500);
-    return () => window.clearInterval(id);
-  }, [busy]);
+  }, [state, busy]);
 
   const toggleTorch = useCallback(async () => {
     const track = streamRef.current?.getVideoTracks()[0];
@@ -99,6 +104,10 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
     if (!v || v.readyState < 2) return;
     const canvas = captureFrame(v);
     const blob = await canvasToJpeg(canvas);
+    // congelar: la cámara deja de actualizarse y queda la foto que se mandó
+    v.pause();
+    setPhotoUrl(URL.createObjectURL(blob));
+    navigator.vibrate?.(30);
     onCapture(blob);
   }, [onCapture]);
 
@@ -107,25 +116,29 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
       <div className="relative flex-1 overflow-hidden">
         <video ref={videoRef} playsInline muted className="absolute inset-0 h-full w-full object-cover" />
         {/* guía de encuadre: una columna alta */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />
+        {!busy && <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />}
+
+        {busy && photoUrl && <ScanProgress photoUrl={photoUrl} modelLabel={OCR_MODELS[model].label} expectedMs={EXPECTED_MS[model]} />}
 
         {/* selector de modelo, cambiable en vivo */}
-        <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex justify-center">
-          <div role="radiogroup" aria-label="Modelo de lectura" className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
-            {(Object.keys(OCR_MODELS) as OcrModelId[]).map((id) => (
-              <button
-                key={id}
-                type="button"
-                role="radio"
-                aria-checked={model === id}
-                onClick={() => onModelChange(id)}
-                className={`h-9 rounded-full px-4 text-sm font-medium ${model === id ? "bg-accent text-ink" : "text-fg"}`}
-              >
-                {OCR_MODELS[id].label}
-              </button>
-            ))}
+        {!busy && (
+          <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex justify-center">
+            <div role="radiogroup" aria-label="Modelo de lectura" className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
+              {(Object.keys(OCR_MODELS) as OcrModelId[]).map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="radio"
+                  aria-checked={model === id}
+                  onClick={() => onModelChange(id)}
+                  className={`h-9 rounded-full px-4 text-sm font-medium ${model === id ? "bg-accent text-ink" : "text-fg"}`}
+                >
+                  {OCR_MODELS[id].label}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {state === "starting" && <Overlay>Abriendo la cámara…</Overlay>}
         {state === "denied" && (
@@ -139,38 +152,33 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
             Hay poca luz. Acercá una lámpara o prendé la linterna del teléfono.
           </div>
         )}
-        {busy && (
-          <Overlay>
-            <span className="inline-block size-6 animate-spin rounded-full border-2 border-accent border-t-transparent align-middle" />
-            <div className="mt-3">Leyendo la columna con {OCR_MODELS[model].label}…</div>
-            <div className="mt-1 text-sm text-muted">{elapsed} s</div>
-          </Overlay>
-        )}
       </div>
 
-      <div className="flex items-center justify-between gap-3 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
-        <button type="button" onClick={onManual} className="h-12 min-w-24 rounded-xl border border-line px-4 text-sm text-fg">
-          Tipear
-        </button>
-        <button
-          type="button"
-          onClick={capture}
-          disabled={busy || state !== "ready"}
-          aria-label="Leer la columna"
-          className="size-20 rounded-full border-4 border-fg/90 bg-accent disabled:opacity-40 active:scale-95"
-        />
-        {torch.supported ? (
+      {!busy && (
+        <div className="flex items-center justify-between gap-3 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
+          <button type="button" onClick={onManual} className="h-12 min-w-24 rounded-xl border border-line px-4 text-sm text-fg">
+            Tipear
+          </button>
           <button
             type="button"
-            onClick={toggleTorch}
-            className={`h-12 min-w-24 rounded-xl border px-4 text-sm ${torch.on ? "border-accent bg-accent text-ink" : "border-line text-fg"}`}
-          >
-            Linterna
-          </button>
-        ) : (
-          <div className="min-w-24" />
-        )}
-      </div>
+            onClick={capture}
+            disabled={state !== "ready"}
+            aria-label="Leer la columna"
+            className="size-20 rounded-full border-4 border-fg/90 bg-accent disabled:opacity-40 active:scale-95"
+          />
+          {torch.supported ? (
+            <button
+              type="button"
+              onClick={toggleTorch}
+              className={`h-12 min-w-24 rounded-xl border px-4 text-sm ${torch.on ? "border-accent bg-accent text-ink" : "border-line text-fg"}`}
+            >
+              Linterna
+            </button>
+          ) : (
+            <div className="min-w-24" />
+          )}
+        </div>
+      )}
     </div>
   );
 }
