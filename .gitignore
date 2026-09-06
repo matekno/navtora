@@ -1,0 +1,14 @@
+node_modules/
+dist/
+!packages/data/dist/
+.next/
+out/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+.vercel
+# datos de evaluación: escaneos y caché de OCR, nunca al repo
+tools/eval/data/

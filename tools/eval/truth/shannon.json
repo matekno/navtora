@@ -1,0 +1,7 @@
+{
+  "note": "Sefer de Elihu Shannon, layout estándar. El PDF viene en dos mitades y la columna 111 (transición Shemot/Vaikrá) aparece en ambas: los archivos 111 y 112 son idénticos. Archivo k → columna k - offset según el segmento.",
+  "segments": [
+    { "from": 1, "to": 111, "offset": 0 },
+    { "from": 112, "to": 246, "offset": 1 }
+  ]
+}

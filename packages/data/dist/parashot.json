@@ -1,0 +1,7709 @@
+[
+ {
+  "n": 1,
+  "name": {
+   "en": "Bereshit",
+   "he": "בְּרֵאשִׁית",
+   "es": "Bereshit"
+  },
+  "book": 1,
+  "startWord": 0,
+  "endWord": 1940,
+  "start": {
+   "book": 1,
+   "chapter": 1,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 6,
+   "verse": 8
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 0,
+    "endWord": 475,
+    "start": {
+     "book": 1,
+     "chapter": 1,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 2,
+     "verse": 3
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 476,
+    "endWord": 692,
+    "start": {
+     "book": 1,
+     "chapter": 2,
+     "verse": 4
+    },
+    "end": {
+     "book": 1,
+     "chapter": 2,
+     "verse": 19
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 693,
+    "endWord": 1065,
+    "start": {
+     "book": 1,
+     "chapter": 2,
+     "verse": 20
+    },
+    "end": {
+     "book": 1,
+     "chapter": 3,
+     "verse": 21
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 1066,
+    "endWord": 1350,
+    "start": {
+     "book": 1,
+     "chapter": 3,
+     "verse": 22
+    },
+    "end": {
+     "book": 1,
+     "chapter": 4,
+     "verse": 18
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 1351,
+    "endWord": 1397,
+    "start": {
+     "book": 1,
+     "chapter": 4,
+     "verse": 19
+    },
+    "end": {
+     "book": 1,
+     "chapter": 4,
+     "verse": 22
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 1398,
+    "endWord": 1722,
+    "start": {
+     "book": 1,
+     "chapter": 4,
+     "verse": 23
+    },
+    "end": {
+     "book": 1,
+     "chapter": 5,
+     "verse": 24
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 1723,
+    "endWord": 1940,
+    "start": {
+     "book": 1,
+     "chapter": 5,
+     "verse": 25
+    },
+    "end": {
+     "book": 1,
+     "chapter": 6,
+     "verse": 8
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 1888,
+    "endWord": 1940,
+    "start": {
+     "book": 1,
+     "chapter": 6,
+     "verse": 5
+    },
+    "end": {
+     "book": 1,
+     "chapter": 6,
+     "verse": 8
+    }
+   }
+  ]
+ },
+ {
+  "n": 2,
+  "name": {
+   "en": "Noach",
+   "he": "נֹחַ",
+   "es": "Nóaj"
+  },
+  "book": 1,
+  "startWord": 1941,
+  "endWord": 3807,
+  "start": {
+   "book": 1,
+   "chapter": 6,
+   "verse": 9
+  },
+  "end": {
+   "book": 1,
+   "chapter": 11,
+   "verse": 32
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 1941,
+    "endWord": 2129,
+    "start": {
+     "book": 1,
+     "chapter": 6,
+     "verse": 9
+    },
+    "end": {
+     "book": 1,
+     "chapter": 6,
+     "verse": 22
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 2130,
+    "endWord": 2356,
+    "start": {
+     "book": 1,
+     "chapter": 7,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 7,
+     "verse": 16
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 2357,
+    "endWord": 2653,
+    "start": {
+     "book": 1,
+     "chapter": 7,
+     "verse": 17
+    },
+    "end": {
+     "book": 1,
+     "chapter": 8,
+     "verse": 14
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 2654,
+    "endWord": 2860,
+    "start": {
+     "book": 1,
+     "chapter": 8,
+     "verse": 15
+    },
+    "end": {
+     "book": 1,
+     "chapter": 9,
+     "verse": 7
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 2861,
+    "endWord": 3003,
+    "start": {
+     "book": 1,
+     "chapter": 9,
+     "verse": 8
+    },
+    "end": {
+     "book": 1,
+     "chapter": 9,
+     "verse": 17
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 3004,
+    "endWord": 3413,
+    "start": {
+     "book": 1,
+     "chapter": 9,
+     "verse": 18
+    },
+    "end": {
+     "book": 1,
+     "chapter": 10,
+     "verse": 32
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 3414,
+    "endWord": 3807,
+    "start": {
+     "book": 1,
+     "chapter": 11,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 11,
+     "verse": 32
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 3743,
+    "endWord": 3807,
+    "start": {
+     "book": 1,
+     "chapter": 11,
+     "verse": 29
+    },
+    "end": {
+     "book": 1,
+     "chapter": 11,
+     "verse": 32
+    }
+   }
+  ]
+ },
+ {
+  "n": 3,
+  "name": {
+   "en": "Lech-Lecha",
+   "he": "לֶךְ־לְךָ",
+   "es": "Lej Lejá"
+  },
+  "book": 1,
+  "startWord": 3808,
+  "endWord": 5496,
+  "start": {
+   "book": 1,
+   "chapter": 12,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 17,
+   "verse": 27
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 3808,
+    "endWord": 3987,
+    "start": {
+     "book": 1,
+     "chapter": 12,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 12,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 3988,
+    "endWord": 4123,
+    "start": {
+     "book": 1,
+     "chapter": 12,
+     "verse": 14
+    },
+    "end": {
+     "book": 1,
+     "chapter": 13,
+     "verse": 4
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 4124,
+    "endWord": 4318,
+    "start": {
+     "book": 1,
+     "chapter": 13,
+     "verse": 5
+    },
+    "end": {
+     "book": 1,
+     "chapter": 13,
+     "verse": 18
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 4319,
+    "endWord": 4602,
+    "start": {
+     "book": 1,
+     "chapter": 14,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 14,
+     "verse": 20
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 4603,
+    "endWord": 4744,
+    "start": {
+     "book": 1,
+     "chapter": 14,
+     "verse": 21
+    },
+    "end": {
+     "book": 1,
+     "chapter": 15,
+     "verse": 6
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 4745,
+    "endWord": 5207,
+    "start": {
+     "book": 1,
+     "chapter": 15,
+     "verse": 7
+    },
+    "end": {
+     "book": 1,
+     "chapter": 17,
+     "verse": 6
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 5208,
+    "endWord": 5496,
+    "start": {
+     "book": 1,
+     "chapter": 17,
+     "verse": 7
+    },
+    "end": {
+     "book": 1,
+     "chapter": 17,
+     "verse": 27
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 5459,
+    "endWord": 5496,
+    "start": {
+     "book": 1,
+     "chapter": 17,
+     "verse": 24
+    },
+    "end": {
+     "book": 1,
+     "chapter": 17,
+     "verse": 27
+    }
+   }
+  ]
+ },
+ {
+  "n": 4,
+  "name": {
+   "en": "Vayera",
+   "he": "וַיֵּרָא",
+   "es": "Vaierá"
+  },
+  "book": 1,
+  "startWord": 5497,
+  "endWord": 7585,
+  "start": {
+   "book": 1,
+   "chapter": 18,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 22,
+   "verse": 24
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 5497,
+    "endWord": 5674,
+    "start": {
+     "book": 1,
+     "chapter": 18,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 18,
+     "verse": 14
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 5675,
+    "endWord": 5933,
+    "start": {
+     "book": 1,
+     "chapter": 18,
+     "verse": 15
+    },
+    "end": {
+     "book": 1,
+     "chapter": 18,
+     "verse": 33
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 5934,
+    "endWord": 6254,
+    "start": {
+     "book": 1,
+     "chapter": 19,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 19,
+     "verse": 20
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 6255,
+    "endWord": 6824,
+    "start": {
+     "book": 1,
+     "chapter": 19,
+     "verse": 21
+    },
+    "end": {
+     "book": 1,
+     "chapter": 21,
+     "verse": 4
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 6825,
+    "endWord": 7057,
+    "start": {
+     "book": 1,
+     "chapter": 21,
+     "verse": 5
+    },
+    "end": {
+     "book": 1,
+     "chapter": 21,
+     "verse": 21
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 7058,
+    "endWord": 7216,
+    "start": {
+     "book": 1,
+     "chapter": 21,
+     "verse": 22
+    },
+    "end": {
+     "book": 1,
+     "chapter": 21,
+     "verse": 34
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 7217,
+    "endWord": 7585,
+    "start": {
+     "book": 1,
+     "chapter": 22,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 22,
+     "verse": 24
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 7525,
+    "endWord": 7585,
+    "start": {
+     "book": 1,
+     "chapter": 22,
+     "verse": 20
+    },
+    "end": {
+     "book": 1,
+     "chapter": 22,
+     "verse": 24
+    }
+   }
+  ]
+ },
+ {
+  "n": 5,
+  "name": {
+   "en": "Chayei Sara",
+   "he": "חַיֵּי שָֹרָה",
+   "es": "Jaiei Sará"
+  },
+  "book": 1,
+  "startWord": 7586,
+  "endWord": 8991,
+  "start": {
+   "book": 1,
+   "chapter": 23,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 25,
+   "verse": 18
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 7586,
+    "endWord": 7802,
+    "start": {
+     "book": 1,
+     "chapter": 23,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 23,
+     "verse": 16
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 7803,
+    "endWord": 7999,
+    "start": {
+     "book": 1,
+     "chapter": 23,
+     "verse": 17
+    },
+    "end": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 9
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 8000,
+    "endWord": 8221,
+    "start": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 10
+    },
+    "end": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 26
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 8222,
+    "endWord": 8604,
+    "start": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 27
+    },
+    "end": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 52
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 8605,
+    "endWord": 8780,
+    "start": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 53
+    },
+    "end": {
+     "book": 1,
+     "chapter": 24,
+     "verse": 67
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 8781,
+    "endWord": 8916,
+    "start": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 11
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 8917,
+    "endWord": 8991,
+    "start": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 12
+    },
+    "end": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 18
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 8949,
+    "endWord": 8991,
+    "start": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 16
+    },
+    "end": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 18
+    }
+   }
+  ]
+ },
+ {
+  "n": 6,
+  "name": {
+   "en": "Toldot",
+   "he": "תּוֹלְדוֹת",
+   "es": "Toldot"
+  },
+  "book": 1,
+  "startWord": 8992,
+  "endWord": 10427,
+  "start": {
+   "book": 1,
+   "chapter": 25,
+   "verse": 19
+  },
+  "end": {
+   "book": 1,
+   "chapter": 28,
+   "verse": 9
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 8992,
+    "endWord": 9265,
+    "start": {
+     "book": 1,
+     "chapter": 25,
+     "verse": 19
+    },
+    "end": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 5
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 9266,
+    "endWord": 9366,
+    "start": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 6
+    },
+    "end": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 12
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 9367,
+    "endWord": 9494,
+    "start": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 13
+    },
+    "end": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 22
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 9495,
+    "endWord": 9589,
+    "start": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 23
+    },
+    "end": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 29
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 9590,
+    "endWord": 9991,
+    "start": {
+     "book": 1,
+     "chapter": 26,
+     "verse": 30
+    },
+    "end": {
+     "book": 1,
+     "chapter": 27,
+     "verse": 27
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 9992,
+    "endWord": 10350,
+    "start": {
+     "book": 1,
+     "chapter": 27,
+     "verse": 28
+    },
+    "end": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 4
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 10351,
+    "endWord": 10427,
+    "start": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 5
+    },
+    "end": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 9
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 10393,
+    "endWord": 10427,
+    "start": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 7
+    },
+    "end": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 9
+    }
+   }
+  ]
+ },
+ {
+  "n": 7,
+  "name": {
+   "en": "Vayetzei",
+   "he": "וַיֵּצֵא",
+   "es": "Vaietzé"
+  },
+  "book": 1,
+  "startWord": 10428,
+  "endWord": 12451,
+  "start": {
+   "book": 1,
+   "chapter": 28,
+   "verse": 10
+  },
+  "end": {
+   "book": 1,
+   "chapter": 32,
+   "verse": 3
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 10428,
+    "endWord": 10618,
+    "start": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 10
+    },
+    "end": {
+     "book": 1,
+     "chapter": 28,
+     "verse": 22
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 10619,
+    "endWord": 10852,
+    "start": {
+     "book": 1,
+     "chapter": 29,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 29,
+     "verse": 17
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 10853,
+    "endWord": 11229,
+    "start": {
+     "book": 1,
+     "chapter": 29,
+     "verse": 18
+    },
+    "end": {
+     "book": 1,
+     "chapter": 30,
+     "verse": 13
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 11230,
+    "endWord": 11417,
+    "start": {
+     "book": 1,
+     "chapter": 30,
+     "verse": 14
+    },
+    "end": {
+     "book": 1,
+     "chapter": 30,
+     "verse": 27
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 11418,
+    "endWord": 11870,
+    "start": {
+     "book": 1,
+     "chapter": 30,
+     "verse": 28
+    },
+    "end": {
+     "book": 1,
+     "chapter": 31,
+     "verse": 16
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 11871,
+    "endWord": 12253,
+    "start": {
+     "book": 1,
+     "chapter": 31,
+     "verse": 17
+    },
+    "end": {
+     "book": 1,
+     "chapter": 31,
+     "verse": 42
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 12254,
+    "endWord": 12451,
+    "start": {
+     "book": 1,
+     "chapter": 31,
+     "verse": 43
+    },
+    "end": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 3
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 12420,
+    "endWord": 12451,
+    "start": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 3
+    }
+   }
+  ]
+ },
+ {
+  "n": 8,
+  "name": {
+   "en": "Vayishlach",
+   "he": "וַיִּשְׁלַח",
+   "es": "Vaishlaj"
+  },
+  "book": 1,
+  "startWord": 12452,
+  "endWord": 14436,
+  "start": {
+   "book": 1,
+   "chapter": 32,
+   "verse": 4
+  },
+  "end": {
+   "book": 1,
+   "chapter": 36,
+   "verse": 43
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 12452,
+    "endWord": 12603,
+    "start": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 4
+    },
+    "end": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 12604,
+    "endWord": 12826,
+    "start": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 14
+    },
+    "end": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 30
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 12827,
+    "endWord": 12948,
+    "start": {
+     "book": 1,
+     "chapter": 32,
+     "verse": 31
+    },
+    "end": {
+     "book": 1,
+     "chapter": 33,
+     "verse": 5
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 12949,
+    "endWord": 13141,
+    "start": {
+     "book": 1,
+     "chapter": 33,
+     "verse": 6
+    },
+    "end": {
+     "book": 1,
+     "chapter": 33,
+     "verse": 20
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 13142,
+    "endWord": 13741,
+    "start": {
+     "book": 1,
+     "chapter": 34,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 35,
+     "verse": 11
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 13742,
+    "endWord": 14205,
+    "start": {
+     "book": 1,
+     "chapter": 35,
+     "verse": 12
+    },
+    "end": {
+     "book": 1,
+     "chapter": 36,
+     "verse": 19
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 14206,
+    "endWord": 14436,
+    "start": {
+     "book": 1,
+     "chapter": 36,
+     "verse": 20
+    },
+    "end": {
+     "book": 1,
+     "chapter": 36,
+     "verse": 43
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 14397,
+    "endWord": 14436,
+    "start": {
+     "book": 1,
+     "chapter": 36,
+     "verse": 40
+    },
+    "end": {
+     "book": 1,
+     "chapter": 36,
+     "verse": 43
+    }
+   }
+  ]
+ },
+ {
+  "n": 9,
+  "name": {
+   "en": "Vayeshev",
+   "he": "וַיֵּשֶׁב",
+   "es": "Vaieshev"
+  },
+  "book": 1,
+  "startWord": 14437,
+  "endWord": 15998,
+  "start": {
+   "book": 1,
+   "chapter": 37,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 40,
+   "verse": 23
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 14437,
+    "endWord": 14603,
+    "start": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 11
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 14604,
+    "endWord": 14742,
+    "start": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 12
+    },
+    "end": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 22
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 14743,
+    "endWord": 14931,
+    "start": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 23
+    },
+    "end": {
+     "book": 1,
+     "chapter": 37,
+     "verse": 36
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 14932,
+    "endWord": 15336,
+    "start": {
+     "book": 1,
+     "chapter": 38,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 38,
+     "verse": 30
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 15337,
+    "endWord": 15437,
+    "start": {
+     "book": 1,
+     "chapter": 39,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 39,
+     "verse": 6
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 15438,
+    "endWord": 15685,
+    "start": {
+     "book": 1,
+     "chapter": 39,
+     "verse": 7
+    },
+    "end": {
+     "book": 1,
+     "chapter": 39,
+     "verse": 23
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 15686,
+    "endWord": 15998,
+    "start": {
+     "book": 1,
+     "chapter": 40,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 40,
+     "verse": 23
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 15950,
+    "endWord": 15998,
+    "start": {
+     "book": 1,
+     "chapter": 40,
+     "verse": 20
+    },
+    "end": {
+     "book": 1,
+     "chapter": 40,
+     "verse": 23
+    }
+   }
+  ]
+ },
+ {
+  "n": 10,
+  "name": {
+   "en": "Miketz",
+   "he": "מִקֵּץ",
+   "es": "Miketz"
+  },
+  "book": 1,
+  "startWord": 15999,
+  "endWord": 18021,
+  "start": {
+   "book": 1,
+   "chapter": 41,
+   "verse": 1
+  },
+  "end": {
+   "book": 1,
+   "chapter": 44,
+   "verse": 17
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 15999,
+    "endWord": 16182,
+    "start": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 14
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 16183,
+    "endWord": 16487,
+    "start": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 15
+    },
+    "end": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 38
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 16488,
+    "endWord": 16699,
+    "start": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 39
+    },
+    "end": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 52
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 16700,
+    "endWord": 16996,
+    "start": {
+     "book": 1,
+     "chapter": 41,
+     "verse": 53
+    },
+    "end": {
+     "book": 1,
+     "chapter": 42,
+     "verse": 18
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 16997,
+    "endWord": 17519,
+    "start": {
+     "book": 1,
+     "chapter": 42,
+     "verse": 19
+    },
+    "end": {
+     "book": 1,
+     "chapter": 43,
+     "verse": 15
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 17520,
+    "endWord": 17721,
+    "start": {
+     "book": 1,
+     "chapter": 43,
+     "verse": 16
+    },
+    "end": {
+     "book": 1,
+     "chapter": 43,
+     "verse": 29
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 17722,
+    "endWord": 18021,
+    "start": {
+     "book": 1,
+     "chapter": 43,
+     "verse": 30
+    },
+    "end": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 17
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 17952,
+    "endWord": 18021,
+    "start": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 14
+    },
+    "end": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 17
+    }
+   }
+  ]
+ },
+ {
+  "n": 11,
+  "name": {
+   "en": "Vayigash",
+   "he": "וַיִּגַּשׁ",
+   "es": "Vaigash"
+  },
+  "book": 1,
+  "startWord": 18022,
+  "endWord": 19501,
+  "start": {
+   "book": 1,
+   "chapter": 44,
+   "verse": 18
+  },
+  "end": {
+   "book": 1,
+   "chapter": 47,
+   "verse": 27
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 18022,
+    "endWord": 18186,
+    "start": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 18
+    },
+    "end": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 30
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 18187,
+    "endWord": 18344,
+    "start": {
+     "book": 1,
+     "chapter": 44,
+     "verse": 31
+    },
+    "end": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 7
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 18345,
+    "endWord": 18502,
+    "start": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 8
+    },
+    "end": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 18
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 18503,
+    "endWord": 18629,
+    "start": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 19
+    },
+    "end": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 27
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 18630,
+    "endWord": 18949,
+    "start": {
+     "book": 1,
+     "chapter": 45,
+     "verse": 28
+    },
+    "end": {
+     "book": 1,
+     "chapter": 46,
+     "verse": 27
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 18950,
+    "endWord": 19206,
+    "start": {
+     "book": 1,
+     "chapter": 46,
+     "verse": 28
+    },
+    "end": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 10
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 19207,
+    "endWord": 19501,
+    "start": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 11
+    },
+    "end": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 27
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 19463,
+    "endWord": 19501,
+    "start": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 25
+    },
+    "end": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 27
+    }
+   }
+  ]
+ },
+ {
+  "n": 12,
+  "name": {
+   "en": "Vayechi",
+   "he": "וַיְחִי",
+   "es": "Vaiejí"
+  },
+  "book": 1,
+  "startWord": 19502,
+  "endWord": 20666,
+  "start": {
+   "book": 1,
+   "chapter": 47,
+   "verse": 28
+  },
+  "end": {
+   "book": 1,
+   "chapter": 50,
+   "verse": 26
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 19502,
+    "endWord": 19702,
+    "start": {
+     "book": 1,
+     "chapter": 47,
+     "verse": 28
+    },
+    "end": {
+     "book": 1,
+     "chapter": 48,
+     "verse": 9
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 19703,
+    "endWord": 19813,
+    "start": {
+     "book": 1,
+     "chapter": 48,
+     "verse": 10
+    },
+    "end": {
+     "book": 1,
+     "chapter": 48,
+     "verse": 16
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 19814,
+    "endWord": 19918,
+    "start": {
+     "book": 1,
+     "chapter": 48,
+     "verse": 17
+    },
+    "end": {
+     "book": 1,
+     "chapter": 48,
+     "verse": 22
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 19919,
+    "endWord": 20106,
+    "start": {
+     "book": 1,
+     "chapter": 49,
+     "verse": 1
+    },
+    "end": {
+     "book": 1,
+     "chapter": 49,
+     "verse": 18
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 20107,
+    "endWord": 20187,
+    "start": {
+     "book": 1,
+     "chapter": 49,
+     "verse": 19
+    },
+    "end": {
+     "book": 1,
+     "chapter": 49,
+     "verse": 26
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 20188,
+    "endWord": 20581,
+    "start": {
+     "book": 1,
+     "chapter": 49,
+     "verse": 27
+    },
+    "end": {
+     "book": 1,
+     "chapter": 50,
+     "verse": 20
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 20582,
+    "endWord": 20666,
+    "start": {
+     "book": 1,
+     "chapter": 50,
+     "verse": 21
+    },
+    "end": {
+     "book": 1,
+     "chapter": 50,
+     "verse": 26
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 20606,
+    "endWord": 20666,
+    "start": {
+     "book": 1,
+     "chapter": 50,
+     "verse": 23
+    },
+    "end": {
+     "book": 1,
+     "chapter": 50,
+     "verse": 26
+    }
+   }
+  ]
+ },
+ {
+  "n": 13,
+  "name": {
+   "en": "Shemot",
+   "he": "שְׁמוֹת",
+   "es": "Shemot"
+  },
+  "book": 2,
+  "startWord": 20667,
+  "endWord": 22436,
+  "start": {
+   "book": 2,
+   "chapter": 1,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 6,
+   "verse": 1
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 20667,
+    "endWord": 20848,
+    "start": {
+     "book": 2,
+     "chapter": 1,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 1,
+     "verse": 17
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 20849,
+    "endWord": 21049,
+    "start": {
+     "book": 2,
+     "chapter": 1,
+     "verse": 18
+    },
+    "end": {
+     "book": 2,
+     "chapter": 2,
+     "verse": 10
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 21050,
+    "endWord": 21249,
+    "start": {
+     "book": 2,
+     "chapter": 2,
+     "verse": 11
+    },
+    "end": {
+     "book": 2,
+     "chapter": 2,
+     "verse": 25
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 21250,
+    "endWord": 21518,
+    "start": {
+     "book": 2,
+     "chapter": 3,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 3,
+     "verse": 15
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 21519,
+    "endWord": 21902,
+    "start": {
+     "book": 2,
+     "chapter": 3,
+     "verse": 16
+    },
+    "end": {
+     "book": 2,
+     "chapter": 4,
+     "verse": 17
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 21903,
+    "endWord": 22101,
+    "start": {
+     "book": 2,
+     "chapter": 4,
+     "verse": 18
+    },
+    "end": {
+     "book": 2,
+     "chapter": 4,
+     "verse": 31
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 22102,
+    "endWord": 22436,
+    "start": {
+     "book": 2,
+     "chapter": 5,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 1
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 22393,
+    "endWord": 22436,
+    "start": {
+     "book": 2,
+     "chapter": 5,
+     "verse": 22
+    },
+    "end": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 1
+    }
+   }
+  ]
+ },
+ {
+  "n": 14,
+  "name": {
+   "en": "Vaera",
+   "he": "וָאֵרָא",
+   "es": "Vaerá"
+  },
+  "book": 2,
+  "startWord": 22437,
+  "endWord": 24193,
+  "start": {
+   "book": 2,
+   "chapter": 6,
+   "verse": 2
+  },
+  "end": {
+   "book": 2,
+   "chapter": 9,
+   "verse": 35
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 22437,
+    "endWord": 22613,
+    "start": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 2
+    },
+    "end": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 22614,
+    "endWord": 22795,
+    "start": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 14
+    },
+    "end": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 28
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 22796,
+    "endWord": 22922,
+    "start": {
+     "book": 2,
+     "chapter": 6,
+     "verse": 29
+    },
+    "end": {
+     "book": 2,
+     "chapter": 7,
+     "verse": 7
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 22923,
+    "endWord": 23336,
+    "start": {
+     "book": 2,
+     "chapter": 7,
+     "verse": 8
+    },
+    "end": {
+     "book": 2,
+     "chapter": 8,
+     "verse": 6
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 23337,
+    "endWord": 23528,
+    "start": {
+     "book": 2,
+     "chapter": 8,
+     "verse": 7
+    },
+    "end": {
+     "book": 2,
+     "chapter": 8,
+     "verse": 18
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 23529,
+    "endWord": 23910,
+    "start": {
+     "book": 2,
+     "chapter": 8,
+     "verse": 19
+    },
+    "end": {
+     "book": 2,
+     "chapter": 9,
+     "verse": 16
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 23911,
+    "endWord": 24193,
+    "start": {
+     "book": 2,
+     "chapter": 9,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 9,
+     "verse": 35
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 24150,
+    "endWord": 24193,
+    "start": {
+     "book": 2,
+     "chapter": 9,
+     "verse": 33
+    },
+    "end": {
+     "book": 2,
+     "chapter": 9,
+     "verse": 35
+    }
+   }
+  ]
+ },
+ {
+  "n": 15,
+  "name": {
+   "en": "Bo",
+   "he": "בֹּא",
+   "es": "Bo"
+  },
+  "book": 2,
+  "startWord": 24194,
+  "endWord": 25855,
+  "start": {
+   "book": 2,
+   "chapter": 10,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 13,
+   "verse": 16
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 24194,
+    "endWord": 24400,
+    "start": {
+     "book": 2,
+     "chapter": 10,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 10,
+     "verse": 11
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 24401,
+    "endWord": 24606,
+    "start": {
+     "book": 2,
+     "chapter": 10,
+     "verse": 12
+    },
+    "end": {
+     "book": 2,
+     "chapter": 10,
+     "verse": 23
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 24607,
+    "endWord": 24749,
+    "start": {
+     "book": 2,
+     "chapter": 10,
+     "verse": 24
+    },
+    "end": {
+     "book": 2,
+     "chapter": 11,
+     "verse": 3
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 24750,
+    "endWord": 25180,
+    "start": {
+     "book": 2,
+     "chapter": 11,
+     "verse": 4
+    },
+    "end": {
+     "book": 2,
+     "chapter": 12,
+     "verse": 20
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 25181,
+    "endWord": 25309,
+    "start": {
+     "book": 2,
+     "chapter": 12,
+     "verse": 21
+    },
+    "end": {
+     "book": 2,
+     "chapter": 12,
+     "verse": 28
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 25310,
+    "endWord": 25621,
+    "start": {
+     "book": 2,
+     "chapter": 12,
+     "verse": 29
+    },
+    "end": {
+     "book": 2,
+     "chapter": 12,
+     "verse": 51
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 25622,
+    "endWord": 25855,
+    "start": {
+     "book": 2,
+     "chapter": 13,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 13,
+     "verse": 16
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 25797,
+    "endWord": 25855,
+    "start": {
+     "book": 2,
+     "chapter": 13,
+     "verse": 14
+    },
+    "end": {
+     "book": 2,
+     "chapter": 13,
+     "verse": 16
+    }
+   }
+  ]
+ },
+ {
+  "n": 16,
+  "name": {
+   "en": "Beshalach",
+   "he": "בְּשַׁלַּח",
+   "es": "Beshalaj"
+  },
+  "book": 2,
+  "startWord": 25856,
+  "endWord": 27548,
+  "start": {
+   "book": 2,
+   "chapter": 13,
+   "verse": 17
+  },
+  "end": {
+   "book": 2,
+   "chapter": 17,
+   "verse": 16
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 25856,
+    "endWord": 26055,
+    "start": {
+     "book": 2,
+     "chapter": 13,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 8
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 26056,
+    "endWord": 26163,
+    "start": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 9
+    },
+    "end": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 14
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 26164,
+    "endWord": 26325,
+    "start": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 15
+    },
+    "end": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 25
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 26326,
+    "endWord": 26734,
+    "start": {
+     "book": 2,
+     "chapter": 14,
+     "verse": 26
+    },
+    "end": {
+     "book": 2,
+     "chapter": 15,
+     "verse": 26
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 26735,
+    "endWord": 26939,
+    "start": {
+     "book": 2,
+     "chapter": 15,
+     "verse": 27
+    },
+    "end": {
+     "book": 2,
+     "chapter": 16,
+     "verse": 10
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 26940,
+    "endWord": 27299,
+    "start": {
+     "book": 2,
+     "chapter": 16,
+     "verse": 11
+    },
+    "end": {
+     "book": 2,
+     "chapter": 16,
+     "verse": 36
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 27300,
+    "endWord": 27548,
+    "start": {
+     "book": 2,
+     "chapter": 17,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 17,
+     "verse": 16
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 27511,
+    "endWord": 27548,
+    "start": {
+     "book": 2,
+     "chapter": 17,
+     "verse": 14
+    },
+    "end": {
+     "book": 2,
+     "chapter": 17,
+     "verse": 16
+    }
+   }
+  ]
+ },
+ {
+  "n": 17,
+  "name": {
+   "en": "Yitro",
+   "he": "יִתְרוֹ",
+   "es": "Itró"
+  },
+  "book": 2,
+  "startWord": 27549,
+  "endWord": 28663,
+  "start": {
+   "book": 2,
+   "chapter": 18,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 20,
+   "verse": 23
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 27549,
+    "endWord": 27725,
+    "start": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 12
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 27726,
+    "endWord": 27915,
+    "start": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 13
+    },
+    "end": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 23
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 27916,
+    "endWord": 27967,
+    "start": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 24
+    },
+    "end": {
+     "book": 2,
+     "chapter": 18,
+     "verse": 27
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 27968,
+    "endWord": 28052,
+    "start": {
+     "book": 2,
+     "chapter": 19,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 19,
+     "verse": 6
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 28053,
+    "endWord": 28256,
+    "start": {
+     "book": 2,
+     "chapter": 19,
+     "verse": 7
+    },
+    "end": {
+     "book": 2,
+     "chapter": 19,
+     "verse": 19
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 28257,
+    "endWord": 28529,
+    "start": {
+     "book": 2,
+     "chapter": 19,
+     "verse": 20
+    },
+    "end": {
+     "book": 2,
+     "chapter": 20,
+     "verse": 14
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 28530,
+    "endWord": 28663,
+    "start": {
+     "book": 2,
+     "chapter": 20,
+     "verse": 15
+    },
+    "end": {
+     "book": 2,
+     "chapter": 20,
+     "verse": 23
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 28590,
+    "endWord": 28663,
+    "start": {
+     "book": 2,
+     "chapter": 20,
+     "verse": 19
+    },
+    "end": {
+     "book": 2,
+     "chapter": 20,
+     "verse": 23
+    }
+   }
+  ]
+ },
+ {
+  "n": 18,
+  "name": {
+   "en": "Mishpatim",
+   "he": "מִשְׁפָּטִים",
+   "es": "Mishpatim"
+  },
+  "book": 2,
+  "startWord": 28664,
+  "endWord": 30132,
+  "start": {
+   "book": 2,
+   "chapter": 21,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 24,
+   "verse": 18
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 28664,
+    "endWord": 28863,
+    "start": {
+     "book": 2,
+     "chapter": 21,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 21,
+     "verse": 19
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 28864,
+    "endWord": 29151,
+    "start": {
+     "book": 2,
+     "chapter": 21,
+     "verse": 20
+    },
+    "end": {
+     "book": 2,
+     "chapter": 22,
+     "verse": 3
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 29152,
+    "endWord": 29439,
+    "start": {
+     "book": 2,
+     "chapter": 22,
+     "verse": 4
+    },
+    "end": {
+     "book": 2,
+     "chapter": 22,
+     "verse": 26
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 29440,
+    "endWord": 29531,
+    "start": {
+     "book": 2,
+     "chapter": 22,
+     "verse": 27
+    },
+    "end": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 5
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 29532,
+    "endWord": 29698,
+    "start": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 6
+    },
+    "end": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 19
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 29699,
+    "endWord": 29778,
+    "start": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 20
+    },
+    "end": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 25
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 29779,
+    "endWord": 30132,
+    "start": {
+     "book": 2,
+     "chapter": 23,
+     "verse": 26
+    },
+    "end": {
+     "book": 2,
+     "chapter": 24,
+     "verse": 18
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 30083,
+    "endWord": 30132,
+    "start": {
+     "book": 2,
+     "chapter": 24,
+     "verse": 15
+    },
+    "end": {
+     "book": 2,
+     "chapter": 24,
+     "verse": 18
+    }
+   }
+  ]
+ },
+ {
+  "n": 19,
+  "name": {
+   "en": "Terumah",
+   "he": "תְּרוּמָה",
+   "es": "Terumá"
+  },
+  "book": 2,
+  "startWord": 30133,
+  "endWord": 31280,
+  "start": {
+   "book": 2,
+   "chapter": 25,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 27,
+   "verse": 19
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 30133,
+    "endWord": 30283,
+    "start": {
+     "book": 2,
+     "chapter": 25,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 25,
+     "verse": 16
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 30284,
+    "endWord": 30574,
+    "start": {
+     "book": 2,
+     "chapter": 25,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 25,
+     "verse": 40
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 30575,
+    "endWord": 30776,
+    "start": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 14
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 30777,
+    "endWord": 30955,
+    "start": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 15
+    },
+    "end": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 30
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 30956,
+    "endWord": 31055,
+    "start": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 31
+    },
+    "end": {
+     "book": 2,
+     "chapter": 26,
+     "verse": 37
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 31056,
+    "endWord": 31151,
+    "start": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 8
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 31152,
+    "endWord": 31280,
+    "start": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 9
+    },
+    "end": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 19
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 31246,
+    "endWord": 31280,
+    "start": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 19
+    }
+   }
+  ]
+ },
+ {
+  "n": 20,
+  "name": {
+   "en": "Tetzaveh",
+   "he": "תְּצַוֶּה",
+   "es": "Tetzavé"
+  },
+  "book": 2,
+  "startWord": 31281,
+  "endWord": 32695,
+  "start": {
+   "book": 2,
+   "chapter": 27,
+   "verse": 20
+  },
+  "end": {
+   "book": 2,
+   "chapter": 30,
+   "verse": 10
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 31281,
+    "endWord": 31492,
+    "start": {
+     "book": 2,
+     "chapter": 27,
+     "verse": 20
+    },
+    "end": {
+     "book": 2,
+     "chapter": 28,
+     "verse": 12
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 31493,
+    "endWord": 31731,
+    "start": {
+     "book": 2,
+     "chapter": 28,
+     "verse": 13
+    },
+    "end": {
+     "book": 2,
+     "chapter": 28,
+     "verse": 30
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 31732,
+    "endWord": 31913,
+    "start": {
+     "book": 2,
+     "chapter": 28,
+     "verse": 31
+    },
+    "end": {
+     "book": 2,
+     "chapter": 28,
+     "verse": 43
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 31914,
+    "endWord": 32147,
+    "start": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 18
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 32148,
+    "endWord": 32456,
+    "start": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 19
+    },
+    "end": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 37
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 32457,
+    "endWord": 32563,
+    "start": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 38
+    },
+    "end": {
+     "book": 2,
+     "chapter": 29,
+     "verse": 46
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 32564,
+    "endWord": 32695,
+    "start": {
+     "book": 2,
+     "chapter": 30,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 30,
+     "verse": 10
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 32654,
+    "endWord": 32695,
+    "start": {
+     "book": 2,
+     "chapter": 30,
+     "verse": 8
+    },
+    "end": {
+     "book": 2,
+     "chapter": 30,
+     "verse": 10
+    }
+   }
+  ]
+ },
+ {
+  "n": 21,
+  "name": {
+   "en": "Ki Tisa",
+   "he": "כִּי תִשָּׂא",
+   "es": "Ki Tisá"
+  },
+  "book": 2,
+  "startWord": 32696,
+  "endWord": 34706,
+  "start": {
+   "book": 2,
+   "chapter": 30,
+   "verse": 11
+  },
+  "end": {
+   "book": 2,
+   "chapter": 34,
+   "verse": 35
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 32696,
+    "endWord": 33248,
+    "start": {
+     "book": 2,
+     "chapter": 30,
+     "verse": 11
+    },
+    "end": {
+     "book": 2,
+     "chapter": 31,
+     "verse": 17
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 33249,
+    "endWord": 34003,
+    "start": {
+     "book": 2,
+     "chapter": 31,
+     "verse": 18
+    },
+    "end": {
+     "book": 2,
+     "chapter": 33,
+     "verse": 11
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 34004,
+    "endWord": 34086,
+    "start": {
+     "book": 2,
+     "chapter": 33,
+     "verse": 12
+    },
+    "end": {
+     "book": 2,
+     "chapter": 33,
+     "verse": 16
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 34087,
+    "endWord": 34167,
+    "start": {
+     "book": 2,
+     "chapter": 33,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 33,
+     "verse": 23
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 34168,
+    "endWord": 34314,
+    "start": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 9
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 34315,
+    "endWord": 34554,
+    "start": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 10
+    },
+    "end": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 26
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 34555,
+    "endWord": 34706,
+    "start": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 27
+    },
+    "end": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 35
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 34659,
+    "endWord": 34706,
+    "start": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 33
+    },
+    "end": {
+     "book": 2,
+     "chapter": 34,
+     "verse": 35
+    }
+   }
+  ]
+ },
+ {
+  "n": 22,
+  "name": {
+   "en": "Vayakhel",
+   "he": "וַיַּקְהֵל",
+   "es": "Vaiakhel"
+  },
+  "book": 2,
+  "startWord": 34707,
+  "endWord": 36272,
+  "start": {
+   "book": 2,
+   "chapter": 35,
+   "verse": 1
+  },
+  "end": {
+   "book": 2,
+   "chapter": 38,
+   "verse": 20
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 34707,
+    "endWord": 34930,
+    "start": {
+     "book": 2,
+     "chapter": 35,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 35,
+     "verse": 20
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 34931,
+    "endWord": 35078,
+    "start": {
+     "book": 2,
+     "chapter": 35,
+     "verse": 21
+    },
+    "end": {
+     "book": 2,
+     "chapter": 35,
+     "verse": 29
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 35079,
+    "endWord": 35273,
+    "start": {
+     "book": 2,
+     "chapter": 35,
+     "verse": 30
+    },
+    "end": {
+     "book": 2,
+     "chapter": 36,
+     "verse": 7
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 35274,
+    "endWord": 35441,
+    "start": {
+     "book": 2,
+     "chapter": 36,
+     "verse": 8
+    },
+    "end": {
+     "book": 2,
+     "chapter": 36,
+     "verse": 19
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 35442,
+    "endWord": 35864,
+    "start": {
+     "book": 2,
+     "chapter": 36,
+     "verse": 20
+    },
+    "end": {
+     "book": 2,
+     "chapter": 37,
+     "verse": 16
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 35865,
+    "endWord": 36034,
+    "start": {
+     "book": 2,
+     "chapter": 37,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 37,
+     "verse": 29
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 36035,
+    "endWord": 36272,
+    "start": {
+     "book": 2,
+     "chapter": 38,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 38,
+     "verse": 20
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 36235,
+    "endWord": 36272,
+    "start": {
+     "book": 2,
+     "chapter": 38,
+     "verse": 18
+    },
+    "end": {
+     "book": 2,
+     "chapter": 38,
+     "verse": 20
+    }
+   }
+  ]
+ },
+ {
+  "n": 23,
+  "name": {
+   "en": "Pekudei",
+   "he": "פְקוּדֵי",
+   "es": "Pekudei"
+  },
+  "book": 2,
+  "startWord": 36273,
+  "endWord": 37461,
+  "start": {
+   "book": 2,
+   "chapter": 38,
+   "verse": 21
+  },
+  "end": {
+   "book": 2,
+   "chapter": 40,
+   "verse": 38
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 36273,
+    "endWord": 36468,
+    "start": {
+     "book": 2,
+     "chapter": 38,
+     "verse": 21
+    },
+    "end": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 1
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 36469,
+    "endWord": 36733,
+    "start": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 2
+    },
+    "end": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 21
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 36734,
+    "endWord": 36870,
+    "start": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 22
+    },
+    "end": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 32
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 36871,
+    "endWord": 37020,
+    "start": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 33
+    },
+    "end": {
+     "book": 2,
+     "chapter": 39,
+     "verse": 43
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 37021,
+    "endWord": 37192,
+    "start": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 1
+    },
+    "end": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 16
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 37193,
+    "endWord": 37327,
+    "start": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 17
+    },
+    "end": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 27
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 37328,
+    "endWord": 37461,
+    "start": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 28
+    },
+    "end": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 38
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 37402,
+    "endWord": 37461,
+    "start": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 34
+    },
+    "end": {
+     "book": 2,
+     "chapter": 40,
+     "verse": 38
+    }
+   }
+  ]
+ },
+ {
+  "n": 24,
+  "name": {
+   "en": "Vayikra",
+   "he": "וַיִּקְרָא",
+   "es": "Vaikrá"
+  },
+  "book": 3,
+  "startWord": 37462,
+  "endWord": 39147,
+  "start": {
+   "book": 3,
+   "chapter": 1,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 5,
+   "verse": 26
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 37462,
+    "endWord": 37653,
+    "start": {
+     "book": 3,
+     "chapter": 1,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 1,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 37654,
+    "endWord": 37794,
+    "start": {
+     "book": 3,
+     "chapter": 1,
+     "verse": 14
+    },
+    "end": {
+     "book": 3,
+     "chapter": 2,
+     "verse": 6
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 37795,
+    "endWord": 37915,
+    "start": {
+     "book": 3,
+     "chapter": 2,
+     "verse": 7
+    },
+    "end": {
+     "book": 3,
+     "chapter": 2,
+     "verse": 16
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 37916,
+    "endWord": 38167,
+    "start": {
+     "book": 3,
+     "chapter": 3,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 3,
+     "verse": 17
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 38168,
+    "endWord": 38568,
+    "start": {
+     "book": 3,
+     "chapter": 4,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 4,
+     "verse": 26
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 38569,
+    "endWord": 38885,
+    "start": {
+     "book": 3,
+     "chapter": 4,
+     "verse": 27
+    },
+    "end": {
+     "book": 3,
+     "chapter": 5,
+     "verse": 10
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 38886,
+    "endWord": 39147,
+    "start": {
+     "book": 3,
+     "chapter": 5,
+     "verse": 11
+    },
+    "end": {
+     "book": 3,
+     "chapter": 5,
+     "verse": 26
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 39103,
+    "endWord": 39147,
+    "start": {
+     "book": 3,
+     "chapter": 5,
+     "verse": 24
+    },
+    "end": {
+     "book": 3,
+     "chapter": 5,
+     "verse": 26
+    }
+   }
+  ]
+ },
+ {
+  "n": 25,
+  "name": {
+   "en": "Tzav",
+   "he": "צַו",
+   "es": "Tzav"
+  },
+  "book": 3,
+  "startWord": 39148,
+  "endWord": 40506,
+  "start": {
+   "book": 3,
+   "chapter": 6,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 8,
+   "verse": 36
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 39148,
+    "endWord": 39310,
+    "start": {
+     "book": 3,
+     "chapter": 6,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 6,
+     "verse": 11
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 39311,
+    "endWord": 39570,
+    "start": {
+     "book": 3,
+     "chapter": 6,
+     "verse": 12
+    },
+    "end": {
+     "book": 3,
+     "chapter": 7,
+     "verse": 10
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 39571,
+    "endWord": 39936,
+    "start": {
+     "book": 3,
+     "chapter": 7,
+     "verse": 11
+    },
+    "end": {
+     "book": 3,
+     "chapter": 7,
+     "verse": 38
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 39937,
+    "endWord": 40112,
+    "start": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 13
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 40113,
+    "endWord": 40239,
+    "start": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 14
+    },
+    "end": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 21
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 40240,
+    "endWord": 40389,
+    "start": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 22
+    },
+    "end": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 29
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 40390,
+    "endWord": 40506,
+    "start": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 30
+    },
+    "end": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 36
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 40452,
+    "endWord": 40506,
+    "start": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 33
+    },
+    "end": {
+     "book": 3,
+     "chapter": 8,
+     "verse": 36
+    }
+   }
+  ]
+ },
+ {
+  "n": 26,
+  "name": {
+   "en": "Shmini",
+   "he": "שְּׁמִינִי",
+   "es": "Sheminí"
+  },
+  "book": 3,
+  "startWord": 40507,
+  "endWord": 41749,
+  "start": {
+   "book": 3,
+   "chapter": 9,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 11,
+   "verse": 47
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 40507,
+    "endWord": 40715,
+    "start": {
+     "book": 3,
+     "chapter": 9,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 9,
+     "verse": 16
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 40716,
+    "endWord": 40806,
+    "start": {
+     "book": 3,
+     "chapter": 9,
+     "verse": 17
+    },
+    "end": {
+     "book": 3,
+     "chapter": 9,
+     "verse": 23
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 40807,
+    "endWord": 40993,
+    "start": {
+     "book": 3,
+     "chapter": 9,
+     "verse": 24
+    },
+    "end": {
+     "book": 3,
+     "chapter": 10,
+     "verse": 11
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 40994,
+    "endWord": 41074,
+    "start": {
+     "book": 3,
+     "chapter": 10,
+     "verse": 12
+    },
+    "end": {
+     "book": 3,
+     "chapter": 10,
+     "verse": 15
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 41075,
+    "endWord": 41154,
+    "start": {
+     "book": 3,
+     "chapter": 10,
+     "verse": 16
+    },
+    "end": {
+     "book": 3,
+     "chapter": 10,
+     "verse": 20
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 41155,
+    "endWord": 41540,
+    "start": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 32
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 41541,
+    "endWord": 41749,
+    "start": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 33
+    },
+    "end": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 47
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 41707,
+    "endWord": 41749,
+    "start": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 45
+    },
+    "end": {
+     "book": 3,
+     "chapter": 11,
+     "verse": 47
+    }
+   }
+  ]
+ },
+ {
+  "n": 27,
+  "name": {
+   "en": "Tazria",
+   "he": "תַזְרִיעַ",
+   "es": "Tazría"
+  },
+  "book": 3,
+  "startWord": 41750,
+  "endWord": 42764,
+  "start": {
+   "book": 3,
+   "chapter": 12,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 13,
+   "verse": 59
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 41750,
+    "endWord": 41958,
+    "start": {
+     "book": 3,
+     "chapter": 12,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 5
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 41959,
+    "endWord": 42112,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 6
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 17
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 42113,
+    "endWord": 42186,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 18
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 23
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 42187,
+    "endWord": 42274,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 24
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 28
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 42275,
+    "endWord": 42443,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 29
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 39
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 42444,
+    "endWord": 42661,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 40
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 54
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 42662,
+    "endWord": 42764,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 55
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 59
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 42708,
+    "endWord": 42764,
+    "start": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 57
+    },
+    "end": {
+     "book": 3,
+     "chapter": 13,
+     "verse": 59
+    }
+   }
+  ]
+ },
+ {
+  "n": 28,
+  "name": {
+   "en": "Metzora",
+   "he": "מְצֹרָע",
+   "es": "Metzorá"
+  },
+  "book": 3,
+  "startWord": 42765,
+  "endWord": 44042,
+  "start": {
+   "book": 3,
+   "chapter": 14,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 15,
+   "verse": 33
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 42765,
+    "endWord": 42949,
+    "start": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 12
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 42950,
+    "endWord": 43077,
+    "start": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 13
+    },
+    "end": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 20
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 43078,
+    "endWord": 43264,
+    "start": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 21
+    },
+    "end": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 32
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 43265,
+    "endWord": 43563,
+    "start": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 33
+    },
+    "end": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 53
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 43564,
+    "endWord": 43781,
+    "start": {
+     "book": 3,
+     "chapter": 14,
+     "verse": 54
+    },
+    "end": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 15
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 43782,
+    "endWord": 43973,
+    "start": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 16
+    },
+    "end": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 28
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 43974,
+    "endWord": 44042,
+    "start": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 29
+    },
+    "end": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 33
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 44007,
+    "endWord": 44042,
+    "start": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 31
+    },
+    "end": {
+     "book": 3,
+     "chapter": 15,
+     "verse": 33
+    }
+   }
+  ]
+ },
+ {
+  "n": 29,
+  "name": {
+   "en": "Achrei Mot",
+   "he": "אַחֲרֵי מוֹת",
+   "es": "Ajarei Mot"
+  },
+  "book": 3,
+  "startWord": 44043,
+  "endWord": 45215,
+  "start": {
+   "book": 3,
+   "chapter": 16,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 18,
+   "verse": 30
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 44043,
+    "endWord": 44320,
+    "start": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 17
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 44321,
+    "endWord": 44443,
+    "start": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 18
+    },
+    "end": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 24
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 44444,
+    "endWord": 44595,
+    "start": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 25
+    },
+    "end": {
+     "book": 3,
+     "chapter": 16,
+     "verse": 34
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 44596,
+    "endWord": 44714,
+    "start": {
+     "book": 3,
+     "chapter": 17,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 17,
+     "verse": 7
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 44715,
+    "endWord": 44929,
+    "start": {
+     "book": 3,
+     "chapter": 17,
+     "verse": 8
+    },
+    "end": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 5
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 44930,
+    "endWord": 45102,
+    "start": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 6
+    },
+    "end": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 21
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 45103,
+    "endWord": 45215,
+    "start": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 22
+    },
+    "end": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 30
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 45175,
+    "endWord": 45215,
+    "start": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 28
+    },
+    "end": {
+     "book": 3,
+     "chapter": 18,
+     "verse": 30
+    }
+   }
+  ]
+ },
+ {
+  "n": 30,
+  "name": {
+   "en": "Kedoshim",
+   "he": "קְדֹשִׁים",
+   "es": "Kedoshim"
+  },
+  "book": 3,
+  "startWord": 45216,
+  "endWord": 46086,
+  "start": {
+   "book": 3,
+   "chapter": 19,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 20,
+   "verse": 27
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 45216,
+    "endWord": 45365,
+    "start": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 14
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 45366,
+    "endWord": 45486,
+    "start": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 15
+    },
+    "end": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 22
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 45487,
+    "endWord": 45594,
+    "start": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 23
+    },
+    "end": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 32
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 45595,
+    "endWord": 45657,
+    "start": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 33
+    },
+    "end": {
+     "book": 3,
+     "chapter": 19,
+     "verse": 37
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 45658,
+    "endWord": 45765,
+    "start": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 7
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 45766,
+    "endWord": 45995,
+    "start": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 8
+    },
+    "end": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 22
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 45996,
+    "endWord": 46086,
+    "start": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 23
+    },
+    "end": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 27
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 46034,
+    "endWord": 46086,
+    "start": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 25
+    },
+    "end": {
+     "book": 3,
+     "chapter": 20,
+     "verse": 27
+    }
+   }
+  ]
+ },
+ {
+  "n": 31,
+  "name": {
+   "en": "Emor",
+   "he": "אֱמוֹר",
+   "es": "Emor"
+  },
+  "book": 3,
+  "startWord": 46087,
+  "endWord": 47712,
+  "start": {
+   "book": 3,
+   "chapter": 21,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 24,
+   "verse": 23
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 46087,
+    "endWord": 46272,
+    "start": {
+     "book": 3,
+     "chapter": 21,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 21,
+     "verse": 15
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 46273,
+    "endWord": 46623,
+    "start": {
+     "book": 3,
+     "chapter": 21,
+     "verse": 16
+    },
+    "end": {
+     "book": 3,
+     "chapter": 22,
+     "verse": 16
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 46624,
+    "endWord": 46834,
+    "start": {
+     "book": 3,
+     "chapter": 22,
+     "verse": 17
+    },
+    "end": {
+     "book": 3,
+     "chapter": 22,
+     "verse": 33
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 46835,
+    "endWord": 47140,
+    "start": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 22
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 47141,
+    "endWord": 47259,
+    "start": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 23
+    },
+    "end": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 32
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 47260,
+    "endWord": 47432,
+    "start": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 33
+    },
+    "end": {
+     "book": 3,
+     "chapter": 23,
+     "verse": 44
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 47433,
+    "endWord": 47712,
+    "start": {
+     "book": 3,
+     "chapter": 24,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 24,
+     "verse": 23
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 47673,
+    "endWord": 47712,
+    "start": {
+     "book": 3,
+     "chapter": 24,
+     "verse": 21
+    },
+    "end": {
+     "book": 3,
+     "chapter": 24,
+     "verse": 23
+    }
+   }
+  ]
+ },
+ {
+  "n": 32,
+  "name": {
+   "en": "Behar",
+   "he": "בְּהַר",
+   "es": "Behar"
+  },
+  "book": 3,
+  "startWord": 47713,
+  "endWord": 48451,
+  "start": {
+   "book": 3,
+   "chapter": 25,
+   "verse": 1
+  },
+  "end": {
+   "book": 3,
+   "chapter": 26,
+   "verse": 2
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 47713,
+    "endWord": 47884,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 47885,
+    "endWord": 47948,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 14
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 18
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 47949,
+    "endWord": 48014,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 19
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 24
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 48015,
+    "endWord": 48070,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 25
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 28
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 48071,
+    "endWord": 48211,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 29
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 38
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 48212,
+    "endWord": 48308,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 39
+    },
+    "end": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 46
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 48309,
+    "endWord": 48451,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 47
+    },
+    "end": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 2
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 48409,
+    "endWord": 48451,
+    "start": {
+     "book": 3,
+     "chapter": 25,
+     "verse": 55
+    },
+    "end": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 2
+    }
+   }
+  ]
+ },
+ {
+  "n": 33,
+  "name": {
+   "en": "Bechukotai",
+   "he": "בְּחֻקֹּתַי",
+   "es": "Bejukotai"
+  },
+  "book": 3,
+  "startWord": 48452,
+  "endWord": 49466,
+  "start": {
+   "book": 3,
+   "chapter": 26,
+   "verse": 3
+  },
+  "end": {
+   "book": 3,
+   "chapter": 27,
+   "verse": 34
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 48452,
+    "endWord": 48484,
+    "start": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 3
+    },
+    "end": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 5
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 48485,
+    "endWord": 48527,
+    "start": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 6
+    },
+    "end": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 9
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 48528,
+    "endWord": 49008,
+    "start": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 10
+    },
+    "end": {
+     "book": 3,
+     "chapter": 26,
+     "verse": 46
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 49009,
+    "endWord": 49215,
+    "start": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 1
+    },
+    "end": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 15
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 49216,
+    "endWord": 49296,
+    "start": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 16
+    },
+    "end": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 21
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 49297,
+    "endWord": 49395,
+    "start": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 22
+    },
+    "end": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 28
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 49396,
+    "endWord": 49466,
+    "start": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 29
+    },
+    "end": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 34
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 49425,
+    "endWord": 49466,
+    "start": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 32
+    },
+    "end": {
+     "book": 3,
+     "chapter": 27,
+     "verse": 34
+    }
+   }
+  ]
+ },
+ {
+  "n": 34,
+  "name": {
+   "en": "Bamidbar",
+   "he": "בְּמִדְבַּר",
+   "es": "Bamidbar"
+  },
+  "book": 4,
+  "startWord": 49467,
+  "endWord": 51313,
+  "start": {
+   "book": 4,
+   "chapter": 1,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 4,
+   "verse": 20
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 49467,
+    "endWord": 49624,
+    "start": {
+     "book": 4,
+     "chapter": 1,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 1,
+     "verse": 19
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 49625,
+    "endWord": 50069,
+    "start": {
+     "book": 4,
+     "chapter": 1,
+     "verse": 20
+    },
+    "end": {
+     "book": 4,
+     "chapter": 1,
+     "verse": 54
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 50070,
+    "endWord": 50411,
+    "start": {
+     "book": 4,
+     "chapter": 2,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 2,
+     "verse": 34
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 50412,
+    "endWord": 50579,
+    "start": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 13
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 50580,
+    "endWord": 50858,
+    "start": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 14
+    },
+    "end": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 39
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 50859,
+    "endWord": 51015,
+    "start": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 40
+    },
+    "end": {
+     "book": 4,
+     "chapter": 3,
+     "verse": 51
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 51016,
+    "endWord": 51313,
+    "start": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 20
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 51270,
+    "endWord": 51313,
+    "start": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 17
+    },
+    "end": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 20
+    }
+   }
+  ]
+ },
+ {
+  "n": 35,
+  "name": {
+   "en": "Nasso",
+   "he": "נָשׂא",
+   "es": "Nasó"
+  },
+  "book": 4,
+  "startWord": 51314,
+  "endWord": 53595,
+  "start": {
+   "book": 4,
+   "chapter": 4,
+   "verse": 21
+  },
+  "end": {
+   "book": 4,
+   "chapter": 7,
+   "verse": 89
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 51314,
+    "endWord": 51543,
+    "start": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 21
+    },
+    "end": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 37
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 51544,
+    "endWord": 51686,
+    "start": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 38
+    },
+    "end": {
+     "book": 4,
+     "chapter": 4,
+     "verse": 49
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 51687,
+    "endWord": 51820,
+    "start": {
+     "book": 4,
+     "chapter": 5,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 5,
+     "verse": 10
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 51821,
+    "endWord": 52512,
+    "start": {
+     "book": 4,
+     "chapter": 5,
+     "verse": 11
+    },
+    "end": {
+     "book": 4,
+     "chapter": 6,
+     "verse": 27
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 52513,
+    "endWord": 53004,
+    "start": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 41
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 53005,
+    "endWord": 53339,
+    "start": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 42
+    },
+    "end": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 71
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 53340,
+    "endWord": 53595,
+    "start": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 72
+    },
+    "end": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 89
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 53531,
+    "endWord": 53595,
+    "start": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 87
+    },
+    "end": {
+     "book": 4,
+     "chapter": 7,
+     "verse": 89
+    }
+   }
+  ]
+ },
+ {
+  "n": 36,
+  "name": {
+   "en": "Beha'alotcha",
+   "he": "בְּהַעֲלֹתְךָ",
+   "es": "Behaalotjá"
+  },
+  "book": 4,
+  "startWord": 53596,
+  "endWord": 55446,
+  "start": {
+   "book": 4,
+   "chapter": 8,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 12,
+   "verse": 16
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 53596,
+    "endWord": 53771,
+    "start": {
+     "book": 4,
+     "chapter": 8,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 8,
+     "verse": 14
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 53772,
+    "endWord": 53958,
+    "start": {
+     "book": 4,
+     "chapter": 8,
+     "verse": 15
+    },
+    "end": {
+     "book": 4,
+     "chapter": 8,
+     "verse": 26
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 53959,
+    "endWord": 54167,
+    "start": {
+     "book": 4,
+     "chapter": 9,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 9,
+     "verse": 14
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 54168,
+    "endWord": 54422,
+    "start": {
+     "book": 4,
+     "chapter": 9,
+     "verse": 15
+    },
+    "end": {
+     "book": 4,
+     "chapter": 10,
+     "verse": 10
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 54423,
+    "endWord": 54676,
+    "start": {
+     "book": 4,
+     "chapter": 10,
+     "verse": 11
+    },
+    "end": {
+     "book": 4,
+     "chapter": 10,
+     "verse": 34
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 54677,
+    "endWord": 55159,
+    "start": {
+     "book": 4,
+     "chapter": 10,
+     "verse": 35
+    },
+    "end": {
+     "book": 4,
+     "chapter": 11,
+     "verse": 29
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 55160,
+    "endWord": 55446,
+    "start": {
+     "book": 4,
+     "chapter": 11,
+     "verse": 30
+    },
+    "end": {
+     "book": 4,
+     "chapter": 12,
+     "verse": 16
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 55408,
+    "endWord": 55446,
+    "start": {
+     "book": 4,
+     "chapter": 12,
+     "verse": 14
+    },
+    "end": {
+     "book": 4,
+     "chapter": 12,
+     "verse": 16
+    }
+   }
+  ]
+ },
+ {
+  "n": 37,
+  "name": {
+   "en": "Sh'lach",
+   "he": "שְׁלַח־לְךָ",
+   "es": "Shelaj"
+  },
+  "book": 4,
+  "startWord": 55447,
+  "endWord": 56994,
+  "start": {
+   "book": 4,
+   "chapter": 13,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 15,
+   "verse": 41
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 55447,
+    "endWord": 55635,
+    "start": {
+     "book": 4,
+     "chapter": 13,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 13,
+     "verse": 20
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 55636,
+    "endWord": 55937,
+    "start": {
+     "book": 4,
+     "chapter": 13,
+     "verse": 21
+    },
+    "end": {
+     "book": 4,
+     "chapter": 14,
+     "verse": 7
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 55938,
+    "endWord": 56204,
+    "start": {
+     "book": 4,
+     "chapter": 14,
+     "verse": 8
+    },
+    "end": {
+     "book": 4,
+     "chapter": 14,
+     "verse": 25
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 56205,
+    "endWord": 56561,
+    "start": {
+     "book": 4,
+     "chapter": 14,
+     "verse": 26
+    },
+    "end": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 7
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 56562,
+    "endWord": 56665,
+    "start": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 8
+    },
+    "end": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 16
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 56666,
+    "endWord": 56794,
+    "start": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 17
+    },
+    "end": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 26
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 56795,
+    "endWord": 56994,
+    "start": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 27
+    },
+    "end": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 41
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 56925,
+    "endWord": 56994,
+    "start": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 37
+    },
+    "end": {
+     "book": 4,
+     "chapter": 15,
+     "verse": 41
+    }
+   }
+  ]
+ },
+ {
+  "n": 38,
+  "name": {
+   "en": "Korach",
+   "he": "קֹרַח",
+   "es": "Kóraj"
+  },
+  "book": 4,
+  "startWord": 56995,
+  "endWord": 58411,
+  "start": {
+   "book": 4,
+   "chapter": 16,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 18,
+   "verse": 32
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 56995,
+    "endWord": 57180,
+    "start": {
+     "book": 4,
+     "chapter": 16,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 16,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 57181,
+    "endWord": 57282,
+    "start": {
+     "book": 4,
+     "chapter": 16,
+     "verse": 14
+    },
+    "end": {
+     "book": 4,
+     "chapter": 16,
+     "verse": 19
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 57283,
+    "endWord": 57611,
+    "start": {
+     "book": 4,
+     "chapter": 16,
+     "verse": 20
+    },
+    "end": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 8
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 57612,
+    "endWord": 57703,
+    "start": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 9
+    },
+    "end": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 15
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 57704,
+    "endWord": 57838,
+    "start": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 16
+    },
+    "end": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 24
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 57839,
+    "endWord": 58228,
+    "start": {
+     "book": 4,
+     "chapter": 17,
+     "verse": 25
+    },
+    "end": {
+     "book": 4,
+     "chapter": 18,
+     "verse": 20
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 58229,
+    "endWord": 58411,
+    "start": {
+     "book": 4,
+     "chapter": 18,
+     "verse": 21
+    },
+    "end": {
+     "book": 4,
+     "chapter": 18,
+     "verse": 32
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 58369,
+    "endWord": 58411,
+    "start": {
+     "book": 4,
+     "chapter": 18,
+     "verse": 30
+    },
+    "end": {
+     "book": 4,
+     "chapter": 18,
+     "verse": 32
+    }
+   }
+  ]
+ },
+ {
+  "n": 39,
+  "name": {
+   "en": "Chukat",
+   "he": "חֻקַּת",
+   "es": "Jukat"
+  },
+  "book": 4,
+  "startWord": 58412,
+  "endWord": 59662,
+  "start": {
+   "book": 4,
+   "chapter": 19,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 22,
+   "verse": 1
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 58412,
+    "endWord": 58666,
+    "start": {
+     "book": 4,
+     "chapter": 19,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 19,
+     "verse": 17
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 58667,
+    "endWord": 58843,
+    "start": {
+     "book": 4,
+     "chapter": 19,
+     "verse": 18
+    },
+    "end": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 6
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 58844,
+    "endWord": 58951,
+    "start": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 7
+    },
+    "end": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 13
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 58952,
+    "endWord": 59066,
+    "start": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 14
+    },
+    "end": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 21
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 59067,
+    "endWord": 59326,
+    "start": {
+     "book": 4,
+     "chapter": 20,
+     "verse": 22
+    },
+    "end": {
+     "book": 4,
+     "chapter": 21,
+     "verse": 9
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 59327,
+    "endWord": 59437,
+    "start": {
+     "book": 4,
+     "chapter": 21,
+     "verse": 10
+    },
+    "end": {
+     "book": 4,
+     "chapter": 21,
+     "verse": 20
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 59438,
+    "endWord": 59662,
+    "start": {
+     "book": 4,
+     "chapter": 21,
+     "verse": 21
+    },
+    "end": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 1
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 59613,
+    "endWord": 59662,
+    "start": {
+     "book": 4,
+     "chapter": 21,
+     "verse": 34
+    },
+    "end": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 1
+    }
+   }
+  ]
+ },
+ {
+  "n": 40,
+  "name": {
+   "en": "Balak",
+   "he": "בָּלָק",
+   "es": "Balak"
+  },
+  "book": 4,
+  "startWord": 59663,
+  "endWord": 61120,
+  "start": {
+   "book": 4,
+   "chapter": 22,
+   "verse": 2
+  },
+  "end": {
+   "book": 4,
+   "chapter": 25,
+   "verse": 9
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 59663,
+    "endWord": 59847,
+    "start": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 2
+    },
+    "end": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 12
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 59848,
+    "endWord": 59974,
+    "start": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 13
+    },
+    "end": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 20
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 59975,
+    "endWord": 60276,
+    "start": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 21
+    },
+    "end": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 38
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 60277,
+    "endWord": 60465,
+    "start": {
+     "book": 4,
+     "chapter": 22,
+     "verse": 39
+    },
+    "end": {
+     "book": 4,
+     "chapter": 23,
+     "verse": 12
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 60466,
+    "endWord": 60643,
+    "start": {
+     "book": 4,
+     "chapter": 23,
+     "verse": 13
+    },
+    "end": {
+     "book": 4,
+     "chapter": 23,
+     "verse": 26
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 60644,
+    "endWord": 60870,
+    "start": {
+     "book": 4,
+     "chapter": 23,
+     "verse": 27
+    },
+    "end": {
+     "book": 4,
+     "chapter": 24,
+     "verse": 13
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 60871,
+    "endWord": 61120,
+    "start": {
+     "book": 4,
+     "chapter": 24,
+     "verse": 14
+    },
+    "end": {
+     "book": 4,
+     "chapter": 25,
+     "verse": 9
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 61080,
+    "endWord": 61120,
+    "start": {
+     "book": 4,
+     "chapter": 25,
+     "verse": 7
+    },
+    "end": {
+     "book": 4,
+     "chapter": 25,
+     "verse": 9
+    }
+   }
+  ]
+ },
+ {
+  "n": 41,
+  "name": {
+   "en": "Pinchas",
+   "he": "פִּינְחָס",
+   "es": "Pinjás"
+  },
+  "book": 4,
+  "startWord": 61121,
+  "endWord": 63018,
+  "start": {
+   "book": 4,
+   "chapter": 25,
+   "verse": 10
+  },
+  "end": {
+   "book": 4,
+   "chapter": 30,
+   "verse": 1
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 61121,
+    "endWord": 61289,
+    "start": {
+     "book": 4,
+     "chapter": 25,
+     "verse": 10
+    },
+    "end": {
+     "book": 4,
+     "chapter": 26,
+     "verse": 4
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 61290,
+    "endWord": 61733,
+    "start": {
+     "book": 4,
+     "chapter": 26,
+     "verse": 5
+    },
+    "end": {
+     "book": 4,
+     "chapter": 26,
+     "verse": 51
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 61734,
+    "endWord": 61993,
+    "start": {
+     "book": 4,
+     "chapter": 26,
+     "verse": 52
+    },
+    "end": {
+     "book": 4,
+     "chapter": 27,
+     "verse": 5
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 61994,
+    "endWord": 62235,
+    "start": {
+     "book": 4,
+     "chapter": 27,
+     "verse": 6
+    },
+    "end": {
+     "book": 4,
+     "chapter": 27,
+     "verse": 23
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 62236,
+    "endWord": 62420,
+    "start": {
+     "book": 4,
+     "chapter": 28,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 28,
+     "verse": 15
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 62421,
+    "endWord": 62715,
+    "start": {
+     "book": 4,
+     "chapter": 28,
+     "verse": 16
+    },
+    "end": {
+     "book": 4,
+     "chapter": 29,
+     "verse": 11
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 62716,
+    "endWord": 63018,
+    "start": {
+     "book": 4,
+     "chapter": 29,
+     "verse": 12
+    },
+    "end": {
+     "book": 4,
+     "chapter": 30,
+     "verse": 1
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 62956,
+    "endWord": 63018,
+    "start": {
+     "book": 4,
+     "chapter": 29,
+     "verse": 35
+    },
+    "end": {
+     "book": 4,
+     "chapter": 30,
+     "verse": 1
+    }
+   }
+  ]
+ },
+ {
+  "n": 42,
+  "name": {
+   "en": "Matot",
+   "he": "מַטּוֹת",
+   "es": "Matot"
+  },
+  "book": 4,
+  "startWord": 63019,
+  "endWord": 64507,
+  "start": {
+   "book": 4,
+   "chapter": 30,
+   "verse": 2
+  },
+  "end": {
+   "book": 4,
+   "chapter": 32,
+   "verse": 42
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 63019,
+    "endWord": 63271,
+    "start": {
+     "book": 4,
+     "chapter": 30,
+     "verse": 2
+    },
+    "end": {
+     "book": 4,
+     "chapter": 30,
+     "verse": 17
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 63272,
+    "endWord": 63436,
+    "start": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 12
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 63437,
+    "endWord": 63592,
+    "start": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 13
+    },
+    "end": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 24
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 63593,
+    "endWord": 63785,
+    "start": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 25
+    },
+    "end": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 41
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 63786,
+    "endWord": 63949,
+    "start": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 42
+    },
+    "end": {
+     "book": 4,
+     "chapter": 31,
+     "verse": 54
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 63950,
+    "endWord": 64211,
+    "start": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 19
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 64212,
+    "endWord": 64507,
+    "start": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 20
+    },
+    "end": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 42
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 64464,
+    "endWord": 64507,
+    "start": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 39
+    },
+    "end": {
+     "book": 4,
+     "chapter": 32,
+     "verse": 42
+    }
+   }
+  ]
+ },
+ {
+  "n": 43,
+  "name": {
+   "en": "Masei",
+   "he": "מַסְעֵי",
+   "es": "Masei"
+  },
+  "book": 4,
+  "startWord": 64508,
+  "endWord": 65974,
+  "start": {
+   "book": 4,
+   "chapter": 33,
+   "verse": 1
+  },
+  "end": {
+   "book": 4,
+   "chapter": 36,
+   "verse": 13
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 64508,
+    "endWord": 64623,
+    "start": {
+     "book": 4,
+     "chapter": 33,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 33,
+     "verse": 10
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 64624,
+    "endWord": 64862,
+    "start": {
+     "book": 4,
+     "chapter": 33,
+     "verse": 11
+    },
+    "end": {
+     "book": 4,
+     "chapter": 33,
+     "verse": 49
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 64863,
+    "endWord": 65170,
+    "start": {
+     "book": 4,
+     "chapter": 33,
+     "verse": 50
+    },
+    "end": {
+     "book": 4,
+     "chapter": 34,
+     "verse": 15
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 65171,
+    "endWord": 65278,
+    "start": {
+     "book": 4,
+     "chapter": 34,
+     "verse": 16
+    },
+    "end": {
+     "book": 4,
+     "chapter": 34,
+     "verse": 29
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 65279,
+    "endWord": 65405,
+    "start": {
+     "book": 4,
+     "chapter": 35,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 35,
+     "verse": 8
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 65406,
+    "endWord": 65762,
+    "start": {
+     "book": 4,
+     "chapter": 35,
+     "verse": 9
+    },
+    "end": {
+     "book": 4,
+     "chapter": 35,
+     "verse": 34
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 65763,
+    "endWord": 65974,
+    "start": {
+     "book": 4,
+     "chapter": 36,
+     "verse": 1
+    },
+    "end": {
+     "book": 4,
+     "chapter": 36,
+     "verse": 13
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 65935,
+    "endWord": 65974,
+    "start": {
+     "book": 4,
+     "chapter": 36,
+     "verse": 11
+    },
+    "end": {
+     "book": 4,
+     "chapter": 36,
+     "verse": 13
+    }
+   }
+  ]
+ },
+ {
+  "n": 44,
+  "name": {
+   "en": "Devarim",
+   "he": "דְּבָרִים",
+   "es": "Devarim"
+  },
+  "book": 5,
+  "startWord": 65975,
+  "endWord": 67522,
+  "start": {
+   "book": 5,
+   "chapter": 1,
+   "verse": 1
+  },
+  "end": {
+   "book": 5,
+   "chapter": 3,
+   "verse": 22
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 65975,
+    "endWord": 66126,
+    "start": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 10
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 66127,
+    "endWord": 66284,
+    "start": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 11
+    },
+    "end": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 21
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 66285,
+    "endWord": 66519,
+    "start": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 38
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 66520,
+    "endWord": 66644,
+    "start": {
+     "book": 5,
+     "chapter": 1,
+     "verse": 39
+    },
+    "end": {
+     "book": 5,
+     "chapter": 2,
+     "verse": 1
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 66645,
+    "endWord": 67060,
+    "start": {
+     "book": 5,
+     "chapter": 2,
+     "verse": 2
+    },
+    "end": {
+     "book": 5,
+     "chapter": 2,
+     "verse": 30
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 67061,
+    "endWord": 67394,
+    "start": {
+     "book": 5,
+     "chapter": 2,
+     "verse": 31
+    },
+    "end": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 14
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 67395,
+    "endWord": 67522,
+    "start": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 15
+    },
+    "end": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 22
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 67465,
+    "endWord": 67522,
+    "start": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 20
+    },
+    "end": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 22
+    }
+   }
+  ]
+ },
+ {
+  "n": 45,
+  "name": {
+   "en": "Vaetchanan",
+   "he": "וָאֶתְחַנַּן",
+   "es": "Vaetjanán"
+  },
+  "book": 5,
+  "startWord": 67523,
+  "endWord": 69413,
+  "start": {
+   "book": 5,
+   "chapter": 3,
+   "verse": 23
+  },
+  "end": {
+   "book": 5,
+   "chapter": 7,
+   "verse": 11
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 67523,
+    "endWord": 67693,
+    "start": {
+     "book": 5,
+     "chapter": 3,
+     "verse": 23
+    },
+    "end": {
+     "book": 5,
+     "chapter": 4,
+     "verse": 4
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 67694,
+    "endWord": 68314,
+    "start": {
+     "book": 5,
+     "chapter": 4,
+     "verse": 5
+    },
+    "end": {
+     "book": 5,
+     "chapter": 4,
+     "verse": 40
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 68315,
+    "endWord": 68438,
+    "start": {
+     "book": 5,
+     "chapter": 4,
+     "verse": 41
+    },
+    "end": {
+     "book": 5,
+     "chapter": 4,
+     "verse": 49
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 68439,
+    "endWord": 68706,
+    "start": {
+     "book": 5,
+     "chapter": 5,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 5,
+     "verse": 18
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 68707,
+    "endWord": 68978,
+    "start": {
+     "book": 5,
+     "chapter": 5,
+     "verse": 19
+    },
+    "end": {
+     "book": 5,
+     "chapter": 6,
+     "verse": 3
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 68979,
+    "endWord": 69236,
+    "start": {
+     "book": 5,
+     "chapter": 6,
+     "verse": 4
+    },
+    "end": {
+     "book": 5,
+     "chapter": 6,
+     "verse": 25
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 69237,
+    "endWord": 69413,
+    "start": {
+     "book": 5,
+     "chapter": 7,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 7,
+     "verse": 11
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 69373,
+    "endWord": 69413,
+    "start": {
+     "book": 5,
+     "chapter": 7,
+     "verse": 9
+    },
+    "end": {
+     "book": 5,
+     "chapter": 7,
+     "verse": 11
+    }
+   }
+  ]
+ },
+ {
+  "n": 46,
+  "name": {
+   "en": "Eikev",
+   "he": "עֵקֶב",
+   "es": "Ékev"
+  },
+  "book": 5,
+  "startWord": 69414,
+  "endWord": 71165,
+  "start": {
+   "book": 5,
+   "chapter": 7,
+   "verse": 12
+  },
+  "end": {
+   "book": 5,
+   "chapter": 11,
+   "verse": 25
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 69414,
+    "endWord": 69806,
+    "start": {
+     "book": 5,
+     "chapter": 7,
+     "verse": 12
+    },
+    "end": {
+     "book": 5,
+     "chapter": 8,
+     "verse": 10
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 69807,
+    "endWord": 69999,
+    "start": {
+     "book": 5,
+     "chapter": 8,
+     "verse": 11
+    },
+    "end": {
+     "book": 5,
+     "chapter": 9,
+     "verse": 3
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 70000,
+    "endWord": 70445,
+    "start": {
+     "book": 5,
+     "chapter": 9,
+     "verse": 4
+    },
+    "end": {
+     "book": 5,
+     "chapter": 9,
+     "verse": 29
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 70446,
+    "endWord": 70626,
+    "start": {
+     "book": 5,
+     "chapter": 10,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 10,
+     "verse": 11
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 70627,
+    "endWord": 70918,
+    "start": {
+     "book": 5,
+     "chapter": 10,
+     "verse": 12
+    },
+    "end": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 9
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 70919,
+    "endWord": 71091,
+    "start": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 10
+    },
+    "end": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 21
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 71092,
+    "endWord": 71165,
+    "start": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 25
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 71092,
+    "endWord": 71165,
+    "start": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 25
+    }
+   }
+  ]
+ },
+ {
+  "n": 47,
+  "name": {
+   "en": "Re'eh",
+   "he": "רְאֵה",
+   "es": "Reé"
+  },
+  "book": 5,
+  "startWord": 71166,
+  "endWord": 73102,
+  "start": {
+   "book": 5,
+   "chapter": 11,
+   "verse": 26
+  },
+  "end": {
+   "book": 5,
+   "chapter": 16,
+   "verse": 17
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 71166,
+    "endWord": 71436,
+    "start": {
+     "book": 5,
+     "chapter": 11,
+     "verse": 26
+    },
+    "end": {
+     "book": 5,
+     "chapter": 12,
+     "verse": 10
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 71437,
+    "endWord": 71737,
+    "start": {
+     "book": 5,
+     "chapter": 12,
+     "verse": 11
+    },
+    "end": {
+     "book": 5,
+     "chapter": 12,
+     "verse": 28
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 71738,
+    "endWord": 72127,
+    "start": {
+     "book": 5,
+     "chapter": 12,
+     "verse": 29
+    },
+    "end": {
+     "book": 5,
+     "chapter": 13,
+     "verse": 19
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 72128,
+    "endWord": 72339,
+    "start": {
+     "book": 5,
+     "chapter": 14,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 14,
+     "verse": 21
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 72340,
+    "endWord": 72479,
+    "start": {
+     "book": 5,
+     "chapter": 14,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 14,
+     "verse": 29
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 72480,
+    "endWord": 72774,
+    "start": {
+     "book": 5,
+     "chapter": 15,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 15,
+     "verse": 18
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 72775,
+    "endWord": 73102,
+    "start": {
+     "book": 5,
+     "chapter": 15,
+     "verse": 19
+    },
+    "end": {
+     "book": 5,
+     "chapter": 16,
+     "verse": 17
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 73026,
+    "endWord": 73102,
+    "start": {
+     "book": 5,
+     "chapter": 16,
+     "verse": 13
+    },
+    "end": {
+     "book": 5,
+     "chapter": 16,
+     "verse": 17
+    }
+   }
+  ]
+ },
+ {
+  "n": 48,
+  "name": {
+   "en": "Shoftim",
+   "he": "שׁוֹפְטִים",
+   "es": "Shoftim"
+  },
+  "book": 5,
+  "startWord": 73103,
+  "endWord": 74629,
+  "start": {
+   "book": 5,
+   "chapter": 16,
+   "verse": 18
+  },
+  "end": {
+   "book": 5,
+   "chapter": 21,
+   "verse": 9
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 73103,
+    "endWord": 73402,
+    "start": {
+     "book": 5,
+     "chapter": 16,
+     "verse": 18
+    },
+    "end": {
+     "book": 5,
+     "chapter": 17,
+     "verse": 13
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 73403,
+    "endWord": 73539,
+    "start": {
+     "book": 5,
+     "chapter": 17,
+     "verse": 14
+    },
+    "end": {
+     "book": 5,
+     "chapter": 17,
+     "verse": 20
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 73540,
+    "endWord": 73608,
+    "start": {
+     "book": 5,
+     "chapter": 18,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 18,
+     "verse": 5
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 73609,
+    "endWord": 73701,
+    "start": {
+     "book": 5,
+     "chapter": 18,
+     "verse": 6
+    },
+    "end": {
+     "book": 5,
+     "chapter": 18,
+     "verse": 13
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 73702,
+    "endWord": 74069,
+    "start": {
+     "book": 5,
+     "chapter": 18,
+     "verse": 14
+    },
+    "end": {
+     "book": 5,
+     "chapter": 19,
+     "verse": 13
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 74070,
+    "endWord": 74322,
+    "start": {
+     "book": 5,
+     "chapter": 19,
+     "verse": 14
+    },
+    "end": {
+     "book": 5,
+     "chapter": 20,
+     "verse": 9
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 74323,
+    "endWord": 74629,
+    "start": {
+     "book": 5,
+     "chapter": 20,
+     "verse": 10
+    },
+    "end": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 9
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 74592,
+    "endWord": 74629,
+    "start": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 7
+    },
+    "end": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 9
+    }
+   }
+  ]
+ },
+ {
+  "n": 49,
+  "name": {
+   "en": "Ki Teitzei",
+   "he": "כִּי־תֵצֵא",
+   "es": "Ki Tetzé"
+  },
+  "book": 5,
+  "startWord": 74630,
+  "endWord": 76214,
+  "start": {
+   "book": 5,
+   "chapter": 21,
+   "verse": 10
+  },
+  "end": {
+   "book": 5,
+   "chapter": 25,
+   "verse": 19
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 74630,
+    "endWord": 74813,
+    "start": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 10
+    },
+    "end": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 21
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 74814,
+    "endWord": 74971,
+    "start": {
+     "book": 5,
+     "chapter": 21,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 22,
+     "verse": 7
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 74972,
+    "endWord": 75380,
+    "start": {
+     "book": 5,
+     "chapter": 22,
+     "verse": 8
+    },
+    "end": {
+     "book": 5,
+     "chapter": 23,
+     "verse": 7
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 75381,
+    "endWord": 75600,
+    "start": {
+     "book": 5,
+     "chapter": 23,
+     "verse": 8
+    },
+    "end": {
+     "book": 5,
+     "chapter": 23,
+     "verse": 24
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 75601,
+    "endWord": 75704,
+    "start": {
+     "book": 5,
+     "chapter": 23,
+     "verse": 25
+    },
+    "end": {
+     "book": 5,
+     "chapter": 24,
+     "verse": 4
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 75705,
+    "endWord": 75824,
+    "start": {
+     "book": 5,
+     "chapter": 24,
+     "verse": 5
+    },
+    "end": {
+     "book": 5,
+     "chapter": 24,
+     "verse": 13
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 75825,
+    "endWord": 76214,
+    "start": {
+     "book": 5,
+     "chapter": 24,
+     "verse": 14
+    },
+    "end": {
+     "book": 5,
+     "chapter": 25,
+     "verse": 19
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 76167,
+    "endWord": 76214,
+    "start": {
+     "book": 5,
+     "chapter": 25,
+     "verse": 17
+    },
+    "end": {
+     "book": 5,
+     "chapter": 25,
+     "verse": 19
+    }
+   }
+  ]
+ },
+ {
+  "n": 50,
+  "name": {
+   "en": "Ki Tavo",
+   "he": "כִּי־תָבוֹא",
+   "es": "Ki Tavó"
+  },
+  "book": 5,
+  "startWord": 76215,
+  "endWord": 77968,
+  "start": {
+   "book": 5,
+   "chapter": 26,
+   "verse": 1
+  },
+  "end": {
+   "book": 5,
+   "chapter": 29,
+   "verse": 8
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 76215,
+    "endWord": 76386,
+    "start": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 11
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 76387,
+    "endWord": 76470,
+    "start": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 12
+    },
+    "end": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 15
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 76471,
+    "endWord": 76534,
+    "start": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 16
+    },
+    "end": {
+     "book": 5,
+     "chapter": 26,
+     "verse": 19
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 76535,
+    "endWord": 76687,
+    "start": {
+     "book": 5,
+     "chapter": 27,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 27,
+     "verse": 10
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 76688,
+    "endWord": 76922,
+    "start": {
+     "book": 5,
+     "chapter": 27,
+     "verse": 11
+    },
+    "end": {
+     "book": 5,
+     "chapter": 28,
+     "verse": 6
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 76923,
+    "endWord": 77859,
+    "start": {
+     "book": 5,
+     "chapter": 28,
+     "verse": 7
+    },
+    "end": {
+     "book": 5,
+     "chapter": 28,
+     "verse": 69
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 77860,
+    "endWord": 77968,
+    "start": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 8
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 77931,
+    "endWord": 77968,
+    "start": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 6
+    },
+    "end": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 8
+    }
+   }
+  ]
+ },
+ {
+  "n": 51,
+  "name": {
+   "en": "Nitzavim",
+   "he": "נִצָּבִים",
+   "es": "Nitzavim"
+  },
+  "book": 5,
+  "startWord": 77969,
+  "endWord": 78626,
+  "start": {
+   "book": 5,
+   "chapter": 29,
+   "verse": 9
+  },
+  "end": {
+   "book": 5,
+   "chapter": 30,
+   "verse": 20
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 77969,
+    "endWord": 78004,
+    "start": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 9
+    },
+    "end": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 11
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 78005,
+    "endWord": 78051,
+    "start": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 12
+    },
+    "end": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 14
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 78052,
+    "endWord": 78299,
+    "start": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 15
+    },
+    "end": {
+     "book": 5,
+     "chapter": 29,
+     "verse": 28
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 78300,
+    "endWord": 78394,
+    "start": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 6
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 78395,
+    "endWord": 78464,
+    "start": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 7
+    },
+    "end": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 10
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 78465,
+    "endWord": 78515,
+    "start": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 11
+    },
+    "end": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 14
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 78516,
+    "endWord": 78626,
+    "start": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 15
+    },
+    "end": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 20
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 78516,
+    "endWord": 78626,
+    "start": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 15
+    },
+    "end": {
+     "book": 5,
+     "chapter": 30,
+     "verse": 20
+    }
+   }
+  ]
+ },
+ {
+  "n": 52,
+  "name": {
+   "en": "Vayeilech",
+   "he": "וַיֵּלֶךְ",
+   "es": "Vaiélej"
+  },
+  "book": 5,
+  "startWord": 78627,
+  "endWord": 79181,
+  "start": {
+   "book": 5,
+   "chapter": 31,
+   "verse": 1
+  },
+  "end": {
+   "book": 5,
+   "chapter": 31,
+   "verse": 30
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 78627,
+    "endWord": 78675,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 3
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 78676,
+    "endWord": 78715,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 4
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 6
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 78716,
+    "endWord": 78776,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 7
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 9
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 78777,
+    "endWord": 78856,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 10
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 13
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 78857,
+    "endWord": 78979,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 14
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 19
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 78980,
+    "endWord": 79077,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 20
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 24
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 79078,
+    "endWord": 79181,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 25
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 30
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 79124,
+    "endWord": 79181,
+    "start": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 28
+    },
+    "end": {
+     "book": 5,
+     "chapter": 31,
+     "verse": 30
+    }
+   }
+  ]
+ },
+ {
+  "n": 53,
+  "name": {
+   "en": "Ha'azinu",
+   "he": "הַאֲזִינוּ",
+   "es": "Haazinu"
+  },
+  "book": 5,
+  "startWord": 79182,
+  "endWord": 79800,
+  "start": {
+   "book": 5,
+   "chapter": 32,
+   "verse": 1
+  },
+  "end": {
+   "book": 5,
+   "chapter": 32,
+   "verse": 52
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 79182,
+    "endWord": 79244,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 6
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 79245,
+    "endWord": 79306,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 7
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 12
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 79307,
+    "endWord": 79374,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 13
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 18
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 79375,
+    "endWord": 79484,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 19
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 28
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 79485,
+    "endWord": 79598,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 29
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 39
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 79599,
+    "endWord": 79645,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 40
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 43
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 79646,
+    "endWord": 79800,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 44
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 52
+    }
+   },
+   {
+    "n": "M",
+    "startWord": 79715,
+    "endWord": 79800,
+    "start": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 48
+    },
+    "end": {
+     "book": 5,
+     "chapter": 32,
+     "verse": 52
+    }
+   }
+  ]
+ },
+ {
+  "n": 54,
+  "name": {
+   "en": "Vezot Haberakhah",
+   "he": "וְזֹאת הַבְּרָכָה",
+   "es": "Vezot Haberajá"
+  },
+  "book": 5,
+  "startWord": 79801,
+  "endWord": 80315,
+  "start": {
+   "book": 5,
+   "chapter": 33,
+   "verse": 1
+  },
+  "end": {
+   "book": 5,
+   "chapter": 34,
+   "verse": 12
+  },
+  "aliyot": [
+   {
+    "n": 1,
+    "startWord": 79801,
+    "endWord": 79881,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 7
+    }
+   },
+   {
+    "n": 2,
+    "startWord": 79882,
+    "endWord": 79949,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 8
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 12
+    }
+   },
+   {
+    "n": 3,
+    "startWord": 79950,
+    "endWord": 80003,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 13
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 17
+    }
+   },
+   {
+    "n": 4,
+    "startWord": 80004,
+    "endWord": 80052,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 18
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 21
+    }
+   },
+   {
+    "n": 5,
+    "startWord": 80053,
+    "endWord": 80095,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 22
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 26
+    }
+   },
+   {
+    "n": 6,
+    "startWord": 80096,
+    "endWord": 80139,
+    "start": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 27
+    },
+    "end": {
+     "book": 5,
+     "chapter": 33,
+     "verse": 29
+    }
+   },
+   {
+    "n": 7,
+    "startWord": 80140,
+    "endWord": 80315,
+    "start": {
+     "book": 5,
+     "chapter": 34,
+     "verse": 1
+    },
+    "end": {
+     "book": 5,
+     "chapter": 34,
+     "verse": 12
+    }
+   }
+  ]
+ }
+]

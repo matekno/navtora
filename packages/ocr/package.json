@@ -1,0 +1,19 @@
+{
+  "name": "@kore/ocr",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Proveedores de OCR para columnas de Sefer Torá: Claude vision, oráculo para eval y caché en disco",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0",
+    "@kore/core": "workspace:*",
+    "zod": "^4.0.0"
+  }
+}

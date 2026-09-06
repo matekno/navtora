@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0c10;
+  --color-panel: #15171d;
+  --color-panel-2: #1d2029;
+  --color-line: #2a2e3a;
+  --color-fg: #f2f2ef;
+  --color-muted: #a5a9b8;
+  --color-accent: #f5c451;
+  --color-ok: #4cd18a;
+  --color-warn: #f5a623;
+  --color-bad: #ff6b6b;
+  --font-hebrew: "Noto Serif Hebrew", "Frank Ruehl CLM", "David", "Times New Roman", serif;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-fg);
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+  overscroll-behavior: none;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.hebrew {
+  font-family: var(--font-hebrew);
+  direction: rtl;
+  unicode-bidi: isolate;
+  font-feature-settings: "kern";
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
