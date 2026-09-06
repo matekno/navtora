@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@hebcal/core": "^6.9.2",
+    "@hebcal/leyning": "^10.0.0",
     "@kore/core": "workspace:*",
     "@kore/data": "workspace:*",
     "@kore/ocr": "workspace:*",

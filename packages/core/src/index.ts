@@ -7,3 +7,4 @@ export { matchTokens, tokensFromOcr, voteOrigins, alignWindow, DEFAULT_MATCH_OPT
 export { buildPlacement, estimateLayout, matchStandardColumn, type ResolveContext } from "./resolve";
 export { createLocator, DEFAULT_THRESHOLDS, type Locator, type LocatorOptions, type ConfidenceThresholds } from "./locate";
 export { noisyLines, noisyWord, makeRng, DEFAULT_NOISE, type NoiseOptions } from "./noise";
+export { navigate, targetFromVerse, type NavTarget, type Navigation, type NavDirection, type NavLineHint, type NavContext } from "./navigate";

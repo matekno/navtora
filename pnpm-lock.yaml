@@ -23,6 +23,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@hebcal/core':
+        specifier: ^6.9.2
+        version: 6.9.2
+      '@hebcal/leyning':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@kore/core':
         specifier: workspace:*
         version: link:../../packages/core

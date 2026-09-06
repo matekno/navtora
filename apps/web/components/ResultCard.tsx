@@ -2,7 +2,9 @@
 
 import type { OcrResult, Placement } from "@kore/core";
 import { aliyotEs, versesEs } from "@/lib/format";
+import { linksFor } from "@/lib/links";
 import { modelLabel } from "@/lib/models";
+import { Links } from "./Links";
 
 export interface ScanMeta {
   provider?: string;
@@ -18,9 +20,10 @@ interface Props {
   ocr: OcrResult | null;
   meta: ScanMeta | null;
   onAgain: () => void;
+  onPickTarget: () => void;
 }
 
-export function ResultCard({ placement: p, ocr, meta, onAgain }: Props) {
+export function ResultCard({ placement: p, ocr, meta, onAgain, onPickTarget }: Props) {
   const parashaNames = p.parashot.map((x) => x.name.es).join(" y ");
   const col = p.standardColumn;
   return (
@@ -52,6 +55,9 @@ export function ResultCard({ placement: p, ocr, meta, onAgain }: Props) {
         {p.aliyot.some((a) => a.startsHere) && (
           <div className="mt-3 text-sm text-accent">En esta columna empieza una aliá.</div>
         )}
+        <div className="mt-4">
+          <Links links={linksFor(p.verses.start, p.verses.end)} compact />
+        </div>
       </section>
 
       {ocr && ocr.lines.length > 0 && (
@@ -70,8 +76,11 @@ export function ResultCard({ placement: p, ocr, meta, onAgain }: Props) {
 
       {meta && <MetaLine meta={meta} />}
 
-      <div className="mt-auto pt-6">
-        <button type="button" onClick={onAgain} className="h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
+      <div className="mt-auto flex gap-3 pt-6">
+        <button type="button" onClick={onPickTarget} className="h-14 flex-1 rounded-2xl border border-line text-base text-fg">
+          Ir a…
+        </button>
+        <button type="button" onClick={onAgain} className="h-14 flex-[2] rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
           Escanear de nuevo
         </button>
       </div>

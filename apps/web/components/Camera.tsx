@@ -11,6 +11,10 @@ interface Props {
   onModelChange: (m: OcrModelId) => void;
   onCapture: (blob: Blob) => void;
   onManual: () => void;
+  /** objetivo activo, texto corto, o null si sólo se quiere saber dónde está */
+  targetLabel: string | null;
+  onPickTarget: () => void;
+  onClearTarget: () => void;
 }
 
 type CamState = "starting" | "ready" | "denied" | "unavailable";
@@ -18,7 +22,7 @@ type CamState = "starting" | "ready" | "denied" | "unavailable";
 /** duración típica medida por modelo, para el ritmo de la barra de progreso */
 const EXPECTED_MS: Record<OcrModelId, number> = { "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
 
-export function Camera({ busy, model, onModelChange, onCapture, onManual }: Props) {
+export function Camera({ busy, model, onModelChange, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CamState>("starting");
@@ -120,9 +124,9 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
 
         {busy && photoUrl && <ScanProgress photoUrl={photoUrl} modelLabel={OCR_MODELS[model].label} expectedMs={EXPECTED_MS[model]} />}
 
-        {/* selector de modelo, cambiable en vivo */}
+        {/* selector de modelo, cambiable en vivo, y objetivo activo */}
         {!busy && (
-          <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex justify-center">
+          <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex flex-col items-center gap-2 px-4">
             <div role="radiogroup" aria-label="Modelo de lectura" className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
               {(Object.keys(OCR_MODELS) as OcrModelId[]).map((id) => (
                 <button
@@ -137,6 +141,24 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
                 </button>
               ))}
             </div>
+            {targetLabel ? (
+              <div className="flex max-w-full items-center gap-1 rounded-full bg-ink/70 p-1 pl-3 backdrop-blur">
+                <span className="truncate text-sm">
+                  <span className="text-muted">Objetivo: </span>
+                  <span className="font-medium text-accent">{targetLabel}</span>
+                </span>
+                <button type="button" onClick={onPickTarget} className="h-8 rounded-full px-3 text-xs text-fg">
+                  Cambiar
+                </button>
+                <button type="button" onClick={onClearTarget} aria-label="Quitar objetivo" className="h-8 rounded-full px-3 text-xs text-muted">
+                  ✕
+                </button>
+              </div>
+            ) : (
+              <button type="button" onClick={onPickTarget} className="h-9 rounded-full bg-ink/70 px-4 text-sm font-medium text-accent backdrop-blur">
+                Elegir a dónde ir
+              </button>
+            )}
           </div>
         )}
 
@@ -148,7 +170,7 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual }: Prop
         )}
         {state === "unavailable" && <Overlay>Este navegador no permite usar la cámara acá. Probá con Safari o Chrome, o usá la entrada manual.</Overlay>}
         {state === "ready" && lowLight && !busy && (
-          <div className="absolute left-4 right-4 top-16 rounded-xl bg-warn/90 px-4 py-3 text-center text-sm font-medium text-ink">
+          <div className="absolute left-4 right-4 top-28 rounded-xl bg-warn/90 px-4 py-3 text-center text-sm font-medium text-ink">
             Hay poca luz. Acercá una lámpara o prendé la linterna del teléfono.
           </div>
         )}

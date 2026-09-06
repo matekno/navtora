@@ -12,15 +12,23 @@ let instance: Locator | null = null;
 
 export function getLocator(): Locator {
   if (!instance) {
-    instance = createLocator({
-      torah: torahJson as unknown as TorahData,
-      layout: layoutJson as unknown as LayoutData,
-      parashot: parashotJson as unknown as ParashotData,
-    });
+    instance = createLocator(
+      {
+        torah: torahJson as unknown as TorahData,
+        layout: layoutJson as unknown as LayoutData,
+        parashot: parashotJson as unknown as ParashotData,
+      },
+      // debug para tener la alineación por línea, que la navegación usa para decir en qué línea empieza la lectura
+      { debug: true },
+    );
   }
   return instance;
 }
 
 export function getLayout(): LayoutData {
   return layoutJson as unknown as LayoutData;
+}
+
+export function getParashot(): ParashotData {
+  return parashotJson as unknown as ParashotData;
 }
