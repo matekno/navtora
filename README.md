@@ -2,7 +2,11 @@
 
 App para ubicarse en un Sefer Torá desde el celular: apuntás la cámara a la columna abierta y te dice libro, parashá, aliá y versículos. Nunca afirma una posición de la que no está segura.
 
-Etapa 1, en curso: escanear y reconocer. El plan completo está en [docs/plan-etapa-1.md](docs/plan-etapa-1.md).
+Etapa 1, hecha: escanear y reconocer. Etapa 2, hecha: navegar hacia un objetivo. El plan de la etapa 1 está en [docs/plan-etapa-1.md](docs/plan-etapa-1.md). App en producción: https://kore-kompanion.vercel.app
+
+## Navegación
+
+Se elige a dónde ir de tres formas: parashá y aliá, un pasuk, o la lectura del día según el calendario, con jaguim, rosh jodesh, maftir y días con lecturas en varios sifrei. Después de cada escaneo la app dice hacia dónde rolar, hacia Bereshit o hacia Devarim, y cuántas columnas faltan: exactas si el sefer sigue el layout estándar, aproximadas y cada vez mejores si no. Al llegar, indica en qué línea empieza la lectura, con qué palabras y qué espacio en blanco la precede, y ofrece pasar a la siguiente aliá. Toda referencia lleva links a Sefaria y a tikkun.io. Las instrucciones se pueden leer en voz alta.
 
 ## Cómo funciona
 
