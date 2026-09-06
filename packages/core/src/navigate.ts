@@ -41,7 +41,7 @@ export interface Navigation {
   direction: NavDirection | null;
   /** palabras entre la posición actual y el objetivo, con signo: negativo hacia Bereshit */
   wordDelta: number;
-  /** columnas a rolar, redondeadas; null si no se puede estimar */
+  /** columnas a mover, redondeadas; null si no se puede estimar */
   columns: number | null;
   /** la cuenta de columnas viene del layout estándar */
   columnsExact: boolean;
@@ -156,14 +156,16 @@ export function navigate(p: Placement, target: NavTarget, ctx: NavContext, lineS
     }
   }
 
-  const side = direction === "towards-bereshit" ? "hacia Bereshit, las columnas de la derecha" : "hacia Devarim, las columnas de la izquierda";
-  const amount =
-    columns === null
-      ? "No puedo estimar cuántas columnas faltan todavía; rolá un poco y volvé a escanear."
-      : columns === 1
-        ? "Falta una columna."
-        : `${exact ? "Faltan" : "Faltan aproximadamente"} ${columns} columnas.`;
-  const instruction = `Rolá ${side}. ${amount}`;
+  // el texto va de derecha a izquierda: hacia Bereshit son las columnas de la derecha
+  const side = direction === "towards-bereshit" ? "a la derecha" : "a la izquierda";
+  const towards = direction === "towards-bereshit" ? "hacia el principio del sefer" : "hacia el final del sefer";
+  let instruction: string;
+  if (columns === null) {
+    instruction = `Todavía no sé cuántas columnas faltan. Movete unas columnas ${side}, ${towards}, y volvé a escanear.`;
+  } else {
+    const amount = columns === 1 ? (exact ? "1 columna" : "Cerca de 1 columna") : exact ? `${columns} columnas` : `Unas ${columns} columnas`;
+    instruction = `${amount} ${side}, ${towards}.`;
+  }
   return { status: "move", direction, wordDelta, columns, columnsExact: exact, wordsPerColumnUsed, line: null, instruction };
 }
 

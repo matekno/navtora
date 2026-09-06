@@ -4,7 +4,7 @@ export function ConsentGate({ onAccept }: { onAccept: () => void }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-between px-6 py-10">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Koré Kompanion</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">NavTorá</h1>
         <p className="mt-2 text-muted">Ubicarse en el sefer sin saber el texto de memoria.</p>
 
         <h2 className="mt-10 text-lg font-medium">Antes de empezar</h2>

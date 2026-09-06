@@ -26,7 +26,7 @@ describe("navigate con layout estándar", () => {
     expect(nav.columnsExact).toBe(true);
     const targetCol = data.layout.columns.find((c) => miketz.startWord >= c.startWord && miketz.startWord <= c.endWord)!;
     expect(nav.columns).toBe(targetCol.n - 50);
-    expect(nav.instruction).toMatch(/hacia Devarim/);
+    expect(nav.instruction).toMatch(/a la izquierda, hacia el final del sefer/);
   });
 
   it("hacia Bereshit cuando el objetivo está antes", () => {
@@ -35,7 +35,7 @@ describe("navigate con layout estándar", () => {
     const nav = navigate(placement, t, ctx);
     expect(nav.direction).toBe("towards-bereshit");
     expect(nav.columns).toBe(119);
-    expect(nav.instruction).toMatch(/derecha/);
+    expect(nav.instruction).toMatch(/a la derecha, hacia el principio del sefer/);
   });
 
   it("al llegar da la línea exacta y las primeras palabras", () => {
@@ -58,7 +58,7 @@ describe("navigate con layout estándar", () => {
     const col11 = data.layout.columns[10]!;
     const nav = navigate(placement, { word: col11.startWord + 5, label: "prueba", ref: locator.text.refOf(col11.startWord + 5) }, ctx);
     expect(nav.columns).toBe(1);
-    expect(nav.instruction).toMatch(/Falta una columna/);
+    expect(nav.instruction).toMatch(/^1 columna a la izquierda/);
   });
 });
 
@@ -72,6 +72,6 @@ describe("navigate sin layout conocido", () => {
     expect(nav.columnsExact).toBe(false);
     expect(nav.columns).toBeGreaterThanOrEqual(8);
     expect(nav.columns).toBeLessThanOrEqual(11);
-    expect(nav.instruction).toMatch(/aproximadamente/);
+    expect(nav.instruction).toMatch(/^Unas \d+ columnas/);
   });
 });

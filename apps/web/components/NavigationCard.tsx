@@ -23,8 +23,9 @@ interface Props {
 export function NavigationCard({ navigation: nav, target, placement: p, meta, hasNext, voice, onToggleVoice, onAgain, onNextTarget, onChangeTarget }: Props) {
   const here = nav.status === "here";
   const arrow = nav.direction === "towards-bereshit" ? "→" : "←";
-  const sideLabel = nav.direction === "towards-bereshit" ? "hacia Bereshit" : "hacia Devarim";
-  const sideHint = nav.direction === "towards-bereshit" ? "las columnas de la derecha" : "las columnas de la izquierda";
+  // el texto va de derecha a izquierda: hacia Bereshit son las columnas de la derecha
+  const sideLabel = nav.direction === "towards-bereshit" ? "a la derecha" : "a la izquierda";
+  const towardsLabel = nav.direction === "towards-bereshit" ? "hacia el principio del sefer (Bereshit)" : "hacia el final del sefer (Devarim)";
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
@@ -66,26 +67,25 @@ export function NavigationCard({ navigation: nav, target, placement: p, meta, ha
             <div className="text-7xl leading-none text-accent" aria-hidden>
               {arrow}
             </div>
-            <div className="min-w-0">
-              <div className="text-2xl font-semibold">
-                Rolá {sideLabel}
-              </div>
-              <div className="text-sm text-muted">{sideHint}</div>
-            </div>
-          </div>
-          <div className="mt-5 flex items-baseline gap-3">
             {nav.columns !== null ? (
-              <>
-                <div className="text-6xl font-semibold tabular-nums">{nav.columns}</div>
-                <div className="text-lg">
-                  {nav.columns === 1 ? "columna" : "columnas"}
-                  {nav.columnsExact ? "" : " aprox."}
+              <div className="min-w-0">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-6xl font-semibold tabular-nums">{nav.columns}</span>
+                  <span className="text-lg">
+                    {nav.columns === 1 ? "columna" : "columnas"}
+                    {nav.columnsExact ? "" : " aprox."}
+                  </span>
                 </div>
-              </>
+                <div className="text-2xl font-semibold">{sideLabel}</div>
+              </div>
             ) : (
-              <div className="text-base text-muted">Todavía no puedo estimar cuántas columnas faltan. Rolá un poco y volvé a escanear.</div>
+              <div className="min-w-0">
+                <div className="text-2xl font-semibold">Movete unas columnas {sideLabel}</div>
+                <div className="text-sm text-muted">Todavía no puedo estimar cuántas faltan; escaneá de nuevo cuando llegues.</div>
+              </div>
             )}
           </div>
+          <div className="mt-4 text-sm text-muted">{towardsLabel}</div>
           {!nav.columnsExact && nav.columns !== null && (
             <div className="mt-2 text-xs text-muted">
               Este sefer no tiene el layout estándar: la cuenta se ajusta con cada escaneo.
@@ -130,7 +130,7 @@ export function NavigationCard({ navigation: nav, target, placement: p, meta, ha
           )}
         </div>
         <button type="button" onClick={onAgain} className="h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
-          {here ? "Volver a verificar" : "Rolé, escanear de nuevo"}
+          {here ? "Volver a verificar" : "Ya lo moví, escanear de nuevo"}
         </button>
       </div>
     </main>

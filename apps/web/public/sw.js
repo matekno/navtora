@@ -1,6 +1,6 @@
 // Service worker mínimo: cachea el shell para que la app abra sin red.
 // Nunca cachea /api ni resultados de lectura.
-const CACHE = "kore-shell-v1";
+const CACHE = "navtora-shell-v1";
 const SHELL = ["/", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (event) => {

@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Koré Kompanion",
+  title: "NavTorá",
   description: "Apuntá la cámara al sefer y te dice en qué libro, parashá y aliá está abierto.",
-  applicationName: "Koré Kompanion",
+  applicationName: "NavTorá",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Koré" },
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "NavTorá" },
   icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
 };
 
