@@ -9,7 +9,7 @@ export async function GET(): Promise<Response> {
   return NextResponse.json({ parashot: listParashot() });
 }
 
-/** Resuelve un objetivo a posiciones en el texto: parashá y aliá, pasuk, o lectura del día. */
+/** Resuelve un objetivo a posiciones en el texto: parashá y aliá, pasuk, lectura de una fecha, o listado de jaguim del año. */
 export async function POST(req: Request): Promise<Response> {
   let body: TargetRequest;
   try {
@@ -17,8 +17,11 @@ export async function POST(req: Request): Promise<Response> {
   } catch {
     return NextResponse.json({ targets: [], error: "Se esperaba JSON." }, { status: 400 });
   }
-  if (!body || !["aliyah", "verse", "today"].includes(body.kind)) {
-    return NextResponse.json({ targets: [], error: "kind tiene que ser aliyah, verse o today." }, { status: 400 });
+  if (!body || !["aliyah", "verse", "today", "holidays"].includes(body.kind)) {
+    return NextResponse.json({ targets: [], error: "kind tiene que ser aliyah, verse, today o holidays." }, { status: 400 });
+  }
+  if (body.kind === "holidays" && body.year !== undefined && !(body.year >= 5000 && body.year <= 6500)) {
+    return NextResponse.json({ targets: [], error: "El año hebreo tiene que estar entre 5000 y 6500." }, { status: 400 });
   }
   if (body.kind === "verse" && !(body.book >= 1 && body.book <= 5 && body.chapter >= 1 && body.verse >= 1)) {
     return NextResponse.json({ targets: [], error: "Referencia inválida." }, { status: 400 });

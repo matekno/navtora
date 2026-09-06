@@ -15,6 +15,8 @@ export interface TargetInfo extends NavTarget {
   aliyah?: number | "M";
   /** nombre de la lectura del día a la que pertenece, si vino del calendario */
   reading?: string;
+  /** motivo de una lectura especial, por ejemplo el maftir de Shabat Shekalim */
+  reason?: string;
   links: RefLinks;
 }
 
@@ -27,15 +29,33 @@ export interface ReadingInfo {
   multipleBooks: boolean;
 }
 
+/** Una fecha del calendario con lectura festiva o especial. */
+export interface HolidayItem {
+  dateISO: string;
+  hebrewDate: string;
+  /** nombres de las lecturas de ese día según hebcal, por ejemplo "Rosh Hashana I (on Shabbat)" */
+  names: string[];
+  /** nombres de las festividades del día en español, según hebcal */
+  events: string[];
+  summary: string;
+}
+
 export type TargetRequest =
   | { kind: "aliyah"; parasha: number; aliyah?: number | "M" }
   | { kind: "verse"; book: number; chapter: number; verse: number }
-  | { kind: "today"; date?: string; il?: boolean };
+  | { kind: "today"; date?: string; il?: boolean }
+  | { kind: "holidays"; year?: number; il?: boolean };
 
 export interface TargetResponse {
   targets: TargetInfo[];
   readings?: ReadingInfo[];
   hebrewDate?: string;
+  /** si el día pedido no tiene lectura: la próxima fecha con lectura */
+  next?: { dateISO: string; hebrewDate: string; names: string[] } | null;
+  /** para kind holidays */
+  year?: number;
+  years?: number[];
+  holidays?: HolidayItem[];
   error?: string;
 }
 

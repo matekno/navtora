@@ -6,7 +6,7 @@ Etapa 1, hecha: escanear y reconocer. Etapa 2, hecha: navegar hacia un objetivo.
 
 ## Navegación
 
-Se elige a dónde ir de tres formas: parashá y aliá, un pasuk, o la lectura del día según el calendario, con jaguim, rosh jodesh, maftir y días con lecturas en varios sifrei. Después de cada escaneo la app dice hacia dónde rolar, hacia Bereshit o hacia Devarim, y cuántas columnas faltan: exactas si el sefer sigue el layout estándar, aproximadas y cada vez mejores si no. Al llegar, indica en qué línea empieza la lectura, con qué palabras y qué espacio en blanco la precede, y ofrece pasar a la siguiente aliá. Toda referencia lleva links a Sefaria y a tikkun.io. Las instrucciones se pueden leer en voz alta.
+Se elige a dónde ir de cuatro formas: la lectura de una fecha, el listado de jaguim y fechas especiales del año hebreo, parashá y aliá, o un pasuk. El calendario viene de hebcal y contempla las variantes de cada año: Rosh Hashaná en shabat con siete aliot, jol hamoed según el día, ayunos con lectura de minjá, rosh jodesh y shabatot especiales con maftir de un segundo sefer. Después de cada escaneo la app dice hacia dónde rolar, hacia Bereshit o hacia Devarim, y cuántas columnas faltan: exactas si el sefer sigue el layout estándar, aproximadas y cada vez mejores si no. Al llegar, indica en qué línea empieza la lectura, con qué palabras y qué espacio en blanco la precede, y ofrece pasar a la siguiente aliá. Toda referencia lleva links a Sefaria y a tikkun.io. Las instrucciones se pueden leer en voz alta.
 
 ## Cómo funciona
 
