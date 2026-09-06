@@ -2,7 +2,7 @@
 
 App para ubicarse en un Sefer Torá desde el celular: apuntás la cámara a la columna abierta y te dice libro, parashá, aliá y versículos. Nunca afirma una posición de la que no está segura.
 
-Etapa 1, hecha: escanear y reconocer. Etapa 2, hecha: navegar hacia un objetivo. El plan de la etapa 1 está en [docs/plan-etapa-1.md](docs/plan-etapa-1.md). App en producción: https://kore-kompanion.vercel.app
+Etapa 1, hecha: escanear y reconocer. Etapa 2, hecha: navegar hacia un objetivo. El plan de la etapa 1 está en [docs/plan-etapa-1.md](docs/plan-etapa-1.md). App en producción: https://navtora.vercel.app
 
 ## Navegación
 
