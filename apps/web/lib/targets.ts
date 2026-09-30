@@ -1,17 +1,16 @@
 /**
- * Resolución de objetivos a índices de palabra: parashá y aliá, pasuk puntual,
- * la lectura de una fecha, o el listado de jaguim y fechas especiales de un año.
- * Sólo servidor: usa hebcal y los datos.
+ * Resolves navigation targets to word indexes: a parashah and aliyah, a verse,
+ * the reading for a date, or the year's holidays and special days.
  *
- * hebcal ya contempla las variantes por año: Rosh Hashaná en shabat con siete
- * aliot en vez de cinco, jol hamoed según el día de la semana, shabatot
- * especiales con maftir de un segundo sefer, ayunos con lectura de minjá.
+ * hebcal handles the year-to-year variants: Rosh Hashanah on Shabbat with seven
+ * aliyot, chol hamoed by weekday, special Shabbatot with a maftir from a second
+ * sefer, fast days with a mincha reading.
  */
 import "server-only";
 import { HDate, HebrewCalendar } from "@hebcal/core";
 import { getLeyningOnDate } from "@hebcal/leyning";
-import { BOOK_NAMES, type ParashotData, type VerseRef } from "@kore/core";
-import { aliyahLabel } from "./format";
+import { BOOK_NAMES, type ParashotData, type VerseRef } from "@navtora/core";
+import { getDictionary, type Dictionary, type Locale } from "./i18n";
 import { linksFor } from "./links";
 import { getLocator, getParashot } from "./locator";
 import type { HolidayItem, ParashaListItem, ReadingInfo, TargetInfo, TargetRequest, TargetResponse } from "./target-types";
@@ -27,7 +26,11 @@ function isoDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-function makeTarget(id: string, label: string, short: string, start: VerseRef, end: VerseRef, extra: Partial<TargetInfo> = {}): TargetInfo | null {
+function bookName(book: number, lang: Locale): string {
+  return BOOK_NAMES[book]?.[lang] ?? String(book);
+}
+
+function makeTarget(id: string, label: string, short: string, start: VerseRef, end: VerseRef, lang: Locale, extra: Partial<TargetInfo> = {}): TargetInfo | null {
   const text = getLocator().text;
   const word = text.startOfVerse(start);
   const endWord = text.endOfVerse(end);
@@ -41,7 +44,7 @@ function makeTarget(id: string, label: string, short: string, start: VerseRef, e
     ref: start,
     endRef: end,
     book: start.book,
-    bookName: BOOK_NAMES[start.book]?.es ?? String(start.book),
+    bookName: bookName(start.book, lang),
     links: linksFor(start, end),
     ...extra,
   };
@@ -51,24 +54,24 @@ export function listParashot(): ParashaListItem[] {
   return getParashot().map((p) => ({ n: p.n, name: p.name, book: p.book, aliyot: p.aliyot.map((a) => a.n) }));
 }
 
-function aliyahTargets(parashot: ParashotData, parashaN: number, which?: number | "M"): TargetInfo[] {
+function aliyahTargets(parashot: ParashotData, parashaN: number, which: number | "M" | undefined, t: Dictionary): TargetInfo[] {
   const p = parashot.find((x) => x.n === parashaN);
   if (!p) return [];
   const list = which === undefined ? p.aliyot : p.aliyot.filter((a) => a.n === which);
+  const name = p.name[t.lang];
   return list
     .map((a) =>
-      makeTarget(`aliyah-${p.n}-${a.n}`, `${p.name.es}, ${aliyahLabel(a.n)}`, `${p.name.es} · ${a.n === "M" ? "maftir" : `${a.n}ª`}`, a.start, a.end, {
-        parasha: { n: p.n, name: p.name.es },
+      makeTarget(`aliyah-${p.n}-${a.n}`, t.aliyah.withParasha(name, t.aliyah.label(a.n)), `${name} · ${t.aliyah.short(a.n)}`, a.start, a.end, t.lang, {
+        parasha: { n: p.n, name },
         aliyah: a.n,
       }),
     )
-    .filter((t): t is TargetInfo => t !== null);
+    .filter((x): x is TargetInfo => x !== null);
 }
 
-function verseTarget(ref: VerseRef): TargetInfo | null {
-  const bookName = BOOK_NAMES[ref.book]?.es ?? String(ref.book);
-  const label = `${bookName} ${ref.chapter}:${ref.verse}`;
-  return makeTarget(`verse-${ref.book}-${ref.chapter}-${ref.verse}`, label, label, ref, ref);
+function verseTarget(ref: VerseRef, lang: Locale): TargetInfo | null {
+  const label = `${bookName(ref.book, lang)} ${ref.chapter}:${ref.verse}`;
+  return makeTarget(`verse-${ref.book}-${ref.chapter}-${ref.verse}`, label, label, ref, ref, lang);
 }
 
 interface HebcalAliyah {
@@ -94,8 +97,8 @@ function hebcalReadings(hd: HDate, il: boolean): HebcalReading[] {
   return list as unknown as HebcalReading[];
 }
 
-/** Todas las lecturas de la Torá de una fecha, con sus aliot resueltas a palabras. */
-function readingsForDate(hd: HDate, il: boolean): ReadingInfo[] {
+/** All Torah readings on a date, with aliyot resolved to word indexes. */
+function readingsForDate(hd: HDate, il: boolean, t: Dictionary): ReadingInfo[] {
   const readings: ReadingInfo[] = [];
   for (const ley of hebcalReadings(hd, il)) {
     const aliyot = ley.fullkriyah ?? ley.weekday ?? {};
@@ -103,18 +106,26 @@ function readingsForDate(hd: HDate, il: boolean): ReadingInfo[] {
     const books = new Set<number>();
     for (const [key, a] of Object.entries(aliyot)) {
       const book = BOOK_BY_EN[a.k];
-      if (!book) continue; // lecturas fuera de la Torá, por ejemplo la haftará
+      if (!book) continue; // outside the Torah, e.g. the haftarah
       const start: VerseRef = { book, ...parseCv(a.b) };
       const end: VerseRef = { book, ...parseCv(a.e) };
       const n: number | "M" = key === "M" ? "M" : Number(key);
-      const t = makeTarget(`${isoDate(hd.greg())}-${ley.name.en}-${key}`, `${ley.name.en}, ${aliyahLabel(n)}`, `${ley.name.en} · ${n === "M" ? "maftir" : `${n}ª`}`, start, end, {
-        aliyah: n,
-        reading: ley.name.en,
-        ...(a.reason ? { reason: a.reason } : {}),
-        ...(a.p ? { parasha: { n: a.p, name: getParashot()[a.p - 1]?.name.es ?? String(a.p) } } : {}),
-      });
-      if (t) {
-        targets.push(t);
+      const target = makeTarget(
+        `${isoDate(hd.greg())}-${ley.name.en}-${key}`,
+        t.aliyah.withParasha(ley.name.en, t.aliyah.label(n)),
+        `${ley.name.en} · ${t.aliyah.short(n)}`,
+        start,
+        end,
+        t.lang,
+        {
+          aliyah: n,
+          reading: ley.name.en,
+          ...(a.reason ? { reason: a.reason } : {}),
+          ...(a.p ? { parasha: { n: a.p, name: getParashot()[a.p - 1]?.name[t.lang] ?? String(a.p) } } : {}),
+        },
+      );
+      if (target) {
+        targets.push(target);
         books.add(book);
       }
     }
@@ -124,11 +135,11 @@ function readingsForDate(hd: HDate, il: boolean): ReadingInfo[] {
   return readings;
 }
 
-/** Próxima fecha con lectura a partir del día siguiente, hasta 10 días. */
-function nextReading(from: HDate, il: boolean): TargetResponse["next"] {
+/** Next date with a reading, looking up to 10 days ahead. */
+function nextReading(from: HDate, il: boolean, t: Dictionary): TargetResponse["next"] {
   for (let i = 1; i <= 10; i++) {
     const hd = from.add(i, "d");
-    const readings = readingsForDate(hd, il);
+    const readings = readingsForDate(hd, il, t);
     if (readings.length > 0) {
       return { dateISO: isoDate(hd.greg()), hebrewDate: hd.render("he"), names: readings.map((r) => r.name) };
     }
@@ -136,23 +147,16 @@ function nextReading(from: HDate, il: boolean): TargetResponse["next"] {
   return null;
 }
 
-/** Fechas del año hebreo con lectura festiva o especial: jaguim, jol hamoed, ayunos, rosh jodesh, shabatot especiales. */
+/** Dates in a Hebrew year with a festive or special reading. */
 function holidaysForYear(year: number, il: boolean): HolidayItem[] {
   const events = HebrewCalendar.calendar({ year, isHebrewYear: true, il, noModern: true, sedrot: false, candlelighting: false });
-  const byDate = new Map<string, { hd: HDate; events: string[] }>();
-  for (const ev of events) {
-    const hd = ev.getDate();
-    const key = hd.toString();
-    const entry = byDate.get(key) ?? { hd, events: [] };
-    const name = ev.render("es");
-    if (!entry.events.includes(name)) entry.events.push(name);
-    byDate.set(key, entry);
-  }
+  const days = new Map<string, HDate>();
+  for (const ev of events) days.set(ev.getDate().toString(), ev.getDate());
   const items: HolidayItem[] = [];
-  for (const { hd, events: names } of byDate.values()) {
+  for (const hd of days.values()) {
     const readings = hebcalReadings(hd, il).filter((l) => {
       if (l.type === "weekday") return false;
-      // un shabat común sólo cuenta si tiene maftir especial de otro sefer
+      // a regular Shabbat only counts if it has a special maftir
       if (l.type === "shabbat") return Boolean(l.fullkriyah?.M?.reason);
       return true;
     });
@@ -161,7 +165,6 @@ function holidaysForYear(year: number, il: boolean): HolidayItem[] {
       dateISO: isoDate(hd.greg()),
       hebrewDate: hd.render("he"),
       names: [...new Set(readings.map((r) => r.name.en))],
-      events: names,
       summary: readings.map((r) => r.summary).join(" · "),
     });
   }
@@ -169,21 +172,22 @@ function holidaysForYear(year: number, il: boolean): HolidayItem[] {
   return items;
 }
 
-export function resolveTargets(req: TargetRequest): TargetResponse {
+export function resolveTargets(req: TargetRequest, lang: Locale): TargetResponse {
+  const t = getDictionary(lang);
   const parashot = getParashot();
   if (req.kind === "aliyah") {
-    const targets = aliyahTargets(parashot, req.parasha, req.aliyah);
-    return targets.length ? { targets } : { targets: [], error: "No encontré esa parashá o aliá." };
+    const targets = aliyahTargets(parashot, req.parasha, req.aliyah, t);
+    return targets.length ? { targets } : { targets: [], error: t.api.aliyahNotFound };
   }
   if (req.kind === "verse") {
-    const t = verseTarget({ book: req.book, chapter: req.chapter, verse: req.verse });
-    return t ? { targets: [t] } : { targets: [], error: "Ese versículo no existe en la Torá." };
+    const target = verseTarget({ book: req.book, chapter: req.chapter, verse: req.verse }, lang);
+    return target ? { targets: [target] } : { targets: [], error: t.api.verseNotFound };
   }
   if (req.kind === "holidays") {
     const il = req.il ?? false;
     const now = new HDate();
     const current = now.getFullYear();
-    // en Elul ya se prepara el año que viene: Rosh Hashaná está a días
+    // during Elul people are preparing for Rosh Hashanah, so default to next year
     const defaultYear = now.getMonth() === 6 ? current + 1 : current;
     const year = req.year ?? defaultYear;
     return { targets: [], year, years: [current - 1, current, current + 1, current + 2], holidays: holidaysForYear(year, il) };
@@ -191,11 +195,11 @@ export function resolveTargets(req: TargetRequest): TargetResponse {
   const il = req.il ?? false;
   const date = req.date ? new Date(`${req.date}T12:00:00`) : new Date();
   const hd = new HDate(date);
-  const readings = readingsForDate(hd, il);
+  const readings = readingsForDate(hd, il, t);
   return {
     targets: readings.flatMap((r) => r.targets),
     readings,
     hebrewDate: hd.render("he"),
-    next: readings.length === 0 ? nextReading(hd, il) : null,
+    next: readings.length === 0 ? nextReading(hd, il, t) : null,
   };
 }

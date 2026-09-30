@@ -1,10 +1,10 @@
 /**
- * Selección del proveedor de OCR según entorno y modelo pedido.
- *   OCR_PROVIDER=claude   (default) modelo de visión de Claude; el modelo se puede elegir por request
- *   OCR_PROVIDER=oracle   para desarrollo sin clave: devuelve la columna OCR_ORACLE_COLUMN del layout estándar con ruido
+ * OCR provider selection.
+ *   OCR_PROVIDER=claude  (default) Claude vision; the model can be chosen per request
+ *   OCR_PROVIDER=oracle  no API key needed: returns column OCR_ORACLE_COLUMN of the standard layout, with simulated noise
  */
 import "server-only";
-import { ClaudeVisionOcr, OracleOcr, type OcrProvider } from "@kore/ocr";
+import { ClaudeVisionOcr, OracleOcr, type OcrProvider } from "@navtora/ocr";
 import { getLayout } from "./locator";
 import { DEFAULT_MODEL, isOcrModel, type OcrModelId } from "./models";
 
@@ -13,6 +13,12 @@ const providers = new Map<string, OcrProvider>();
 export function defaultModel(): OcrModelId {
   const env = process.env.OCR_MODEL;
   return isOcrModel(env) ? env : DEFAULT_MODEL;
+}
+
+/** "missing-key" when Claude is selected but no API key is set. */
+export function ocrConfigError(): "missing-key" | null {
+  const kind = process.env.OCR_PROVIDER ?? "claude";
+  return kind !== "oracle" && !process.env.ANTHROPIC_API_KEY ? "missing-key" : null;
 }
 
 export function getOcrProvider(model?: string): OcrProvider {
@@ -27,7 +33,7 @@ export function getOcrProvider(model?: string): OcrProvider {
     provider = new OracleOcr({ layout: getLayout(), columnOf: () => column, charErrorRate: 0.15 });
   } else {
     if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error("Falta ANTHROPIC_API_KEY. Configurala en .env.local o usá OCR_PROVIDER=oracle para probar sin clave.");
+      throw new Error("ANTHROPIC_API_KEY is not set. Add it to .env.local or use OCR_PROVIDER=oracle to run without a key.");
     }
     provider = new ClaudeVisionOcr({ model: key });
   }

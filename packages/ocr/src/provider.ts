@@ -1,4 +1,4 @@
-import type { OcrResult } from "@kore/core";
+import type { OcrResult } from "@navtora/core";
 
 export interface OcrImage {
   bytes: Uint8Array;
@@ -19,8 +19,23 @@ export interface OcrOutput {
   meta: OcrMeta;
 }
 
-/** Cualquier cosa que convierta una foto de columna en líneas de texto hebreo. */
+/** Turns a photo of a column into lines of Hebrew text. */
 export interface OcrProvider {
   readonly name: string;
   recognize(image: OcrImage): Promise<OcrOutput>;
+}
+
+export type OcrErrorCode = "refusal" | "truncated" | "bad-format";
+
+/** Provider failure with a code the app can localize. */
+export class OcrError extends Error {
+  constructor(
+    readonly code: OcrErrorCode,
+    message: string,
+    /** extra detail from the provider, e.g. a refusal explanation */
+    readonly detail?: string,
+  ) {
+    super(message);
+    this.name = "OcrError";
+  }
 }

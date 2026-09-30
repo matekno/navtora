@@ -1,9 +1,9 @@
 {
-  "name": "@kore/ocr",
+  "name": "@navtora/ocr",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Proveedores de OCR para columnas de Sefer Torá: Claude vision, oráculo para eval y caché en disco",
+  "description": "OCR providers for Sefer Torah columns: Claude vision, an eval oracle, and a disk cache",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": { ".": "./src/index.ts" },
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
-    "@kore/core": "workspace:*",
+    "@navtora/core": "workspace:*",
     "zod": "^4.0.0"
   }
 }

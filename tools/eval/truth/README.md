@@ -1,6 +1,6 @@
-# Verdad conocida por set
+# Ground truth per set
 
-- `shannon.json`: layout estándar; `offset` relaciona número de archivo con número de columna.
-- Para sets con layout no estándar (kokhav, makhonot, bl1462) se genera `columns` con el pipeline en modo
-  confident y revisión manual de 20 columnas por set. Hasta entonces el eval de esos sets informa sólo
-  el estado (confident/ambiguous/insufficient) y la posición predicha, sin marcar acierto.
+- `shannon.json`: standard layout; `offset` maps file number to column number.
+- For sets with a non-standard layout (kokhav, makhonot, bl1462), `columns` will be generated from the
+  pipeline's confident results plus manual review of 20 columns per set. Until then, eval on those sets
+  reports only the status (confident/ambiguous/insufficient) and the predicted position, without scoring hits.

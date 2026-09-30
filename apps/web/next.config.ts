@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@kore/core", "@kore/data", "@kore/ocr"],
-  // el matcher y los datos viven en el servidor; nada de esto va al cliente
+  transpilePackages: ["@navtora/core", "@navtora/data", "@navtora/ocr"],
   serverExternalPackages: ["@anthropic-ai/sdk"],
 };
 

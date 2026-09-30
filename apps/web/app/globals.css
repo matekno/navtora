@@ -40,7 +40,7 @@ button,
   touch-action: manipulation;
 }
 
-/* línea de luz que recorre la foto mientras se lee */
+/* scan line sweeping the photo while it is read */
 @keyframes scanline {
   0% {
     transform: translateY(-100%);

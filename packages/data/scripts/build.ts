@@ -1,16 +1,16 @@
 /**
- * Genera dist/torah.json, dist/layout-245.json y dist/parashot.json a partir
- * de los datos crudos de tikkun.io (MIT) fijados en raw/tikkun.
+ * Builds dist/torah.json, dist/layout-245.json and dist/parashot.json from the
+ * raw tikkun.io data (MIT) pinned in raw/tikkun.
  *
- * Los límites de aliot se toman de @hebcal/leyning (BSD-2) y se cruzan contra
- * las marcas de aliá de tikkun.io. Las discrepancias se informan; el build
- * falla sólo si falta una parashá o si la estructura del texto es inconsistente.
+ * Aliyah boundaries come from @hebcal/leyning (BSD-2) and are cross-checked
+ * against tikkun.io's aliyah marks. Disagreements are reported; the build fails
+ * only if a parashah is missing or the text structure is inconsistent.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLeyningForParsha } from "@hebcal/leyning";
-import { SOF_PASUK, tokenizeHebrew, type LayoutData, type ParashotData, type TorahData, type VerseRef } from "@kore/core";
+import { SOF_PASUK, tokenizeHebrew, type LayoutData, type ParashotData, type TorahData, type VerseRef } from "@navtora/core";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const RAW = path.resolve(here, "../raw/tikkun");
@@ -27,7 +27,7 @@ type RawToc = Record<string, Record<string, Record<string, { p: number; l: numbe
 const BOOK_EN: Record<number, string> = { 1: "Genesis", 2: "Exodus", 3: "Leviticus", 4: "Numbers", 5: "Deuteronomy" };
 const BOOK_BY_EN = Object.fromEntries(Object.entries(BOOK_EN).map(([n, en]) => [en, Number(n)])) as Record<string, number>;
 
-/** Nombres de hebcal en orden, con transliteración rioplatense. */
+/** Hebcal parashah names in order, paired with Spanish transliterations. */
 const PARASHOT: Array<[en: string, es: string]> = [
   ["Bereshit", "Bereshit"], ["Noach", "Nóaj"], ["Lech-Lecha", "Lej Lejá"], ["Vayera", "Vaierá"],
   ["Chayei Sara", "Jaiei Sará"], ["Toldot", "Toldot"], ["Vayetzei", "Vaietzé"], ["Vayishlach", "Vaishlaj"],
@@ -50,7 +50,7 @@ function readJson<T>(p: string): T {
 function parseRef(book: string, cv: string): VerseRef {
   const [c, v] = cv.split(":").map(Number);
   const b = BOOK_BY_EN[book];
-  if (!b || !c || !v) throw new Error(`referencia inválida: ${book} ${cv}`);
+  if (!b || !c || !v) throw new Error(`invalid reference: ${book} ${cv}`);
   return { book: b, chapter: c, verse: v };
 }
 
@@ -72,7 +72,7 @@ function main(): void {
   const petuchaBefore: number[] = [];
   const gapBefore: number[] = [];
   const columns: LayoutData["columns"] = [];
-  /** marcas de aliá de tikkun.io: página, línea, tipo, número, y versículos que empiezan en esa línea */
+  /** tikkun.io aliyah marks, with the verses that start on the marked line */
   const aliyahMarks: Array<{ page: number; line: number; kind: string; n: number | string; verseStarts: number[] }> = [];
 
   let verseOpen = false;
@@ -113,17 +113,17 @@ function main(): void {
               if (ref) {
                 verses.push({ ...ref, start: words.length });
                 verseStartsHere.push(verses.length - 1);
-                // cruce con la tabla de contenidos
+                // cross-check against the table of contents
                 const tocEntry = toc[String(ref.book)]?.[String(ref.chapter)]?.[String(ref.verse)];
                 if (tocEntry && (tocEntry.p !== page || tocEntry.l !== li + 1)) {
                   placementMismatches++;
-                  if (problems.length < 20) problems.push(`${fmt(ref)}: ToC dice p${tocEntry.p} l${tocEntry.l}, texto en p${page} l${li + 1}`);
+                  if (problems.length < 20) problems.push(`${fmt(ref)}: ToC says p${tocEntry.p} l${tocEntry.l}, text is at p${page} l${li + 1}`);
                 }
               } else {
-                // sof pasuk interno sin nuevo versículo en la fuente: pasa en los Aseret HaDibrot,
-                // donde el taam tajtón corta versículos que la numeración cuenta como uno solo
+                // sof pasuk with no new verse in the source: happens in the Ten Commandments,
+                // where the lower cantillation splits verses that the numbering counts as one
                 internalSofPasuk++;
-                if (problems.length < 20) problems.push(`p${page} l${li + 1}: sof pasuk interno sin nuevo versículo, sigue ${fmt(verses[verses.length - 1]!)}`);
+                if (problems.length < 20) problems.push(`p${page} l${li + 1}: internal sof pasuk with no new verse, continuing ${fmt(verses[verses.length - 1]!)}`);
               }
               verseOpen = true;
             }
@@ -143,7 +143,7 @@ function main(): void {
       });
       if (queue.length > 0) {
         missingVerseRefs++;
-        if (problems.length < 20) problems.push(`p${page} l${li + 1}: sobran referencias de versículo ${queue.map(fmt).join(", ")}`);
+        if (problems.length < 20) problems.push(`p${page} l${li + 1}: leftover verse references ${queue.map(fmt).join(", ")}`);
       }
       for (const mark of line.aliyot) {
         for (const [kind, n] of Object.entries(mark)) {
@@ -162,22 +162,22 @@ function main(): void {
     columns.push({ n: page, startWord: colStart, endWord: words.length - 1, lines });
   }
 
-  // --- parashot y aliot desde hebcal, cruzadas con las marcas de tikkun.io ---
+  // --- parashot and aliyot from hebcal, cross-checked with tikkun.io marks ---
   const verseIndex = new Map<string, number>();
   verses.forEach((v, i) => verseIndex.set(`${v.book}:${v.chapter}:${v.verse}`, i));
   const startOf = (r: VerseRef): number => {
     const i = verseIndex.get(`${r.book}:${r.chapter}:${r.verse}`);
-    if (i === undefined) throw new Error(`versículo no encontrado en el texto: ${fmt(r)}`);
+    if (i === undefined) throw new Error(`verse not found in text: ${fmt(r)}`);
     return verses[i]!.start;
   };
   const endOf = (r: VerseRef): number => {
     const i = verseIndex.get(`${r.book}:${r.chapter}:${r.verse}`);
-    if (i === undefined) throw new Error(`versículo no encontrado en el texto: ${fmt(r)}`);
+    if (i === undefined) throw new Error(`verse not found in text: ${fmt(r)}`);
     const next = verses[i + 1];
     return next ? next.start - 1 : words.length - 1;
   };
 
-  // marcas "standard" de tikkun.io agrupadas por parashá: 1..7 son las aliot, 8 es el maftir
+  // tikkun.io "standard" marks grouped by parashah: 1..7 are the aliyot, 8 is maftir
   type Mark = (typeof aliyahMarks)[number];
   const markGroups: Array<Map<number, Mark>> = [];
   for (const m of aliyahMarks) {
@@ -192,15 +192,15 @@ function main(): void {
   let aliyahUnmarked = 0;
   const parashot: ParashotData = PARASHOT.map(([en, es], idx) => {
     const ley = getLeyningForParsha(en);
-    if (!ley || !ley.fullkriyah) throw new Error(`hebcal no devolvió lectura para ${en}`);
+    if (!ley || !ley.fullkriyah) throw new Error(`hebcal returned no reading for ${en}`);
     const group = markGroups[idx] ?? new Map<number, Mark>();
     const aliyot: ParashotData[number]["aliyot"] = [];
     for (const key of ["1", "2", "3", "4", "5", "6", "7", "M"] as const) {
       const a = ley.fullkriyah[key];
       if (!a) {
-        // Vezot Haberakhah no tiene maftir propio en hebcal: se lee en Simjat Torá con otra estructura
+        // hebcal has no maftir for Vezot Haberakhah: it is read on Simchat Torah with a different structure
         if (key === "M") continue;
-        throw new Error(`falta aliá ${key} en ${en}`);
+        throw new Error(`missing aliyah ${key} in ${en}`);
       }
       const start = parseRef(a.k, a.b);
       const end = parseRef(a.k, a.e);
@@ -213,8 +213,8 @@ function main(): void {
       const agrees = mark.verseStarts.some((vi) => sameRef(verses[vi]!, start));
       if (!agrees) {
         aliyahDisagreements++;
-        const where = `p${mark.page} l${mark.line} (${mark.verseStarts.map((vi) => fmt(verses[vi]!)).join(", ") || "sin inicio de versículo"})`;
-        if (problems.length < 60) problems.push(`aliá ${key} de ${en}: hebcal ${fmt(start)}, tikkun.io ${where}`);
+        const where = `p${mark.page} l${mark.line} (${mark.verseStarts.map((vi) => fmt(verses[vi]!)).join(", ") || "no verse start"})`;
+        if (problems.length < 60) problems.push(`${en} aliyah ${key}: hebcal ${fmt(start)}, tikkun.io ${where}`);
       }
     }
     const first = aliyot[0]!;
@@ -231,27 +231,27 @@ function main(): void {
     };
   });
 
-  // contigüidad de parashot
+  // parashot must be contiguous
   for (let i = 1; i < parashot.length; i++) {
     const prev = parashot[i - 1]!;
     const cur = parashot[i]!;
     if (cur.startWord !== prev.endWord + 1) {
-      problems.push(`parashá ${cur.name.en} empieza en palabra ${cur.startWord} pero ${prev.name.en} termina en ${prev.endWord}`);
+      problems.push(`parashah ${cur.name.en} starts at word ${cur.startWord} but ${prev.name.en} ends at ${prev.endWord}`);
     }
   }
   const last = parashot[parashot.length - 1]!;
-  if (last.endWord !== words.length - 1) problems.push(`la última parashá termina en ${last.endWord}, el texto en ${words.length - 1}`);
+  if (last.endWord !== words.length - 1) problems.push(`last parashah ends at ${last.endWord}, text ends at ${words.length - 1}`);
 
-  // --- validaciones duras ---
+  // --- hard checks ---
   const errors: string[] = [];
-  if (columns.length !== 245) errors.push(`columnas: ${columns.length}`);
-  if (words.some((w) => !/^[א-ת]+$/.test(w))) errors.push("hay palabras con caracteres fuera del alefato");
-  if (markGroups.length !== 54) errors.push(`grupos de marcas de aliá en tikkun.io: ${markGroups.length}, se esperaban 54`);
-  if (words[0] !== "בראשית") errors.push(`primera palabra: ${words[0]}`);
-  if (words[words.length - 1] !== "ישראל") errors.push(`última palabra: ${words[words.length - 1]}`);
+  if (columns.length !== 245) errors.push(`columns: ${columns.length}`);
+  if (words.some((w) => !/^[א-ת]+$/.test(w))) errors.push("some words contain characters outside the Hebrew alphabet");
+  if (markGroups.length !== 54) errors.push(`tikkun.io aliyah mark groups: ${markGroups.length}, expected 54`);
+  if (words[0] !== "בראשית") errors.push(`first word: ${words[0]}`);
+  if (words[words.length - 1] !== "ישראל") errors.push(`last word: ${words[words.length - 1]}`);
   if (parashot.length !== 54) errors.push(`parashot: ${parashot.length}`);
   if (errors.length > 0) {
-    console.error("ERRORES:\n - " + errors.join("\n - "));
+    console.error("ERRORS:\n - " + errors.join("\n - "));
     process.exit(1);
   }
 
@@ -273,13 +273,13 @@ function main(): void {
 
   const uniqueForms = new Set(words).size;
   const lineCounts = columns.map((c) => c.lines.length);
-  console.log(`palabras: ${words.length} | formas únicas: ${uniqueForms} | versículos: ${verses.length}`);
-  console.log(`petujot: ${petuchaBefore.length} | espacios en línea: ${gapBefore.length}`);
-  console.log(`columnas: ${columns.length} | líneas por columna: min ${Math.min(...lineCounts)} max ${Math.max(...lineCounts)}`);
-  console.log(`versículos fuera de lugar según ToC: ${placementMismatches} | referencias sobrantes: ${missingVerseRefs} | sof pasuk internos: ${internalSofPasuk}`);
-  console.log(`aliot donde hebcal y tikkun.io difieren: ${aliyahDisagreements} | aliot sin marca en tikkun.io: ${aliyahUnmarked}`);
+  console.log(`words: ${words.length} | unique forms: ${uniqueForms} | verses: ${verses.length}`);
+  console.log(`petuchot: ${petuchaBefore.length} | in-line gaps: ${gapBefore.length}`);
+  console.log(`columns: ${columns.length} | lines per column: min ${Math.min(...lineCounts)} max ${Math.max(...lineCounts)}`);
+  console.log(`verses misplaced per ToC: ${placementMismatches} | leftover references: ${missingVerseRefs} | internal sof pasuk: ${internalSofPasuk}`);
+  console.log(`aliyot where hebcal and tikkun.io disagree: ${aliyahDisagreements} | aliyot unmarked in tikkun.io: ${aliyahUnmarked}`);
   if (problems.length > 0) {
-    console.log("\nObservaciones:");
+    console.log("\nNotes:");
     for (const p of problems) console.log(" - " + p);
   }
   const sizes = ["torah.json", "layout-245.json", "parashot.json"].map((f) => `${f} ${(fs.statSync(path.join(DIST, f)).size / 1e6).toFixed(2)} MB`);

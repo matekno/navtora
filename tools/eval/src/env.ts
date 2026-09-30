@@ -1,7 +1,7 @@
 /**
- * Carga ANTHROPIC_API_KEY, OCR_MODEL y OCR_EFFORT desde apps/web/.env.local
- * cuando no vienen en el entorno, para que el eval use la misma configuración
- * que la app. El archivo está fuera de git.
+ * Loads ANTHROPIC_API_KEY, OCR_MODEL and OCR_EFFORT from apps/web/.env.local
+ * when not already set, so the eval uses the same configuration as the app.
+ * That file is not in git.
  */
 import fs from "node:fs";
 import path from "node:path";

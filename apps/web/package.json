@@ -1,5 +1,5 @@
 {
-  "name": "@kore/web",
+  "name": "@navtora/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,9 @@
   "dependencies": {
     "@hebcal/core": "^6.9.2",
     "@hebcal/leyning": "^10.0.0",
-    "@kore/core": "workspace:*",
-    "@kore/data": "workspace:*",
-    "@kore/ocr": "workspace:*",
+    "@navtora/core": "workspace:*",
+    "@navtora/data": "workspace:*",
+    "@navtora/ocr": "workspace:*",
     "next": "^16.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

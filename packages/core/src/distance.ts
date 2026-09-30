@@ -1,8 +1,8 @@
 /**
- * Distancia de edición ponderada con las confusiones típicas de la escritura
- * STA"M leída por OCR. Una sustitución entre letras confundibles cuesta menos
- * que una sustitución arbitraria. El comodín `?` representa una letra que el
- * OCR no pudo leer y empareja con cualquier letra a bajo costo.
+ * Weighted edit distance tuned to the letter confusions typical of OCR on STA"M
+ * script. Substituting confusable letters costs less than an arbitrary
+ * substitution. The `?` wildcard (a letter the OCR could not read) matches any
+ * letter at low cost.
  */
 
 const CONFUSABLE_PAIRS: Array<[string, string]> = [
@@ -26,7 +26,7 @@ export const COST = {
   deletion: 0.8,
 } as const;
 
-/** Verdadero si las dos letras se confunden habitualmente en escritura de sefer. */
+/** True if the two letters are commonly confused in sefer script. */
 export function isConfusable(a: string, b: string): boolean {
   return CONFUSABLE.has(a + b);
 }
@@ -38,10 +38,7 @@ function substitutionCost(a: string, b: string): number {
   return COST.substitution;
 }
 
-/**
- * Distancia de edición ponderada entre dos palabras. Si el costo supera
- * `maxCost` devuelve Infinity para permitir cortar temprano.
- */
+/** Weighted edit distance. Returns Infinity as soon as the cost exceeds `maxCost`. */
 export function weightedEditDistance(a: string, b: string, maxCost = Infinity): number {
   const n = a.length;
   const m = b.length;
@@ -74,8 +71,8 @@ export function weightedEditDistance(a: string, b: string, maxCost = Infinity): 
 }
 
 /**
- * Similitud en [0, 1]: 1 es idéntico. Normaliza por la longitud mayor para que
- * una letra confundida en una palabra larga pese poco y en una corta pese mucho.
+ * Similarity in [0, 1], 1 = identical. Normalized by the longer length so one
+ * wrong letter weighs little in a long word and a lot in a short one.
  */
 export function wordSimilarity(a: string, b: string, maxNormalizedDistance = 0.5): number {
   const len = Math.max(a.length, b.length);

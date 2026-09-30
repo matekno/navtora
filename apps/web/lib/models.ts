@@ -1,8 +1,8 @@
-/** Modelos de OCR que la app permite elegir en vivo. Compartido entre cliente y servidor. */
+/** OCR models selectable in the camera screen. */
 
 export const OCR_MODELS = {
-  "claude-opus-5": { label: "Opus 5", hint: "más preciso" },
-  "claude-sonnet-5": { label: "Sonnet 5", hint: "más rápido y barato" },
+  "claude-opus-5": { label: "Opus 5" },
+  "claude-sonnet-5": { label: "Sonnet 5" },
 } as const;
 
 export type OcrModelId = keyof typeof OCR_MODELS;

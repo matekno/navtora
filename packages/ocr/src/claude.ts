@@ -1,22 +1,22 @@
 /**
- * OCR con un modelo de visión de Claude. El modelo sólo transcribe lo que ve;
- * la posición y la confianza las decide el matcher de @kore/core.
+ * OCR with a Claude vision model. The model only transcribes; position and
+ * confidence are decided by the matcher in @navtora/core.
  *
- * Para ubicarse alcanzan las primeras líneas de la columna, así que por defecto
- * se transcriben sólo `maxLines` líneas desde arriba y se cuenta el total. Eso
- * recorta la salida, que es lo que domina la latencia y el costo.
+ * The top few lines are enough to locate a column, so by default only
+ * `maxLines` lines are transcribed and the rest are just counted. That cuts
+ * output tokens, which dominate latency and cost.
  *
- * Medido sobre el sefer de Shannon, 5 columnas cada variante, todas correctas:
- *   columna completa, esfuerzo medium: 52 s, 3500 tokens de salida, CER 0,19 %
- *   14 líneas, esfuerzo medium:        24 s, 1100 tokens de salida
- *   14 líneas, esfuerzo low:           15 s,  450 tokens de salida, CER 0,38 %
- *   14 líneas, low, claude-sonnet-5:   12 s,  420 tokens de salida, CER 0,60 %
- * Por eso el esfuerzo por defecto es low.
+ * Measured on the Shannon sefer, 5 columns per variant, all located correctly:
+ *   full column, effort medium:     52 s, 3500 output tokens, CER 0.19%
+ *   14 lines, effort medium:        24 s, 1100 output tokens
+ *   14 lines, effort low:           15 s,  450 output tokens, CER 0.38%
+ *   14 lines, low, claude-sonnet-5: 12 s,  420 output tokens, CER 0.60%
+ * Hence the default effort is low.
  */
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
-import type { OcrImage, OcrOutput, OcrProvider } from "./provider";
+import { OcrError, type OcrImage, type OcrOutput, type OcrProvider } from "./provider";
 
 export const OCR_PROMPT_VERSION = "2026-09-06.2";
 
@@ -54,7 +54,7 @@ export interface ClaudeOcrOptions {
   effort?: OcrEffort;
   apiKey?: string;
   maxTokens?: number;
-  /** líneas a transcribir desde arriba; 0 o Infinity para toda la columna */
+  /** lines to transcribe from the top; 0 or Infinity for the whole column */
   maxLines?: number;
 }
 
@@ -80,7 +80,7 @@ export class ClaudeVisionOcr implements OcrProvider {
     this.maxTokens = opts.maxTokens ?? 8000;
   }
 
-  /** identifica la configuración para la caché del eval */
+  /** identifies this configuration in the eval's OCR cache */
   get cacheSalt(): string {
     return `${this.model}|${this.effort}|${this.maxLines}|${OCR_PROMPT_VERSION}`;
   }
@@ -105,14 +105,14 @@ export class ClaudeVisionOcr implements OcrProvider {
     });
 
     if (response.stop_reason === "refusal") {
-      throw new Error(`El modelo rechazó la imagen: ${response.stop_details?.explanation ?? "sin explicación"}`);
+      throw new OcrError("refusal", "The model refused to transcribe the image.", response.stop_details?.explanation ?? undefined);
     }
     if (response.stop_reason === "max_tokens") {
-      throw new Error("La transcripción quedó cortada por el límite de tokens.");
+      throw new OcrError("truncated", "The transcription was cut off by the token limit.");
     }
     const parsed = response.parsed_output;
     if (!parsed) {
-      throw new Error("El modelo no devolvió una transcripción con el formato esperado.");
+      throw new OcrError("bad-format", "The model did not return a transcription in the expected format.");
     }
     const uncertain = new Set(parsed.uncertainLines);
     const gaps = new Map(parsed.gapBeforeLines.map((g) => [g.line, g.gap] as const));

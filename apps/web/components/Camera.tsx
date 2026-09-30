@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n/context";
 import { canvasToJpeg, captureFrame, meanLuminance } from "@/lib/image";
 import { OCR_MODELS, type OcrModelId } from "@/lib/models";
 import { ScanProgress } from "./ScanProgress";
@@ -11,7 +12,7 @@ interface Props {
   onModelChange: (m: OcrModelId) => void;
   onCapture: (blob: Blob) => void;
   onManual: () => void;
-  /** objetivo activo, texto corto, o null si sólo se quiere saber dónde está */
+  /** short label of the active target, or null when just locating */
   targetLabel: string | null;
   onPickTarget: () => void;
   onClearTarget: () => void;
@@ -19,10 +20,11 @@ interface Props {
 
 type CamState = "starting" | "ready" | "denied" | "unavailable";
 
-/** duración típica medida por modelo, para el ritmo de la barra de progreso */
+/** measured typical scan time per model, to pace the progress bar */
 const EXPECTED_MS: Record<OcrModelId, number> = { "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
 
 export function Camera({ busy, model, onModelChange, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
+  const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CamState>("starting");
@@ -68,7 +70,7 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
     };
   }, []);
 
-  // la foto congelada se libera al salir o al volver a la cámara
+  // release the frozen photo when the scan ends
   useEffect(() => {
     if (!busy && photoUrl) {
       URL.revokeObjectURL(photoUrl);
@@ -80,7 +82,7 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
     if (photoUrl) URL.revokeObjectURL(photoUrl);
   }, [photoUrl]);
 
-  // medición de luz cada segundo, sin subir nada
+  // local light check once a second; nothing is uploaded
   useEffect(() => {
     if (state !== "ready" || busy) return;
     const id = window.setInterval(() => {
@@ -108,7 +110,7 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
     if (!v || v.readyState < 2) return;
     const canvas = captureFrame(v);
     const blob = await canvasToJpeg(canvas);
-    // congelar: la cámara deja de actualizarse y queda la foto que se mandó
+    // freeze on the photo that was sent
     v.pause();
     setPhotoUrl(URL.createObjectURL(blob));
     navigator.vibrate?.(30);
@@ -119,15 +121,14 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
     <div className="relative flex min-h-dvh flex-col bg-ink">
       <div className="relative flex-1 overflow-hidden">
         <video ref={videoRef} playsInline muted className="absolute inset-0 h-full w-full object-cover" />
-        {/* guía de encuadre: una columna alta */}
+        {/* framing guide: one tall column */}
         {!busy && <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />}
 
         {busy && photoUrl && <ScanProgress photoUrl={photoUrl} modelLabel={OCR_MODELS[model].label} expectedMs={EXPECTED_MS[model]} />}
 
-        {/* selector de modelo, cambiable en vivo, y objetivo activo */}
         {!busy && (
           <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex flex-col items-center gap-2 px-4">
-            <div role="radiogroup" aria-label="Modelo de lectura" className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
+            <div role="radiogroup" aria-label={t.camera.modelGroup} className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
               {(Object.keys(OCR_MODELS) as OcrModelId[]).map((id) => (
                 <button
                   key={id}
@@ -144,34 +145,30 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
             {targetLabel ? (
               <div className="flex max-w-full items-center gap-1 rounded-full bg-ink/70 p-1 pl-3 backdrop-blur">
                 <span className="truncate text-sm">
-                  <span className="text-muted">Objetivo: </span>
+                  <span className="text-muted">{t.camera.targetPrefix}</span>
                   <span className="font-medium text-accent">{targetLabel}</span>
                 </span>
                 <button type="button" onClick={onPickTarget} className="h-8 rounded-full px-3 text-xs text-fg">
-                  Cambiar
+                  {t.camera.change}
                 </button>
-                <button type="button" onClick={onClearTarget} aria-label="Quitar objetivo" className="h-8 rounded-full px-3 text-xs text-muted">
+                <button type="button" onClick={onClearTarget} aria-label={t.camera.removeTarget} className="h-8 rounded-full px-3 text-xs text-muted">
                   ✕
                 </button>
               </div>
             ) : (
               <button type="button" onClick={onPickTarget} className="h-9 rounded-full bg-ink/70 px-4 text-sm font-medium text-accent backdrop-blur">
-                Elegir a dónde ir
+                {t.camera.pickTarget}
               </button>
             )}
           </div>
         )}
 
-        {state === "starting" && <Overlay>Abriendo la cámara…</Overlay>}
-        {state === "denied" && (
-          <Overlay>
-            No hay permiso para usar la cámara. Habilitalo en la configuración del navegador o usá la entrada manual.
-          </Overlay>
-        )}
-        {state === "unavailable" && <Overlay>Este navegador no permite usar la cámara acá. Probá con Safari o Chrome, o usá la entrada manual.</Overlay>}
+        {state === "starting" && <Overlay>{t.camera.starting}</Overlay>}
+        {state === "denied" && <Overlay>{t.camera.denied}</Overlay>}
+        {state === "unavailable" && <Overlay>{t.camera.unavailable}</Overlay>}
         {state === "ready" && lowLight && !busy && (
           <div className="absolute left-4 right-4 top-28 rounded-xl bg-warn/90 px-4 py-3 text-center text-sm font-medium text-ink">
-            Hay poca luz. Acercá una lámpara o prendé la linterna del teléfono.
+            {t.camera.lowLight}
           </div>
         )}
       </div>
@@ -179,13 +176,13 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
       {!busy && (
         <div className="flex items-center justify-between gap-3 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
           <button type="button" onClick={onManual} className="h-12 min-w-24 rounded-xl border border-line px-4 text-sm text-fg">
-            Tipear
+            {t.camera.type}
           </button>
           <button
             type="button"
             onClick={capture}
             disabled={state !== "ready"}
-            aria-label="Leer la columna"
+            aria-label={t.camera.capture}
             className="size-20 rounded-full border-4 border-fg/90 bg-accent disabled:opacity-40 active:scale-95"
           />
           {torch.supported ? (
@@ -194,7 +191,7 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
               onClick={toggleTorch}
               className={`h-12 min-w-24 rounded-xl border px-4 text-sm ${torch.on ? "border-accent bg-accent text-ink" : "border-line text-fg"}`}
             >
-              Linterna
+              {t.camera.torch}
             </button>
           ) : (
             <div className="min-w-24" />

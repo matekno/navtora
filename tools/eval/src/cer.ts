@@ -1,16 +1,16 @@
 /**
- * Tasa de error por letra (CER) de las transcripciones cacheadas de un set con
- * layout estándar, comparadas con el texto real de la columna.
+ * Character error rate (CER) of the cached transcriptions for a standard-layout
+ * set, against the true column text.
  *
- *   pnpm --filter @kore/eval cer -- --set shannon --salt "claude-opus-5|2026-09-05.1" [--limit 20]
+ *   pnpm --filter @navtora/eval cer -- --set shannon --salt "claude-opus-5|2026-09-05.1" [--limit 20]
  */
 import "./env";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadDataNode } from "@kore/data";
-import { normalizeHebrew, tokenizeHebrew } from "@kore/core";
-import { imageHash } from "@kore/ocr";
+import { loadDataNode } from "@navtora/data";
+import { normalizeHebrew, tokenizeHebrew } from "@navtora/core";
+import { imageHash } from "@navtora/ocr";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const COLUMNS = path.resolve(here, "../data/columns");
@@ -62,7 +62,7 @@ function main(): void {
   let totalChars = 0;
   let totalErr = 0;
   let n = 0;
-  console.log("archivo  col  líneas(ocr/real)  CER    palabras exactas  ms     tok in/out");
+  console.log("file     col  lines ocr/true      CER   exact              ms  tok in/out");
   for (const file of files) {
     const k = Number(file.replace(/\D/g, ""));
     const offset = truth.segments ? truth.segments.find((s) => k >= s.from && k <= s.to)?.offset : truth.offset;
@@ -75,7 +75,7 @@ function main(): void {
     const out = JSON.parse(fs.readFileSync(cachePath, "utf8")) as CachedOut;
     const ocrLines = out.result.lines.map((l) => normalizeHebrew(typeof l === "string" ? l : l.text));
     const realLines = col.lines.map((l) => normalizeHebrew(l.text)).filter((l) => l.length > 0);
-    // comparar sólo las líneas que el OCR transcribió, en orden
+    // compare only the lines the OCR transcribed, in order
     const compared = Math.min(ocrLines.length, realLines.length);
     const ocrText = ocrLines.slice(0, compared).join(" ");
     const realText = realLines.slice(0, compared).join(" ");
@@ -91,8 +91,8 @@ function main(): void {
       `${file}  ${String(k - offset).padStart(3)}  ${String(ocrLines.length).padStart(2)}/${String(realLines.length).padEnd(2)}            ${((err / chars) * 100).toFixed(1).padStart(5)}%  ${(exact * 100).toFixed(1).padStart(5)}%          ${String(out.meta.ms ?? "").padStart(6)}  ${out.meta.inputTokens ?? ""}/${out.meta.outputTokens ?? ""}`,
     );
   }
-  if (n > 0) console.log(`\n${n} columnas | CER global ${((totalErr / totalChars) * 100).toFixed(2)} % sobre ${totalChars} letras`);
-  else console.log("no hay transcripciones cacheadas para ese salt");
+  if (n > 0) console.log(`\n${n} columns | overall CER ${((totalErr / totalChars) * 100).toFixed(2)}% over ${totalChars} letters`);
+  else console.log("no cached transcriptions for that salt");
 }
 
 main();

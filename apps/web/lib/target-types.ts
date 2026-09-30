@@ -1,5 +1,5 @@
-/** Tipos de objetivo compartidos entre cliente y servidor. */
-import type { NavTarget, VerseRef } from "@kore/core";
+/** Target types shared by client and server. */
+import type { NavTarget, VerseRef } from "@navtora/core";
 import type { RefLinks } from "./links";
 
 export interface TargetInfo extends NavTarget {
@@ -9,13 +9,13 @@ export interface TargetInfo extends NavTarget {
   /** 1..5 */
   book: number;
   bookName: string;
-  /** texto corto para el chip de la cámara */
+  /** short label for the camera chip */
   short: string;
   parasha?: { n: number; name: string };
   aliyah?: number | "M";
-  /** nombre de la lectura del día a la que pertenece, si vino del calendario */
+  /** reading name, when it came from the calendar */
   reading?: string;
-  /** motivo de una lectura especial, por ejemplo el maftir de Shabat Shekalim */
+  /** why the reading is special, e.g. the maftir of Shabbat Shekalim */
   reason?: string;
   links: RefLinks;
 }
@@ -25,34 +25,42 @@ export interface ReadingInfo {
   type: string;
   summary: string;
   targets: TargetInfo[];
-  /** hay aliot en más de un libro: probablemente hace falta otro sefer */
+  /** aliyot span more than one book: probably needs a second sefer */
   multipleBooks: boolean;
 }
 
-/** Una fecha del calendario con lectura festiva o especial. */
+/** A calendar date with a festive or special reading. */
 export interface HolidayItem {
   dateISO: string;
   hebrewDate: string;
-  /** nombres de las lecturas de ese día según hebcal, por ejemplo "Rosh Hashana I (on Shabbat)" */
+  /** hebcal reading names, e.g. "Rosh Hashana I (on Shabbat)" */
   names: string[];
-  /** nombres de las festividades del día en español, según hebcal */
-  events: string[];
   summary: string;
 }
 
-export type TargetRequest =
+/** Scroll length in words and the first word of each book, for the scroll map. */
+export interface ScrollInfo {
+  totalWords: number;
+  /** index 0 = Bereshit … 4 = Devarim */
+  bookStarts: number[];
+}
+
+export type TargetRequest = (
   | { kind: "aliyah"; parasha: number; aliyah?: number | "M" }
   | { kind: "verse"; book: number; chapter: number; verse: number }
   | { kind: "today"; date?: string; il?: boolean }
-  | { kind: "holidays"; year?: number; il?: boolean };
+  | { kind: "holidays"; year?: number; il?: boolean }
+) & {
+  /** label language; falls back to the cookie or Accept-Language */
+  lang?: string;
+};
 
 export interface TargetResponse {
   targets: TargetInfo[];
   readings?: ReadingInfo[];
   hebrewDate?: string;
-  /** si el día pedido no tiene lectura: la próxima fecha con lectura */
+  /** when the date has no reading: the next one that does */
   next?: { dateISO: string; hebrewDate: string; names: string[] } | null;
-  /** para kind holidays */
   year?: number;
   years?: number[];
   holidays?: HolidayItem[];

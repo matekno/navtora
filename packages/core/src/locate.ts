@@ -2,18 +2,18 @@ import { WordIndex } from "./index-words";
 import { DEFAULT_MATCH_OPTIONS, matchTokens, tokensFromOcr, type MatchOptions } from "./match";
 import { buildPlacement, type ResolveContext } from "./resolve";
 import { TorahText } from "./text";
-import type { LayoutData, LocateResult, OcrResult, ParashotData, TorahData } from "./types";
+import type { LayoutData, LocateReason, LocateResult, LocateSuggestion, OcrResult, ParashotData, TorahData } from "./types";
 
 export interface ConfidenceThresholds {
-  /** tokens alineados mínimos para afirmar algo */
+  /** minimum aligned tokens to assert a position */
   minAlignedTokens: number;
-  /** líneas distintas con al menos una palabra alineada */
+  /** minimum distinct lines with at least one aligned word */
   minLinesCovered: number;
-  /** fracción mínima de tokens alineados */
+  /** minimum fraction of tokens aligned */
   minCoverage: number;
-  /** margen relativo mínimo entre el mejor y el segundo candidato */
+  /** minimum relative score margin between the best and second candidate */
   minMargin: number;
-  /** score absoluto mínimo del alineamiento */
+  /** minimum absolute alignment score */
   minScore: number;
 }
 
@@ -33,7 +33,7 @@ export interface LocatorOptions {
 
 export interface Locator {
   locate(ocr: OcrResult): LocateResult;
-  /** entrada manual: una o varias líneas tipeadas */
+  /** manual input: one or more typed lines */
   locateText(text: string): LocateResult;
   readonly text: TorahText;
   readonly index: WordIndex;
@@ -52,19 +52,19 @@ export function createLocator(
   function locate(ocr: OcrResult): LocateResult {
     const t0 = Date.now();
     const tokens = tokensFromOcr(ocr);
-    const reasons: string[] = [];
-    const suggestions: string[] = [];
+    const reasons: LocateReason[] = [];
+    const suggestions: LocateSuggestion[] = [];
 
     if (tokens.length < 4) {
-      reasons.push("Se leyeron muy pocas palabras.");
-      suggestions.push("Acercá la cámara para que entren varias líneas completas y bien iluminadas.");
+      reasons.push("few-words");
+      suggestions.push("move-closer");
       return finish("insufficient", null, [], reasons, suggestions, tokens.length, [], t0);
     }
 
     const cands = matchTokens(tokens, text.words, index, ocr.lines.length, matchOpts);
     if (cands.length === 0) {
-      reasons.push("No encontré ninguna parte de la Torá que coincida con lo leído.");
-      suggestions.push("Verificá que la foto muestre texto del rollo, nítido y sin reflejos, y volvé a intentar.");
+      reasons.push("no-match");
+      suggestions.push("check-photo");
       return finish("insufficient", null, [], reasons, suggestions, tokens.length, cands, t0);
     }
 
@@ -79,18 +79,18 @@ export function createLocator(
       best.score >= thresholds.minScore;
 
     if (!strongEnough) {
-      if (best.alignedTokens < thresholds.minAlignedTokens) reasons.push("Coincidieron pocas palabras con el texto.");
-      if (best.linesCovered < thresholds.minLinesCovered) reasons.push("Sólo una línea coincide; no alcanza para estar seguro.");
-      if (best.coverage < thresholds.minCoverage) reasons.push("La mayor parte de lo leído no coincide con el texto: la lectura salió con mucho ruido.");
-      suggestions.push("Probá con más luz y con la cámara paralela al pergamino.");
-      suggestions.push("Si hay una línea con espacio en blanco antes, incluila en la foto: ayuda a ubicarse.");
+      if (best.alignedTokens < thresholds.minAlignedTokens) reasons.push("few-aligned");
+      if (best.linesCovered < thresholds.minLinesCovered) reasons.push("single-line");
+      if (best.coverage < thresholds.minCoverage) reasons.push("low-coverage");
+      suggestions.push("more-light");
+      suggestions.push("include-gap");
       const placement = buildPlacement(best, ocr, ctx, margin);
       return finish("insufficient", null, [placement], reasons, suggestions, tokens.length, cands, t0);
     }
 
     if (margin < thresholds.minMargin && second) {
-      reasons.push("Este texto se parece a más de un pasaje de la Torá.");
-      suggestions.push("Mostrame el principio de la columna o la columna de al lado para distinguirlos.");
+      reasons.push("similar-passages");
+      suggestions.push("show-column-start");
       const alts = cands
         .filter((c) => (best.score - c.score) / best.score < thresholds.minMargin * 1.5)
         .slice(0, 3)
@@ -106,8 +106,8 @@ export function createLocator(
     status: LocateResult["status"],
     best: LocateResult["best"],
     alternatives: LocateResult["alternatives"],
-    reasons: string[],
-    suggestions: string[],
+    reasons: LocateReason[],
+    suggestions: LocateSuggestion[],
     tokenCount: number,
     candidates: ReturnType<typeof matchTokens>,
     t0: number,

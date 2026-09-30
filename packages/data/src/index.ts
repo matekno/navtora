@@ -1,16 +1,16 @@
 /**
- * Carga de los datos generados en dist/. Para Node (scripts, tests, eval).
- * La app web importa los JSON directamente con el bundler.
+ * Loads the generated data in dist/ for Node (scripts, tests, eval).
+ * The web app imports the JSON directly through the bundler.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { LayoutData, ParashotData, TorahData } from "@kore/core";
+import type { LayoutData, ParashotData, TorahData } from "@navtora/core";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DIST_DIR = path.resolve(here, "../dist");
 
-export interface KoreData {
+export interface NavToraData {
   torah: TorahData;
   layout: LayoutData;
   parashot: ParashotData;
@@ -19,14 +19,14 @@ export interface KoreData {
 function readJson<T>(name: string): T {
   const p = path.join(DIST_DIR, name);
   if (!fs.existsSync(p)) {
-    throw new Error(`No existe ${p}. Corré "pnpm build:data" primero.`);
+    throw new Error(`${p} not found. Run "pnpm build:data" first.`);
   }
   return JSON.parse(fs.readFileSync(p, "utf8")) as T;
 }
 
-let cache: KoreData | null = null;
+let cache: NavToraData | null = null;
 
-export function loadDataNode(): KoreData {
+export function loadDataNode(): NavToraData {
   if (!cache) {
     cache = {
       torah: readJson<TorahData>("torah.json"),

@@ -1,9 +1,9 @@
 {
-  "name": "@kore/eval",
+  "name": "@navtora/eval",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Evaluación del motor: barrido con ruido simulado y corrida sobre escaneos de sifrei",
+  "description": "Engine evaluation: simulated-noise sweep and runs over scanned sifrei Torah",
   "scripts": {
     "noise": "tsx src/noise-sweep.ts",
     "download": "tsx src/download.ts",
@@ -16,9 +16,9 @@
     "consistency": "tsx src/consistency.ts"
   },
   "dependencies": {
-    "@kore/core": "workspace:*",
-    "@kore/data": "workspace:*",
-    "@kore/ocr": "workspace:*",
+    "@navtora/core": "workspace:*",
+    "@navtora/data": "workspace:*",
+    "@navtora/ocr": "workspace:*",
     "sharp": "^0.34.5"
   }
 }

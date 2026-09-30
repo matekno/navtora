@@ -1,17 +1,16 @@
 import { wordSimilarity } from "./distance";
 
 /**
- * Índice de palabras del texto: mapa exacto de forma consonántica a posiciones,
- * índice de trigramas sobre el vocabulario para búsqueda difusa, e IDF por forma.
+ * Word index over the text: exact map from consonantal form to positions, a
+ * trigram index over the vocabulary for fuzzy lookup, and IDF per form.
  */
 export interface VocabCandidate {
-  /** forma del vocabulario */
+  /** vocabulary form */
   form: string;
-  /** similitud con el token consultado, en [0, 1] */
+  /** similarity to the query token, in [0, 1] */
   similarity: number;
-  /** peso IDF de la forma */
   idf: number;
-  /** posiciones de la forma en el texto */
+  /** word indices where the form occurs */
   positions: readonly number[];
 }
 
@@ -67,8 +66,8 @@ export class WordIndex {
   }
 
   /**
-   * Candidatos del vocabulario para un token de OCR. Incluye la coincidencia
-   * exacta con similitud 1 y formas cercanas por trigramas y distancia ponderada.
+   * Vocabulary candidates for an OCR token: the exact match (similarity 1) plus
+   * nearby forms found via trigrams and weighted edit distance.
    */
   candidates(
     token: string,
@@ -84,7 +83,7 @@ export class WordIndex {
       out.push({ form: token, similarity: 1, idf: this.idf(token), positions: exactPositions });
     }
 
-    // Palabras de una o dos letras sólo por coincidencia exacta: el difuso es puro ruido.
+    // One- and two-letter words match exactly only; fuzzy matches on them are pure noise.
     if (token.length < 3) return out;
 
     const grams = trigramsOf(token);
@@ -95,7 +94,7 @@ export class WordIndex {
       if (!forms) continue;
       for (const f of forms) counts.set(f, (counts.get(f) ?? 0) + 1);
     }
-    // umbral de trigramas compartidos: al menos un tercio de los del token, mínimo 1
+    // require at least a third of the token's trigrams to be shared (minimum 1)
     const needed = Math.max(1, Math.ceil((grams.length - 1) / 3));
     const scored: Array<{ form: string; similarity: number }> = [];
     for (const [form, c] of counts) {

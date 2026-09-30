@@ -7,7 +7,7 @@ import { tokenizeHebrew } from "../src/normalize";
 const data = loadDataNode();
 let locator: Locator;
 
-/** Texto consonántico de las líneas [from, to) de una columna del layout estándar. */
+/** Consonantal text of lines [from, to) of a standard-layout column. */
 function columnLines(column: number, from: number, to: number): string[] {
   const col = data.layout.columns[column - 1]!;
   return col.lines.slice(from, to).map((l) => tokenizeHebrew(l.text).join(" ")).filter((l) => l.length > 0);
@@ -17,8 +17,8 @@ beforeAll(() => {
   locator = createLocator(data, { debug: true });
 });
 
-describe("locate sobre texto limpio", () => {
-  it("ubica el principio de la columna 50 en Miketz", () => {
+describe("locate on clean text", () => {
+  it("finds the start of column 50 in Miketz", () => {
     const res = locator.locate({ lines: columnLines(50, 0, 8).map((text) => ({ text })) });
     expect(res.status).toBe("confident");
     expect(res.best?.book.n).toBe(1);
@@ -28,7 +28,7 @@ describe("locate sobre texto limpio", () => {
     expect(res.best?.firstWords).toBe("ויאמר אלהם יוסף הוא");
   });
 
-  it("ubica un tramo del medio de una columna y reporta la línea", () => {
+  it("finds a span in the middle of a column and reports the line", () => {
     const res = locator.locate({ lines: columnLines(120, 20, 27).map((text) => ({ text })) });
     expect(res.status).toBe("confident");
     expect(res.best?.standardColumn?.column).toBe(120);
@@ -36,22 +36,22 @@ describe("locate sobre texto limpio", () => {
     expect(res.best?.standardColumn?.firstLine).toBe(21);
   });
 
-  it("acepta texto con nikud tipeado a mano", () => {
+  it("accepts hand-typed text with nikkud", () => {
     const res = locator.locateText("וַיֹּ֥אמֶר אֲלֵהֶ֖ם יוֹסֵ֑ף ה֗וּא אֲשֶׁ֨ר דִּבַּ֧רְתִּי אֲלֵכֶ֛ם לֵאמֹ֖ר\nמְרַגְּלִ֥ים אַתֶּֽם׃ בְּזֹ֖את תִּבָּחֵ֑נוּ חֵ֤י פַרְעֹה֙");
     expect(res.status).toBe("confident");
     expect(res.best?.standardColumn?.column).toBe(50);
   });
 
-  it("con muy pocas palabras se declara insuficiente", () => {
+  it("reports insufficient with very few words", () => {
     const res = locator.locateText("ויאמר יהוה");
     expect(res.status).toBe("insufficient");
     expect(res.reasons.length).toBeGreaterThan(0);
   });
 });
 
-describe("honestidad", () => {
-  it("un pasaje repetido de los nesiim se declara ambiguo o sale con margen bajo", () => {
-    // Bamidbar 7: la fórmula de la ofrenda se repite doce veces casi igual
+describe("honesty", () => {
+  it("reports a repeated nesiim passage as ambiguous", () => {
+    // Bamidbar 7: the offering formula repeats twelve times almost verbatim
     const formula =
       "וקרבנו קערת כסף אחת שלשים ומאה משקלה מזרק אחד כסף שבעים שקל בשקל הקדש שניהם מלאים סלת בלולה בשמן למנחה כף אחת עשרה זהב מלאה קטרת פר אחד בן בקר איל אחד כבש אחד בן שנתו לעלה";
     const words = formula.split(" ");
@@ -64,13 +64,13 @@ describe("honestidad", () => {
     for (const alt of res.alternatives) expect(alt.book.n).toBe(4);
   });
 
-  it("texto que no es de la Torá no produce una posición con confianza", () => {
+  it("does not confidently place non-Torah text", () => {
     const res = locator.locateText("שלום עולם היום יום יפה מאד בעיר הגדולה\nאנחנו הולכים לבית הספר עם החברים שלנו");
     expect(res.status).not.toBe("confident");
   });
 });
 
-describe("robustez ante ruido de OCR", () => {
+describe("robustness to OCR noise", () => {
   const WINDOWS = 150;
 
   function sample(seed: number): { lines: string[]; column: number; startWord: number; endWord: number } {
@@ -88,7 +88,7 @@ describe("robustez ante ruido de OCR", () => {
     };
   }
 
-  /** acierto: el span predicho se solapa con el tramo real en al menos la mitad del más corto */
+  /** hit: the predicted span overlaps the true span by at least half of the shorter one */
   function overlaps(a: { startWord: number; endWord: number }, b: { startWord: number; endWord: number }): boolean {
     const overlap = Math.min(a.endWord, b.endWord) - Math.max(a.startWord, b.startWord) + 1;
     const shorter = Math.min(a.endWord - a.startWord, b.endWord - b.startWord) + 1;
@@ -116,13 +116,13 @@ describe("robustez ante ruido de OCR", () => {
     return { top1: top1 / WINDOWS, confidentWrong, abstain };
   }
 
-  it("con 20 % de error por letra ubica casi todo y nunca afirma una posición equivocada", () => {
+  it("at 20% character error, finds almost everything and never asserts a wrong position", () => {
     const r = sweep(0.2);
     expect(r.confidentWrong).toBe(0);
     expect(r.top1).toBeGreaterThanOrEqual(0.99);
   });
 
-  it("con 35 % de error por letra sigue sin afirmar posiciones equivocadas", () => {
+  it("at 35% character error, still never asserts a wrong position", () => {
     const r = sweep(0.35);
     expect(r.confidentWrong).toBe(0);
   });

@@ -1,18 +1,18 @@
 {
-  "name": "kore-kompanion",
+  "name": "navtora",
   "private": true,
   "version": "0.1.0",
-  "description": "Ubicaci\u00f3n y navegaci\u00f3n en un Sefer Tor\u00e1 desde el celular",
+  "description": "Find your place in a Sefer Torah with the phone camera, and navigate to an aliyah",
   "packageManager": "pnpm@11.1.0",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "build:data": "pnpm --filter @kore/data build",
+    "build:data": "pnpm --filter @navtora/data build",
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck",
-    "dev": "pnpm --filter @kore/web dev",
-    "eval": "pnpm --filter @kore/eval pipeline"
+    "dev": "pnpm --filter @navtora/web dev",
+    "eval": "pnpm --filter @navtora/eval pipeline"
   },
   "devDependencies": {
     "typescript": "^5.6.0",

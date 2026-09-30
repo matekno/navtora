@@ -1,19 +1,19 @@
 /**
- * Simulador de ruido de OCR sobre texto consonántico. Sirve para medir el
- * matcher sin gastar en OCR real y para los tests. Determinista por semilla.
+ * Simulated OCR noise on consonantal text, for measuring the matcher without
+ * paying for real OCR. Deterministic per seed.
  */
 import { isConfusable } from "./distance";
 
 export interface NoiseOptions {
-  /** probabilidad de error por letra */
+  /** per-letter error probability */
   charErrorRate: number;
-  /** probabilidad de perder una palabra entera */
+  /** probability of dropping a whole word */
   wordDropRate: number;
-  /** probabilidad de pegar una palabra con la siguiente */
+  /** probability of merging a word with the next */
   wordMergeRate: number;
-  /** probabilidad de partir una palabra en dos */
+  /** probability of splitting a word in two */
   wordSplitRate: number;
-  /** probabilidad de perder una línea entera */
+  /** probability of dropping a whole line */
   lineDropRate: number;
   seed: number;
 }
@@ -29,7 +29,7 @@ export const DEFAULT_NOISE: NoiseOptions = {
 
 const LETTERS = "אבגדהוזחטיכלמנסעפצקרשתךםןףץ";
 
-/** PRNG mulberry32, determinista. */
+/** mulberry32 PRNG. */
 export function makeRng(seed: number): () => number {
   let a = seed >>> 0;
   return () => {
@@ -57,14 +57,14 @@ export function noisyWord(word: string, cer: number, rng: () => number): string 
     const r = rng();
     if (r < 0.5) out += confusablePartner(ch, rng);
     else if (r < 0.75) {
-      /* letra perdida */
+      /* dropped letter */
     } else if (r < 0.9) out += "?";
     else out += ch + LETTERS[Math.floor(rng() * LETTERS.length)]!;
   }
   return out;
 }
 
-/** Aplica ruido a líneas de texto consonántico. Devuelve las líneas resultantes. */
+/** Applies noise to lines of consonantal text. */
 export function noisyLines(lines: string[], opts: Partial<NoiseOptions> = {}): string[] {
   const o = { ...DEFAULT_NOISE, ...opts };
   const rng = makeRng(o.seed);

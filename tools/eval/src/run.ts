@@ -1,26 +1,25 @@
 /**
- * Corre el pipeline completo (OCR + matcher) sobre las columnas de un set y
- * compara con la verdad conocida.
+ * Runs the full pipeline (OCR + matcher) over a set's columns and compares with
+ * the known ground truth.
  *
- *   pnpm --filter @kore/eval pipeline -- --set shannon [--provider claude|oracle] [--limit 20] [--start 1] [--cer 0.2]
+ *   pnpm --filter @navtora/eval pipeline -- --set shannon [--provider claude|oracle] [--limit 20] [--start 1] [--cer 0.2]
  *                                          [--model claude-opus-5] [--effort low|medium|high] [--max-lines 14]
  *
- * Verdad por set: tools/eval/truth/<set>.json con { "offset": n } o con
- * { "segments": [{ "from", "to", "offset" }] } cuando el archivo k corresponde a
- * la columna estándar k - offset (shannon), o con
- * { "columns": { "007": { "startWord": 1234, "endWord": 1600 } } } cuando el
- * layout no es el estándar (kokhav, makhonot, bl1462).
+ * Ground truth per set lives in tools/eval/truth/<set>.json: { "offset": n } or
+ * { "segments": [{ "from", "to", "offset" }] } when file k is standard column
+ * k - offset (shannon), or { "columns": { "007": { "startWord": 1234, "endWord": 1600 } } }
+ * for non-standard layouts (kokhav, makhonot, bl1462).
  *
- * Los resultados de OCR se cachean en data/ocr-cache por hash de imagen para
- * no pagar dos veces. Se escribe data/results/<set>.csv con una fila por columna.
+ * OCR results are cached in data/ocr-cache by image hash so they are paid for
+ * once. Writes data/results/<set>-<tag>.csv with one row per column.
  */
 import "./env";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadDataNode } from "@kore/data";
-import { createLocator, type LocateResult } from "@kore/core";
-import { ClaudeVisionOcr, DiskCachedOcr, OracleOcr, parseEffort, type OcrProvider } from "@kore/ocr";
+import { loadDataNode } from "@navtora/data";
+import { createLocator, type LocateResult } from "@navtora/core";
+import { ClaudeVisionOcr, DiskCachedOcr, OracleOcr, parseEffort, type OcrProvider } from "@navtora/ocr";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const COLUMNS = path.resolve(here, "../data/columns");
@@ -30,7 +29,7 @@ const TRUTH = path.resolve(here, "../truth");
 
 interface Truth {
   offset?: number;
-  /** tramos de archivos con distinto desfasaje respecto de la columna estándar */
+  /** file ranges with different offsets from the standard column */
   segments?: Array<{ from: number; to: number; offset: number }>;
   columns?: Record<string, { startWord: number; endWord: number }>;
 }
@@ -81,7 +80,7 @@ async function main(): Promise<void> {
   const truth = loadTruth(args.set);
   const dir = path.join(COLUMNS, args.set);
   if (!fs.existsSync(dir)) {
-    console.error(`No existe ${dir}. Corré download y split primero.`);
+    console.error(`${dir} not found. Run download and split first.`);
     process.exit(1);
   }
   const files = fs
@@ -111,12 +110,12 @@ async function main(): Promise<void> {
   if (args.provider === "oracle") {
     provider = new OracleOcr({
       layout: data.layout,
-      columnOf: () => 1, // se pisa por archivo más abajo
+      columnOf: () => 1, // replaced per file below
       charErrorRate: args.cer,
     });
   } else {
     if (!process.env.ANTHROPIC_API_KEY) {
-      console.error("Falta ANTHROPIC_API_KEY para el proveedor claude. Usá --provider oracle para probar la cañería.");
+      console.error("ANTHROPIC_API_KEY is required for the claude provider. Use --provider oracle to test the pipeline without it.");
       process.exit(1);
     }
     const claude = new ClaudeVisionOcr({
@@ -124,7 +123,7 @@ async function main(): Promise<void> {
       ...(args.effort ? { effort: parseEffort(args.effort) } : {}),
       ...(args.maxLines !== undefined ? { maxLines: args.maxLines } : {}),
     });
-    console.log(`OCR: ${claude.model} | esfuerzo ${claude.effort} | hasta ${claude.maxLines} líneas`);
+    console.log(`OCR: ${claude.model} | effort ${claude.effort} | up to ${claude.maxLines} lines`);
     provider = new DiskCachedOcr(claude, CACHE, claude.cacheSalt);
   }
 
@@ -199,18 +198,18 @@ async function main(): Promise<void> {
       ].join(","),
     );
     const mark = res.status === "confident" ? (hit === false ? "✗✗" : "✓ ") : res.status === "ambiguous" ? "? " : "· ";
-    console.log(`${mark} ${file} esperado ${expCol ?? "?"} → ${res.status} col ${predCol || "-"} score ${best?.confidence.score ?? "-"} margen ${best?.confidence.margin ?? "-"} ${meta.cached ? "(cache)" : `${meta.ms} ms`}`);
+    console.log(`${mark} ${file} expected ${expCol ?? "?"} → ${res.status} col ${predCol || "-"} score ${best?.confidence.score ?? "-"} margin ${best?.confidence.margin ?? "-"} ${meta.cached ? "(cache)" : `${meta.ms} ms`}`);
   }
   fs.writeFileSync(csvPath, rows.join("\n") + "\n");
 
-  console.log("\nResumen", args.set, args.provider);
-  console.log(`columnas evaluadas: ${n} | errores de OCR: ${errors}`);
+  console.log("\nSummary", args.set, args.provider);
+  console.log(`columns evaluated: ${n} | OCR errors: ${errors}`);
   if (n > 0) {
     console.log(`top-1: ${((hits / n) * 100).toFixed(1)} %`);
-    console.log(`confident correctas: ${confOk} | confident EQUIVOCADAS: ${confWrong} | ambiguas: ${ambiguous} | insuficientes: ${insufficient}`);
-    console.log(`OCR: ${(ocrMs / n).toFixed(0)} ms promedio | tokens entrada ${inTok} salida ${outTok}`);
+    console.log(`confident correct: ${confOk} | confident WRONG: ${confWrong} | ambiguous: ${ambiguous} | insufficient: ${insufficient}`);
+    console.log(`OCR: ${(ocrMs / n).toFixed(0)} ms mean | tokens in ${inTok} out ${outTok}`);
   }
-  console.log(`detalle: ${csvPath}`);
+  console.log(`details: ${csvPath}`);
 }
 
 main();

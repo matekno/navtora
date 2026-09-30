@@ -11,7 +11,7 @@ const { layout } = loadDataNode();
 const fakeImage: OcrImage = { bytes: new Uint8Array([1, 2, 3, 4]), mime: "image/jpeg" };
 
 describe("OracleOcr", () => {
-  it("devuelve las líneas consonánticas de la columna pedida", async () => {
+  it("returns the consonantal lines of the requested column", async () => {
     const ocr = new OracleOcr({ layout, columnOf: () => 50 });
     const { result, meta } = await ocr.recognize(fakeImage);
     expect(meta.provider).toBe("oracle");
@@ -20,7 +20,7 @@ describe("OracleOcr", () => {
     expect(result.lineCountVisible).toBe(42);
   });
 
-  it("con ruido cambia el texto pero mantiene la cantidad de líneas", async () => {
+  it("with noise, changes the text but keeps roughly the same line count", async () => {
     const clean = await new OracleOcr({ layout, columnOf: () => 50 }).recognize(fakeImage);
     const noisy = await new OracleOcr({ layout, columnOf: () => 50, charErrorRate: 0.3, seed: 7 }).recognize(fakeImage);
     expect(noisy.result.lines.length).toBeGreaterThanOrEqual(38);
@@ -29,7 +29,7 @@ describe("OracleOcr", () => {
 });
 
 describe("DiskCachedOcr", () => {
-  it("llama al proveedor una sola vez por imagen y marca el resultado cacheado", async () => {
+  it("calls the provider once per image and marks the result as cached", async () => {
     let calls = 0;
     const inner: OcrProvider = {
       name: "counter",
@@ -38,7 +38,7 @@ describe("DiskCachedOcr", () => {
         return { result: { lines: [{ text: "בראשית ברא" }], lineCountVisible: 1 }, meta: { provider: "counter", ms: 5 } };
       },
     };
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kore-ocr-cache-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "navtora-ocr-cache-"));
     const cached = new DiskCachedOcr(inner, dir, "test");
     const a = await cached.recognize(fakeImage);
     const b = await cached.recognize(fakeImage);

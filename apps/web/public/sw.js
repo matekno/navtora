@@ -1,7 +1,6 @@
-// Service worker mínimo: cachea el shell para que la app abra sin red.
-// Nunca cachea /api ni resultados de lectura.
-const CACHE = "navtora-shell-v1";
-const SHELL = ["/", "/manifest.webmanifest", "/icon.svg"];
+// Caches the app shell so it opens offline. Never caches /api.
+const CACHE = "navtora-shell-v2";
+const SHELL = ["/es", "/en", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -25,6 +24,12 @@ self.addEventListener("fetch", (event) => {
         }
         return res;
       })
-      .catch(() => caches.match(event.request).then((hit) => hit ?? caches.match("/"))),
+      .catch(async () => {
+        const hit = await caches.match(event.request);
+        if (hit) return hit;
+        // offline: the shell for the URL's locale, or any cached one
+        const lang = url.pathname.split("/")[1];
+        return (await caches.match(`/${lang}`)) ?? (await caches.match("/es")) ?? (await caches.match("/en"));
+      }),
   );
 });

@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Props {
-  /** URL de la foto capturada, para mostrarla congelada */
+  /** object URL of the captured photo, shown frozen */
   photoUrl: string;
   modelLabel: string;
-  /** duración esperada del escaneo, para que la barra avance a un ritmo creíble */
+  /** expected scan time, to pace the bar */
   expectedMs: number;
 }
 
-/**
- * Pantalla de espera: la foto queda fija, una línea de luz la recorre de
- * arriba a abajo y una barra avanza con el tiempo esperado. Los mensajes
- * cambian por etapa para que los segundos se sientan ocupados, no muertos.
- */
+/** Waiting screen: frozen photo, a scan line sweeping it, and a progress bar paced to the expected time. */
 export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
+  const { t } = useI18n();
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
@@ -24,16 +22,16 @@ export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
     return () => window.clearInterval(id);
   }, []);
 
-  // la barra llega al 88 % en el tiempo esperado y después avanza despacio: nunca se clava ni llega a 100 antes de tiempo
+  // reaches 88% at the expected time, then creeps toward 98%; never stalls, never hits 100 early
   const ratio = elapsed / expectedMs;
   const progress = ratio < 1 ? 88 * (1 - Math.pow(1 - ratio, 2)) : 88 + 10 * (1 - Math.exp(-(ratio - 1) * 1.5));
   const secs = Math.floor(elapsed / 1000);
 
   let stage: string;
-  if (elapsed < 1500) stage = "Enviando la foto…";
-  else if (ratio < 0.75) stage = `Leyendo las letras con ${modelLabel}…`;
-  else if (ratio < 1.4) stage = "Buscando el lugar en la Torá…";
-  else stage = "Está tardando más de lo habitual, seguimos…";
+  if (elapsed < 1500) stage = t.progress.sending;
+  else if (ratio < 0.75) stage = t.progress.reading(modelLabel);
+  else if (ratio < 1.4) stage = t.progress.searching;
+  else stage = t.progress.slow;
 
   return (
     <div className="absolute inset-0 bg-ink">
@@ -51,7 +49,7 @@ export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
         <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-line" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)}>
           <div className="h-full rounded-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${progress}%` }} />
         </div>
-        <div className="mt-2 text-xs text-muted">La foto no se guarda. Se manda una sola vez para leerla.</div>
+        <div className="mt-2 text-xs text-muted">{t.progress.note}</div>
       </div>
     </div>
   );

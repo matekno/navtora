@@ -6,7 +6,7 @@ import type { AlignmentCandidate, OcrResult } from "./types";
 export interface Token {
   text: string;
   line: number;
-  /** posición secuencial global en la columna transcripta */
+  /** sequential position across the whole transcribed column */
   k: number;
 }
 
@@ -24,11 +24,11 @@ export function tokensFromOcr(ocr: OcrResult): Token[] {
 export interface MatchOptions {
   binWidth: number;
   maxBins: number;
-  /** las formas con más de estas posiciones no votan en difuso, sólo en exacto */
+  /** forms with more positions than this vote only on exact matches, not fuzzy ones */
   maxPositionsForFuzzy: number;
-  /** margen de ventana alrededor del origen para el alineamiento fino */
+  /** window padding around the origin for fine alignment */
   windowPad: number;
-  /** similitud mínima para considerar un par palabra-token como coincidencia en el DP */
+  /** minimum similarity for a word/token pair to count as a match in the DP */
   minPairSimilarity: number;
 }
 
@@ -46,8 +46,8 @@ interface Bin {
 }
 
 /**
- * Votación diagonal: cada candidato en posición p para el token k vota el
- * origen p - k. Los bins con más peso son los puntos de partida probables.
+ * Diagonal voting: each candidate at position p for token k votes for origin
+ * p - k. The heaviest bins are the likely starting points.
  */
 export function voteOrigins(tokens: Token[], index: WordIndex, opts: MatchOptions): Bin[] {
   const acc = new Map<number, number>();
@@ -56,7 +56,7 @@ export function voteOrigins(tokens: Token[], index: WordIndex, opts: MatchOption
     const cands = index.candidates(tok.text);
     for (const c of cands) {
       if (c.similarity < 1 && c.positions.length > opts.maxPositionsForFuzzy) continue;
-      // peso: IDF por calidad de coincidencia; las formas muy frecuentes casi no pesan
+      // weight = IDF x match quality, so very common forms barely count
       const w = c.idf * (c.similarity === 1 ? 1 : c.similarity * 0.8);
       if (w <= 0) continue;
       for (const p of c.positions) {
@@ -69,7 +69,7 @@ export function voteOrigins(tokens: Token[], index: WordIndex, opts: MatchOption
     }
   }
   const bins = [...acc.entries()].map(([bin, score]) => ({ bin, score })).sort((a, b) => b.score - a.score);
-  // suprimir bins vecinos de uno mejor
+  // non-maximum suppression over neighboring bins
   const chosen: Bin[] = [];
   for (const b of bins) {
     if (chosen.length >= opts.maxBins) break;
@@ -80,8 +80,8 @@ export function voteOrigins(tokens: Token[], index: WordIndex, opts: MatchOption
 }
 
 /**
- * Alineamiento local (Smith-Waterman) entre la secuencia de tokens y una
- * ventana del texto. Devuelve el mejor tramo alineado y sus estadísticas.
+ * Local alignment (Smith-Waterman) of the token sequence against a window of
+ * the text. Returns the best aligned span and its statistics.
  */
 export function alignWindow(
   tokens: Token[],
@@ -97,9 +97,8 @@ export function alignWindow(
 
   const GAP = -0.6;
   const MISMATCH = -1.0;
-  // matriz (m+1) x (n+1)
   const H = new Float64Array((m + 1) * (n + 1));
-  const T = new Uint8Array((m + 1) * (n + 1)); // 0 stop, 1 diag, 2 up (token sin palabra), 3 left (palabra sin token)
+  const T = new Uint8Array((m + 1) * (n + 1)); // 0 stop, 1 diag, 2 up (token without word), 3 left (word without token)
   const at = (i: number, j: number) => i * (n + 1) + j;
 
   let best = 0;
@@ -157,7 +156,7 @@ export function alignWindow(
       if (sim >= opts.minPairSimilarity) {
         aligned++;
         linesSeen.add(tk.line);
-        lineStarts[tk.line] = wordIdx; // se sobreescribe hacia atrás: queda la primera palabra alineada de la línea
+        lineStarts[tk.line] = wordIdx; // walking backwards, so this ends as the line's first aligned word
         if (lastWord < 0) lastWord = wordIdx;
         firstWord = wordIdx;
       }
@@ -182,9 +181,8 @@ export function alignWindow(
 }
 
 /**
- * Localiza la secuencia de tokens en el texto: votación gruesa y refinamiento
- * fino de los mejores orígenes. Devuelve candidatos ordenados por score,
- * sin solapamientos.
+ * Locates the token sequence in the text: coarse voting, then fine alignment
+ * around the best origins. Returns non-overlapping candidates sorted by score.
  */
 export function matchTokens(
   tokens: Token[],
@@ -204,7 +202,7 @@ export function matchTokens(
     if (c) results.push(c);
   }
   results.sort((a, b) => b.score - a.score);
-  // quitar duplicados: dos candidatos son el mismo tramo si sus spans se solapan en más de la mitad del más corto
+  // two candidates are the same span if they overlap by more than half of the shorter one
   const distinct: AlignmentCandidate[] = [];
   for (const c of results) {
     const dup = distinct.some((d) => {

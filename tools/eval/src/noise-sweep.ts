@@ -1,14 +1,14 @@
 /**
- * Barrido de robustez del matcher con ruido simulado de OCR.
+ * Matcher robustness sweep with simulated OCR noise.
  *
- *   pnpm --filter @kore/eval noise -- --windows 2000 --cer 0.1,0.2,0.3,0.4 --verbose
+ *   pnpm --filter @navtora/eval noise -- --windows 2000 --cer 0.1,0.2,0.3,0.4 --verbose
  *
- * Métricas por tasa de error: top-1 (la posición correcta quedó primera, con o
- * sin confianza), confident-wrong (afirmó una posición equivocada: debe ser 0),
- * abstención (ambiguo o insuficiente) y tiempo medio.
+ * Metrics per error rate: top-1 (correct position ranked first, confident or
+ * not), confident-wrong (asserted a wrong position; must be 0), abstention
+ * (ambiguous or insufficient) and mean time.
  */
-import { loadDataNode } from "@kore/data";
-import { createLocator, makeRng, noisyLines, tokenizeHebrew, type LocateResult } from "@kore/core";
+import { loadDataNode } from "@navtora/data";
+import { createLocator, makeRng, noisyLines, tokenizeHebrew, type LocateResult } from "@navtora/core";
 
 interface Args {
   windows: number;
@@ -61,7 +61,7 @@ function sample(seed: number, minLines: number, maxLines: number): Sample {
   };
 }
 
-/** Acierto: el span predicho se solapa con el tramo real en al menos la mitad del más corto. */
+/** Hit: the predicted span overlaps the true span by at least half of the shorter one. */
 function isHit(res: LocateResult, s: Sample): boolean {
   const best = res.best ?? res.alternatives[0];
   if (!best) return false;
@@ -72,8 +72,8 @@ function isHit(res: LocateResult, s: Sample): boolean {
 
 function main(): void {
   const args = parseArgs(process.argv.slice(2));
-  console.log(`ventanas: ${args.windows} | líneas por ventana: ${args.minLines}-${args.maxLines}`);
-  console.log("cer   top1    conf-ok  conf-WRONG  ambiguo  insuf   ms/ventana");
+  console.log(`windows: ${args.windows} | lines per window: ${args.minLines}-${args.maxLines}`);
+  console.log("cer   top1    conf-ok  conf-WRONG  ambig    insuf   ms/window");
   for (const cer of args.cers) {
     let top1 = 0;
     let confOk = 0;
@@ -96,8 +96,8 @@ function main(): void {
           confWrong++;
           const b = res.best!;
           failures.push(
-            `  ✗ col ${s.column} l${s.firstLine} palabras ${s.startWord}-${s.endWord} → predijo ${b.span.startWord}-${b.span.endWord} (col ${b.standardColumn?.column ?? "?"}) score ${b.confidence.score} margen ${b.confidence.margin} alineados ${b.confidence.alignedTokens}/${res.debug?.tokens}\n` +
-              `    ruido: ${noisy.join(" | ")}`,
+            `  ✗ col ${s.column} l${s.firstLine} words ${s.startWord}-${s.endWord} → predicted ${b.span.startWord}-${b.span.endWord} (col ${b.standardColumn?.column ?? "?"}) score ${b.confidence.score} margin ${b.confidence.margin} aligned ${b.confidence.alignedTokens}/${res.debug?.tokens}\n` +
+              `    noisy: ${noisy.join(" | ")}`,
           );
         }
       } else if (res.status === "ambiguous") ambiguous++;

@@ -16,11 +16,11 @@ export interface ResolveContext {
   layout: LayoutData | null;
 }
 
-/** Estimación de layout a partir de lo que el OCR vio y de lo que se alineó. */
+/** Estimates the scroll's layout from what the OCR saw and what was aligned. */
 export function estimateLayout(ocr: OcrResult, cand: AlignmentCandidate, text: TorahText): LayoutEstimate {
   const linesTranscribed = ocr.lines.length;
   const linesVisible = ocr.lineCountVisible ?? linesTranscribed;
-  // palabras por línea: promedio de palabras del texto entre inicios de líneas alineadas consecutivas
+  // words per line: mean distance between the starts of consecutive aligned lines
   const starts = cand.lineStarts.filter((x): x is number => x !== null);
   let wordsPerLine = 0;
   if (starts.length >= 2) {
@@ -42,7 +42,7 @@ export function estimateLayout(ocr: OcrResult, cand: AlignmentCandidate, text: T
   return { linesTranscribed, linesVisible, wordsPerLine: Math.round(wordsPerLine * 10) / 10, wordsPerColumn };
 }
 
-/** Busca la columna del layout estándar que contiene el span. */
+/** Finds the standard-layout column containing the span. */
 export function matchStandardColumn(cand: AlignmentCandidate, layout: LayoutData | null): StandardColumnMatch | null {
   if (!layout) return null;
   const col = layout.columns.find((c) => cand.startWord >= c.startWord && cand.startWord <= c.endWord);
@@ -72,7 +72,7 @@ export function buildPlacement(
   const aliyot: Placement["aliyot"] = [];
   for (const p of parashotHit) {
     for (const a of p.aliyot) {
-      if (a.n === "M") continue; // el maftir repite el final de la séptima; se informa aparte en etapas posteriores
+      if (a.n === "M") continue; // maftir repeats the end of the seventh aliyah; it is reported separately
       if (a.startWord <= cand.endWord && a.endWord >= cand.startWord) {
         aliyot.push({
           parasha: p.n,

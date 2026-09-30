@@ -1,12 +1,12 @@
 /**
- * Recorta columnas individuales de fotos de hojas enteras de un sefer, como las
- * de la British Library, donde en cada imagen se ven varias columnas chicas.
- * Detecta los espacios entre columnas por proyección vertical de tinta y guarda
- * cada columna escalada a 1800 px de alto, igual que una foto de teléfono.
+ * Crops individual columns out of whole-sheet photos of a sefer (e.g. the
+ * British Library set, where each image shows several small columns). Finds the
+ * gaps between columns by vertical ink projection and saves each column scaled
+ * to 1800 px tall, like a phone photo.
  *
- *   pnpm --filter @kore/eval crop -- --set bl1462 [--min-gap 40] [--limit 10]
+ *   pnpm --filter @navtora/eval crop -- --set bl1462 [--min-gap 40] [--limit 10]
  *
- * Salida: tools/eval/data/columns/<set>-cols/<img>-<k>.jpg
+ * Output: tools/eval/data/columns/<set>-cols/<img>-<k>.jpg
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -26,7 +26,7 @@ interface Band {
   end: number;
 }
 
-/** Bandas de columnas de x: tramos con tinta separados por gaps claros. Trabaja sobre una versión reducida. */
+/** Column bands along x: inked stretches separated by clear gaps. Works on a downscaled copy. */
 async function detectColumns(file: string, minGapPx: number): Promise<{ bands: Band[]; width: number; height: number; scale: number }> {
   const meta = await sharp(file).metadata();
   const width = meta.width ?? 0;
@@ -42,7 +42,7 @@ async function detectColumns(file: string, minGapPx: number): Promise<{ bands: B
   const w = small.info.width;
   const h = small.info.height;
   const px = small.data;
-  // recortar márgenes superior e inferior del análisis: el 15 % de cada extremo suele ser fondo o madera
+  // skip the top and bottom 15%, which are usually background or wood
   const y0 = Math.floor(h * 0.15);
   const y1 = Math.floor(h * 0.85);
   const profile = new Float64Array(w);
@@ -51,7 +51,7 @@ async function detectColumns(file: string, minGapPx: number): Promise<{ bands: B
     for (let y = y0; y < y1; y++) if (px[y * w + x]! < 110) ink++;
     profile[x] = ink / (y1 - y0);
   }
-  // umbral: columna con texto tiene una fracción de píxeles oscuros claramente mayor que un gap
+  // a text column has a clearly higher fraction of dark pixels than a gap
   const sorted = [...profile].sort((a, b) => a - b);
   const median = sorted[Math.floor(sorted.length / 2)]!;
   const threshold = Math.max(0.02, median * 0.5);
@@ -74,7 +74,7 @@ async function detectColumns(file: string, minGapPx: number): Promise<{ bands: B
     }
   }
   if (start >= 0) bands.push({ start, end: w - 1 });
-  // descartar bandas angostas: manchas o bordes
+  // drop narrow bands: stains or edges
   const widths = bands.map((b) => b.end - b.start);
   const medW = [...widths].sort((a, b) => a - b)[Math.floor(widths.length / 2)] ?? 0;
   const kept = bands.filter((b) => b.end - b.start >= medW * 0.55);
@@ -97,10 +97,9 @@ async function main(): Promise<void> {
   for (const f of files) {
     const file = path.join(inDir, f);
     const { bands, width, height } = await detectColumns(file, minGap);
-    // recortar también el margen vertical: quedarse con la franja que contiene tinta
     const padX = Math.round(width * 0.006);
     let k = 0;
-    // de derecha a izquierda, como se leen las columnas
+    // right to left, the order columns are read in
     for (const b of [...bands].reverse()) {
       k++;
       const left = Math.max(0, b.start - padX);
@@ -114,9 +113,9 @@ async function main(): Promise<void> {
         .toFile(out);
       total++;
     }
-    console.log(`${f}: ${bands.length} columnas`);
+    console.log(`${f}: ${bands.length} columns`);
   }
-  console.log(`${total} columnas en ${outDir}`);
+  console.log(`${total} columns in ${outDir}`);
 }
 
 main();

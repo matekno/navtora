@@ -1,6 +1,6 @@
 /**
- * Caché en disco de resultados de OCR por hash de imagen, modelo y versión del
- * prompt. Sólo para evaluación local: la app nunca persiste imágenes ni lecturas.
+ * Disk cache of OCR results keyed by image hash plus a salt (model, prompt
+ * version). For local evaluation only: the app never persists images or readings.
  */
 import { createHash } from "node:crypto";
 import fs from "node:fs";

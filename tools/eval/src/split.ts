@@ -1,12 +1,11 @@
 /**
- * Convierte los PDF y ZIP bajados en una imagen JPEG por columna:
+ * Converts the downloaded PDFs and ZIPs into one JPEG per column:
  * tools/eval/data/columns/<set>/<nnn>.jpg
  *
- *   pnpm --filter @kore/eval split -- [shannon|kokhav|makhonot|bl1462|all] [--scale 1800]
+ *   pnpm --filter @navtora/eval split -- [shannon|kokhav|makhonot|bl1462|all] [--scale 1800]
  *
- * Usa pdftoppm (poppler) y escala cada página para que el lado mayor tenga
- * --scale píxeles, igual que hace la app con la foto del teléfono. El ZIP de la
- * British Library se descomprime tal cual.
+ * Uses pdftoppm (poppler), scaling each page so its long side is --scale pixels,
+ * as the app does with phone photos. The British Library ZIP is unpacked as is.
  */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -35,12 +34,12 @@ function pdfToJpegs(pdf: string, outDir: string, prefix: string, scaleTo: number
 function splitSet(set: string, scaleTo: number): void {
   const outDir = path.join(COLUMNS, set);
   if (fs.existsSync(outDir) && fs.readdirSync(outDir).some((f) => f.endsWith(".jpg"))) {
-    console.log(`✓ ${set}: ya hay columnas en ${outDir}`);
+    console.log(`✓ ${set}: columns already in ${outDir}`);
     return;
   }
   const srcDir = path.join(SCANS, set);
   if (!fs.existsSync(srcDir)) {
-    console.error(`✗ ${set}: no está bajado. Corré download primero.`);
+    console.error(`✗ ${set}: not downloaded. Run download first.`);
     return;
   }
   const files = fs.readdirSync(srcDir).sort();
@@ -70,7 +69,7 @@ function splitSet(set: string, scaleTo: number): void {
       fs.rmSync(path.join(outDir, "_zip"), { recursive: true, force: true });
     }
   }
-  console.log(`✓ ${set}: ${count} imágenes en ${outDir}`);
+  console.log(`✓ ${set}: ${count} images in ${outDir}`);
 }
 
 function main(): void {

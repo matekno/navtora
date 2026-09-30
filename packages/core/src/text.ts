@@ -8,7 +8,7 @@ export const BOOK_NAMES: Record<number, { en: string; he: string; es: string }> 
   5: { en: "Deuteronomy", he: "דברים", es: "Devarim" },
 };
 
-/** Acceso indexado al texto consonántico de la Torá. */
+/** Indexed access to the consonantal Torah text. */
 export class TorahText {
   readonly words: readonly string[];
   readonly wordVerse: readonly number[];
@@ -23,7 +23,7 @@ export class TorahText {
     this.petuchaBefore = new Set(data.petuchaBefore);
     this.gapBefore = new Set(data.gapBefore);
     if (this.words.length !== this.wordVerse.length) {
-      throw new Error(`TorahData inconsistente: ${this.words.length} palabras y ${this.wordVerse.length} referencias`);
+      throw new Error(`Inconsistent TorahData: ${this.words.length} words but ${this.wordVerse.length} verse references`);
     }
   }
 
@@ -33,7 +33,7 @@ export class TorahText {
 
   refOf(wordIndex: number): VerseRef {
     const v = this.verses[this.wordVerse[wordIndex] ?? -1];
-    if (!v) throw new RangeError(`índice de palabra fuera de rango: ${wordIndex}`);
+    if (!v) throw new RangeError(`Word index out of range: ${wordIndex}`);
     return { book: v.book, chapter: v.chapter, verse: v.verse };
   }
 
@@ -41,20 +41,20 @@ export class TorahText {
     return this.refOf(wordIndex).book;
   }
 
-  /** Palabras [start, end] inclusive, unidas por espacio. */
+  /** Words [start, end] inclusive, joined by spaces. */
   slice(start: number, end: number): string {
     const a = Math.max(0, start);
     const b = Math.min(this.words.length - 1, end);
     return this.words.slice(a, b + 1).join(" ");
   }
 
-  /** Primera palabra de un versículo dado, o -1 si no existe. */
+  /** First word index of a verse, or -1 if it does not exist. */
   startOfVerse(ref: VerseRef): number {
     const v = this.verses.find((x) => x.book === ref.book && x.chapter === ref.chapter && x.verse === ref.verse);
     return v ? v.start : -1;
   }
 
-  /** Última palabra de un versículo dado, o -1 si no existe. */
+  /** Last word index of a verse, or -1 if it does not exist. */
   endOfVerse(ref: VerseRef): number {
     const i = this.verses.findIndex((x) => x.book === ref.book && x.chapter === ref.chapter && x.verse === ref.verse);
     if (i < 0) return -1;

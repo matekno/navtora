@@ -1,9 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { LocateResult, Navigation, OcrResult } from "@kore/core";
+import type { LocateResult, Navigation, OcrResult } from "@navtora/core";
+import { useI18n } from "@/lib/i18n/context";
 import { DEFAULT_MODEL, isOcrModel, type OcrModelId } from "@/lib/models";
-import type { TargetInfo } from "@/lib/target-types";
+import { speechForNavigation } from "@/lib/say";
+import { primeSpeech, speak } from "@/lib/speech";
+import type { ScrollInfo, TargetInfo } from "@/lib/target-types";
 import { Camera } from "./Camera";
 import { ConsentGate } from "./ConsentGate";
 import { ManualInput } from "./ManualInput";
@@ -12,11 +15,13 @@ import { ResultCard, type ScanMeta } from "./ResultCard";
 import { TargetPicker } from "./TargetPicker";
 import { UncertainCard } from "./UncertainCard";
 
-const CONSENT_KEY = "kore.consent.v1";
-const MODEL_KEY = "kore.model.v1";
-const TARGETS_KEY = "kore.targets.v1";
-const VOICE_KEY = "kore.voice.v1";
-const WPC_KEY = "kore.wpc.v1";
+const KEYS = {
+  consent: "navtora.consent.v1",
+  model: "navtora.model.v1",
+  targets: "navtora.targets.v1",
+  voice: "navtora.voice.v1",
+  wpc: "navtora.wpc.v1",
+};
 
 type Screen = "consent" | "camera" | "manual" | "result" | "target";
 
@@ -25,6 +30,7 @@ interface Outcome {
   ocr: OcrResult | null;
   meta: ScanMeta | null;
   navigation: Navigation | null;
+  scroll: ScrollInfo | null;
   error: string | null;
 }
 
@@ -33,7 +39,17 @@ interface TargetState {
   active: number;
 }
 
-function readJson<T>(key: string): T | null {
+interface ApiResponse {
+  locate?: LocateResult;
+  ocr?: OcrResult;
+  meta?: ScanMeta;
+  navigation?: Navigation | null;
+  scroll?: ScrollInfo;
+  error?: string;
+}
+
+// localStorage can be missing or throw (private mode); the app works without it
+function load<T>(key: string): T | null {
   try {
     const raw = window.localStorage.getItem(key);
     return raw ? (JSON.parse(raw) as T) : null;
@@ -42,142 +58,146 @@ function readJson<T>(key: string): T | null {
   }
 }
 
-function writeJson(key: string, value: unknown): void {
+function save(key: string, value: unknown): void {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    /* sin almacenamiento */
-  }
+  } catch {}
 }
 
-function speak(text: string): void {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "es-AR";
-  u.rate = 0.95;
-  window.speechSynthesis.speak(u);
+const EMPTY: LocateResult = { status: "insufficient", best: null, alternatives: [], reasons: [], suggestions: [] };
+
+function failure(error: string): Outcome {
+  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error };
 }
 
 export function ScanApp() {
+  const { t, lang, tag } = useI18n();
   const [screen, setScreen] = useState<Screen>("consent");
   const [busy, setBusy] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [returnTo, setReturnTo] = useState<"camera" | "manual">("camera");
   const [model, setModel] = useState<OcrModelId>(DEFAULT_MODEL);
   const [targetState, setTargetState] = useState<TargetState>({ targets: [], active: 0 });
-  const [voice, setVoice] = useState(false);
+  const [autoVoice, setAutoVoice] = useState(false);
+  // words per column seen in this sefer, when it doesn't follow the standard layout
   const wpcRef = useRef<number[]>([]);
 
   useEffect(() => {
-    try {
-      if (window.localStorage.getItem(CONSENT_KEY) === "1") setScreen("camera");
-      const saved = window.localStorage.getItem(MODEL_KEY);
-      if (isOcrModel(saved)) setModel(saved);
-    } catch {
-      /* sin almacenamiento: se pide consentimiento cada vez */
-    }
-    const t = readJson<TargetState>(TARGETS_KEY);
-    if (t && Array.isArray(t.targets)) setTargetState({ targets: t.targets, active: Math.min(t.active ?? 0, Math.max(0, t.targets.length - 1)) });
-    setVoice(readJson<boolean>(VOICE_KEY) === true);
-    wpcRef.current = readJson<number[]>(WPC_KEY) ?? [];
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => undefined);
-    }
+    if (load<boolean>(KEYS.consent)) setScreen("camera");
+    const saved = load<string>(KEYS.model);
+    if (isOcrModel(saved)) setModel(saved);
+    const ts = load<TargetState>(KEYS.targets);
+    if (ts && Array.isArray(ts.targets)) setTargetState({ targets: ts.targets, active: Math.min(ts.active ?? 0, Math.max(0, ts.targets.length - 1)) });
+    setAutoVoice(load<boolean>(KEYS.voice) === true);
+    wpcRef.current = load<number[]>(KEYS.wpc) ?? [];
+    navigator.serviceWorker?.register("/sw.js").catch(() => undefined);
   }, []);
 
   const activeTarget = targetState.targets[targetState.active] ?? null;
 
   const changeModel = useCallback((m: OcrModelId) => {
     setModel(m);
-    try {
-      window.localStorage.setItem(MODEL_KEY, m);
-    } catch {
-      /* ignorar */
-    }
+    save(KEYS.model, m);
   }, []);
 
   const accept = useCallback(() => {
-    try {
-      window.localStorage.setItem(CONSENT_KEY, "1");
-    } catch {
-      /* ignorar */
-    }
+    save(KEYS.consent, true);
     setScreen("camera");
   }, []);
 
   const setTargets = useCallback((targets: TargetInfo[], active: number) => {
     const next = { targets, active };
     setTargetState(next);
-    writeJson(TARGETS_KEY, next);
+    save(KEYS.targets, next);
   }, []);
 
-  const toggleVoice = useCallback(() => {
-    setVoice((v) => {
-      writeJson(VOICE_KEY, !v);
-      if (!v && outcome?.navigation) speak(outcome.navigation.instruction);
+  const toggleAutoVoice = useCallback(() => {
+    setAutoVoice((v) => {
+      save(KEYS.voice, !v);
       return !v;
     });
-  }, [outcome]);
+  }, []);
+
+  const sayNavigation = useCallback(
+    (nav: Navigation | null) => {
+      if (nav && activeTarget) void speak(speechForNavigation(nav, activeTarget.label, t, tag));
+    },
+    [activeTarget, t, tag],
+  );
 
   const handleCapture = useCallback(
     async (blob: Blob) => {
       setBusy(true);
       setReturnTo("camera");
+      if (autoVoice) primeSpeech();
       try {
         const form = new FormData();
-        form.append("image", blob, "columna.jpg");
+        form.append("image", blob, "column.jpg");
         form.append("model", model);
+        form.append("lang", lang);
         if (activeTarget) {
-          form.append("target", JSON.stringify({ word: activeTarget.word, endWord: activeTarget.endWord, label: activeTarget.label, ref: activeTarget.ref }));
+          const { word, endWord, label, ref } = activeTarget;
+          form.append("target", JSON.stringify({ word, endWord, label, ref }));
         }
         if (wpcRef.current.length > 0) {
           const avg = wpcRef.current.reduce((s, x) => s + x, 0) / wpcRef.current.length;
           form.append("wpc", String(Math.round(avg)));
         }
         const res = await fetch("/api/scan", { method: "POST", body: form });
-        const body = (await res.json()) as { locate?: LocateResult; ocr?: OcrResult; meta?: ScanMeta; navigation?: Navigation | null; error?: string };
+        const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) {
-          setOutcome({ locate: emptyResult(), ocr: null, meta: null, navigation: null, error: body.error ?? `Error ${res.status}` });
-        } else {
-          // aprender palabras por columna de este sefer cuando no es el layout estándar
-          const best = body.locate.best;
-          if (best && !best.standardColumn && best.layout.wordsPerColumn) {
-            wpcRef.current = [...wpcRef.current.slice(-4), best.layout.wordsPerColumn];
-            writeJson(WPC_KEY, wpcRef.current);
-          }
-          const navigation = body.navigation ?? null;
-          setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, error: null });
-          if (voice && navigation) speak(navigation.instruction);
+          setOutcome(failure(body.error ?? t.errors.http(res.status)));
+          return;
         }
+        const best = body.locate.best;
+        if (best && !best.standardColumn && best.layout.wordsPerColumn) {
+          wpcRef.current = [...wpcRef.current.slice(-4), best.layout.wordsPerColumn];
+          save(KEYS.wpc, wpcRef.current);
+        }
+        const navigation = body.navigation ?? null;
+        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null });
+        if (autoVoice) sayNavigation(navigation);
       } catch (err) {
-        setOutcome({ locate: emptyResult(), ocr: null, meta: null, navigation: null, error: `No se pudo conectar con el servidor: ${(err as Error).message}` });
+        setOutcome(failure(t.errors.connect((err as Error).message)));
       } finally {
         setBusy(false);
         setScreen("result");
       }
     },
-    [model, activeTarget, voice],
+    [model, lang, activeTarget, autoVoice, sayNavigation, t],
   );
 
-  const handleManual = useCallback(async (text: string) => {
-    setBusy(true);
-    setReturnTo("manual");
-    try {
-      const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) });
-      const body = (await res.json()) as { locate?: LocateResult; error?: string };
-      if (!res.ok || !body.locate) setOutcome({ locate: emptyResult(), ocr: null, meta: null, navigation: null, error: body.error ?? `Error ${res.status}` });
-      else setOutcome({ locate: body.locate, ocr: null, meta: null, navigation: null, error: null });
-    } catch (err) {
-      setOutcome({ locate: emptyResult(), ocr: null, meta: null, navigation: null, error: `No se pudo conectar con el servidor: ${(err as Error).message}` });
-    } finally {
-      setBusy(false);
-      setScreen("result");
-    }
-  }, []);
+  const handleManual = useCallback(
+    async (text: string) => {
+      setBusy(true);
+      setReturnTo("manual");
+      try {
+        const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, lang }) });
+        const body = (await res.json()) as ApiResponse;
+        if (!res.ok || !body.locate) setOutcome(failure(body.error ?? t.errors.http(res.status)));
+        else setOutcome({ locate: body.locate, ocr: null, meta: null, navigation: null, scroll: body.scroll ?? null, error: null });
+      } catch (err) {
+        setOutcome(failure(t.errors.connect((err as Error).message)));
+      } finally {
+        setBusy(false);
+        setScreen("result");
+      }
+    },
+    [lang, t],
+  );
 
   if (screen === "consent") return <ConsentGate onAccept={accept} />;
-  if (screen === "target") return <TargetPicker onPick={(t, a) => { setTargets(t, a); setScreen("camera"); }} onCancel={() => setScreen("camera")} />;
+  if (screen === "target") {
+    return (
+      <TargetPicker
+        onPick={(targets, active) => {
+          setTargets(targets, active);
+          setScreen("camera");
+        }}
+        onCancel={() => setScreen("camera")}
+      />
+    );
+  }
   if (screen === "manual") return <ManualInput busy={busy} onSubmit={handleManual} onBack={() => setScreen("camera")} />;
   if (screen === "result" && outcome) {
     const best = outcome.locate.best;
@@ -188,10 +208,12 @@ export function ScanApp() {
             navigation={outcome.navigation}
             target={activeTarget}
             placement={best}
+            scroll={outcome.scroll}
             meta={outcome.meta}
             hasNext={targetState.active < targetState.targets.length - 1}
-            voice={voice}
-            onToggleVoice={toggleVoice}
+            autoVoice={autoVoice}
+            onToggleAutoVoice={toggleAutoVoice}
+            onListen={() => sayNavigation(outcome.navigation)}
             onAgain={() => setScreen(returnTo)}
             onNextTarget={() => {
               setTargets(targetState.targets, targetState.active + 1);
@@ -201,7 +223,16 @@ export function ScanApp() {
           />
         );
       }
-      return <ResultCard placement={best} ocr={outcome.ocr} meta={outcome.meta} onAgain={() => setScreen(returnTo)} onPickTarget={() => setScreen("target")} />;
+      return (
+        <ResultCard
+          placement={best}
+          ocr={outcome.ocr}
+          meta={outcome.meta}
+          scroll={outcome.scroll}
+          onAgain={() => setScreen(returnTo)}
+          onPickTarget={() => setScreen("target")}
+        />
+      );
     }
     return (
       <UncertainCard
@@ -226,8 +257,4 @@ export function ScanApp() {
       onClearTarget={() => setTargets([], 0)}
     />
   );
-}
-
-function emptyResult(): LocateResult {
-  return { status: "insufficient", best: null, alternatives: [], reasons: [], suggestions: [] };
 }

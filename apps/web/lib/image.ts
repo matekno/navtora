@@ -1,9 +1,9 @@
-/** Utilidades de imagen del lado del cliente: captura, reducción y medición de luz. */
+/** Client-side capture, downscaling and light metering. */
 
 export const MAX_EDGE = 1800;
 export const JPEG_QUALITY = 0.85;
 
-/** Dibuja el frame actual del video en un canvas reducido al lado mayor indicado. */
+/** Draws the current video frame, downscaled so the long edge is at most maxEdge. */
 export function captureFrame(video: HTMLVideoElement, maxEdge = MAX_EDGE): HTMLCanvasElement {
   const vw = video.videoWidth;
   const vh = video.videoHeight;
@@ -12,18 +12,18 @@ export function captureFrame(video: HTMLVideoElement, maxEdge = MAX_EDGE): HTMLC
   canvas.width = Math.round(vw * scale);
   canvas.height = Math.round(vh * scale);
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("No se pudo crear el contexto de dibujo.");
+  if (!ctx) throw new Error("Could not get a 2D canvas context.");
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
   return canvas;
 }
 
 export function canvasToJpeg(canvas: HTMLCanvasElement, quality = JPEG_QUALITY): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("No se pudo codificar la imagen."))), "image/jpeg", quality);
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Could not encode the image."))), "image/jpeg", quality);
   });
 }
 
-/** Luminancia media en [0, 255] sobre una muestra reducida del video. */
+/** Mean luminance in [0, 255] over a small sample of the frame. */
 export function meanLuminance(video: HTMLVideoElement): number {
   const w = 64;
   const h = Math.max(1, Math.round((video.videoHeight / Math.max(1, video.videoWidth)) * w));

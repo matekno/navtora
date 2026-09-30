@@ -29,13 +29,13 @@ importers:
       '@hebcal/leyning':
         specifier: ^10.0.0
         version: 10.0.0
-      '@kore/core':
+      '@navtora/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@kore/data':
+      '@navtora/data':
         specifier: workspace:*
         version: link:../../packages/data
-      '@kore/ocr':
+      '@navtora/ocr':
         specifier: workspace:*
         version: link:../../packages/ocr
       next:
@@ -68,7 +68,7 @@ importers:
 
   packages/data:
     dependencies:
-      '@kore/core':
+      '@navtora/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -84,7 +84,7 @@ importers:
       '@anthropic-ai/sdk':
         specifier: ^0.90.0
         version: 0.90.0(zod@4.5.4)
-      '@kore/core':
+      '@navtora/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -93,13 +93,13 @@ importers:
 
   tools/eval:
     dependencies:
-      '@kore/core':
+      '@navtora/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@kore/data':
+      '@navtora/data':
         specifier: workspace:*
         version: link:../../packages/data
-      '@kore/ocr':
+      '@navtora/ocr':
         specifier: workspace:*
         version: link:../../packages/ocr
       sharp:

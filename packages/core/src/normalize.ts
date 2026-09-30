@@ -1,22 +1,22 @@
 /**
- * Normalización de hebreo al texto consonántico tal como está escrito en un rollo.
+ * Normalizes Hebrew to consonantal text as written in a scroll.
  *
- * Se quitan nikud, taamim, meteg, rafe, puntos de shin/sin y qamats qatan.
- * El maqaf pasa a espacio porque en el sefer las palabras unidas por maqaf se
- * escriben separadas. El sof pasuk y el paseq se eliminan: no existen en el rollo.
- * El signo `?` se conserva como comodín de letra ilegible que puede venir del OCR.
+ * Strips nikkud, cantillation, meteg, rafe, shin/sin dots and qamats qatan.
+ * Maqaf becomes a space because words joined by maqaf are written apart in the
+ * sefer. Sof pasuk and paseq are dropped: they do not exist in the scroll.
+ * `?` is kept as the OCR's wildcard for an illegible letter.
  */
 
 const HEBREW_LETTER = /[א-ת]/;
 
-// Marcas a eliminar: taamim y nikud (0591–05BD), rafe (05BF), paseq (05C0),
-// puntos de shin/sin (05C1, 05C2), sof pasuk (05C3), marcas raras (05C4, 05C5),
-// nun hafukha (05C6), qamats qatan (05C7), controles bidi e invisibles.
+// Cantillation and nikkud (0591–05BD), rafe (05BF), paseq (05C0), shin/sin dots
+// (05C1, 05C2), sof pasuk (05C3), rare marks (05C4, 05C5), nun hafukha (05C6),
+// qamats qatan (05C7), bidi controls and invisible characters.
 const STRIP_RE = /[\u0591-\u05BD\u05BF-\u05C7\u200B-\u200F\u202A-\u202E\u2060\uFEFF]/g;
-// maqaf y guiones equivalentes pasan a espacio
+// maqaf and equivalent dashes
 const MAQAF_RE = /[\u05BE\u2010-\u2015\-]/g;
 
-/** Devuelve el texto consonántico con palabras separadas por un espacio simple. */
+/** Returns consonantal text with words separated by single spaces. */
 export function normalizeHebrew(input: string): string {
   const stripped = input.replace(STRIP_RE, "").replace(MAQAF_RE, " ");
   let out = "";
@@ -27,23 +27,22 @@ export function normalizeHebrew(input: string): string {
       pendingSpace = false;
       out += ch;
     } else {
-      // cualquier otro carácter, incluidos espacios, puntuación, dígitos o latinas, actúa como separador
+      // any other character (whitespace, punctuation, digits, Latin) is a separator
       pendingSpace = true;
     }
   }
   return out;
 }
 
-/** Normaliza y parte en palabras. Descarta tokens vacíos. */
+/** Normalizes and splits into words, dropping empty tokens. */
 export function tokenizeHebrew(input: string): string[] {
   const n = normalizeHebrew(input);
   return n.length === 0 ? [] : n.split(" ");
 }
 
-/** Verdadero si la palabra contiene al menos una letra hebrea. */
 export function hasHebrewLetter(word: string): boolean {
   return HEBREW_LETTER.test(word);
 }
 
-/** Sof pasuk: fin de versículo en el texto fuente con taamim. */
+/** Sof pasuk: end-of-verse mark in the cantillated source text. */
 export const SOF_PASUK = "\u05C3";

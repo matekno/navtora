@@ -1,9 +1,9 @@
-/** Links a Sefaria y tikkun.io para cualquier referencia. Puro, se usa en cliente y servidor. */
-import type { VerseRef } from "@kore/core";
+/** Links to Sefaria and tikkun.io for a verse reference. */
+import type { VerseRef } from "@navtora/core";
 
 const SEFARIA_BOOKS: Record<number, string> = { 1: "Genesis", 2: "Exodus", 3: "Leviticus", 4: "Numbers", 5: "Deuteronomy" };
 
-/** Sefaria, texto bilingüe. Con `end` arma un rango. */
+/** Bilingual Sefaria page; `end` makes it a range. */
 export function sefariaUrl(start: VerseRef, end?: VerseRef): string {
   const book = SEFARIA_BOOKS[start.book] ?? "Genesis";
   let ref = `${book}.${start.chapter}.${start.verse}`;
@@ -13,7 +13,7 @@ export function sefariaUrl(start: VerseRef, end?: VerseRef): string {
   return `https://www.sefaria.org/${ref}?lang=bi`;
 }
 
-/** tikkun.io abre el rollo en el versículo indicado, con el texto tal como está escrito en el sefer. */
+/** tikkun.io shows the verse as it is laid out in the scroll. */
 export function tikkunUrl(ref: VerseRef): string {
   return `https://tikkun.io/#/r/${ref.book}-${ref.chapter}-${ref.verse}`;
 }

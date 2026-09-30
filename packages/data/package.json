@@ -1,9 +1,9 @@
 {
-  "name": "@kore/data",
+  "name": "@navtora/data",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Texto consonántico de la Torá, layout estándar de 245 columnas y parashot/aliot, generados desde tikkun.io",
+  "description": "Consonantal Torah text, standard 245-column layout, and parashot/aliyot, generated from tikkun.io",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@kore/core": "workspace:*"
+    "@navtora/core": "workspace:*"
   },
   "devDependencies": {
     "@hebcal/core": "^6.9.0",
