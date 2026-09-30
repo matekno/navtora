@@ -36,6 +36,17 @@ There is no manual ground truth for these. Instead the check is that predicted p
 
 In the 15th-century scroll, columns that appear twice because consecutive photos overlap were placed 1 and 9 words apart.
 
+## Field tests
+
+Two recordings on physical scrolls, both with the default configuration (Opus 5, effort low, 14 lines). The videos are in `apps/web/public/demo/`.
+
+| Scroll | Target | Placed at | Instruction | Scan time |
+|---|---|---|---|---|
+| Worn sefer, stained and faded parchment | Yom Kippur, first aliyah (Vayikra 16:1, column 131) | Acharei Mot, Vayikra 16:8-15, column 132 | 1 column to the right | 17 s |
+| Printed tikkun | Rosh Hashanah maftir (Bamidbar 29:1, column 190) | Balak, Bamidbar 22:4-10, column 181 | 9 columns to the left | 16 s |
+
+Both placements and column counts match the standard layout data.
+
 ## Does the model read or recite?
 
 A synthetic column had six words replaced by other real Hebrew words. The model transcribed all six as written; none reverted to the biblical text. When the image cut off the start of the lines, it transcribed only what was visible.

@@ -4,6 +4,15 @@ Find your place in a Sefer Torah with your phone. Point the camera at the open c
 
 The app is available in English and Spanish.
 
+## Demo
+
+Two real tests, recorded with an earlier, Spanish-only version of the app. The previews play at 3x; click one for the full video.
+
+| A worn sefer | A printed tikkun |
+|---|---|
+| [![A worn sefer being scanned](apps/web/public/demo/worn-sefer-preview.webp)](apps/web/public/demo/worn-sefer.mp4) | [![A printed tikkun being scanned](apps/web/public/demo/printed-tikkun-preview.webp)](apps/web/public/demo/printed-tikkun.mp4) |
+| Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right. | Target: the maftir of Rosh Hashanah. The book is open at Balak, column 181, and the app says 9 columns to the left. |
+
 ## How it works
 
 NavTorah doesn't recognize the image; it locates text. A vision model (Claude) transcribes the top lines of the column, errors and all. A matcher then finds that transcription in the full Torah text (80,316 words) using diagonal voting and banded alignment, with an edit distance that treats common STA"M letter confusions (ב/כ, ד/ר, ה/ח/ת…) as cheap.
@@ -55,7 +64,7 @@ With the defaults (Claude Opus 5, effort low, 14 lines) a scan takes about 15 se
 
 On a scanned standard-layout sefer with known positions, every column was placed correctly. On three older or non-standard scrolls, one of them from the 15th century, every confident answer was consistent with the neighboring columns, and the app abstained on crops without readable text. With up to 50% of letters wrong in simulated OCR output, the matcher never placed a passage wrongly with confidence. Details and how to reproduce them are in [docs/evaluation.md](docs/evaluation.md).
 
-It has not yet been tested on a real sefer in a synagogue.
+It has also been used on a worn sefer and on a printed tikkun; see the [demo](#demo).
 
 ## Privacy
 

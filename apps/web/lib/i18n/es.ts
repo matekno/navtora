@@ -220,6 +220,18 @@ export const es = {
     screenshotAlt: "La app indicando 47 columnas a la derecha, hacia Bereshit",
     admin: "Admin",
     license: "Código abierto, licencia MIT",
+    demoTitle: "Probada con sifrei reales",
+    demoNote: "Grabados con una versión anterior de la app, sólo en español.",
+    demos: [
+      {
+        title: "Un sefer gastado",
+        caption: "Objetivo: la primera aliá de Yom Kipur. El sefer está abierto en Ajarei Mot, columna 132, y la app indica 1 columna a la derecha.",
+      },
+      {
+        title: "Un tikún impreso",
+        caption: "Objetivo: el maftir de Rosh Hashaná. El tikún está abierto en Balak, columna 181, y la app indica 9 columnas a la izquierda.",
+      },
+    ],
   },
 };
 

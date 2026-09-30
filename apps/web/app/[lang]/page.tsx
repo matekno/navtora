@@ -2,6 +2,10 @@ import { getDictionary } from "@/lib/i18n";
 import { LanguageSwitch } from "@/lib/i18n/context";
 
 const GITHUB_URL = "https://github.com/matekno/navtora";
+const DEMO_VIDEOS = [
+  { name: "worn-sefer", width: 480, height: 1068 },
+  { name: "printed-tikkun", width: 474, height: 1068 },
+];
 
 export default async function Landing({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -42,6 +46,31 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
           </li>
         ))}
       </ol>
+
+      <section className="mt-16">
+        <h2 className="text-2xl font-semibold tracking-tight">{t.landing.demoTitle}</h2>
+        <div className="mt-6 grid gap-8 sm:grid-cols-2">
+          {DEMO_VIDEOS.map((v, i) => (
+            <figure key={v.name} className="flex flex-col items-center">
+              <video
+                src={`/demo/${v.name}.mp4`}
+                poster={`/demo/${v.name}.webp`}
+                width={v.width}
+                height={v.height}
+                controls
+                muted
+                playsInline
+                preload="none"
+                className="w-full max-w-[280px] rounded-[1.5rem] border-4 border-panel-2 bg-panel"
+              />
+              <figcaption className="mt-4 max-w-sm text-[15px] leading-relaxed text-muted">
+                <b className="font-medium text-fg">{t.landing.demos[i]?.title}.</b> {t.landing.demos[i]?.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="mt-6 text-sm text-muted">{t.landing.demoNote}</p>
+      </section>
 
       <p className="mt-10 max-w-2xl text-[15px] leading-relaxed text-muted">{t.landing.status}</p>
 

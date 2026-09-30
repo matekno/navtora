@@ -213,6 +213,18 @@ export const en: Dictionary = {
     screenshotAlt: "The app showing 47 columns to the right, toward Bereshit",
     admin: "Admin",
     license: "Open source, MIT license",
+    demoTitle: "Tested on real scrolls",
+    demoNote: "Recorded with an earlier, Spanish-only version of the app.",
+    demos: [
+      {
+        title: "A worn sefer",
+        caption: "Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right.",
+      },
+      {
+        title: "A printed tikkun",
+        caption: "Target: the maftir of Rosh Hashanah. The book is open at Balak, column 181, and the app says 9 columns to the left.",
+      },
+    ],
   },
 };
 
