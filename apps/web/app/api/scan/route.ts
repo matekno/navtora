@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { navigate, type LocateResult, type NavTarget, type Navigation, type OcrResult } from "@navtora/core";
 import { OcrError, type OcrMeta } from "@navtora/ocr";
+import { requireSession } from "@/lib/auth";
 import { getDictionary, langFromRequest, type Dictionary } from "@/lib/i18n";
 import { getLayout, getLocator } from "@/lib/locator";
 import { getOcrProvider, ocrConfigError } from "@/lib/ocr";
@@ -50,6 +51,8 @@ function describeError(err: unknown, t: Dictionary): string {
  * The image is never stored or logged; only timings and token counts are.
  */
 export async function POST(req: Request): Promise<Response> {
+  const denied = requireSession(req);
+  if (denied) return denied;
   const t0 = Date.now();
   let form: FormData;
   try {

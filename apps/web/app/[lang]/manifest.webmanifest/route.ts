@@ -14,7 +14,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ lang: s
     short_name: t.app.name,
     description: t.app.description,
     lang,
-    start_url: `/${lang}`,
+    start_url: `/${lang}/app`,
     scope: "/",
     display: "standalone",
     orientation: "portrait",

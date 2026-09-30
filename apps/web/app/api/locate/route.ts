@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireSession } from "@/lib/auth";
 import { getDictionary, langFromRequest } from "@/lib/i18n";
 import { getLocator } from "@/lib/locator";
 import { getScrollInfo } from "@/lib/scroll-info";
@@ -7,6 +8,8 @@ export const runtime = "nodejs";
 
 /** Manual entry: typed Hebrew text, one or more lines. Body: { text, lang? } */
 export async function POST(req: Request): Promise<Response> {
+  const denied = requireSession(req);
+  if (denied) return denied;
   let text: unknown;
   let lang: unknown;
   try {

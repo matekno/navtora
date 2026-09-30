@@ -35,6 +35,8 @@ OCR_PROVIDER=oracle OCR_ORACLE_COLUMN=50 pnpm --filter @navtora/web dev:http
 
 The camera only works in a secure context. To test from a phone on the same network, `pnpm dev` runs Next.js with local HTTPS.
 
+The site has a public landing page at `/en` and `/es`; the app itself is at `/en/app` and `/es/app`. If you host a copy, set `ADMIN_PASSWORD` to require a password for the app and its API, so strangers can't spend your API credits. Without it, the app is open.
+
 With the defaults (Claude Opus 5, effort low, 14 lines) a scan takes about 15 seconds and costs about 3 US cents. `OCR_MODEL=claude-sonnet-5` brings it to about 1 cent with similar accuracy on clean scrolls.
 
 ## Repository layout

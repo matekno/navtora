@@ -195,10 +195,32 @@ export const es = {
     missingKey: "Falta ANTHROPIC_API_KEY en el servidor.",
     unknown: "Error desconocido",
     tooLong: "El texto es demasiado largo.",
+    unauthorized: "Hay que iniciar sesión para usar la app.",
     aliyahNotFound: "No encontré esa parashá o aliá.",
     verseNotFound: "Ese versículo no existe en la Torá.",
   },
   links: { sefaria: "Sefaria ↗", tikkun: "tikkun.io ↗" },
+  login: {
+    title: "Acceso de administración",
+    password: "Contraseña",
+    submit: "Entrar",
+    wrong: "Contraseña incorrecta.",
+    back: "Volver",
+  },
+  landing: {
+    headline: "Ubicarse en el Sefer Torá desde el celular",
+    lead: "Apuntás la cámara a la columna abierta y NavTorá te dice libro, parashá y aliá, y cuántas columnas faltan para llegar a la lectura.",
+    steps: [
+      { title: "Elegí la lectura", text: "La de hoy, un jag, una parashá y aliá, o cualquier pasuk." },
+      { title: "Escaneá la columna", text: "La cámara lee unas líneas y las ubica en la Torá. Si no está segura, te lo dice." },
+      { title: "Mové y volvé a escanear", text: "Te dice cuántas columnas mover y para qué lado. Al llegar, en qué línea empieza la lectura." },
+    ],
+    status: "NavTorá está en prueba y todavía no está abierta al público. El código es abierto: podés correr tu propia copia.",
+    github: "Ver en GitHub",
+    screenshotAlt: "La app indicando 47 columnas a la derecha, hacia Bereshit",
+    admin: "Admin",
+    license: "Código abierto, licencia MIT",
+  },
 };
 
 function capitalize(s: string): string {

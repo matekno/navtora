@@ -1,5 +1,5 @@
 // Caches the app shell so it opens offline. Never caches /api.
-const CACHE = "navtora-shell-v2";
+const CACHE = "navtora-shell-v3";
 const SHELL = ["/es", "/en", "/icon.svg"];
 
 self.addEventListener("install", (event) => {

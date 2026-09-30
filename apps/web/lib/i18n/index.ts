@@ -1,6 +1,7 @@
 /** Dictionaries and locale helpers. No React, so API routes and metadata can use it too. */
 import { en } from "./en";
 import { es } from "./es";
+import { readCookie } from "../cookies";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, hasLocale, negotiateLocale, type Locale } from "./locales";
 import type { Dictionary } from "./types";
 
@@ -16,12 +17,5 @@ export function getDictionary(lang: string | null | undefined): Dictionary {
 /** Locale for an API request: explicit field, then cookie, then Accept-Language. */
 export function langFromRequest(req: Request, explicit?: unknown): Locale {
   if (hasLocale(explicit)) return explicit;
-  const prefix = `${LOCALE_COOKIE}=`;
-  const cookie = req.headers
-    .get("cookie")
-    ?.split(";")
-    .map((c) => c.trim())
-    .find((c) => c.startsWith(prefix))
-    ?.slice(prefix.length);
-  return negotiateLocale(cookie, req.headers.get("accept-language"));
+  return negotiateLocale(readCookie(req, LOCALE_COOKIE), req.headers.get("accept-language"));
 }

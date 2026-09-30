@@ -9,7 +9,7 @@ interface I18n {
   /** BCP 47 tag, for dates and speech */
   tag: string;
   t: Dictionary;
-  /** Stores the choice in a cookie and reloads under the other locale. */
+  /** Stores the choice in a cookie and reloads the same page in the other locale. */
   switchTo: (lang: Locale) => void;
 }
 
@@ -24,7 +24,7 @@ export function I18nProvider({ lang, children }: { lang: string; children: React
       t: getDictionary(locale),
       switchTo: (next) => {
         document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
-        window.location.assign(`/${next}`);
+        window.location.assign(window.location.pathname.replace(/^\/(es|en)(?=\/|$)/, `/${next}`));
       },
     };
   }, [lang]);

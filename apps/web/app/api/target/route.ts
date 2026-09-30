@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireSession } from "@/lib/auth";
 import { langFromRequest } from "@/lib/i18n";
 import { listParashot, resolveTargets } from "@/lib/targets";
 import type { TargetRequest } from "@/lib/target-types";
@@ -6,12 +7,16 @@ import type { TargetRequest } from "@/lib/target-types";
 export const runtime = "nodejs";
 
 /** Parashot with their aliyot, for the picker. */
-export async function GET(): Promise<Response> {
+export async function GET(req: Request): Promise<Response> {
+  const denied = requireSession(req);
+  if (denied) return denied;
   return NextResponse.json({ parashot: listParashot() });
 }
 
 /** Resolves a target request (see TargetRequest) to word positions. */
 export async function POST(req: Request): Promise<Response> {
+  const denied = requireSession(req);
+  if (denied) return denied;
   let body: TargetRequest;
   try {
     body = (await req.json()) as TargetRequest;

@@ -188,10 +188,32 @@ export const en: Dictionary = {
     missingKey: "ANTHROPIC_API_KEY is not set on the server.",
     unknown: "Unknown error",
     tooLong: "The text is too long.",
+    unauthorized: "Sign in to use the app.",
     aliyahNotFound: "Could not find that parashah or aliyah.",
     verseNotFound: "That verse does not exist in the Torah.",
   },
   links: { sefaria: "Sefaria ↗", tikkun: "tikkun.io ↗" },
+  login: {
+    title: "Admin sign-in",
+    password: "Password",
+    submit: "Sign in",
+    wrong: "Wrong password.",
+    back: "Back",
+  },
+  landing: {
+    headline: "Find your place in the Sefer Torah with your phone",
+    lead: "Point the camera at the open column. NavTorah tells you the book, parashah and aliyah, and how many columns to move to reach the reading.",
+    steps: [
+      { title: "Choose the reading", text: "Today's, a holiday's, a parashah and aliyah, or any verse." },
+      { title: "Scan the open column", text: "The camera reads a few lines and finds them in the Torah. When it isn't sure, it says so." },
+      { title: "Move and scan again", text: "It tells you how many columns to move and which way. Once there, the line where the reading starts." },
+    ],
+    status: "NavTorah is in testing and not open to the public yet. The code is open source: you can run your own copy.",
+    github: "View on GitHub",
+    screenshotAlt: "The app showing 47 columns to the right, toward Bereshit",
+    admin: "Admin",
+    license: "Open source, MIT license",
+  },
 };
 
 function capitalize(s: string): string {
