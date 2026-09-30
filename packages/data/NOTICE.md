@@ -1,23 +1,24 @@
-# Atribuciones de datos
+# Data attributions
 
 ## tikkun.io
 
-Los archivos en `raw/tikkun/` son copia de `src/data/pages/torah/*.json` y
-`src/data/tables-of-contents/torah.json` del repositorio
-https://github.com/akivajgordon/tikkun.io, commit fijado en `raw/tikkun/COMMIT`.
+The files in `raw/tikkun/` are copies of `src/data/pages/torah/*.json` and
+`src/data/tables-of-contents/torah.json` from
+https://github.com/akivajgordon/tikkun.io, at the commit pinned in `raw/tikkun/COMMIT`.
 
-Licencia MIT, Copyright (c) Akiva Gordon. El texto de la Torá que contiene
-proviene de la API de Sefaria con correcciones del autor.
+MIT License, Copyright (c) Akiva Gordon. Its Torah text comes from the Sefaria
+API with corrections by the author.
 
-Los archivos en `dist/` se derivan de esos datos.
+The files in `dist/` are derived from that data.
 
 ## Sefaria
 
-Cruce del texto consonántico contra la versión "Tanach with Text Only" de
-Sefaria (dominio público). https://www.sefaria.org
+The consonantal text is cross-checked against Sefaria's "Tanach with Text Only"
+version (public domain). https://www.sefaria.org
 
 ## hebcal
 
-`@hebcal/leyning` (BSD-2-Clause) y `@hebcal/core` (GPL-2.0) se usan únicamente
-en el script de build para cruzar los límites de aliot. Ningún código de hebcal
-se incluye en los artefactos ni en la aplicación.
+`@hebcal/leyning` (BSD-2-Clause) and `@hebcal/core` (GPL-2.0) are used by the
+build script to cross-check aliyah boundaries. No hebcal code is included in the
+generated data. The web app uses them at runtime for the reading calendar; see
+the license note in the top-level README.

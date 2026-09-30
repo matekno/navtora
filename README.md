@@ -1,93 +1,68 @@
-# NavTorá
+# NavTorah
 
-App para ubicarse en un Sefer Torá desde el celular: apuntás la cámara a la columna abierta y te dice libro, parashá, aliá y versículos. Nunca afirma una posición de la que no está segura.
+Find your place in a Sefer Torah with your phone. Point the camera at the open column and NavTorah tells you the book, parashah, aliyah and verses, and how many columns to move to reach the reading you want. When it isn't sure, it says so instead of guessing.
 
-Etapa 1, hecha: escanear y reconocer. Etapa 2, hecha: navegar hacia un objetivo. El plan de la etapa 1 está en [docs/plan-etapa-1.md](docs/plan-etapa-1.md). App en producción: https://navtora.vercel.app
+The app is available in English and Spanish.
 
-## Navegación
+## How it works
 
-Se elige a dónde ir de cuatro formas: la lectura de una fecha, el listado de jaguim y fechas especiales del año hebreo, parashá y aliá, o un pasuk. El calendario viene de hebcal y contempla las variantes de cada año: Rosh Hashaná en shabat con siete aliot, jol hamoed según el día, ayunos con lectura de minjá, rosh jodesh y shabatot especiales con maftir de un segundo sefer. Después de cada escaneo la app dice cuántas columnas faltan y para qué lado: a la derecha, hacia el principio del sefer, o a la izquierda, hacia el final. Las columnas son exactas si el sefer sigue el layout estándar, aproximadas y cada vez mejores si no. Al llegar, indica en qué línea empieza la lectura, con qué palabras y qué espacio en blanco la precede, y ofrece pasar a la siguiente aliá. Toda referencia lleva links a Sefaria y a tikkun.io. Las instrucciones se pueden leer en voz alta.
+NavTorah doesn't recognize the image; it locates text. A vision model (Claude) transcribes the top lines of the column, errors and all. A matcher then finds that transcription in the full Torah text (80,316 words) using diagonal voting and banded alignment, with an edit distance that treats common STA"M letter confusions (ב/כ, ד/ר, ה/ח/ת…) as cheap.
 
-## Cómo funciona
+The matcher decides, not the model. Confidence comes from the margin between the best and second-best candidate. Repeated passages, like the offerings of the nesiim in Bamidbar 7, come back as ambiguous with both candidates.
 
-No se reconoce la imagen, se localiza texto. Un modelo de visión transcribe la columna letra por letra, con ruido, y un matcher propio ubica esa transcripción dentro del texto completo de la Torá con votación diagonal y alineamiento local. La confianza sale del margen entre el mejor candidato y el segundo. Si dos pasajes quedan cerca, por ejemplo las ofrendas repetidas de los nesiim, la app lo dice.
+Positions are word indexes, so any layout works. On scrolls with the standard 245-column, 42-line layout it also gives the exact column and line.
 
-## Estructura
+## Navigation
 
-| Paquete | Qué hace |
-|---|---|
-| `packages/data` | Genera `dist/torah.json`, `dist/layout-245.json` y `dist/parashot.json` a partir de tikkun.io (MIT) y cruza aliot con hebcal. |
-| `packages/core` | Motor puro en TypeScript: normalización, índice, distancia con confusiones de STA"M, matcher, resolución y simulador de ruido. |
-| `packages/ocr` | Proveedores de OCR: Claude vision, oráculo para pruebas sin clave, caché en disco para eval. |
-| `apps/web` | PWA con Next.js: cámara, captura, resultado, entrada manual, consentimiento. |
-| `tools/eval` | Descarga de sifrei digitalizados abiertos, corte por columna, barrido con ruido y corrida del pipeline. |
+Pick a target: the reading for a date, a holiday or special day, a parashah and aliyah, or a verse. The calendar comes from [hebcal](https://github.com/hebcal) and handles each year's variants: Rosh Hashanah on Shabbat, chol hamoed, fast days, Rosh Chodesh, and special Shabbatot with a maftir from a second sefer.
 
-## Puesta en marcha
+After each scan NavTorah says how many columns to move and which way. The count is exact on standard-layout scrolls and estimated on others, getting better with each scan. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
+
+## Running it
+
+Requires Node 22+ and pnpm.
 
 ```bash
 pnpm install
-pnpm build:data
 pnpm test
 ```
 
-Para la app hace falta una clave de la API de Anthropic. Copiá `apps/web/.env.example` a `apps/web/.env.local` y completá `ANTHROPIC_API_KEY`. Sin clave se puede probar toda la interfaz con el proveedor oráculo, que devuelve el texto real de una columna con ruido simulado:
+Copy `apps/web/.env.example` to `apps/web/.env.local` and set `ANTHROPIC_API_KEY`. To try the whole UI without a key, use the oracle provider, which returns the real text of a column with simulated OCR noise:
 
 ```bash
-OCR_PROVIDER=oracle OCR_ORACLE_COLUMN=50 pnpm --filter @kore/web dev:http
+OCR_PROVIDER=oracle OCR_ORACLE_COLUMN=50 pnpm --filter @navtora/web dev:http
 ```
 
-La cámara sólo funciona en contexto seguro. Para probar desde el teléfono en la misma red usá `pnpm dev`, que levanta Next con HTTPS local, o una URL de preview de Vercel.
+The camera only works in a secure context. To test from a phone on the same network, `pnpm dev` runs Next.js with local HTTPS.
 
-## Evaluación
+With the defaults (Claude Opus 5, effort low, 14 lines) a scan takes about 15 seconds and costs about 3 US cents. `OCR_MODEL=claude-sonnet-5` brings it to about 1 cent with similar accuracy on clean scrolls.
 
-```bash
-pnpm --filter @kore/eval noise -- --windows 2000 --cer 0.1,0.2,0.3,0.4   # matcher solo, ruido simulado
-pnpm --filter @kore/eval download -- all                                  # baja los escaneos a tools/eval/data/scans
-pnpm --filter @kore/eval split -- all                                     # una imagen por columna, lado mayor 1800 px
-pnpm --filter @kore/eval pipeline -- --set shannon --provider oracle           # cañería completa sin gastar en OCR
-pnpm --filter @kore/eval pipeline -- --set shannon --provider claude --limit 20  # OCR real, cacheado por hash de imagen
-```
+## Repository layout
 
-Los escaneos y la caché de OCR viven en `tools/eval/data/`, fuera del repo. Las fuentes y licencias quedan en `tools/eval/data/scans/SOURCES.md` y en `packages/data/NOTICE.md`.
+| Path | What it does |
+|---|---|
+| `packages/core` | The engine, in plain TypeScript: normalization, index, STA"M-aware distance, matcher, navigation. |
+| `packages/data` | Torah text, the standard 245-column layout, and parashot with aliyot, built from tikkun.io. |
+| `packages/ocr` | OCR providers: Claude vision, an oracle for testing without a key, and a disk cache for evaluation. |
+| `apps/web` | The Next.js PWA: camera, results, navigation, target picker, manual entry. |
+| `tools/eval` | Evaluation on openly licensed scanned sifrei and on simulated noise. |
 
-## Resultado del barrido con ruido
+`packages/data/dist` is committed. `pnpm build:data` regenerates it from `packages/data/raw`.
 
-Matcher solo, 2000 ventanas aleatorias de 6 a 10 líneas, layout estándar:
+## Evaluation
 
-| error por letra | top-1 | afirma bien | afirma mal | se abstiene |
-|---|---|---|---|---|
-| 10 % | 99,9 % | 97,5 % | 0 | 2,5 % |
-| 20 % | 99,9 % | 98,3 % | 0 | 1,7 % |
-| 30 % | 99,9 % | 97,8 % | 0 | 2,2 % |
-| 40 % | 99,8 % | 97,9 % | 0 | 2,2 % |
-| 50 % | 99,6 % | 93,0 % | 0 | 6,9 % |
+On a scanned standard-layout sefer with known positions, every column was placed correctly. On three older or non-standard scrolls, one of them from the 15th century, every confident answer was consistent with the neighboring columns, and the app abstained on crops without readable text. With up to 50% of letters wrong in simulated OCR output, the matcher never placed a passage wrongly with confidence. Details and how to reproduce them are in [docs/evaluation.md](docs/evaluation.md).
 
-## Resultado del OCR real
+It has not yet been tested on a real sefer in a synagogue.
 
-Sefer de Shannon, columnas fotografiadas a 1800 px de lado mayor, todas ubicadas con confianza y ninguna equivocada:
+## Privacy
 
-| configuración | columnas | latencia media | tokens salida | error por letra |
-|---|---|---|---|---|
-| Opus 5, columna completa, esfuerzo medium | 19 | 52 s | 3500 | 0,19 % |
-| Opus 5, 14 líneas, esfuerzo medium | 5 | 24 s | 1100 | |
-| Opus 5, 14 líneas, esfuerzo low | 5 | 15 s | 450 | 0,38 % |
-| Sonnet 5, 14 líneas, esfuerzo low | 5 | 12 s | 420 | 0,60 % |
+A photo leaves the phone only when you tap the read button. It goes to the server and to the Anthropic API for transcription. NavTorah never stores images. The server logs only timings, token counts and the result status.
 
-Con la configuración por defecto, Opus 5, esfuerzo low y 14 líneas, un escaneo cuesta unos 3 centavos de dólar. Sonnet 5 baja a poco más de 1 centavo con precisión similar en sifrei limpios; se elige con `OCR_MODEL`.
+## License
 
-Sifrei con layout no estándar o en mal estado, sin verdad manual: se verifica que la posición predicha avance de una columna a la siguiente, y que en ninguna columna con texto el sistema afirme algo incoherente con sus vecinas.
+The code is [MIT](LICENSE).
 
-| sefer | columnas | con confianza | se abstuvo | incoherencias |
-|---|---|---|---|---|
-| Makhon Ot, Alemania 1920, 190 columnas de ~50 líneas | 8 | 8 | 0 | 0 |
-| Kokhav, moderno, convenciones yemenitas, 226 columnas | 8 | 8 | 0 | 0 |
-| British Library Or. 1462, siglo XV, hojas enteras con 5 a 7 columnas | 8 | 6 | 2, sin texto legible | 0 |
-| British Library Or. 1462, columnas recortadas de esas hojas | 20 | 17 | 3, recortes sin texto | 0 |
-
-En el sefer del siglo XV las columnas repetidas entre hojas consecutivas, por el solapamiento de las fotos, cayeron en la misma posición con 1 y 9 palabras de diferencia.
-
-Prueba de autocompletado: en una columna sintética con seis palabras reemplazadas por otras palabras reales, el modelo transcribió las seis tal como estaban impresas y ninguna volvió al texto bíblico original. Cuando la imagen recortaba el principio de las líneas, transcribió sólo lo visible. La transcripción se comporta como lectura, no como recitado.
-
-## Privacidad
-
-La foto se envía al servidor y al servicio de lectura sólo cuando la persona aprieta Leer. No se guarda ninguna imagen en ningún lado. El servidor registra únicamente tiempos, tokens y estado del resultado.
+- The Torah text and standard layout come from [tikkun.io](https://github.com/akivajgordon/tikkun.io) (MIT). See [packages/data/NOTICE.md](packages/data/NOTICE.md).
+- The web app uses `@hebcal/core` (GPL-2.0) and `@hebcal/leyning` (BSD-2-Clause) for the reading calendar. If you distribute a build of `apps/web`, the GPL applies to that combined work.
+- The scans used for evaluation are not in this repository. `tools/eval/src/download.ts` lists their sources and licenses.
