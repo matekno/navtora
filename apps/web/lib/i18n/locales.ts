@@ -11,12 +11,20 @@ export function hasLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 }
 
+/** Hosted domains with a fixed default language, ahead of Accept-Language. */
+export const HOST_LOCALE: Record<string, Locale> = {
+  "navtora.vercel.app": "es",
+  "navtorah.vercel.app": "en",
+};
+
 /** BCP 47 tag for dates and speech. */
 export const LOCALE_TAG: Record<Locale, string> = { es: "es-AR", en: "en-US" };
 
-/** Cookie first, then Accept-Language by preference, then the default. */
-export function negotiateLocale(cookie: string | undefined | null, acceptLanguage: string | undefined | null): Locale {
+/** Cookie first, then the host's language, then Accept-Language by preference, then the default. */
+export function negotiateLocale(cookie: string | undefined | null, acceptLanguage: string | undefined | null, host?: string | null): Locale {
   if (hasLocale(cookie)) return cookie;
+  const fromHost = host ? HOST_LOCALE[host.toLowerCase().split(":")[0] ?? ""] : undefined;
+  if (fromHost) return fromHost;
   if (acceptLanguage) {
     const ranked = acceptLanguage
       .split(",")

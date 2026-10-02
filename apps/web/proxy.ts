@@ -1,5 +1,5 @@
 /**
- * Redirects / to /es or /en by the NEXT_LOCALE cookie or Accept-Language, and
+ * Redirects / to /es or /en by the NEXT_LOCALE cookie, the domain or Accept-Language, and
  * sends visitors without a session from the app to the login page. API routes
  * check the session themselves.
  */
@@ -11,7 +11,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const lang = localeFromPath(pathname);
   if (!lang) {
-    const locale = negotiateLocale(request.cookies.get(LOCALE_COOKIE)?.value, request.headers.get("accept-language"));
+    const locale = negotiateLocale(request.cookies.get(LOCALE_COOKIE)?.value, request.headers.get("accept-language"), request.headers.get("host"));
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
     return NextResponse.redirect(url);
