@@ -9,11 +9,10 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import sharp from "sharp";
-import * as ort from "onnxruntime-node";
 import { loadDataNode } from "@navtora/data";
 import { createLocator, tokenizeHebrew, type LayoutData, type LocateResult } from "@navtora/core";
-import { batchedRecognizer, LocalOcr, type LocalRead, type OcrImage } from "@navtora/ocr";
+import type { LocalRead } from "@navtora/ocr";
+import { createLocalOcr, DEFAULT_MODEL } from "./local-provider";
 
 interface SynthMeta {
   column: number;
@@ -86,24 +85,14 @@ async function main(): Promise<void> {
     const i = argv.indexOf(k);
     return i >= 0 ? argv[i + 1] : undefined;
   };
-  const modelPath = get("--model") ?? "../../apps/web/public/models/stam-crnn.onnx";
+  const modelPath = get("--model") ?? DEFAULT_MODEL;
   const synthDir = get("--synth");
   const limit = Number(get("--limit") ?? "200");
   const minProb = Number(get("--min-prob") ?? "0.5");
   const verbose = argv.includes("--verbose");
   const real = argv.flatMap((a, i) => (argv[i - 1] === "--real" ? [a] : []));
 
-  const session = await ort.InferenceSession.create(modelPath, { intraOpNumThreads: 4 });
-  const recognize = batchedRecognizer(async (data, dims) => {
-    const out = await session.run({ ink: new ort.Tensor("float32", data, dims) });
-    const t = out.logprobs!;
-    return { data: t.data as Float32Array, dims: t.dims };
-  });
-  const decode = async (image: OcrImage) => {
-    const { data, info } = await sharp(image.bytes).removeAlpha().raw().toBuffer({ resolveWithObject: true });
-    return { data: new Uint8Array(data), width: info.width, height: info.height, channels: 3 as const };
-  };
-  const ocr = new LocalOcr(decode, recognize, { minLetterProb: minProb });
+  const ocr = await createLocalOcr(modelPath, { minLetterProb: minProb });
   const data = loadDataNode();
   const locator = createLocator(data, { debug: true });
 
