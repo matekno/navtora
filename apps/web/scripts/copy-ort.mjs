@@ -9,7 +9,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.resolve(here, "../node_modules/onnxruntime-web/dist");
 const out = path.resolve(here, "../public/ort");
 fs.mkdirSync(out, { recursive: true });
-for (const f of ["ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm"]) {
+// ort.wasm.min.js for the main thread (a classic script), ort.wasm.min.mjs for the worker (ESM)
+for (const f of ["ort.wasm.min.js", "ort.wasm.min.mjs", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm"]) {
   const src = path.join(dist, f);
   const dst = path.join(out, f);
   const stale = !fs.existsSync(dst) || fs.statSync(dst).size !== fs.statSync(src).size;

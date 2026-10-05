@@ -1,30 +1,64 @@
 /**
- * Local OCR in the browser: the photo never leaves the phone. ONNX Runtime Web
- * is loaded from /ort (copied there from node_modules by scripts/copy-ort.mjs)
- * as a classic script, so the bundler never touches its WebAssembly loader.
- * The recognizer model is /models/stam-crnn.onnx.
+ * Local OCR in the browser: the photo never leaves the phone. The reading runs
+ * in a worker (lib/local-ocr.worker.ts) so the screen keeps animating; where a
+ * worker can't start, it runs here instead. ONNX Runtime Web is served from
+ * /ort, copied there from node_modules by scripts/copy-ort.mjs, and kept out
+ * of the bundle. The recognizer model is /models/stam-crnn.onnx.
  */
-import { batchedRecognizer, readColumnLocally, type LineRecognizer, type LocalRead } from "@navtora/ocr/local";
-import { lineYAt } from "@navtora/vision";
+import type { OcrResult } from "@navtora/core";
+import { readColumnLocally, type LineRecognizer } from "@navtora/ocr/local";
+import { createRecognizer, overlayOf, type OrtGlobal, type ReadOverlay } from "./local-ocr-core";
+import type { WorkerRequest, WorkerResponse } from "./local-ocr.worker";
 
-const ORT_SCRIPT = "/ort/ort.wasm.min.js";
-const MODEL_URL = "/models/stam-crnn.onnx";
+export type { ReadOverlay } from "./local-ocr-core";
 
-/** The slice of the onnxruntime-web global this module uses. */
-interface OrtTensor {
-  data: Float32Array;
-  dims: readonly number[];
-}
-interface OrtGlobal {
-  env: { wasm: { wasmPaths?: string; numThreads?: number } };
-  Tensor: new (type: "float32", data: Float32Array, dims: readonly number[]) => OrtTensor;
-  InferenceSession: { create(url: string, opts?: { executionProviders?: string[] }): Promise<OrtSession> };
-}
-interface OrtSession {
-  run(feeds: Record<string, OrtTensor>): Promise<Record<string, OrtTensor>>;
+export interface PhoneRead {
+  result: OcrResult;
+  overlay: ReadOverlay;
+  ms: { vision: number; model: number };
 }
 
-let ready: Promise<LineRecognizer> | null = null;
+// ---- worker
+
+let worker: Worker | null = null;
+let workerBroken = false;
+let nextId = 1;
+const pending = new Map<number, { resolve: (r: WorkerResponse) => void }>();
+
+function getWorker(): Worker | null {
+  if (workerBroken || typeof Worker === "undefined") return null;
+  if (!worker) {
+    try {
+      worker = new Worker(new URL("./local-ocr.worker.ts", import.meta.url), { type: "module" });
+      worker.onmessage = (e: MessageEvent<WorkerResponse>) => {
+        pending.get(e.data.id)?.resolve(e.data);
+        pending.delete(e.data.id);
+      };
+      worker.onerror = () => {
+        // a worker that fails to start: answer what's pending and use the main thread from now on
+        workerBroken = true;
+        worker = null;
+        for (const [id, p] of pending) p.resolve({ id, ok: false, error: "worker failed" });
+        pending.clear();
+      };
+    } catch {
+      workerBroken = true;
+      return null;
+    }
+  }
+  return worker;
+}
+
+function ask(w: Worker, msg: WorkerRequest, transfer: Transferable[] = []): Promise<WorkerResponse> {
+  return new Promise((resolve) => {
+    pending.set(msg.id, { resolve });
+    w.postMessage(msg, transfer);
+  });
+}
+
+// ---- main thread fallback
+
+let mainReady: Promise<LineRecognizer> | null = null;
 
 function loadScript(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -37,59 +71,35 @@ function loadScript(src: string): Promise<void> {
   });
 }
 
-/** Loads the runtime and the model once; later calls reuse them. */
-export function loadLocalOcr(): Promise<LineRecognizer> {
-  if (!ready) {
-    ready = (async () => {
+function loadOnMainThread(): Promise<LineRecognizer> {
+  if (!mainReady) {
+    mainReady = (async () => {
       const g = globalThis as unknown as { ort?: OrtGlobal };
-      if (!g.ort) await loadScript(ORT_SCRIPT);
-      const ort = g.ort;
-      if (!ort) throw new Error("ONNX Runtime did not load.");
-      ort.env.wasm.wasmPaths = "/ort/";
-      // threads need cross-origin isolation, which this site does not set up
-      ort.env.wasm.numThreads = 1;
-      const session = await ort.InferenceSession.create(MODEL_URL, { executionProviders: ["wasm"] });
-      return batchedRecognizer(async (data, dims) => {
-        const out = await session.run({ ink: new ort.Tensor("float32", data, dims) });
-        const t = out.logprobs!;
-        return { data: t.data, dims: t.dims };
-      });
+      if (!g.ort) await loadScript("/ort/ort.wasm.min.js");
+      if (!g.ort) throw new Error("ONNX Runtime did not load.");
+      return createRecognizer(g.ort);
     })();
-    ready.catch(() => {
-      ready = null; // allow a retry after a network error
+    mainReady.catch(() => {
+      mainReady = null; // allow a retry after a network error
     });
   }
-  return ready;
+  return mainReady;
 }
 
-/** What the phone found in the photo, in photo pixels, to draw over it. */
-export interface ReadOverlay {
-  width: number;
-  height: number;
-  /** one polyline per text line, along its center */
-  lines: Array<Array<[number, number]>>;
-}
+// ---- API
 
-export function overlayOf(read: LocalRead, width: number, height: number): ReadOverlay {
-  const L = read.analysis.layout;
-  const s = read.analysis.scale;
-  const lines: ReadOverlay["lines"] = [];
-  for (const line of L?.lines ?? []) {
-    const pts: Array<[number, number]> = [];
-    const n = 12;
-    // right to left, the reading order, so the drawing animation follows it
-    for (let i = 0; i <= n; i++) {
-      const x = line.x1 - ((line.x1 - line.x0) * i) / n;
-      pts.push([Math.round(x / s), Math.round(lineYAt(line, x) / s)]);
-    }
-    lines.push(pts);
+/** Loads the runtime and the model ahead of the first scan. */
+export async function loadLocalOcr(): Promise<void> {
+  const w = getWorker();
+  if (w) {
+    const r = await ask(w, { id: nextId++, type: "load" });
+    if (r.ok) return;
+    if (!workerBroken) throw new Error(r.error);
   }
-  return { width, height, lines };
+  await loadOnMainThread();
 }
 
-/** Decodes the photo and reads it with the local pipeline. */
-export async function readPhotoLocally(blob: Blob): Promise<LocalRead & { overlay: ReadOverlay }> {
-  const recognize = await loadLocalOcr();
+async function pixelsOf(blob: Blob): Promise<ImageData> {
   const bitmap = await createImageBitmap(blob);
   const canvas = document.createElement("canvas");
   canvas.width = bitmap.width;
@@ -98,7 +108,21 @@ export async function readPhotoLocally(blob: Blob): Promise<LocalRead & { overla
   if (!ctx) throw new Error("Could not get a 2D canvas context.");
   ctx.drawImage(bitmap, 0, 0);
   bitmap.close();
-  const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const read = await readColumnLocally(data, width, height, 4, recognize);
-  return { ...read, overlay: overlayOf(read, width, height) };
+  return ctx.getImageData(0, 0, canvas.width, canvas.height);
+}
+
+/** Decodes the photo and reads it with the local pipeline. */
+export async function readPhotoLocally(blob: Blob): Promise<PhoneRead> {
+  const img = await pixelsOf(blob);
+  const w = getWorker();
+  if (w) {
+    const buffer = img.data.buffer;
+    const r = await ask(w, { id: nextId++, type: "read", pixels: buffer, width: img.width, height: img.height }, [buffer]);
+    if (r.ok && r.result && r.overlay && r.ms) return { result: r.result, overlay: r.overlay, ms: r.ms };
+    if (!workerBroken) throw new Error(r.ok ? "empty answer" : r.error);
+    return readPhotoLocally(blob); // the worker died: start over on the main thread
+  }
+  const recognize = await loadOnMainThread();
+  const read = await readColumnLocally(img.data, img.width, img.height, 4, recognize);
+  return { result: read.result, overlay: overlayOf(read, img.width, img.height), ms: read.ms };
 }

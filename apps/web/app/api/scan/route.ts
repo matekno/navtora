@@ -21,6 +21,8 @@ export interface ScanResponse {
   navigation: Navigation | null;
   scroll: ScrollInfo;
   meta: OcrMeta & { totalMs: number };
+  /** whether a Claude model can read here, to offer it after a local reading */
+  claude: boolean;
 }
 
 function parseTarget(raw: FormDataEntryValue | null): NavTarget | null {
@@ -130,7 +132,7 @@ export async function POST(req: Request): Promise<Response> {
     }
     // the client does not need the candidate details
     delete locate.debug;
-    const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs: Date.now() - t0 + (meta.provider === "local" ? meta.ms : 0) } };
+    const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs: Date.now() - t0 + (meta.provider === "local" ? meta.ms : 0) }, claude: ocrConfigError() === null };
     console.info(
       JSON.stringify({
         evt: "scan",

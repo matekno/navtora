@@ -36,6 +36,8 @@ interface Outcome {
   error: string | null;
   /** the reader that produced this outcome, to offer a second opinion after a local reading */
   model: OcrModelId | null;
+  /** the server can read with Claude */
+  claude?: boolean;
 }
 
 interface TargetState {
@@ -49,6 +51,7 @@ interface ApiResponse {
   meta?: ScanMeta;
   navigation?: Navigation | null;
   scroll?: ScrollInfo;
+  claude?: boolean;
   error?: string;
 }
 
@@ -184,7 +187,7 @@ export function ScanApp() {
           save(KEYS.wpc, wpcRef.current);
         }
         const navigation = body.navigation ?? null;
-        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null, model: reader });
+        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null, model: reader, claude: body.claude === true });
         if (autoVoice) sayNavigation(navigation);
       } catch (err) {
         setOutcome({ ...failure(t.errors.connect((err as Error).message)), model: reader });
@@ -277,7 +280,7 @@ export function ScanApp() {
         ocr={outcome.ocr}
         meta={outcome.meta}
         error={outcome.error}
-        secondOpinion={outcome.model === "local" && returnTo === "camera" && lastPhotoRef.current ? { label: OCR_MODELS[FALLBACK_MODEL].label, onTry: secondOpinion } : null}
+        secondOpinion={outcome.model === "local" && outcome.claude && returnTo === "camera" && lastPhotoRef.current ? { label: OCR_MODELS[FALLBACK_MODEL].label, onTry: secondOpinion } : null}
         onAgain={() => setScreen(returnTo)}
         onManual={() => setScreen("manual")}
       />
