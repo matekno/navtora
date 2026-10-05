@@ -45,9 +45,20 @@ export function estimateLayout(ocr: OcrResult, cand: AlignmentCandidate, text: T
 /** Finds the standard-layout column containing the span. */
 export function matchStandardColumn(cand: AlignmentCandidate, layout: LayoutData | null): StandardColumnMatch | null {
   if (!layout) return null;
-  const col = layout.columns.find((c) => cand.startWord >= c.startWord && cand.startWord <= c.endWord);
+  // the column holding most of the span: a noisy reading can pull the last word or two of the
+  // previous column into the start of the span
+  let col: LayoutData["columns"][number] | null = null;
+  let most = 0;
+  for (const c of layout.columns) {
+    const overlap = Math.min(cand.endWord, c.endWord) - Math.max(cand.startWord, c.startWord) + 1;
+    if (overlap > most) {
+      most = overlap;
+      col = c;
+    }
+  }
   if (!col) return null;
-  const firstAligned = cand.lineStarts.find((x): x is number => x !== null);
+  const inColumn = col;
+  const firstAligned = cand.lineStarts.find((x): x is number => x !== null && x >= inColumn.startWord && x <= inColumn.endWord);
   let firstLine: number | null = null;
   if (firstAligned !== undefined) {
     const li = col.lines.findIndex((l) => firstAligned >= l.start && firstAligned <= l.end);

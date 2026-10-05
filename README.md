@@ -74,7 +74,7 @@ On a scanned standard-layout sefer with known positions, every column was placed
 
 It has also been used on a worn sefer and on a printed tikkun; see the [demo](#demo).
 
-The local reader, trained only on synthetic photos, placed all 10 real frames taken from those two recordings, with about 30% of letters wrong or unsure, and 95.5% of 200 synthetic phone photos, with no confident wrong answer. It has not yet been run on the scanned sifrei.
+The local reader, trained only on synthetic photos, placed 213 of 216 columns of the Shannon sefer, all with the exact column number, and about 99% and 80% of the Makhon Ot and British Library scans, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
 
 ## Privacy
 
