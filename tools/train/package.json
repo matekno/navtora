@@ -1,0 +1,15 @@
+{
+  "name": "@navtora/train",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Training data and model for the local recognizer: synthetic columns, line crops cut by @navtora/vision, CRNN training and ONNX export",
+  "scripts": {
+    "crops": "tsx src/crops.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@navtora/vision": "workspace:*",
+    "sharp": "^0.34.5"
+  }
+}

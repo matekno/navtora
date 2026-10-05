@@ -10,11 +10,13 @@ interface Props {
   ocr: OcrResult | null;
   meta: ScanMeta | null;
   error?: string | null;
+  /** offered after a local reading that was not enough */
+  secondOpinion?: { label: string; onTry: () => void } | null;
   onAgain: () => void;
   onManual: () => void;
 }
 
-export function UncertainCard({ result, ocr, meta, error, onAgain, onManual }: Props) {
+export function UncertainCard({ result, ocr, meta, error, secondOpinion, onAgain, onManual }: Props) {
   const { t, lang } = useI18n();
   const ambiguous = result.status === "ambiguous";
   return (
@@ -65,6 +67,15 @@ export function UncertainCard({ result, ocr, meta, error, onAgain, onManual }: P
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {secondOpinion && (
+        <section className="mt-4 rounded-2xl bg-panel p-5">
+          <p className="text-[15px] leading-relaxed text-muted">{t.uncertain.secondOpinionNote}</p>
+          <button type="button" onClick={secondOpinion.onTry} className="mt-4 h-12 w-full rounded-xl border border-accent text-base font-medium text-accent">
+            {t.uncertain.secondOpinion(secondOpinion.label)}
+          </button>
         </section>
       )}
 

@@ -13,12 +13,16 @@
     "cer": "tsx src/cer.ts",
     "autocomplete": "tsx src/autocomplete-test.ts",
     "crop": "tsx src/crop-columns.ts",
-    "consistency": "tsx src/consistency.ts"
+    "consistency": "tsx src/consistency.ts",
+    "segment": "tsx src/segment-debug.ts",
+    "local": "tsx src/local-eval.ts"
   },
   "dependencies": {
     "@navtora/core": "workspace:*",
     "@navtora/data": "workspace:*",
     "@navtora/ocr": "workspace:*",
+    "@navtora/vision": "workspace:*",
+    "onnxruntime-node": "^1.30.0",
     "sharp": "^0.34.5"
   }
 }

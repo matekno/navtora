@@ -16,7 +16,7 @@ export const en: Dictionary = {
   consent: {
     heading: "Before you start",
     bullets: [
-      "A photo leaves your phone only when you tap the read button. It is read by Claude, a model by Anthropic.",
+      "The photo is read on your phone and stays there. If that is not enough, you can ask Claude, a model by Anthropic, to read it: only then is it sent.",
       "**NavTorah stores no photos.** It logs only timings and line counts.",
       "When it isn't sure where you are, it says so instead of guessing.",
       "It's a helper. The sofer and the rav have the final word.",
@@ -43,6 +43,10 @@ export const en: Dictionary = {
     searching: "Searching the Torah…",
     slow: "Taking longer than usual…",
     note: "The photo is not stored.",
+    readingLocal: "Reading on the phone…",
+    foundLines: (n) => `${n} lines read. Searching the Torah…`,
+    loadingLocal: "Getting the reader ready…",
+    noteLocal: "The photo never leaves the phone.",
   },
   result: {
     badge: "Located with confidence",
@@ -75,6 +79,8 @@ export const en: Dictionary = {
     closest: "Closest match, no guarantee",
     typeWords: "Type the words",
     rescan: "Scan again",
+    secondOpinion: (model) => `Try ${model}`,
+    secondOpinionNote: "Reading on the phone was not enough. Claude can read this same photo: it is sent once and not stored.",
     reasons: {
       "few-words": "Too few words were read.",
       "no-match": "What was read doesn't match anywhere in the Torah.",
@@ -178,6 +184,7 @@ export const en: Dictionary = {
   errors: {
     connect: (msg) => `Could not reach the server: ${msg}`,
     http: (status) => `Error ${status}`,
+    local: (msg) => `Could not read on the phone: ${msg}`,
   },
   api: {
     tooLarge: "The image is over 6 MB.",

@@ -56,7 +56,28 @@ button,
   animation: scanline 2.6s ease-in-out infinite;
 }
 
+@keyframes overlay-line {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.overlay-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: overlay-line 0.5s ease-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .overlay-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
   .scanline {
     animation-duration: 6s;
   }

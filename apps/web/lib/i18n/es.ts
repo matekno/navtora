@@ -18,7 +18,7 @@ export const es = {
   consent: {
     heading: "Antes de empezar",
     bullets: [
-      "La foto sale del teléfono sólo cuando tocás el botón de leer. La lee Claude, un modelo de Anthropic.",
+      "La foto se lee en tu teléfono y no sale de ahí. Si así no alcanza, podés pedir que la lea Claude, un modelo de Anthropic: sólo entonces se manda.",
       "**NavTorá no guarda fotos.** Sólo registra tiempos y cantidad de líneas.",
       "Si no está segura de dónde estás, te lo dice en vez de adivinar.",
       "Es una ayuda. La última palabra la tienen el sofer y el rav.",
@@ -45,6 +45,10 @@ export const es = {
     searching: "Buscando en la Torá…",
     slow: "Tarda más de lo normal…",
     note: "La foto no se guarda.",
+    readingLocal: "Leyendo en el teléfono…",
+    foundLines: (n: number) => `${n} renglones leídos. Buscando en la Torá…`,
+    loadingLocal: "Preparando el lector…",
+    noteLocal: "La foto no sale del teléfono.",
   },
   result: {
     badge: "Ubicado con seguridad",
@@ -77,6 +81,8 @@ export const es = {
     closest: "Lo más parecido, sin garantía",
     typeWords: "Tipear palabras",
     rescan: "Volver a escanear",
+    secondOpinion: (model: string) => `Probar con ${model}`,
+    secondOpinionNote: "La lectura en el teléfono no alcanzó. Claude puede leer esta misma foto: se manda una vez y no se guarda.",
     reasons: {
       "few-words": "Se leyeron muy pocas palabras.",
       "no-match": "Lo leído no coincide con ningún lugar de la Torá.",
@@ -185,6 +191,7 @@ export const es = {
   errors: {
     connect: (msg: string) => `No se pudo conectar con el servidor: ${msg}`,
     http: (status: number) => `Error ${status}`,
+    local: (msg: string) => `No se pudo leer en el teléfono: ${msg}`,
   },
   api: {
     tooLarge: "La imagen supera los 6 MB.",

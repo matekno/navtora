@@ -3,12 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/context";
 import { canvasToJpeg, captureFrame, meanLuminance } from "@/lib/image";
+import type { ReadOverlay } from "@/lib/local-ocr";
 import { OCR_MODELS, type OcrModelId } from "@/lib/models";
 import { ScanProgress } from "./ScanProgress";
 
 interface Props {
   busy: boolean;
   model: OcrModelId;
+  /** the reader running now; its photo is set when it was not just taken here (a second opinion) */
+  reading: { model: OcrModelId; photo: Blob | null; overlay?: ReadOverlay } | null;
   onModelChange: (m: OcrModelId) => void;
   onCapture: (blob: Blob) => void;
   onManual: () => void;
@@ -21,9 +24,9 @@ interface Props {
 type CamState = "starting" | "ready" | "denied" | "unavailable";
 
 /** measured typical scan time per model, to pace the progress bar */
-const EXPECTED_MS: Record<OcrModelId, number> = { "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
+const EXPECTED_MS: Record<OcrModelId, number> = { local: 2500, "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
 
-export function Camera({ busy, model, onModelChange, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
+export function Camera({ busy, model, reading, onModelChange, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -69,6 +72,14 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
       streamRef.current = null;
     };
   }, []);
+
+  // a second opinion reads a photo taken earlier: show it frozen
+  useEffect(() => {
+    if (busy && reading?.photo && !photoUrl) {
+      videoRef.current?.pause();
+      setPhotoUrl(URL.createObjectURL(reading.photo));
+    }
+  }, [busy, reading, photoUrl]);
 
   // release the frozen photo when the scan ends
   useEffect(() => {
@@ -124,7 +135,15 @@ export function Camera({ busy, model, onModelChange, onCapture, onManual, target
         {/* framing guide: one tall column */}
         {!busy && <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />}
 
-        {busy && photoUrl && <ScanProgress photoUrl={photoUrl} modelLabel={OCR_MODELS[model].label} expectedMs={EXPECTED_MS[model]} />}
+        {busy && photoUrl && (
+          <ScanProgress
+            photoUrl={photoUrl}
+            local={(reading?.model ?? model) === "local"}
+            modelLabel={OCR_MODELS[reading?.model ?? model].label}
+            expectedMs={EXPECTED_MS[reading?.model ?? model]}
+            overlay={reading?.overlay ?? null}
+          />
+        )}
 
         {!busy && (
           <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex flex-col items-center gap-2 px-4">

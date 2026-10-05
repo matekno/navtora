@@ -2,17 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n/context";
+import type { ReadOverlay } from "@/lib/local-ocr";
 
 interface Props {
   /** object URL of the captured photo, shown frozen */
   photoUrl: string;
+  /** read on the phone: nothing is sent */
+  local: boolean;
   modelLabel: string;
   /** expected scan time, to pace the bar */
   expectedMs: number;
+  /** lines the phone found, drawn over the photo */
+  overlay: ReadOverlay | null;
 }
 
 /** Waiting screen: frozen photo, a scan line sweeping it, and a progress bar paced to the expected time. */
-export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
+export function ScanProgress({ photoUrl, local, modelLabel, expectedMs, overlay }: Props) {
   const { t } = useI18n();
   const [elapsed, setElapsed] = useState(0);
 
@@ -28,7 +33,8 @@ export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
   const secs = Math.floor(elapsed / 1000);
 
   let stage: string;
-  if (elapsed < 1500) stage = t.progress.sending;
+  if (local) stage = overlay ? t.progress.foundLines(overlay.lines.length) : ratio < 1.4 ? t.progress.readingLocal : t.progress.loadingLocal;
+  else if (elapsed < 1500) stage = t.progress.sending;
   else if (ratio < 0.75) stage = t.progress.reading(modelLabel);
   else if (ratio < 1.4) stage = t.progress.searching;
   else stage = t.progress.slow;
@@ -36,6 +42,25 @@ export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
   return (
     <div className="absolute inset-0 bg-ink">
       <img src={photoUrl} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" />
+      {overlay && overlay.lines.length > 0 && (
+        // same geometry as object-cover, so the lines sit on the photo
+        <svg aria-hidden viewBox={`0 0 ${overlay.width} ${overlay.height}`} preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
+          {overlay.lines.map((pts, i) => (
+            <polyline
+              key={i}
+              points={pts.map(([x, y]) => `${x},${y}`).join(" ")}
+              pathLength={1}
+              fill="none"
+              stroke="rgb(245 196 81)"
+              strokeOpacity={0.85}
+              strokeWidth={Math.max(2, overlay.width / 300)}
+              strokeLinecap="round"
+              className="overlay-line"
+              style={{ animationDelay: `${i * 25}ms` }}
+            />
+          ))}
+        </svg>
+      )}
       <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] overflow-hidden rounded-lg border-2 border-accent">
         <div className="scanline absolute inset-x-0 h-24" />
       </div>
@@ -49,7 +74,7 @@ export function ScanProgress({ photoUrl, modelLabel, expectedMs }: Props) {
         <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-line" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)}>
           <div className="h-full rounded-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${progress}%` }} />
         </div>
-        <div className="mt-2 text-xs text-muted">{t.progress.note}</div>
+        <div className="mt-2 text-xs text-muted">{local ? t.progress.noteLocal : t.progress.note}</div>
       </div>
     </div>
   );

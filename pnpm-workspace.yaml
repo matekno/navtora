@@ -5,3 +5,6 @@ packages:
 allowBuilds:
   esbuild: true
   sharp: true
+  # onnxruntime-node ships its CPU binaries; the script only fetches GPU providers
+  onnxruntime-node: false
+  protobufjs: false

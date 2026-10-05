@@ -2,3 +2,18 @@ export { OcrError, type OcrErrorCode, type OcrImage, type OcrMeta, type OcrOutpu
 export { ClaudeVisionOcr, OcrResultSchema, OCR_PROMPT_VERSION, parseEffort, type ClaudeOcrOptions, type OcrEffort } from "./claude";
 export { DiskCachedOcr, imageHash } from "./cache";
 export { OracleOcr, type OracleOptions } from "./oracle";
+export {
+  batchedRecognizer,
+  ctcDecode,
+  LocalOcr,
+  packCrops,
+  unpackLogits,
+  LOCAL_ALPHABET,
+  readColumnLocally,
+  type DecodedImage,
+  type DecodedLine,
+  type LineLogits,
+  type LineRecognizer,
+  type LocalRead,
+  type LocalReadOptions,
+} from "./local";
