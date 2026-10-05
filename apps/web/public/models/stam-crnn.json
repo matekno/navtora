@@ -1,0 +1,7 @@
+{
+ "alphabet": " אבגדהוזחטיכךלמםנןסעפףצץקרשת",
+ "height": 32,
+ "downsample": 4,
+ "input": "ink",
+ "output": "logprobs"
+}

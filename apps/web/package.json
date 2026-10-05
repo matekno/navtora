@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --experimental-https",
-    "dev:http": "next dev",
-    "build": "next build",
+    "dev": "node scripts/copy-ort.mjs && next dev --experimental-https",
+    "dev:http": "node scripts/copy-ort.mjs && next dev",
+    "build": "node scripts/copy-ort.mjs && next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "assets": "node scripts/copy-ort.mjs"
   },
   "dependencies": {
     "@hebcal/core": "^6.9.2",
@@ -16,8 +17,10 @@
     "@navtora/data": "workspace:*",
     "@navtora/ocr": "workspace:*",
     "next": "^16.0.0",
+    "onnxruntime-web": "^1.30.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "@navtora/vision": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.0",

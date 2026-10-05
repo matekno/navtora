@@ -1,18 +1,20 @@
 /**
- * OCR provider selection.
+ * Server-side OCR provider selection. The default "local" model never reaches
+ * the server: the phone reads the photo and posts only the text (see
+ * lib/local-ocr.ts). These providers serve the Claude models.
  *   OCR_PROVIDER=claude  (default) Claude vision; the model can be chosen per request
  *   OCR_PROVIDER=oracle  no API key needed: returns column OCR_ORACLE_COLUMN of the standard layout, with simulated noise
  */
 import "server-only";
 import { ClaudeVisionOcr, OracleOcr, type OcrProvider } from "@navtora/ocr";
 import { getLayout } from "./locator";
-import { DEFAULT_MODEL, isOcrModel, type OcrModelId } from "./models";
+import { isClaudeModel, type ClaudeModelId } from "./models";
 
 const providers = new Map<string, OcrProvider>();
 
-export function defaultModel(): OcrModelId {
+export function defaultModel(): ClaudeModelId {
   const env = process.env.OCR_MODEL;
-  return isOcrModel(env) ? env : DEFAULT_MODEL;
+  return isClaudeModel(env) ? env : "claude-opus-5";
 }
 
 /** "missing-key" when Claude is selected but no API key is set. */
@@ -23,7 +25,7 @@ export function ocrConfigError(): "missing-key" | null {
 
 export function getOcrProvider(model?: string): OcrProvider {
   const kind = process.env.OCR_PROVIDER ?? "claude";
-  const key = kind === "oracle" ? "oracle" : isOcrModel(model) ? model : defaultModel();
+  const key = kind === "oracle" ? "oracle" : isClaudeModel(model) ? model : defaultModel();
   const existing = providers.get(key);
   if (existing) return existing;
 

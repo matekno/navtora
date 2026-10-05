@@ -2,7 +2,7 @@
  * Runs the full pipeline (OCR + matcher) over a set's columns and compares with
  * the known ground truth.
  *
- *   pnpm --filter @navtora/eval pipeline -- --set shannon [--provider claude|oracle] [--limit 20] [--start 1] [--cer 0.2]
+ *   pnpm --filter @navtora/eval pipeline -- --set shannon [--provider claude|oracle|local] [--limit 20] [--start 1] [--cer 0.2]
  *                                          [--model claude-opus-5] [--effort low|medium|high] [--max-lines 14]
  *
  * Ground truth per set lives in tools/eval/truth/<set>.json: { "offset": n } or
@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 import { loadDataNode } from "@navtora/data";
 import { createLocator, type LocateResult } from "@navtora/core";
 import { ClaudeVisionOcr, DiskCachedOcr, OracleOcr, parseEffort, type OcrProvider } from "@navtora/ocr";
+import { createLocalOcr } from "./local-provider";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const COLUMNS = path.resolve(here, "../data/columns");
@@ -36,7 +37,7 @@ interface Truth {
 
 interface Args {
   set: string;
-  provider: "claude" | "oracle";
+  provider: "claude" | "oracle" | "local";
   limit: number;
   start: number;
   cer: number;
@@ -51,7 +52,7 @@ function parseArgs(argv: string[]): Args {
     const k = argv[i]!;
     const v = argv[i + 1];
     if (k === "--set" && v) a.set = v;
-    else if (k === "--provider" && (v === "claude" || v === "oracle")) a.provider = v;
+    else if (k === "--provider" && (v === "claude" || v === "oracle" || v === "local")) a.provider = v;
     else if (k === "--limit" && v) a.limit = Number(v);
     else if (k === "--start" && v) a.start = Number(v);
     else if (k === "--cer" && v) a.cer = Number(v);
@@ -107,7 +108,11 @@ async function main(): Promise<void> {
   };
 
   let provider: OcrProvider;
-  if (args.provider === "oracle") {
+  if (args.provider === "local") {
+    // fast and free: no cache needed
+    provider = await createLocalOcr();
+    console.log("OCR: local reader (vision + stam-crnn)");
+  } else if (args.provider === "oracle") {
     provider = new OracleOcr({
       layout: data.layout,
       columnOf: () => 1, // replaced per file below
@@ -128,7 +133,8 @@ async function main(): Promise<void> {
   }
 
   fs.mkdirSync(RESULTS, { recursive: true });
-  const tag = args.provider === "claude" ? `${args.model ?? process.env.OCR_MODEL ?? "claude-opus-5"}-${args.effort ?? process.env.OCR_EFFORT ?? "low"}-${args.maxLines ?? process.env.OCR_MAX_LINES ?? 14}` : "oracle";
+  const tag =
+    args.provider === "claude" ? `${args.model ?? process.env.OCR_MODEL ?? "claude-opus-5"}-${args.effort ?? process.env.OCR_EFFORT ?? "low"}-${args.maxLines ?? process.env.OCR_MAX_LINES ?? 14}` : args.provider;
   const csvPath = path.join(RESULTS, `${args.set}-${tag}.csv`);
   const rows: string[] = ["file,expected_col,status,pred_col,pred_start,pred_end,hit,score,margin,aligned,tokens,lines,ocr_ms,in_tok,out_tok,cached"];
 
