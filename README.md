@@ -74,6 +74,8 @@ On a scanned standard-layout sefer with known positions, every column was placed
 
 It has also been used on a worn sefer and on a printed tikkun; see the [demo](#demo).
 
+The local reader, trained only on synthetic photos, placed all 10 real frames taken from those two recordings, with about 30% of letters wrong or unsure, and 95.5% of 200 synthetic phone photos, with no confident wrong answer. It has not yet been run on the scanned sifrei.
+
 ## Privacy
 
 With the local reader, the photo never leaves the phone: only the transcribed text goes to the server. A photo is sent only when you choose a Claude model, or ask Claude for a second opinion; then it goes to the server and to the Anthropic API for transcription. NavTorah never stores images. The server logs only timings, token counts and the result status.

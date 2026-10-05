@@ -12,8 +12,8 @@ import path from "node:path";
 import sharp from "sharp";
 import * as ort from "onnxruntime-node";
 import { loadDataNode } from "@navtora/data";
-import { createLocator, tokenizeHebrew, type LocateResult } from "@navtora/core";
-import { batchedRecognizer, LocalOcr, type OcrImage } from "@navtora/ocr";
+import { createLocator, tokenizeHebrew, type LayoutData, type LocateResult } from "@navtora/core";
+import { batchedRecognizer, LocalOcr, type LocalRead, type OcrImage } from "@navtora/ocr";
 
 interface SynthMeta {
   column: number;
@@ -28,6 +28,56 @@ function editDistance(a: string, b: string): number {
     prev = cur;
   }
   return prev[b.length]!;
+}
+
+/** Written (ketiv) consonantal text of a layout line. */
+function writtenText(text: string): string {
+  return tokenizeHebrew(text.replace(/#\[[^\]]*\]/g, "").replace("#(פ)", "")).join(" ");
+}
+
+/**
+ * Letter errors of the text read from a real photo of a known standard column.
+ * The detected lines are consecutive lines of the column; the matcher's
+ * placement gives a first guess of which column line each crop is, refined to
+ * the offset with the fewest errors. Lines are compared as one text, because
+ * a printed tikkun or a sefer may break lines a word earlier or later than the
+ * standard layout.
+ */
+function realLineErrors(read: LocalRead, res: LocateResult, col: LayoutData["columns"][number]) {
+  const layoutLines = read.analysis.layout?.lines ?? [];
+  // result lines skip crops that decoded to nothing; map them back to crops
+  const cropOf: number[] = [];
+  read.decoded.forEach((d, k) => {
+    if (d.text.replace(/[ ?]/g, "").length > 0) cropOf.push(k);
+  });
+  const starts = res.debug?.candidates[0]?.lineStarts ?? [];
+  const guesses = new Set<number>();
+  starts.forEach((w, i) => {
+    if (w === null || w === undefined) return;
+    const li = col.lines.findIndex((l) => l.start <= w && w <= l.end);
+    if (li >= 0 && cropOf[i] !== undefined) for (const d of [-1, 0, 1]) guesses.add(cropOf[i]! - li + d);
+  });
+  let best: { err: number; len: number; unsure: number; letters: number; lines: number } | null = null;
+  for (const offset of guesses) {
+    const got: string[] = [];
+    const want: string[] = [];
+    read.decoded.forEach((d, k) => {
+      const truthLine = col.lines[k - offset];
+      if (!truthLine || layoutLines[k]?.cut) return;
+      const truth = writtenText(truthLine.text);
+      if (!truth) return;
+      got.push(d.text);
+      want.push(truth);
+    });
+    if (want.length < 3) continue;
+    const g = got.join(" ");
+    const t = want.join(" ");
+    const err = editDistance(g, t);
+    if (!best || err / t.length < best.err / best.len) {
+      best = { err, len: t.length, unsure: (g.match(/\?/g) ?? []).length, letters: g.replace(/ /g, "").length, lines: want.length };
+    }
+  }
+  return best;
 }
 
 async function main(): Promise<void> {
@@ -57,6 +107,7 @@ async function main(): Promise<void> {
   const data = loadDataNode();
   const locator = createLocator(data, { debug: true });
 
+  const real_ = { err: 0, len: 0, unsure: 0, letters: 0 };
   const tally = { n: 0, confOk: 0, confWrong: 0, ambiguous: 0, insufficient: 0, ms: 0, cerErr: 0, cerLen: 0 };
   const judge = (res: LocateResult, span: { startWord: number; endWord: number } | null): string => {
     const best = res.best ?? res.alternatives[0];
@@ -105,11 +156,24 @@ async function main(): Promise<void> {
     const res = locator.locate(read.result);
     tally.ms += Date.now() - t0;
     const mark = judge(res, { startWord: c.startWord, endWord: c.endWord });
-    console.log(`${path.basename(file!)} (column ${column}) → ${mark} | ${read.result.lines.length} lines, vision ${read.ms.vision.toFixed(0)} ms, model ${read.ms.model.toFixed(0)} ms`);
+    const cer = realLineErrors(read, res, c);
+    if (cer) {
+      real_.err += cer.err;
+      real_.len += cer.len;
+      real_.unsure += cer.unsure;
+      real_.letters += cer.letters;
+    }
+    console.log(
+      `${path.basename(file!)} (column ${column}) → ${mark} | ${read.result.lines.length} lines, vision ${read.ms.vision.toFixed(0)} ms, model ${read.ms.model.toFixed(0)} ms` +
+        (cer ? ` | CER ${((100 * cer.err) / cer.len).toFixed(1)}% over ${cer.lines} lines, ? ${((100 * cer.unsure) / Math.max(1, cer.letters)).toFixed(1)}%` : ""),
+    );
     if (verbose) {
       read.result.lines.slice(0, 8).forEach((l, i) => console.log(`   ${i}: ${l.text}`));
       console.log(`   truth: ${tokenizeHebrew(c.lines[0]!.text).join(" ")}`);
     }
+  }
+  if (real_.len) {
+    console.log(`real photos: CER ${((100 * real_.err) / real_.len).toFixed(1)}% (a ? counts as an error), ? on ${((100 * real_.unsure) / Math.max(1, real_.letters)).toFixed(1)}% of letters`);
   }
   const pct = (x: number) => `${((100 * x) / Math.max(1, tally.n)).toFixed(1)}%`;
   console.log(

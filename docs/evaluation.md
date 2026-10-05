@@ -36,6 +36,32 @@ There is no manual ground truth for these. Instead the check is that predicted p
 
 In the 15th-century scroll, columns that appear twice because consecutive photos overlap were placed 1 and 9 words apart.
 
+## Local reader (on the phone, no API)
+
+The local reader (`packages/vision` plus a 0.45M-parameter CRNN; see [tools/train](../tools/train/README.md)) was trained only on synthetic photos. The Wikimedia Commons and archive.org scans above could not be downloaded in the environment where it was built, so they have not been run through it yet.
+
+**Synthetic photos it never saw**: 200 windows of 8 to 42 lines from real standard-layout columns, rendered and degraded like phone photos (parchment, stains, uneven light, glare, perspective, curvature, blur, JPEG), with the neighboring columns at the sides.
+
+| Model | Confident, right | Confident, wrong | Abstained | Letter error rate |
+|---|---|---|---|---|
+| Early checkpoint (1/3 epoch) | 95.0% | 0 | 5.0% | 22.9% |
+| Released (5 epochs) | 95.5% | 0 | 4.5% | 14.9% |
+
+Most of the remaining failures come from finding the column, not from reading it.
+
+**Real photos**: the only real photos available were the two field-test recordings below. These are screen recordings at 480 px wide, so a line is about 17 to 23 px high, roughly a quarter of the resolution the app captures. From them come 10 frames: the frozen photo of each test, plus frames from the moments before capture with the camera guide painted out. The letter error rate counts every `?` as an error and compares against the standard layout's text, which the printed tikkun sometimes breaks a word earlier or later, so it is an upper bound.
+
+| Model | Placed (column 132 or 181) | Wrong | Letter error rate | Letters read as `?` |
+|---|---|---|---|---|
+| Early checkpoint | 9 of 10 | 0 | 44.2% | 23.1% |
+| Released | **10 of 10** | 0 | 30.6% | 10.1% |
+
+On the frozen photos the released model's letter error rate is 29.6% for the worn sefer and 18.6% for the printed tikkun. Frames with no scroll in view (the floor, the app's own screens) produce no confident answer.
+
+The threshold below which a letter becomes `?` was swept over these 210 photos: 0.35 gave 94.8% placed, 0.5 and 0.65 gave 95.7%, with no wrong answer at any setting. The app uses 0.5, which keeps more letters for the matcher.
+
+In Chromium, with a fake camera streaming the worn-sefer frame, the app reads the photo in a worker in about 1.2 s and shows the result about 2.8 s after the tap, against about 17 s with Claude Opus 5.
+
 ## Field tests
 
 Two recordings on physical scrolls, both with the default configuration (Opus 5, effort low, 14 lines). The videos are in `apps/web/public/demo/`.
@@ -59,6 +85,7 @@ pnpm --filter @navtora/eval download -- all                                     
 pnpm --filter @navtora/eval split -- all                                          # one image per column, 1800 px long edge
 pnpm --filter @navtora/eval pipeline -- --set shannon --provider oracle           # full pipeline without spending on OCR
 pnpm --filter @navtora/eval pipeline -- --set shannon --provider claude --limit 20 # real OCR, cached by image hash
+pnpm --filter @navtora/eval local -- --synth ../train/data/synth/eval --real photo.png:132   # local reader, no API
 ```
 
 Scans and the OCR cache live in `tools/eval/data/`, which is not committed. Other scripts in `tools/eval` measure letter error rate (`cer`), consistency on scrolls without ground truth (`consistency`), column cropping (`crop`) and the read-or-recite test (`autocomplete`).
