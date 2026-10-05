@@ -74,7 +74,7 @@ On a scanned standard-layout sefer with known positions, every column was placed
 
 It has also been used on a worn sefer and on a printed tikkun; see the [demo](#demo).
 
-The local reader, trained only on synthetic photos, placed 241 of the 246 columns of the Shannon sefer, all with the exact column number (the rest are the nesiim and the two songs in brick layout), 225 of 226 of the Kokhav sefer, 189 of 190 of Makhon Ot and 187 of 233 British Library crops, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
+The local reader, trained only on synthetic photos, placed 241 of the 246 columns of the Shannon sefer, 240 of them with the exact column number (the rest are the nesiim and the two songs in brick layout), 225 of 226 of the Kokhav sefer, 189 of 190 of Makhon Ot and 187 of 233 British Library crops, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
 
 ## Privacy
 
