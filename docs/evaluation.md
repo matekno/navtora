@@ -44,13 +44,14 @@ The local reader (`packages/vision` plus a 0.45M-parameter CRNN; see [tools/trai
 
 | Sefer | Columns | Confident | Wrong | Abstained | Notes |
 |---|---|---|---|---|---|
-| Elihu Shannon, standard layout | 216 of 246 | 213, all with the exact column number | 0 | 2 ambiguous, 1 insufficient | The ambiguous pair is Bamidbar 7, the offerings of the nesiim. The insufficient one is column 78, Shirat HaYam, whose brick layout the line finder doesn't follow. |
+| Elihu Shannon, standard layout | 246 | 241, all with the exact column number | 0 | 2 ambiguous, 3 insufficient | The ambiguous pair is Bamidbar 7, the offerings of the nesiim. The insufficient ones are the songs in brick layout, which the line finder doesn't follow: Shirat HaYam (column 78) and Haazinu (columns 242 and 243). |
+| David Kokhav, Yemenite conventions, 226 columns | 226 | 225 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
 | Makhon Ot, Germany ca. 1920, 190 columns | 190 | 189 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
 | British Library Or. 1462, 15th century, single columns cropped from 55 sheets | 233 | 187 | 0 inconsistent | 45 insufficient, 1 ambiguous | 21 placements go back, all at the first column of a new photo: 16 land on a column already placed (consecutive photos overlap) and 5 fill gaps between columns placed before. |
 
-Reading takes about 0.35 to 0.4 s per column on a CPU in Node. The Shannon pages come from Commons thumbnails 1920 px wide, scaled to 1800 px on the long edge like the scans used for Claude. The rest of Shannon and the Kokhav sefer were still downloading when this was written; Commons rate-limits cloud machines.
+Reading takes about 0.35 to 0.4 s per column on a CPU in Node. The Shannon and Kokhav pages come from Commons thumbnails 1920 px wide (`download --pages`), scaled to 1800 px on the long edge like the scans used for Claude.
 
-At first 13 of the 213 Shannon columns came out one column early. The span was right, but a noisy reading had pulled the last word or two of the previous column into its start, and the column was taken from the first word. The column is now the one holding most of the span.
+At first 13 of the Shannon columns came out one column early. The span was right, but a noisy reading had pulled the last word or two of the previous column into its start, and the column was taken from the first word. The column is now the one holding most of the span.
 
 **Synthetic photos**: 200 windows of 8 to 42 lines from real standard-layout columns, rendered and degraded like phone photos (parchment, stains, uneven light, glare, perspective, curvature, blur, JPEG), with the neighboring columns at the sides.
 
