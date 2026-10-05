@@ -38,9 +38,24 @@ In the 15th-century scroll, columns that appear twice because consecutive photos
 
 ## Local reader (on the phone, no API)
 
-The local reader (`packages/vision` plus a 0.45M-parameter CRNN; see [tools/train](../tools/train/README.md)) was trained only on synthetic photos. The Wikimedia Commons and archive.org scans above could not be downloaded in the environment where it was built, so they have not been run through it yet.
+The local reader (`packages/vision` plus a 0.45M-parameter CRNN; see [tools/train](../tools/train/README.md)) was trained only on synthetic photos; none of the scans below were used to train it.
 
-**Synthetic photos it never saw**: 200 windows of 8 to 42 lines from real standard-layout columns, rendered and degraded like phone photos (parchment, stains, uneven light, glare, perspective, curvature, blur, JPEG), with the neighboring columns at the sides.
+**Scanned sifrei** (`pipeline --provider local`), every column of each set that could be fetched:
+
+| Sefer | Columns | Confident | Wrong | Abstained | Notes |
+|---|---|---|---|---|---|
+| Elihu Shannon, standard layout | 246 | 241, 240 with the exact column number | 0 | 2 ambiguous, 3 insufficient | The ambiguous pair is Bamidbar 7, the offerings of the nesiim. The insufficient ones are the songs in brick layout, which the line finder doesn't follow: Shirat HaYam (column 78) and Haazinu (columns 242 and 243). |
+| David Kokhav, Yemenite conventions, 226 columns | 226 | 225 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
+| Makhon Ot, Germany ca. 1920, 190 columns | 190 | 189 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
+| British Library Or. 1462, 15th century, single columns cropped from 55 sheets | 233 | 187 | 0 inconsistent | 45 insufficient, 1 ambiguous | 21 placements go back, all at the first column of a new photo: 16 land on a column already placed (consecutive photos overlap) and 5 fill gaps between columns placed before. |
+
+Reading takes about 0.35 to 0.4 s per column on a CPU in Node. The Shannon and Kokhav pages come from Commons thumbnails 1920 px wide (`download --pages`), scaled to 1800 px on the long edge like the scans used for Claude.
+
+With the column taken from the span's first word, 15 of the 241 Shannon placements came out one column early. The span was right, but a noisy reading had aligned the photo's first word or two to the last words of the previous column. Words from the bottom of another column can't open a photo of this one, so when a span starts within the last 3 words of a column and runs on into the next, those words are now ignored. 240 of 241 come out exact; the one left (column 97) starts 5 words early, and allowing more words would also move text typed from the true end of a column.
+
+Against the previous rule, compared on everything that has an answer: 2,358 simulated noisy readings inside one column and 388 typed passages across a column boundary give the same column as before; on Shannon, 14 placements and 84 navigations get right and none get worse. On the Kokhav sefer nothing changes. On Makhon Ot 2 of 189 placements change, with 8 navigations better, 8 worse and the same mean error; in a sefer with another layout the standard column is only an estimate either way. Taking the column that holds most of the span was also tried: it fixed all 15, but cut exact navigation on the Kokhav sefer from 74% to 56%.
+
+**Synthetic photos**: 200 windows of 8 to 42 lines from real standard-layout columns, rendered and degraded like phone photos (parchment, stains, uneven light, glare, perspective, curvature, blur, JPEG), with the neighboring columns at the sides.
 
 | Model | Confident, right | Confident, wrong | Abstained | Letter error rate |
 |---|---|---|---|---|

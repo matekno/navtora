@@ -42,12 +42,24 @@ export function estimateLayout(ocr: OcrResult, cand: AlignmentCandidate, text: T
   return { linesTranscribed, linesVisible, wordsPerLine: Math.round(wordsPerLine * 10) / 10, wordsPerColumn };
 }
 
-/** Finds the standard-layout column containing the span. */
+/** a span that starts within this many words of the end of a column, and runs on into the next, starts in the next */
+const MISREAD_LEAD_WORDS = 3;
+
+/**
+ * Finds the standard-layout column of the span's first word. A noisy reading
+ * can align the first word or two of a photo to the last words of the
+ * previous column; those words sit at the bottom of another column, so they
+ * can't open a photo of this one, and are ignored.
+ */
 export function matchStandardColumn(cand: AlignmentCandidate, layout: LayoutData | null): StandardColumnMatch | null {
   if (!layout) return null;
-  const col = layout.columns.find((c) => cand.startWord >= c.startWord && cand.startWord <= c.endWord);
+  let col = layout.columns.find((c) => cand.startWord >= c.startWord && cand.startWord <= c.endWord);
   if (!col) return null;
-  const firstAligned = cand.lineStarts.find((x): x is number => x !== null);
+  if (col.endWord - cand.startWord < MISREAD_LEAD_WORDS && cand.endWord > col.endWord) {
+    col = layout.columns[col.n] ?? col; // columns[n] is column n + 1
+  }
+  const inColumn = col;
+  const firstAligned = cand.lineStarts.find((x): x is number => x !== null && x >= inColumn.startWord && x <= inColumn.endWord);
   let firstLine: number | null = null;
   if (firstAligned !== undefined) {
     const li = col.lines.findIndex((l) => firstAligned >= l.start && firstAligned <= l.end);
