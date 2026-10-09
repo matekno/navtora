@@ -1,10 +1,9 @@
 /**
- * Optional admin password for a hosted copy. When ADMIN_PASSWORD is set, the
- * app pages and the API require a session cookie; when it isn't, everything
- * is open, which is what you want when running it locally.
+ * The admin panel's password. The app itself is open to everyone; ADMIN_PASSWORD
+ * only guards /admin and its API. Without it the panel is disabled.
  *
  * The cookie holds an HMAC keyed by the password, so changing the password
- * signs everyone out.
+ * signs the admin out.
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { readCookie } from "./cookies";
@@ -27,7 +26,7 @@ function safeEqual(a: string, b: string): boolean {
   return x.length === y.length && timingSafeEqual(x, y);
 }
 
-export function authEnabled(): boolean {
+export function adminEnabled(): boolean {
   return password() !== null;
 }
 
@@ -41,13 +40,19 @@ export function checkPassword(input: string): boolean {
   return pw !== null && safeEqual(sign(input), sign(pw));
 }
 
-export function isAuthorized(cookie: string | undefined): boolean {
+/** Whether the cookie is a valid admin session. Always false when the panel is disabled. */
+export function isAdmin(cookie: string | undefined): boolean {
   const token = sessionToken();
-  return token === null || (cookie !== undefined && safeEqual(cookie, token));
+  return token !== null && cookie !== undefined && safeEqual(cookie, token);
 }
 
-/** For API routes: a 401 response when the request has no valid session, otherwise null. */
-export function requireSession(req: Request): Response | null {
-  if (isAuthorized(readCookie(req, SESSION_COOKIE))) return null;
+/** For admin API routes: a 401 response when the request has no admin session, otherwise null. */
+export function requireAdmin(req: Request): Response | null {
+  if (isAdmin(readCookie(req, SESSION_COOKIE))) return null;
   return Response.json({ error: getDictionary(langFromRequest(req)).api.unauthorized }, { status: 401 });
+}
+
+/** Whether the request came over HTTPS, directly or through the reverse proxy. */
+export function isHttps(req: Request): boolean {
+  return req.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() === "https" || new URL(req.url).protocol === "https:";
 }

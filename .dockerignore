@@ -1,0 +1,16 @@
+**/node_modules
+**/.next
+**/*.tsbuildinfo
+*.log
+.git
+.env
+.env.*
+!.env.example
+.vercel
+apps/web/public/ort
+apps/web/data
+data
+tools/eval/data
+tools/train/data
+tools/train/fonts
+tools/train/runs

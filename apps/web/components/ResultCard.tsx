@@ -4,7 +4,6 @@ import type { OcrResult, Placement } from "@navtora/core";
 import { aliyotLabel, capitalize, parashotLabel, versesLabel } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/context";
 import { linksFor } from "@/lib/links";
-import { modelLabel } from "@/lib/models";
 import type { ScrollInfo } from "@/lib/target-types";
 import { Links } from "./Links";
 import { ScrollMap } from "./ScrollMap";
@@ -21,11 +20,13 @@ interface Props {
   ocr: OcrResult | null;
   meta: ScanMeta | null;
   scroll: ScrollInfo | null;
+  /** feedback and dedication, above the meta line */
+  footer?: React.ReactNode;
   onAgain: () => void;
   onPickTarget: () => void;
 }
 
-export function ResultCard({ placement: p, ocr, meta, scroll, onAgain, onPickTarget }: Props) {
+export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, onPickTarget }: Props) {
   const { t, lang } = useI18n();
   const col = p.standardColumn;
   return (
@@ -63,6 +64,7 @@ export function ResultCard({ placement: p, ocr, meta, scroll, onAgain, onPickTar
       </section>
 
       {ocr && <OcrLines ocr={ocr} />}
+      {footer}
       {meta && <MetaLine meta={meta} />}
 
       <div className="mt-auto flex gap-3 pt-6">
@@ -99,9 +101,7 @@ export function OcrLines({ ocr }: { ocr: OcrResult }) {
 export function MetaLine({ meta }: { meta: ScanMeta }) {
   const { t } = useI18n();
   const ms = meta.totalMs ?? meta.ms;
-  const label = modelLabel(meta.model) || meta.provider;
-  if (!label) return null;
-  return <div className="mt-3 text-center text-xs text-muted">{t.meta.readWith(label, ms !== undefined ? Math.round(ms / 1000) : null)}</div>;
+  return <div className="mt-3 text-center text-xs text-muted">{t.meta.readIn(ms !== undefined ? Math.round(ms / 1000) : null)}</div>;
 }
 
 function Row({ label, value, hebrew, hint }: { label: string; value: string; hebrew?: string; hint?: string }) {

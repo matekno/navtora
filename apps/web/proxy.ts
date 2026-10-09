@@ -1,10 +1,10 @@
 /**
  * Redirects / to /es or /en by the NEXT_LOCALE cookie, the domain or Accept-Language, and
- * sends visitors without a session from the app to the login page. API routes
- * check the session themselves.
+ * sends visitors without an admin session from the admin panel to the login page.
+ * API routes check the session themselves.
  */
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, isAuthorized } from "@/lib/auth";
+import { SESSION_COOKIE, isAdmin } from "@/lib/auth";
 import { LOCALE_COOKIE, localeFromPath, negotiateLocale } from "@/lib/i18n/locales";
 
 export function proxy(request: NextRequest) {
@@ -16,8 +16,8 @@ export function proxy(request: NextRequest) {
     url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
     return NextResponse.redirect(url);
   }
-  const inApp = pathname === `/${lang}/app` || pathname.startsWith(`/${lang}/app/`);
-  if (inApp && !isAuthorized(request.cookies.get(SESSION_COOKIE)?.value)) {
+  const inAdmin = pathname === `/${lang}/admin` || pathname.startsWith(`/${lang}/admin/`);
+  if (inAdmin && !isAdmin(request.cookies.get(SESSION_COOKIE)?.value)) {
     const url = request.nextUrl.clone();
     url.pathname = `/${lang}/login`;
     return NextResponse.redirect(url);

@@ -1,14 +1,22 @@
 import { Frank_Ruhl_Libre } from "next/font/google";
+import { DedicationNote } from "@/components/DedicationNote";
 import { AutoplayVideo } from "@/components/landing/AutoplayVideo";
 import { CountUp } from "@/components/landing/CountUp";
 import { ScrollStory } from "@/components/landing/ScrollStory";
-import { getDictionary } from "@/lib/i18n";
+import { SupportPanel } from "@/components/SupportPanel";
+import { activeDedications } from "@/lib/dedications";
+import { DEFAULT_LOCALE, getDictionary, hasLocale } from "@/lib/i18n";
 import { LanguageSwitch } from "@/lib/i18n/context";
 import { landingStory } from "@/lib/landing-story";
+import { getSupport } from "@/lib/support";
+import { hasSupport } from "@/lib/support-types";
 
 const scrollFont = Frank_Ruhl_Libre({ subsets: ["hebrew"], weight: ["400", "500"], variable: "--font-scroll", display: "swap" });
 
 const GITHUB_URL = "https://github.com/matekno/navtora";
+// the week's dedication and the contact settings are read on each request
+export const dynamic = "force-dynamic";
+
 const DEMO_VIDEOS = [
   { name: "worn-sefer", width: 480, height: 1068 },
   { name: "printed-tikkun", width: 474, height: 1068 },
@@ -27,6 +35,8 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
   const t = getDictionary(lang);
   const story = landingStory();
   const words = t.landing.headline.split(" ");
+  const support = getSupport();
+  const dedications = activeDedications(hasLocale(lang) ? lang : DEFAULT_LOCALE);
 
   return (
     <div className={`${scrollFont.variable} landing overflow-x-clip`}>
@@ -47,6 +57,9 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
               {t.landing.nav.code}
             </a>
             <LanguageSwitch className="h-8 rounded-full border border-line px-3 text-sm text-muted hover:text-fg" />
+            <a href={`/${t.lang}/app`} className="inline-flex h-8 items-center rounded-full bg-accent px-3 text-sm font-semibold text-ink transition hover:brightness-110">
+              {t.landing.nav.app}
+            </a>
           </nav>
         </div>
       </header>
@@ -95,13 +108,14 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
                 {t.landing.lead}
               </p>
               <div className="rise mt-9 flex flex-wrap gap-3" style={{ "--d": `${300 + words.length * 70}ms` } as React.CSSProperties}>
-                <a href="#how" className="inline-flex h-12 items-center gap-2 rounded-2xl bg-accent px-6 text-base font-semibold text-ink transition hover:brightness-110 active:scale-[0.98]">
+                <a href={`/${t.lang}/app`} className="inline-flex h-12 items-center gap-2 rounded-2xl bg-accent px-6 text-base font-semibold text-ink transition hover:brightness-110 active:scale-[0.98]">
+                  {t.landing.ctaApp} <span aria-hidden>→</span>
+                </a>
+                <a href="#how" className="inline-flex h-12 items-center gap-2 rounded-2xl border border-line px-5 text-base text-fg transition hover:bg-panel">
                   {t.landing.ctaHow} <span aria-hidden>↓</span>
                 </a>
-                <a href={GITHUB_URL} className="inline-flex h-12 items-center gap-2 rounded-2xl border border-line px-5 text-base text-fg transition hover:bg-panel">
-                  <GitHubMark /> {t.landing.github}
-                </a>
               </div>
+              <DedicationNote dedications={dedications} className="mt-8 max-w-md" />
             </div>
 
             <div className="phone-tilt relative mx-auto">
@@ -171,7 +185,10 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
             <h2 className="relative text-3xl font-semibold tracking-tight sm:text-4xl">{t.landing.openTitle}</h2>
             <p className="relative mt-4 max-w-2xl text-lg leading-relaxed text-muted">{t.landing.status}</p>
             <div className="relative mt-8 flex flex-wrap gap-3">
-              <a href={GITHUB_URL} className="inline-flex h-12 items-center gap-2 rounded-2xl bg-accent px-6 text-base font-semibold text-ink transition hover:brightness-110">
+              <a href={`/${t.lang}/app`} className="inline-flex h-12 items-center gap-2 rounded-2xl bg-accent px-6 text-base font-semibold text-ink transition hover:brightness-110">
+                {t.landing.ctaApp} <span aria-hidden>→</span>
+              </a>
+              <a href={GITHUB_URL} className="inline-flex h-12 items-center gap-2 rounded-2xl border border-line px-5 text-base text-fg transition hover:bg-panel-2">
                 <GitHubMark /> {t.landing.github}
               </a>
               <a href={`${GITHUB_URL}#running-it`} className="inline-flex h-12 items-center rounded-2xl border border-line px-5 text-base text-fg transition hover:bg-panel-2">
@@ -180,6 +197,15 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
             </div>
           </div>
         </section>
+
+        {hasSupport(support) && (
+          <section id="support" className="scroll-mt-14 px-6 pb-24">
+            <div className="reveal mx-auto max-w-xl">
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.landing.supportTitle}</h2>
+              <SupportPanel support={support} className="mt-6" />
+            </div>
+          </section>
+        )}
       </main>
 
       <footer className="mx-auto flex max-w-6xl items-center justify-between px-6 pb-10 text-sm text-muted">

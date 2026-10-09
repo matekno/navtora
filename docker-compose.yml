@@ -1,0 +1,29 @@
+# NavTorah on your server. Settings come from .env next to this file (see .env.example).
+#   cp .env.example .env    # then fill it in
+#   docker compose up -d --build
+# The app listens on BIND_ADDRESS:PORT (127.0.0.1:3000 by default) for your reverse
+# proxy, which must serve it over HTTPS: phones only open the camera on HTTPS.
+services:
+  navtora:
+    build: .
+    image: navtora:latest
+    restart: unless-stopped
+    environment:
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      CONTACT_WHATSAPP: ${CONTACT_WHATSAPP:-}
+      DONATE_URL: ${DONATE_URL:-}
+      TZ: ${TZ:-UTC}
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:3000"
+    volumes:
+      # SQLite database (navtora.db) and the photos sent with feedback
+      - navtora-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  navtora-data:

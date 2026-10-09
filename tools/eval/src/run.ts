@@ -19,7 +19,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadDataNode } from "@navtora/data";
 import { createLocator, type LocateResult } from "@navtora/core";
-import { ClaudeVisionOcr, DiskCachedOcr, OracleOcr, parseEffort, type OcrProvider } from "@navtora/ocr";
+import { DiskCachedOcr, OracleOcr, type OcrProvider } from "@navtora/ocr";
+import { ClaudeVisionOcr, parseEffort } from "./claude-ocr";
 import { createLocalOcr } from "./local-provider";
 
 const here = path.dirname(fileURLToPath(import.meta.url));

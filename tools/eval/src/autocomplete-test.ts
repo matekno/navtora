@@ -17,7 +17,7 @@ import os from "node:os";
 import path from "node:path";
 import { loadDataNode } from "@navtora/data";
 import { makeRng, tokenizeHebrew } from "@navtora/core";
-import { ClaudeVisionOcr, parseEffort } from "@navtora/ocr";
+import { ClaudeVisionOcr, parseEffort } from "./claude-ocr";
 
 function arg(k: string): string | undefined {
   const i = process.argv.indexOf(k);

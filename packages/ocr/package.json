@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "OCR providers for Sefer Torah columns: local (vision + CRNN), Claude vision, an eval oracle, and a disk cache",
+  "description": "OCR providers for Sefer Torah columns: local (vision + CRNN), an eval oracle, and a disk cache",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -15,9 +15,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.90.0",
     "@navtora/core": "workspace:*",
-    "zod": "^4.0.0",
     "@navtora/vision": "workspace:*"
   }
 }

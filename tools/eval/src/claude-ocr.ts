@@ -16,7 +16,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
-import { OcrError, type OcrImage, type OcrOutput, type OcrProvider } from "./provider";
+import { OcrError, type OcrImage, type OcrOutput, type OcrProvider } from "@navtora/ocr";
 
 export const OCR_PROMPT_VERSION = "2026-09-06.2";
 
