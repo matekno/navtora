@@ -1,5 +1,5 @@
-// Caches the app shell so it opens offline. Never caches /api.
-const CACHE = "navtora-shell-v3";
+// Caches the app shell so it opens offline. Never caches /api or the admin pages.
+const CACHE = "navtora-shell-v4";
 const SHELL = ["/es", "/en", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -14,7 +14,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if (event.request.method !== "GET" || url.pathname.startsWith("/api/")) return;
+  if (event.request.method !== "GET" || url.pathname.startsWith("/api/") || /^\/(es|en)\/(admin|login)(\/|$)/.test(url.pathname)) return;
   event.respondWith(
     fetch(event.request)
       .then((res) => {

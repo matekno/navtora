@@ -99,8 +99,8 @@ pnpm --filter @navtora/eval noise -- --windows 2000 --cer 0.1,0.2,0.3,0.4       
 pnpm --filter @navtora/eval download -- all                                       # scans into tools/eval/data/scans
 pnpm --filter @navtora/eval split -- all                                          # one image per column, 1800 px long edge
 pnpm --filter @navtora/eval pipeline -- --set shannon --provider oracle           # full pipeline without spending on OCR
-pnpm --filter @navtora/eval pipeline -- --set shannon --provider claude --limit 20 # real OCR, cached by image hash
+pnpm --filter @navtora/eval pipeline -- --set shannon --provider claude --limit 20 # Claude OCR for comparison, cached by image hash
 pnpm --filter @navtora/eval local -- --synth ../train/data/synth/eval --real photo.png:132   # local reader, no API
 ```
 
-Scans and the OCR cache live in `tools/eval/data/`, which is not committed. Other scripts in `tools/eval` measure letter error rate (`cer`), consistency on scrolls without ground truth (`consistency`), column cropping (`crop`) and the read-or-recite test (`autocomplete`).
+The Claude provider is only in `tools/eval`, to compare readers; the app doesn't use it. It reads `ANTHROPIC_API_KEY` from the environment or from `tools/eval/.env.local`. Scans and the OCR cache live in `tools/eval/data/`, which is not committed. Other scripts in `tools/eval` measure letter error rate (`cer`), consistency on scrolls without ground truth (`consistency`), column cropping (`crop`) and the read-or-recite test (`autocomplete`).
