@@ -6,12 +6,12 @@ The app is available in English and Spanish.
 
 ## Demo
 
-Two real tests, recorded with an earlier, Spanish-only version of the app. The previews play at 3x; click one for the full video.
+Three real tests. The first two were recorded with the current version, which reads the column on the phone; the third, with an earlier Spanish-only version that sent the photo to Claude. The previews play at 3x; click one for the full video.
 
-| A worn sefer | A printed tikkun |
-|---|---|
-| [![A worn sefer being scanned](apps/web/public/demo/worn-sefer-preview.webp)](apps/web/public/demo/worn-sefer.mp4) | [![A printed tikkun being scanned](apps/web/public/demo/printed-tikkun-preview.webp)](apps/web/public/demo/printed-tikkun.mp4) |
-| Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right. | Target: the maftir of Rosh Hashanah. The book is open at Balak, column 181, and the app says 9 columns to the left. |
+| Two columns away | Across the scroll | A worn sefer |
+|---|---|---|
+| [![A sefer open at Masei being scanned](apps/web/public/demo/masei-to-devarim-preview.webp)](apps/web/public/demo/masei-to-devarim.mp4) | [![A sefer open at Balak being scanned](apps/web/public/demo/balak-to-noach-preview.webp)](apps/web/public/demo/balak-to-noach.mp4) | [![A worn sefer being scanned](apps/web/public/demo/worn-sefer-preview.webp)](apps/web/public/demo/worn-sefer.mp4) |
+| Target: Devarim 1:1. The scroll is open at Masei, column 198, and the app says 2 columns to the left. After moving it, the start of Devarim comes into view. | Target: the first aliyah of Noach. The scroll is open at Balak, column 184, and the app says 178 columns to the right. | Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right. |
 
 ## How it works
 
@@ -72,7 +72,7 @@ A local scan takes a second or two and costs nothing. With Claude (Opus 5, effor
 
 On a scanned standard-layout sefer with known positions, every column was placed correctly. On three older or non-standard scrolls, one of them from the 15th century, every confident answer was consistent with the neighboring columns, and the app abstained on crops without readable text. With up to 50% of letters wrong in simulated OCR output, the matcher never placed a passage wrongly with confidence. Details and how to reproduce them are in [docs/evaluation.md](docs/evaluation.md).
 
-It has also been used on a worn sefer and on a printed tikkun; see the [demo](#demo).
+It has also been used on a worn sefer, a printed tikkun and a third sefer; see the [demo](#demo) and the [field tests](docs/evaluation.md#field-tests).
 
 The local reader, trained only on synthetic photos, placed 241 of the 246 columns of the Shannon sefer, 240 of them with the exact column number (the rest are the nesiim and the two songs in brick layout), 225 of 226 of the Kokhav sefer, 189 of 190 of Makhon Ot and 187 of 233 British Library crops, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
 

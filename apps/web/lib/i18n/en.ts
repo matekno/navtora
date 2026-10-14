@@ -229,18 +229,23 @@ export const en: Dictionary = {
       { value: 80316, suffix: "", label: "words of Torah, all indexed" },
       { value: 0, suffix: "", label: "confident wrong answers in 2,000 trials, even with half the letters misread" },
       { value: 245, suffix: "", label: "columns in the standard scroll, with exact column and line" },
-      { value: 15, suffix: " s", label: "per scan, from photo to answer" },
+      { value: 3, suffix: " s", label: "per scan, from photo to answer" },
     ],
-    demoTitle: "Tested on real scrolls",
-    demoNote: "Recorded with an earlier, Spanish-only version of the app.",
+    demoTitle: "Tested in real shuls",
+    demoNote:
+      "The first two were recorded with the current version. The third, with an earlier Spanish-only version that sent the photo to the cloud and took 17 s; the app now reads it on the phone.",
     demos: [
+      {
+        title: "Two columns away",
+        caption: "Target: Devarim 1:1. The scroll is open at Masei, column 198, and the app says 2 columns to the left. After moving it, the start of Devarim comes into view.",
+      },
+      {
+        title: "Across the scroll",
+        caption: "Target: the first aliyah of Noach. The scroll is open at Balak, column 184, and the app says 178 columns to the right.",
+      },
       {
         title: "A worn sefer",
         caption: "Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right.",
-      },
-      {
-        title: "A printed tikkun",
-        caption: "Target: the maftir of Rosh Hashanah. The book is open at Balak, column 181, and the app says 9 columns to the left.",
       },
     ],
     openTitle: "Open source",
