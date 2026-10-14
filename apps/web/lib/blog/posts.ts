@@ -19,12 +19,12 @@ export const POSTS: PostMeta[] = [
     date: "2026-10-14",
     minutes: 9,
     title: {
-      es: "Preparar el sefer antes de Shabat: la halajá y las fuentes",
-      en: "Preparing the sefer before Shabbat: the halacha and the sources",
+      es: "Por qué NavTorá se usa antes de Shabat",
+      en: "Why NavTorah is used before Shabbat",
     },
     description: {
-      es: "NavTorá es para dejar el rollo listo antes de Shabat y de Iom Tov, no para usarla en Shabat. Por qué preparar el rollo antes, y por qué el teléfono queda afuera, con las fuentes.",
-      en: "NavTorah is for getting the scroll ready before Shabbat and Yom Tov, not for use on Shabbat. Why prepare the scroll beforehand, and why the phone stays out, with the sources.",
+      es: "NavTorá se usa la víspera de Shabat y de Iom Tov para dejar el rollo listo. Acá están las fuentes sobre preparar el rollo antes y sobre por qué el celular no se usa en Shabat.",
+      en: "NavTorah is used the day before Shabbat and Yom Tov to get the scroll ready. Here are the sources on preparing the scroll beforehand and on why phones aren't used on Shabbat.",
     },
   },
   {
@@ -32,12 +32,12 @@ export const POSTS: PostMeta[] = [
     date: "2026-10-14",
     minutes: 10,
     title: {
-      es: "De una foto a la columna exacta",
-      en: "From a photo to the exact column",
+      es: "Cómo NavTorá sabe en qué columna está abierto el sefer",
+      en: "How NavTorah knows which column the sefer is open at",
     },
     description: {
-      es: "Seguimos una foto real de un sefer, paso a paso: cómo la app separa la tinta del pergamino, encuentra los renglones, los lee y los ubica entre las 80.316 palabras de la Torá.",
-      en: "We follow one real photo of a sefer, step by step: how the app separates ink from parchment, finds the lines, reads them and places them among the Torah's 80,316 words.",
+      es: "Seguimos paso a paso una foto real de un sefer, desde que la app separa la tinta del pergamino hasta que ubica la columna entre las 80.316 palabras de la Torá.",
+      en: "We follow one real photo of a sefer step by step, from separating the ink from the parchment to placing the column among the Torah's 80,316 words.",
     },
   },
   {

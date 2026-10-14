@@ -6,18 +6,10 @@ export const contentEs: HalachaContent = {
   intro: (
     <>
       <p>
-        NavTorá sirve para dejar el Séfer Torá listo antes de Shabat y de Iom Tov. El viernes, o la víspera de la fiesta, el gabai elige en la app la lectura del día siguiente, escanea la columna abierta y enrolla hasta donde le
-        indica. A la mañana el rollo ya está en su lugar. En Shabat y en Iom Tov la app no se usa, porque el celular no se usa.
+        NavTorá se usa para dejar el Séfer Torá listo antes de Shabat y de Iom Tov. El viernes, o la víspera de la fiesta, el gabai elige en la app la lectura del día siguiente, escanea la columna abierta y enrolla hasta donde le
+        indica. A la mañana siguiente, el rollo ya está en su lugar.
       </p>
-      <p>Esta página explica por qué tiene sentido preparar el rollo antes y por qué el teléfono queda afuera del Shabat, con las fuentes de cada cosa y el enlace para leerlas.</p>
-      <h2>En corto</h2>
-      <ul>
-        <li>NavTorá es para preparar el Séfer Torá antes de Shabat y de Iom Tov. En Shabat y en Iom Tov no se usa.</li>
-        <li>No se enrolla el Séfer Torá delante del público, por respeto al público (Iomá 70a, Shulján Aruj 144:3), y dejarlo preparado antes de la tefilá es tarea del shamash o del lector (Aruj HaShulján 144:6).</li>
-        <li>
-          Usar el celular en Shabat y en Iom Tov está prohibido. Así lo establece también la posición vigente del movimiento conservador sobre aparatos electrónicos, de 2012, que prohíbe el teléfono celular y la cámara.
-        </li>
-      </ul>
+      <p>En Shabat y en Iom Tov la app no se usa, porque el celular no se usa.</p>
     </>
   ),
   sections: [
@@ -27,8 +19,8 @@ export const contentEs: HalachaContent = {
         <>
           <h2>Para quién es</h2>
           <p>
-            Soy del movimiento conservador, y en Shabat el celular no se usa. NavTorá no está pensada para usarse en Shabat ni en Iom Tov: está pensada para prepararlos. Para quien guarda el Shabat, no tener el teléfono es una
-            limitación más del día, y la app ayuda a que esa limitación no se note en la lectura: la víspera, cada rollo queda en su lugar, y a la mañana nadie tiene que buscar.
+            Soy del movimiento conservador, y pensé NavTorá para quienes guardan el Shabat y necesitan dejar el rollo preparado antes. Para ellos, no tener el teléfono es una limitación más del día, y
+            la app ayuda a que esa limitación no se note en la lectura. La víspera, cada rollo queda en su lugar, y a la mañana nadie tiene que buscar.
           </p>
         </>
       ),
@@ -41,17 +33,18 @@ export const contentEs: HalachaContent = {
           <h2>Cómo se usa para preparar</h2>
           <ul>
             <li>
-              <strong>La víspera.</strong> El viernes, o la víspera de Iom Tov, elegís la lectura del día siguiente, escaneás la columna abierta y enrollás hasta donde te dice la app. El rollo queda listo antes de que empiece la fiesta.
+              <strong>La víspera:</strong> el viernes, o la víspera de Iom Tov, elegís la lectura del día siguiente, escaneás la columna abierta y enrollás hasta donde te indica la app. Así, el rollo queda listo antes de que empiece la
+              fiesta.
             </li>
             <li>
-              <strong>Varios rollos.</strong> En los días con dos o tres lecturas (Rosh Jódesh, Janucá, las cuatro parashiot, Iom Tov), preparás cada rollo en su lugar.
+              <strong>Varios rollos:</strong> en los días con dos o tres lecturas (Rosh Jódesh, Janucá, las cuatro parashiot, Iom Tov), preparás cada rollo en su lugar.
             </li>
             <li>
-              <strong>Marcadores.</strong> Si cada aliá la lee alguien distinto, se pueden pegar notas adhesivas entre las columnas, sin tocar las letras, en el comienzo de cada aliá, como recomienda una guía del movimiento: las ubicás
-              con la app la víspera.
+              <strong>Marcadores:</strong> si cada aliá la lee alguien distinto, se pueden pegar notas adhesivas entre las columnas en el comienzo de cada aliá, sin tocar las letras, como recomienda una guía del movimiento. Los lugares
+              los encontrás con la app la víspera.
             </li>
             <li>
-              <strong>Días de semana.</strong> Lunes, jueves y Rosh Jódesh en día de semana no tienen el problema del Shabat: la app se puede usar ese mismo día, y también para practicar.
+              <strong>Días de semana:</strong> los lunes, los jueves y Rosh Jódesh en día de semana no tienen el problema del Shabat, así que la app se puede usar ese mismo día. También sirve para practicar.
             </li>
           </ul>
         </>
@@ -74,8 +67,8 @@ export const contentEs: HalachaContent = {
         <>
           <h2>Por qué no en Shabat ni en Iom Tov</h2>
           <p>
-            Usar la app implica levantar el teléfono y llevarlo hasta el rollo, prender la pantalla, usar la cámara y mandar datos a un servidor. En 1950 el movimiento conservador permitió usar luces eléctricas en Shabat, pero su
-            posición vigente sobre aparatos electrónicos prohíbe el teléfono celular y la cámara, y fuera del movimiento la gran mayoría de los poskim prohíben usar aparatos eléctricos en Shabat. Estas son las fuentes.
+            Usar la app implica levantar el teléfono y llevarlo hasta el rollo, prender la pantalla, usar la cámara y mandar datos a un servidor. En 1950, el movimiento conservador permitió usar luces eléctricas en Shabat. Sin embargo,
+            su posición vigente sobre aparatos electrónicos, de 2012, prohíbe el teléfono celular y la cámara. Fuera del movimiento, la gran mayoría de los poskim prohíben usar aparatos eléctricos en Shabat.
           </p>
           <h3>Dentro del movimiento conservador</h3>
         </>
@@ -87,7 +80,10 @@ export const contentEs: HalachaContent = {
       text: (
         <>
           <h3>Fuera del movimiento</h3>
-          <p>En el mundo ortodoxo, lo que se discute es sobre todo por qué está prohibido: si es construir, crear algo nuevo, una costumbre que hay que mantener o el espíritu del día. Además del aparato, están escribir, muktzé y transportar.</p>
+          <p>
+            En el mundo ortodoxo, lo que se discute es sobre todo por qué está prohibido (si es construir, crear algo nuevo, una costumbre que hay que mantener o el espíritu del día). Además del aparato en sí, están las leyes de
+            escribir, muktzé y transportar.
+          </p>
         </>
       ),
       sources: ["chazon-ish", "beit-yitzchak", "auerbach", "feinstein", "pninei-halacha", "bleich-cameras", "melachot", "uvdin-dechol"],

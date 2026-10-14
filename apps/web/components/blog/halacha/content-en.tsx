@@ -6,18 +6,10 @@ export const contentEn: HalachaContent = {
   intro: (
     <>
       <p>
-        NavTorah is for getting the Torah scroll ready before Shabbat and Yom Tov. On Friday, or the day before the holiday, the gabbai picks the next day's reading in the app, scans the open column and rolls the scroll to where it
-        says. In the morning the scroll is already at its place. On Shabbat and Yom Tov the app isn't used, because phones aren't.
+        NavTorah is used to get the Torah scroll ready before Shabbat and Yom Tov. On Friday, or the day before the holiday, the gabbai picks the next day's reading in the app, scans the open column and rolls the scroll to where it
+        says. The next morning, the scroll is already at its place.
       </p>
-      <p>This page explains why it makes sense to prepare the scroll beforehand and why the phone stays out of Shabbat, with the sources for each and a link to read them.</p>
-      <h2>In short</h2>
-      <ul>
-        <li>NavTorah is for preparing the Torah scroll before Shabbat and Yom Tov. It isn't used on Shabbat or Yom Tov.</li>
-        <li>
-          A Torah scroll isn't rolled in front of the congregation, out of respect for it (Yoma 70a, Shulchan Aruch 144:3), and preparing it before the service is the job of the shamash or the reader (Aruch HaShulchan 144:6).
-        </li>
-        <li>Using a phone on Shabbat and Yom Tov is forbidden. So holds the Conservative movement's current position on electronic devices, from 2012, which forbids the cellular phone and the camera.</li>
-      </ul>
+      <p>On Shabbat and Yom Tov the app isn't used, because phones aren't.</p>
     </>
   ),
   sections: [
@@ -27,8 +19,8 @@ export const contentEn: HalachaContent = {
         <>
           <h2>Who it's for</h2>
           <p>
-            I'm from the Conservative movement, and phones aren't used on Shabbat. NavTorah isn't meant to be used on Shabbat or Yom Tov: it's meant for preparing them. For those who keep Shabbat, not having the phone is one more
-            limit of the day, and the app helps keep that limit from showing in the reading: the day before, each scroll is set at its place, and in the morning nobody has to search.
+            I'm from the Conservative movement, and I designed NavTorah for people who keep Shabbat and need to get the scroll ready beforehand. For them, not having the phone is one more limit of
+            the day, and the app helps keep that limit from showing in the reading. The day before, each scroll is set at its place, and in the morning nobody has to search.
           </p>
         </>
       ),
@@ -41,17 +33,17 @@ export const contentEn: HalachaContent = {
           <h2>How to use it to prepare</h2>
           <ul>
             <li>
-              <strong>The day before.</strong> On Friday, or the day before Yom Tov, you pick the next day's reading, scan the open column and roll to where the app says. The scroll is ready before the holiday begins.
+              <strong>The day before:</strong> on Friday, or the day before Yom Tov, you pick the next day's reading, scan the open column and roll to where the app says. The scroll is ready before the holiday begins.
             </li>
             <li>
-              <strong>Several scrolls.</strong> On days with two or three readings (Rosh Chodesh, Chanukah, the four parashiyot, Yom Tov), you prepare each scroll at its place.
+              <strong>Several scrolls:</strong> on days with two or three readings (Rosh Chodesh, Chanukah, the four parashiyot, Yom Tov), you prepare each scroll at its place.
             </li>
             <li>
-              <strong>Markers.</strong> If each aliyah is read by someone else, sticky notes can go between the columns, not touching the letters, at the start of each aliyah, as a guidance from the movement recommends: you find the
+              <strong>Markers:</strong> if each aliyah is read by someone else, sticky notes can go between the columns, not touching the letters, at the start of each aliyah, as a guidance from the movement recommends: you find the
               places with the app the day before.
             </li>
             <li>
-              <strong>Weekdays.</strong> Mondays, Thursdays and Rosh Chodesh on a weekday don't have the Shabbat problem: the app can be used that same day, and for practice too.
+              <strong>Weekdays:</strong> Mondays, Thursdays and Rosh Chodesh on a weekday don't have the Shabbat problem, so the app can be used that same day. It's good for practice too.
             </li>
           </ul>
         </>
@@ -74,8 +66,8 @@ export const contentEn: HalachaContent = {
         <>
           <h2>Why not on Shabbat or Yom Tov</h2>
           <p>
-            Using the app means picking up the phone and bringing it to the scroll, turning on the screen, using the camera and sending data to a server. In 1950 the Conservative movement allowed electric lights on Shabbat, but its
-            current position on electronic devices forbids the cellular phone and the camera, and outside the movement the great majority of poskim forbid using electrical devices on Shabbat. These are the sources.
+            Using the app means picking up the phone and bringing it to the scroll, turning on the screen, using the camera and sending data to a server. In 1950 the Conservative movement allowed electric lights on Shabbat. However,
+            its current position on electronic devices, from 2012, forbids the cellular phone and the camera. Outside the movement, the great majority of poskim forbid using electrical devices on Shabbat.
           </p>
           <h3>Within the Conservative movement</h3>
         </>
@@ -88,8 +80,8 @@ export const contentEn: HalachaContent = {
         <>
           <h3>Outside the movement</h3>
           <p>
-            In the Orthodox world, the debate is mostly over why it's forbidden: building, creating something new, a custom to uphold, or the spirit of the day. Beyond the device itself, there are writing, muktzeh and
-            carrying.
+            In the Orthodox world, the debate is mostly over why it's forbidden (building, creating something new, a custom to uphold, or the spirit of the day). Beyond the device itself, there are the laws of writing, muktzeh
+            and carrying.
           </p>
         </>
       ),

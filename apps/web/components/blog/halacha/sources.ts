@@ -17,9 +17,9 @@ export const SOURCES: Source[] = [
     stance: "purpose",
     title: { es: "El Cohén Gadol lee de memoria", en: "The High Priest reads by heart" },
     original: "יוֹתֵר מִמַּה שֶּׁקָּרִיתִי לִפְנֵיכֶם כָּתוּב כָּאן",
-    cite: { es: "Mishná Iomá 7:1; Mishná Sotá 7:7", en: "Mishnah Yoma 7:1; Mishnah Sotah 7:7" },
+    cite: { es: "Mishná Iomá 7:1 y Mishná Sotá 7:7", en: "Mishnah Yoma 7:1 and Mishnah Sotah 7:7" },
     summary: {
-      es: "En Iom Kipur el Cohén Gadol lee dos pasajes de Vaikrá, enrolla el rollo y dice: «más de lo que les leí está escrito acá». El tercer pasaje, que está en Bamidbar, lo recita de memoria.",
+      es: "En Iom Kipur, el Cohén Gadol lee dos pasajes de Vaikrá, enrolla el rollo y le dice al público «más de lo que les leí está escrito acá». El tercer pasaje, que está en Bamidbar, lo recita de memoria.",
       en: "On Yom Kippur the High Priest reads two passages from Leviticus, rolls up the scroll and says: “More than what I have read before you is written here.” The third passage, which is in Numbers, he recites by heart.",
     },
     relevance: {
@@ -52,8 +52,8 @@ export const SOURCES: Source[] = [
       en: "The scroll is not rolled in public, for the congregation's honor. But if the community has only one scroll and two passages must be read, it is rolled, and the congregation's honor gives way.",
     },
     relevance: {
-      es: "Con un solo rollo, enrollar en público está permitido. Dejar el rollo preparado no evita una prohibición: ahorra una espera.",
-      en: "With a single scroll, rolling in public is allowed. Preparing the scroll beforehand doesn't avoid a prohibition: it saves a wait.",
+      es: "Con un solo rollo, enrollar en público está permitido. Es decir, dejar el rollo preparado antes sirve para ahorrarle la espera al público.",
+      en: "With a single scroll, rolling in public is allowed. That is, preparing the scroll beforehand spares the congregation the wait.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.144.3" }],
   },
@@ -64,12 +64,12 @@ export const SOURCES: Source[] = [
     original: "שגוללין ומחפשין בעת שאומרים הקהל פסוקי דזמרה",
     cite: { es: "Mishná Berurá 144:13–14", en: "Mishnah Berurah 144:13–14" },
     summary: {
-      es: "Con dos rollos se puede enrollar uno mientras se lee el otro, y es mejor aún «como se acostumbra hoy: enrollar y buscar mientras el público dice Pesukei deZimrá». El honor del público se afecta porque quedaría esperando en silencio.",
+      es: "Con dos rollos se puede enrollar uno mientras se lee el otro, y es mejor aún «como se acostumbra hoy, enrollar y buscar mientras el público dice Pesukei deZimrá». El honor del público se afecta porque quedaría esperando en silencio.",
       en: "With two scrolls, one can be rolled while the other is read, and better still is “the custom today, to roll and search while the congregation says Pesukei deZimrah.” The congregation's honor is affected because it would be left waiting in silence.",
     },
     relevance: {
-      es: "Buscar el lugar es una tarea que tiene que estar hecha antes de la lectura. Con la app se puede hacer todavía antes: el día anterior.",
-      en: "Finding the place is a task that has to be done before the reading. With the app it can be done earlier still: the day before.",
+      es: "Buscar el lugar es una tarea que tiene que estar hecha antes de la lectura, y con la app se puede hacer el día anterior.",
+      en: "Finding the place is a task that has to be done before the reading, and with the app it can be done the day before.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Mishnah_Berurah.144.13" }],
   },
@@ -100,8 +100,8 @@ export const SOURCES: Source[] = [
       en: "It distinguishes the Temple, where all Israel was present and no one waived their honor, from the synagogue, where there are few and they probably waive it.",
     },
     relevance: {
-      es: "Un matiz: que el público espere no es una catástrofe halájica. Dejar el rollo preparado hace la lectura más fluida, nada más.",
-      en: "A nuance: a waiting congregation is no halachic catastrophe. A scroll prepared beforehand makes the reading smoother, nothing more.",
+      es: "Como el honor del público se puede renunciar, la espera no es una falta grave. Dejar el rollo preparado hace que la lectura sea más fluida.",
+      en: "Since the congregation may waive its honor, the wait isn't a serious fault. A scroll prepared beforehand makes the reading smoother.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Magen_Avraham.144.7" }],
   },
@@ -109,14 +109,14 @@ export const SOURCES: Source[] = [
     id: "several-scrolls",
     stance: "purpose",
     title: { es: "Varios rollos en los días especiales", en: "Several scrolls on special days" },
-    cite: { es: "Shulján Aruj, Óraj Jaim 684:3; Kitzur Shulján Aruj 78:7", en: "Shulchan Aruch, Orach Chayim 684:3; Kitzur Shulchan Aruch 78:7" },
+    cite: { es: "Shulján Aruj, Óraj Jaim 684:3, y Kitzur Shulján Aruj 78:7", en: "Shulchan Aruch, Orach Chayim 684:3, and Kitzur Shulchan Aruch 78:7" },
     summary: {
-      es: "Cuando Rosh Jódesh Tevet cae en Shabat se sacan tres rollos: la parashá, Rosh Jódesh y Janucá. Si hacen falta tres y la comunidad tiene dos, no se enrolla el segundo para la tercera lectura: se vuelve a tomar el primero.",
-      en: "When Rosh Chodesh Tevet falls on Shabbat, three scrolls come out: the parashah, Rosh Chodesh and Chanukah. If three are needed and the community has two, the second is not rolled for the third reading; the first is taken again.",
+      es: "Cuando Rosh Jódesh Tevet cae en Shabat se sacan tres rollos: la parashá, Rosh Jódesh y Janucá. Si hacen falta tres y la comunidad tiene dos, para la tercera lectura se vuelve a tomar el primero en lugar de enrollar el segundo.",
+      en: "When Rosh Chodesh Tevet falls on Shabbat, three scrolls come out: the parashah, Rosh Chodesh and Chanukah. If three are needed and the community has two, the first is taken again for the third reading instead of rolling the second.",
     },
     relevance: {
-      es: "Son los días en que más ayuda la app: para Iom Tov, Rosh Jódesh, Janucá o las cuatro parashiot hay que dejar, la víspera, varios rollos abiertos en lugares distintos.",
-      en: "These are the days the app helps most: for Yom Tov, Rosh Chodesh, Chanukah or the four parashiyot, several scrolls must be left open at different places the day before.",
+      es: "Son los días en que más ayuda la app, porque para Iom Tov, Rosh Jódesh, Janucá o las cuatro parashiot hay que dejar la víspera varios rollos abiertos en lugares distintos.",
+      en: "These are the days the app helps most, because for Yom Tov, Rosh Chodesh, Chanukah or the four parashiyot several scrolls must be left open at different places the day before.",
     },
     links: [
       { label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.684.3" },
@@ -134,8 +134,8 @@ export const SOURCES: Source[] = [
       en: "The Sages wanted to add the passage of Balak to the Shema, and didn't, “because of the burden on the congregation” (torach tzibur).",
     },
     relevance: {
-      es: "Es la fuente clásica de tirjá detziburá. Iomá 70a y el Shulján Aruj, en cambio, hablan de kavod hatzibur, el respeto al público: son conceptos vecinos, no iguales.",
-      en: "It's the classic source for tircha detzibura. Yoma 70a and the Shulchan Aruch speak instead of kavod hatzibur, respect for the congregation: related ideas, not the same one.",
+      es: "Es la fuente clásica de tirjá detziburá. Iomá 70a y el Shulján Aruj, en cambio, hablan de kavod hatzibur, el respeto al público. Son conceptos parecidos, pero no son el mismo.",
+      en: "It's the classic source for tircha detzibura. Yoma 70a and the Shulchan Aruch speak instead of kavod hatzibur, respect for the congregation. The two ideas are related, but they aren't the same.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Berakhot.12b.14" }],
   },
@@ -145,12 +145,12 @@ export const SOURCES: Source[] = [
     title: { es: "Lectura de Torá durante COVID-19", en: "Torah Reading during COVID-19" },
     original: "Torah Reading during COVID-19",
     cite: {
-      es: "CJLS: rabinos Pamela Barmash y Robert Scheinberg. Es una guía, no una responsa oficial. El Seminario Rabínico Latinoamericano publicó su traducción",
-      en: "CJLS: Rabbis Pamela Barmash and Robert Scheinberg. A guidance, not an official responsum. The Seminario Rabínico Latinoamericano published it in Spanish",
+      es: "Rabinos Pamela Barmash y Robert Scheinberg, CJLS. Es una guía y no una responsa oficial. El Seminario Rabínico Latinoamericano publicó su traducción",
+      en: "Rabbis Pamela Barmash and Robert Scheinberg, CJLS. A guidance rather than an official responsum. The Seminario Rabínico Latinoamericano published it in Spanish",
     },
     year: "2020",
     summary: {
-      es: "Si varios lectores sin experiencia tienen que encontrar el lugar en el rollo sin un gabai que los ayude, «esta es una tirja detzibura y también una posible vergüenza para ellos». Recomienda pegar notas adhesivas entre las columnas, sin tocar las letras, en el comienzo de cada aliá: «se puede hacer incluso en Shabat».",
+      es: "Si varios lectores sin experiencia tienen que encontrar el lugar en el rollo sin un gabai que los ayude, «esta es una tirja detzibura y también una posible vergüenza para ellos». Recomienda pegar notas adhesivas entre las columnas en el comienzo de cada aliá, sin tocar las letras, y aclara que «se puede hacer incluso en Shabat».",
       en: "If several inexperienced readers must find their place in the scroll without a gabbai to help, “this is a tircha d'tzibura and also a possible embarrassment for them.” It recommends sticky-note flags between the columns, not touching the letters, at the start of each aliyah: “this could even be done on Shabbat.”",
     },
     relevance: {
@@ -193,21 +193,21 @@ export const SOURCES: Source[] = [
       en: "It holds that any use of electricity on Shabbat is forbidden as a shevut.",
     },
     relevance: {
-      es: "El mismo día el Comité aprobó también otra posición, de los rabinos Fine y Leff, según la cual la electricidad en sí no está prohibida. Ninguna de las dos se ocupa de celulares ni de cámaras: de eso se ocupa Nevins.",
-      en: "The same day the Committee also approved another position, by Rabbis Fine and Leff, under which electricity in itself is not forbidden. Neither deals with phones or cameras: Nevins does.",
+      es: "El mismo día el Comité aprobó también otra posición, de los rabinos Fine y Leff, según la cual la electricidad en sí no está prohibida. Ninguna de las dos se ocupa de celulares ni de cámaras, que es el tema de Nevins.",
+      en: "The same day the Committee also approved another position, by Rabbis Fine and Leff, under which electricity in itself is not forbidden. Neither deals with phones or cameras, which is what Nevins covers.",
     },
     links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/2023-07/schwartz-weiner-sabbath-final-7.26.pdf` }],
   },
   {
     id: "levin-2020",
     stance: "restricts",
-    title: { es: "Transmisión en Shabat y Iom Tov: disenso y desafío", en: "Streaming Services on Shabbat and Yom Tov: A Dissent and a Challenge" },
+    title: { es: "Transmisión en Shabat y Iom Tov, disenso y desafío", en: "Streaming Services on Shabbat and Yom Tov, a Dissent and a Challenge" },
     original: "Streaming Services on Shabbat and Yom Tov – A Dissent and a Challenge",
     cite: { es: "Rabina Amy Levin, CJLS. El Seminario Rabínico Latinoamericano publicó su traducción", en: "Rabbi Amy Levin, CJLS. The Seminario Rabínico Latinoamericano published it in Spanish" },
     year: "2020",
     summary: {
-      es: "Disiente del permiso del Comité para transmitir los servicios de Shabat por internet: no acepta que la pandemia sea una situación apremiante, teme que se termine arreglando el equipo en Shabat, y recuerda con Nevins que registrar datos es kotev. Mientras no exista algo como una computadora apta para Shabat, ese permiso «parece inaceptable».",
-      en: "It dissents from the Committee's permission to stream Shabbat services: it doesn't accept the pandemic as a pressing need, worries that people will end up fixing equipment on Shabbat, and recalls with Nevins that recording data is kotev. Until something like a Shabbat-compliant computer exists, that permission “seems unacceptable”.",
+      es: "Disiente del permiso del Comité para transmitir los servicios de Shabat por internet. No acepta que la pandemia sea una situación apremiante, teme que se termine arreglando el equipo en Shabat y recuerda, con Nevins, que registrar datos es kotev. Según la autora, mientras no exista algo como una computadora apta para Shabat, ese permiso «parece inaceptable».",
+      en: "It dissents from the Committee's permission to stream Shabbat services. It doesn't accept the pandemic as a pressing need, worries that people will end up fixing equipment on Shabbat, and recalls, with Nevins, that recording data is kotev. Until something like a Shabbat-compliant computer exists, it says, that permission “seems unacceptable”.",
     },
     links: [
       { label: { es: "PDF en castellano (Seminario)", en: "Spanish PDF (Seminario)" }, url: `${SRL}/RA-Transmisi%C3%B3n-Shabat-y-Iom-Tov-%E2%80%93-Levin.pdf` },
@@ -256,8 +256,8 @@ export const SOURCES: Source[] = [
     cite: { es: "Rab. David Golinkin, Instituto Schechter (Masortí Israel), Responsa in a Moment 14:5", en: "Rabbi David Golinkin, Schechter Institutes (Masorti Israel), Responsa in a Moment 14:5" },
     year: "2020",
     summary: {
-      es: "Escribe que muchos en el movimiento se apoyan en las responsa de 1950, y que a él ese enfoque no lo convence: usar electricidad en Shabat es «la antítesis del Palacio en el Tiempo» de Heschel. Durante la pandemia propuso reunirse por Zoom antes de encender las velas, para Minjá y Kabalat Shabat, apagar y rezar Arvit en casa.",
-      en: "He writes that many in the movement rely on the 1950 responsa, and that he doesn't find that approach convincing: using electricity on Shabbat is “the antithesis of the ‘Palace in Time’” of Heschel. During the pandemic he suggested meeting on Zoom before candle lighting for Minchah and Kabbalat Shabbat, then turning it off and praying Maariv at home.",
+      es: "Escribe que muchos en el movimiento se apoyan en las responsa de 1950, y que a él ese enfoque no lo convence, porque usar electricidad en Shabat es «la antítesis del Palacio en el Tiempo» de Heschel. Durante la pandemia propuso reunirse por Zoom antes de encender las velas, para Minjá y Kabalat Shabat, apagar y rezar Arvit en casa.",
+      en: "He writes that many in the movement rely on the 1950 responsa, and that he doesn't find that approach convincing, because using electricity on Shabbat is “the antithesis of the ‘Palace in Time’” of Heschel. During the pandemic he suggested meeting on Zoom before candle lighting for Minchah and Kabbalat Shabbat, then turning it off and praying Maariv at home.",
     },
     relevance: {
       es: "Su salida, hacer las cosas antes de que empiece Shabat, es la misma que propone NavTorá.",
@@ -273,8 +273,8 @@ export const SOURCES: Source[] = [
     title: { es: "Cerrar un circuito es construir", en: "Closing a circuit is building" },
     cite: { es: "Jazón Ish, Óraj Jaim 50:9", en: "Chazon Ish, Orach Chayim 50:9" },
     summary: {
-      es: "Cerrar un circuito eléctrico «construye» un utensilio (boné) y abrirlo lo «destruye»; también menciona completar una obra (maké bepatish). Si es así, es una prohibición de la Torá.",
-      en: "Closing an electric circuit “builds” a utensil (boneh) and opening it “destroys” it; he also mentions completing a work (makeh bepatish). If so, it is a Torah prohibition.",
+      es: "Cerrar un circuito eléctrico «construye» un utensilio (boné) y abrirlo lo «destruye». También menciona completar una obra (maké bepatish). Si es así, es una prohibición de la Torá.",
+      en: "Closing an electric circuit “builds” a utensil (boneh) and opening it “destroys” it. He also mentions completing a work (makeh bepatish). If so, it is a Torah prohibition.",
     },
     relevance: {
       es: "Con esta postura, prender cualquier aparato está prohibido, y ningún valor rabínico lo desplaza.",
@@ -288,23 +288,23 @@ export const SOURCES: Source[] = [
     title: { es: "Cerrar un circuito es crear algo nuevo", en: "Closing a circuit creates something new" },
     cite: { es: "Beit Itzjak, Iore Deá 2:31 (R. Itzjak Shmelkes, Lemberg)", en: "Beit Yitzchak, Yoreh De'ah 2:31 (R. Yitzchak Shmelkes, Lemberg)" },
     summary: {
-      es: "Cerrar un circuito se parece a perfumar una ropa (molid, Beitzá 23a): una prohibición rabínica de crear algo nuevo en Shabat.",
-      en: "Closing a circuit resembles scenting a garment (molid, Beitzah 23a): a rabbinic prohibition on creating something new on Shabbat.",
+      es: "Cerrar un circuito se parece a perfumar una ropa (molid, Beitzá 23a), que es una prohibición rabínica de crear algo nuevo en Shabat.",
+      en: "Closing a circuit resembles scenting a garment (molid, Beitzah 23a), which is a rabbinic prohibition on creating something new on Shabbat.",
     },
     links: [{ label: { es: "Resumen en castellano (Pninei Halajá)", en: "Summary in Spanish (Peninei Halakhah)" }, url: "https://ph.yhb.org.il/es/01-17-02/" }],
   },
   {
     id: "auerbach",
     stance: "restricts",
-    title: { es: "No hay una prohibición de fondo, pero se prohíbe", en: "No prohibition in principle, but forbidden in practice" },
+    title: { es: "Prohibida por precaución y por costumbre", en: "Forbidden as a precaution and by custom" },
     cite: { es: "R. Shlomo Zalman Auerbach, Minjat Shlomó", en: "R. Shlomo Zalman Auerbach, Minchat Shlomo" },
     summary: {
-      es: "Rechaza que cerrar un circuito sea construir o crear algo nuevo: es como abrir y cerrar una puerta. Llega a escribir que, en su opinión, usar electricidad sin luz ni calor no tiene una prohibición propia. Aun así no lo permite sin gran necesidad, para que nadie termine prendiendo luces, y pide mantener la costumbre de prohibir. Según el Rab. Neuwirth, para él la imagen en un monitor ni siquiera era escritura.",
-      en: "He rejects the idea that closing a circuit is building or creating something new: it's like opening and closing a door. He goes as far as writing that using electricity without light or heat carries no prohibition of its own. Even so, he doesn't allow it without great need, lest people come to turn on lights, and upholds the custom of forbidding it. According to Rabbi Neuwirth, he didn't consider an image on a monitor writing at all.",
+      es: "Rechaza que cerrar un circuito sea construir o crear algo nuevo, porque para él es como abrir y cerrar una puerta. Llega a escribir que, en su opinión, usar electricidad sin luz ni calor no tiene una prohibición propia. Aun así no lo permite sin gran necesidad, para que nadie termine prendiendo luces, y pide mantener la costumbre de prohibir. Según el Rab. Neuwirth, para él la imagen en un monitor ni siquiera era escritura.",
+      en: "He rejects the idea that closing a circuit is building or creating something new, because to him it's like opening and closing a door. He goes as far as writing that using electricity without light or heat carries no prohibition of its own. Even so, he doesn't allow it without great need, lest people come to turn on lights, and upholds the custom of forbidding it. According to Rabbi Neuwirth, he didn't consider an image on a monitor writing at all.",
     },
     relevance: {
-      es: "En la teoría es la postura ortodoxa más cercana a la conservadora; en la práctica prohíbe.",
-      en: "In theory it's the Orthodox position closest to the Conservative one; in practice it forbids.",
+      es: "En la teoría es la postura ortodoxa más cercana a la conservadora, pero en la práctica prohíbe.",
+      en: "In theory it's the Orthodox position closest to the Conservative one, but in practice it forbids.",
     },
     links: [{ label: { es: "Resumen en castellano (Pninei Halajá)", en: "Summary in Spanish (Peninei Halakhah)" }, url: "https://ph.yhb.org.il/es/01-17-02/" }],
   },
@@ -314,8 +314,8 @@ export const SOURCES: Source[] = [
     title: { es: "El menosprecio del Shabat", en: "Belittling Shabbat" },
     cite: { es: "R. Moshe Feinstein, Igrot Moshé, Óraj Jaim 4:60 y 4:84", en: "R. Moshe Feinstein, Igrot Moshe, Orach Chayim 4:60 and 4:84" },
     summary: {
-      es: "Aunque no haya una melajá clara, hay usos de la tecnología que contradicen el carácter del día y son zilzul Shabat, menosprecio del Shabat: por eso prohíbe, por ejemplo, programar con temporizador una radio o una televisión. Sobre la imagen en un monitor, opina que no es duradera y que es a lo sumo una prohibición rabínica.",
-      en: "Even without a clear melachah, some uses of technology contradict the character of the day and are zilzul Shabbat, belittling Shabbat: that is why he forbids, for example, setting a radio or a television on a timer. Of an image on a monitor, he holds that it isn't lasting and is at most a rabbinic prohibition.",
+      es: "Aunque no haya una melajá clara, hay usos de la tecnología que contradicen el carácter del día y son zilzul Shabat (menosprecio del Shabat). Por eso prohíbe, por ejemplo, programar con temporizador una radio o una televisión. Sobre la imagen en un monitor, opina que no es duradera y que es a lo sumo una prohibición rabínica.",
+      en: "Even without a clear melachah, some uses of technology contradict the character of the day and are zilzul Shabbat, belittling Shabbat. That is why he forbids, for example, setting a radio or a television on a timer. Of an image on a monitor, he holds that it isn't lasting and is at most a rabbinic prohibition.",
     },
     relevance: {
       es: "Aun si la pantalla no fuera escribir, este criterio pesa contra usar un celular en la bimá.",
@@ -329,8 +329,8 @@ export const SOURCES: Source[] = [
     title: { es: "La electricidad y los artefactos eléctricos", en: "Electricity and Electrical Appliances" },
     cite: { es: "R. Eliezer Melamed, Pninei Halajá, Shabat, capítulos 17 y 18", en: "R. Eliezer Melamed, Peninei Halakhah, Shabbat, chapters 17 and 18" },
     summary: {
-      es: "Expone todas las posturas sobre la electricidad (Rav Kuk, R. Uziel, el Jazón Ish, el Beit Itzjak, R. Auerbach) y está traducido al castellano. En la práctica actúa, de entrada, según quienes la prohíben por la Torá. En el capítulo siguiente: «está prohibido tipear letras en el computador o guardarlas en la memoria, tomar fotografías o grabar voces».",
-      en: "It lays out every position on electricity (Rav Kook, R. Uziel, the Chazon Ish, the Beit Yitzchak, R. Auerbach), and is online in Spanish too. In practice it follows, from the outset, those who forbid it by Torah law. The next chapter: “it is forbidden to type letters on a computer or save them in memory, to take photographs or to record voices.”",
+      es: "Expone todas las posturas sobre la electricidad (Rav Kuk, R. Uziel, el Jazón Ish, el Beit Itzjak, R. Auerbach) y está traducido al castellano. En la práctica actúa, de entrada, según quienes la prohíben por la Torá. En el capítulo siguiente aclara que «está prohibido tipear letras en el computador o guardarlas en la memoria, tomar fotografías o grabar voces».",
+      en: "It lays out every position on electricity (Rav Kook, R. Uziel, the Chazon Ish, the Beit Yitzchak, R. Auerbach), and is online in Spanish too. In practice it follows, from the outset, those who forbid it by Torah law. The next chapter adds that “it is forbidden to type letters on a computer or save them in memory, to take photographs or to record voices.”",
     },
     relevance: {
       es: "Es la mejor referencia ortodoxa en castellano para quien quiera profundizar.",
@@ -349,8 +349,8 @@ export const SOURCES: Source[] = [
     cite: { es: "R. J. David Bleich, Tradition 35:3", en: "R. J. David Bleich, Tradition 35:3" },
     year: "2001",
     summary: {
-      es: "Para quien pasa frente a una cámara de seguridad hay posturas permisivas: no lo hace a propósito y la imagen en el monitor no dura. En cambio, para el acto de fotografiar, el Keren LeDavid lo considera escribir, una prohibición de la Torá, aunque se haga de manera indirecta.",
-      en: "For someone walking past a security camera there are lenient positions: it isn't intentional and the image on the monitor doesn't last. For the act of taking a photograph, though, the Keren LeDavid holds it is writing, a Torah prohibition, even when done indirectly.",
+      es: "Para quien pasa frente a una cámara de seguridad hay posturas permisivas, ya que no lo hace a propósito y la imagen en el monitor no dura. En cambio, para el acto de fotografiar, el Keren LeDavid lo considera escribir, una prohibición de la Torá, aunque se haga de manera indirecta.",
+      en: "For someone walking past a security camera there are lenient positions, since it isn't intentional and the image on the monitor doesn't last. For the act of taking a photograph, though, the Keren LeDavid holds it is writing, a Torah prohibition, even when done indirectly.",
     },
     relevance: {
       es: "La app usa la cámara a propósito, así que las permisiones para el caso pasivo no se le aplican directamente.",
@@ -363,16 +363,16 @@ export const SOURCES: Source[] = [
     stance: "restricts",
     title: { es: "Escribir, muktzé y transportar", en: "Writing, muktzeh and carrying" },
     cite: {
-      es: "Mishná Shabat 7:2; Rambam, Hiljot Shabat 11:17; Shulján Aruj, Óraj Jaim 308:1 y 308:3; Mishná Shabat 1:1; Óraj Jaim 345:1",
-      en: "Mishnah Shabbat 7:2; Rambam, Laws of Shabbat 11:17; Shulchan Aruch, Orach Chayim 308:1 and 308:3; Mishnah Shabbat 1:1; Orach Chayim 345:1",
+      es: "Mishná Shabat 7:2 y 1:1, Rambam (Hiljot Shabat 11:17) y Shulján Aruj, Óraj Jaim 308:1, 308:3 y 345:1",
+      en: "Mishnah Shabbat 7:2 and 1:1, Rambam (Laws of Shabbat 11:17) and Shulchan Aruch, Orach Chayim 308:1, 308:3 and 345:1",
     },
     summary: {
-      es: "Escribir dos letras es una de las 39 melajot, y trazar formas es un derivado de escribir. Un objeto que se usa sobre todo para algo prohibido (kli shemelajtó leisur) no se mueve en Shabat salvo para usarlo en algo permitido o para despejar su lugar; tocarlo sin moverlo no está prohibido. Y sin eruv no se puede llevar nada de la casa a la sinagoga.",
-      en: "Writing two letters is one of the 39 melachot, and drawing shapes is derived from writing. An object used mainly for something forbidden (kli shemelachto le'issur) isn't moved on Shabbat except to use it for something permitted or to clear its place; touching it without moving it isn't forbidden. And without an eruv, nothing may be carried from home to the synagogue.",
+      es: "Escribir dos letras es una de las 39 melajot, y trazar formas es un derivado de escribir. Un objeto que se usa sobre todo para algo prohibido (kli shemelajtó leisur) no se mueve en Shabat salvo para usarlo en algo permitido o para despejar su lugar, aunque tocarlo sin moverlo no está prohibido. Además, sin eruv no se puede llevar nada de la casa a la sinagoga.",
+      en: "Writing two letters is one of the 39 melachot, and drawing shapes is derived from writing. An object used mainly for something forbidden (kli shemelachto le'issur) isn't moved on Shabbat except to use it for something permitted or to clear its place, though touching it without moving it isn't forbidden. Also, without an eruv, nothing may be carried from home to the synagogue.",
     },
     relevance: {
-      es: "Usar la app implica levantar el teléfono y llevarlo hasta el rollo: aun antes de la pantalla y la cámara, eso ya choca con estas leyes.",
-      en: "Using the app means picking the phone up and bringing it to the scroll: even before the screen and the camera, that already runs into these laws.",
+      es: "Usar la app implica levantar el teléfono y llevarlo hasta el rollo, así que, aun antes de la pantalla y la cámara, eso ya choca con estas leyes.",
+      en: "Using the app means picking the phone up and bringing it to the scroll, so even before the screen and the camera, that already runs into these laws.",
     },
     links: [
       { label: { es: "Mishná Shabat 7:2", en: "Mishnah Shabbat 7:2" }, url: "https://www.sefaria.org/Mishnah_Shabbat.7.2" },
@@ -386,10 +386,10 @@ export const SOURCES: Source[] = [
     stance: "restricts",
     title: { es: "El espíritu del día", en: "The spirit of the day" },
     original: "וְכִבַּדְתּוֹ מֵעֲשׂוֹת דְּרָכֶיךָ",
-    cite: { es: "Isaías 58:13; Ramban sobre Vaikrá 23:24", en: "Isaiah 58:13; Ramban on Leviticus 23:24" },
+    cite: { es: "Isaías 58:13 y Ramban sobre Vaikrá 23:24", en: "Isaiah 58:13 and Ramban on Leviticus 23:24" },
     summary: {
-      es: "Honrar el Shabat «absteniéndote de tus caminos». Para el Ramban, el shabatón es un mandamiento de reposo que abarca también lo que no es melajá. De ahí sale la idea de uvdin dejol: actividades de días de semana que, aunque no estén prohibidas, no son del Shabat.",
-      en: "Honor Shabbat “by not going your own ways.” For the Ramban, shabbaton is a commandment to rest that covers things that aren't melachah too. From it comes the idea of uvdin dechol: weekday activities that, even if not forbidden, don't belong to Shabbat.",
+      es: "Honrar el Shabat «absteniéndote de tus caminos». Para el Ramban, el shabatón es un mandamiento de reposo que abarca también lo que no es melajá. De ahí sale la idea de uvdin dejol (actividades de días de semana que, aunque no estén prohibidas, no son del Shabat).",
+      en: "Honor Shabbat “by not going your own ways.” For the Ramban, shabbaton is a commandment to rest that covers things that aren't melachah too. From it comes the idea of uvdin dechol, weekday activities that, even if not forbidden, don't belong to Shabbat.",
     },
     relevance: {
       es: "Es la base de la idea de que un celular en la bimá no es del Shabat. La usan Nevins, Golinkin y R. Feinstein.",

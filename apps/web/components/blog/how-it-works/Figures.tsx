@@ -7,7 +7,7 @@ const IMG = "/blog/how-it-works";
 
 const TEXT = {
   es: {
-    steps: "pasos de 4 píxeles; el punto es «nada»",
+    steps: "pasos de 4 píxeles (el punto es «nada»)",
     unsure: "menos del 50 %",
     read: "Leyó",
     scroll: "En el sefer",
@@ -21,7 +21,7 @@ const TEXT = {
     votesLabel: "Votos por el lugar donde empieza la foto, a lo largo de toda la Torá",
   },
   en: {
-    steps: "4-pixel steps; a dot means “nothing”",
+    steps: "4-pixel steps (a dot means “nothing”)",
     unsure: "below 50%",
     read: "Read",
     scroll: "In the sefer",
