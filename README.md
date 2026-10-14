@@ -89,7 +89,7 @@ pnpm dev     # Next.js with local HTTPS, to test the camera from a phone on the 
 
 The reader needs no configuration. For the admin panel and the support options, copy `apps/web/.env.example` to `apps/web/.env.local`. The database goes to `apps/web/data/` unless `DATA_DIR` says otherwise.
 
-The site has a public landing page at `/en` and `/es`; the app itself is at `/en/app` and `/es/app`. A scan takes a second or two and costs nothing.
+The site has a public landing page at `/en` and `/es` and a blog at `/en/blog` and `/es/blog`; the app itself is at `/en/app` and `/es/app`. A scan takes a second or two and costs nothing.
 
 ## Repository layout
 

@@ -303,7 +303,7 @@ export const en: Dictionary = {
     now: "Now",
   },
   landing: {
-    nav: { how: "How it works", demo: "Demo", code: "Code", app: "Open the app" },
+    nav: { how: "How it works", demo: "Demo", code: "Code", blog: "Blog", app: "Open the app" },
     eyebrow: "Tested on real scrolls",
     headline: "Find your place in the Sefer Torah with your phone",
     lead: "Point the camera at the open column. NavTorah tells you the book, parashah and aliyah, and how many columns to move to reach the reading.",
@@ -350,6 +350,16 @@ export const en: Dictionary = {
     runYourOwn: "Run your own copy",
     admin: "Admin",
     license: "Open source, MIT license",
+  },
+  blog: {
+    title: "Blog",
+    lead: "How NavTorah works, why it exists, and what the sources say about using it.",
+    minutes: (n) => `${n} min read`,
+    soon: "Coming soon",
+    soonText: "This post hasn't been written yet.",
+    all: "All posts",
+    read: "Read",
+    figure: "Figure",
   },
 };
 

@@ -15,7 +15,8 @@
     "crop": "tsx src/crop-columns.ts",
     "consistency": "tsx src/consistency.ts",
     "segment": "tsx src/segment-debug.ts",
-    "local": "tsx src/local-eval.ts"
+    "local": "tsx src/local-eval.ts",
+    "figures": "tsx src/blog-figures.ts"
   },
   "dependencies": {
     "@navtora/core": "workspace:*",
