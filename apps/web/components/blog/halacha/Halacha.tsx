@@ -10,10 +10,10 @@ export interface HalachaContent {
   intro: ReactNode;
   /** prose, then the cards of the sources it introduces, by id */
   sections: Array<{ id: string; text: ReactNode; sources: string[] }>;
-  outro: ReactNode;
+  outro?: ReactNode;
 }
 
-/** "What to do when no one can read Torah": the Conservative responsum on it, where the app helps, and the sources. */
+/** "What to do when no one can read Torah": the CJLS responsum on it, and where the app helps. */
 export function Halacha({ lang }: { lang: Locale }) {
   const c = lang === "es" ? contentEs : contentEn;
   return (
@@ -33,7 +33,7 @@ export function Halacha({ lang }: { lang: Locale }) {
           )}
         </section>
       ))}
-      <div className="prose-blog mt-16">{c.outro}</div>
+      {c.outro && <div className="prose-blog mt-16">{c.outro}</div>}
     </article>
   );
 }

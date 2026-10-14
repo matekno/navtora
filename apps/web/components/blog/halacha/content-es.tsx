@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { HalachaContent } from "./Halacha";
 
 const SRL_HALAJA = "https://www.seminariorabinico.org/halaja/";
@@ -9,29 +10,17 @@ export const contentEs: HalachaContent = {
         Encontrar a alguien que sepa leer la Torá es un desafío para muchas kehilot, sobre todo en la diáspora, donde la mayoría no sabe suficiente hebreo. En mayo de 2026, el Comité de Leyes y Estándares de la Asamblea
         Rabínica (CJLS) aprobó una responsa sobre qué hacer cuando no hay nadie que sepa leer. Su respuesta es que la lectura no se deja, y que hay que hacer todo lo posible para leer del rollo.
       </p>
-      <p>Pensé NavTorá para ayudar en esa situación.</p>
+      <p>
+        Pensé NavTorá para ayudar en esa situación. Yo estoy en ella, y conozco a muchos que también (lo cuento en <Link href="/es/blog/story">Por qué hice NavTorá</Link>).
+      </p>
     </>
   ),
   sections: [
     {
-      id: "que-dice-la-halaja",
-      text: (
-        <>
-          <h2>Qué dice la halajá</h2>
-          <p>
-            El Shulján Aruj ya se imaginaba una comunidad donde nadie supiera leer bien la Torá. Su respuesta es que, aun así, se lee con la brajá. La Mishná Berurá y el Aruj HaShulján explican cómo hacerlo. Alguien que sabe leer de
-            un jumash le va susurrando al que lee del rollo, y este repite en voz alta, «porque no hay otra opción».
-          </p>
-          <p>Al mismo tiempo, la lectura se hace con las teamim, y el Talmud es duro con quien lee sin la melodía.</p>
-        </>
-      ),
-      sources: ["sa-142-2", "mb-142-8", "ahs-142-5", "megillah-32a"],
-    },
-    {
       id: "la-responsa",
       text: (
         <>
-          <h2>La responsa conservadora</h2>
+          <h2>La responsa del CJLS</h2>
           <p>
             La responsa es del rabino David J. Fine y se llama «Cuando nadie puede leer la Torá» (OH 142:2.2026a). Pregunta qué opciones tiene una kehilá cuando nadie puede leer del Séfer Torá como corresponde, y si se puede leer
             de un jumash impreso.
@@ -52,29 +41,16 @@ export const contentEs: HalachaContent = {
           </ol>
           <p>
             Fine también descarta leer sin las teamim, porque son un requisito de la halajá y una tradición que hay que hacer todo lo posible por mantener. Si la falta de lector es permanente, propone leer directamente del jumash,
-            sin abrir el Séfer Torá y sin brajot, para que nadie piense que eso reemplaza la lectura del rollo. Además, aclara que el rollo no se marca, ni con lápiz ni con láminas transparentes encima, siguiendo una respuesta del
-            rabino Ben Zion Bokser de 1981.
+            sin abrir el Séfer Torá y sin brajot, para que nadie piense que eso reemplaza la lectura del rollo. Además, aclara que el rollo no se marca, ni con lápiz ni con láminas transparentes encima.
           </p>
           <p>
             La responsa se aprobó con 7 votos a favor, 11 en contra y 5 abstenciones. En el CJLS, una responsa con 6 votos a favor o más es una posición oficial del Comité, aunque haya más votos en contra. Entre quienes votaron a
             favor está el rabino Marcelo Polakoff, de Córdoba.
           </p>
+          <p>La responsa explica en detalle las fuentes en las que se apoya, así que para eso lo mejor es leerla completa.</p>
         </>
       ),
       sources: ["fine-2026"],
-    },
-    {
-      id: "el-disenso",
-      text: (
-        <>
-          <h2>El disenso</h2>
-          <p>
-            Los rabinos Daniel Nevins y Joel Pitkowsky votaron en contra y explicaron por qué. Están de acuerdo con casi toda la responsa y solo rechazan la quinta opción. Para ellos, si no hay forma de leer del rollo ni siquiera con
-            ayuda, es mejor estudiar la parashá del jumash, sin aliot, y leer la parte que faltó el Shabat siguiente.
-          </p>
-        </>
-      ),
-      sources: ["nevins-pitkowsky-2026"],
     },
     {
       id: "donde-ayuda",
@@ -106,19 +82,6 @@ export const contentEs: HalachaContent = {
       sources: [],
     },
     {
-      id: "respeto-al-publico",
-      text: (
-        <>
-          <h2>El respeto al público</h2>
-          <p>
-            Dejar el rollo preparado antes de la tefilá también tiene su propia halajá. No se enrolla el Séfer Torá delante del público, por respeto al público, y el Aruj HaShulján dice que prepararlo antes es obligación del
-            shamash o del lector.
-          </p>
-        </>
-      ),
-      sources: ["yoma-70a", "sa-144-3", "ahs-144-6", "cjls-torah-reading-2020"],
-    },
-    {
       id: "consultar",
       text: (
         <>
@@ -131,10 +94,4 @@ export const contentEs: HalachaContent = {
       sources: [],
     },
   ],
-  outro: (
-    <p>
-      Si falta una fuente o hay algo mal citado, se puede corregir como cualquier otra parte de la app, porque las fuentes de esta página están en el{" "}
-      <a href="https://github.com/matekno/navtora/blob/main/apps/web/components/blog/halacha/sources.ts">código</a>.
-    </p>
-  ),
 };

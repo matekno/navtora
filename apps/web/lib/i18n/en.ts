@@ -360,8 +360,9 @@ export const en: Dictionary = {
     all: "All posts",
     read: "Read",
     figure: "Figure",
-    prepareTitle: "For preparing only",
-    prepareText: "NavTorah is used before Shabbat and Yom Tov, to get the scroll ready. Phones are not used on Shabbat or Yom Tov.",
+    prepareTitle: "For use before Shabbat",
+    prepareText:
+      "NavTorah is meant for preparing the scroll before Shabbat or Yom Tov. In the Masorti (Conservative) movement, the halachic position is not to use a phone during Shabbat or Yom Tov, so the idea is to use it beforehand and come to the reading with everything ready.",
   },
 };
 

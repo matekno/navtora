@@ -17,14 +17,14 @@ export const POSTS: PostMeta[] = [
   {
     slug: "halacha",
     date: "2026-10-14",
-    minutes: 7,
+    minutes: 4,
     title: {
       es: "Qué hacer cuando nadie sabe leer la Torá",
       en: "What to do when no one can read Torah",
     },
     description: {
-      es: "La halajá pide no dejar la lectura de la Torá aunque nadie la sepa leer bien. Qué dice la responsa conservadora de 2026 y cómo ayuda NavTorá a leer del rollo.",
-      en: "The halacha asks not to drop the Torah reading even when no one can read it well. What the 2026 Conservative responsum says, and how NavTorah helps read from the scroll.",
+      es: "Qué dice la responsa del CJLS de 2026 sobre qué hacer cuando nadie sabe leer la Torá, y cómo ayuda NavTorá a leer del rollo.",
+      en: "What the 2026 CJLS responsum says about what to do when no one can read Torah, and how NavTorah helps read from the scroll.",
     },
   },
   {

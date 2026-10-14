@@ -367,8 +367,9 @@ export const es = {
     all: "Todos los artículos",
     read: "Leer",
     figure: "Figura",
-    prepareTitle: "Solo para preparar",
-    prepareText: "NavTorá se usa antes de Shabat y de Iom Tov, para dejar el rollo listo. En Shabat y en Iom Tov el celular no se usa.",
+    prepareTitle: "Para usar antes de Shabat",
+    prepareText:
+      "NavTorá está pensada para preparar el rollo antes de Shabat o de Iom Tov. En el movimiento masortí, la postura halájica es no usar el celular durante Shabat ni Iom Tov, así que la idea es usarla antes y llegar a la lectura con todo listo.",
   },
 };
 
