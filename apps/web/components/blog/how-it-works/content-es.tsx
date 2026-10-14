@@ -33,7 +33,7 @@ export function contentEs(): PostContent {
         </p>
         <p>
           Para ubicarse, la app <strong>lee</strong> la columna (con errores y todo) y <strong>busca</strong> esas palabras entre las 80.316 de la Torá. No necesita tener guardado cómo se ve cada columna, así que sirve para
-          cualquier sefer. La foto de este artículo es un cuadro real de una de las pruebas que grabamos, y todo lo que está dibujado encima salió de correr la app sobre ella.
+          cualquier sefer. La foto de este artículo es un cuadro real de una de las pruebas que grabamos, y lo que está dibujado encima sale de correr el código de la app sobre ella.
         </p>
       </>
     ),
@@ -46,10 +46,11 @@ export function contentEs(): PostContent {
               <span className="step">Paso 1</span>La foto
             </h2>
             <p>
-              Esta es la foto tal cual la sacó la cámara, de {FIG.width} por {FIG.height} píxeles. El pergamino está amarillento y tiene manchas, la columna se ve más angosta arriba que abajo porque el teléfono no estaba paralelo al
-              sefer, y los renglones se curvan un poco porque el pergamino no está plano. A los costados, además, se ven partes de las columnas vecinas.
+              La foto es un cuadro de la grabación de pantalla de una de nuestras pruebas, recortado a lo que mostraba la cámara (le borramos la guía amarilla de la app). Tiene {FIG.width} por {FIG.height} píxeles, más o menos la
+              cuarta parte de la resolución con la que la app saca las fotos. El pergamino está amarillento y tiene manchas, la columna se ve más angosta arriba que abajo porque el teléfono no estaba paralelo al sefer, y los renglones
+              se curvan un poco porque el pergamino no está plano. A los costados, además, se ven partes de las columnas vecinas.
             </p>
-            <p>Todo lo que sigue, hasta tener el texto leído, pasa en el teléfono. La foto no se manda a ningún lado.</p>
+            <p>En la app, todo lo que sigue hasta tener el texto leído pasa en el teléfono, y la foto no se manda a ningún lado.</p>
           </div>
         ),
       },
@@ -65,7 +66,7 @@ export function contentEs(): PostContent {
               golpe, de un píxel al siguiente.
             </p>
             <p>
-              Para separarlas, la app achica la foto a 160 píxeles de lado. En esa copia chiquita, cada punto toma el valor más claro de sus vecinos. Como las letras son finitas, desaparecen, y queda solo el fondo. Después, la app
+              Para separarlas, la app hace una copia chiquita de la foto, de 160 píxeles de lado. En esa copia, cada punto toma el valor más claro de sus vecinos. Como las letras son finitas, desaparecen, y queda solo el fondo. Después, la app
               divide la foto por ese fondo. Es decir, donde hay pergamino el resultado queda blanco y donde hay tinta queda oscuro, esté a la sombra o al sol.
             </p>
             <p>Si arrastrás la línea sobre la foto, vas a ver que las manchas y el amarillo desaparecen y las letras quedan.</p>
@@ -85,7 +86,7 @@ export function contentEs(): PostContent {
             </p>
             <p>
               La columna es el tramo con texto que contiene el centro de la foto, entre dos de esos huecos. Como el teléfono puede estar torcido, antes de sumar la app prueba inclinar la suma unos grados para cada lado y se queda con el
-              ángulo que deja los bordes más nítidos. Además, mide los bordes en cinco franjas de altura por separado, para que sigan la perspectiva. En esta foto, la columna mide {Math.round(top.x1 - top.x0)} píxeles de ancho
+              ángulo que deja los bordes más nítidos. Además, mide los bordes en varias franjas de altura por separado (en esta foto, {FIG.edges.length}), para que sigan la perspectiva. La columna mide {Math.round(top.x1 - top.x0)} píxeles de ancho
               arriba y {Math.round(bottom.x1 - bottom.x0)} abajo.
             </p>
           </div>
@@ -102,12 +103,13 @@ export function contentEs(): PostContent {
               En un sefer, los renglones se apoyan en el <em>sirtut</em>, las rayas que el sofer marca antes de escribir. Por eso son paralelos y están a la misma distancia, y la app aprovecha eso.
             </p>
             <p>
-              Primero corta la columna en {FIG.strips.x.length - 1} tiras verticales y, en cada tira, suma la tinta fila por fila. Cada renglón da un pico (a los costados de la foto están esas sumas para la primera y la última tira).
-              La distancia entre un pico y el siguiente es el paso de los renglones, que en esta foto es de {nf.format(FIG.pitch)} píxeles.
+              Primero mide esa distancia. Corta la columna en seis tiras angostas, suma la tinta fila por fila en cada una y busca cada cuántos píxeles se repite el patrón. En esta foto, los renglones están cada{" "}
+              {nf.format(FIG.pitch)} píxeles.
             </p>
             <p>
-              Si el teléfono está torcido o el pergamino se curva, los picos de una tira no caen a la misma altura que los de la tira de al lado. Comparando tiras vecinas, la app mide cuánto sube o baja cada renglón de una a otra y con
-              eso arma el camino de cada uno. En esta foto encontró {FIG.lines.length} renglones.
+              Después corta la columna en tiras más anchas (en esta foto, {FIG.strips.x.length - 1}). En cada una, la suma fila por fila da un pico por renglón (a los costados de la foto están esas sumas para la primera y la última
+              tira). Si el teléfono está torcido o el pergamino se curva, los picos de una tira no caen a la misma altura que los de la tira de al lado. Comparando tiras vecinas, la app mide cuánto sube o baja cada renglón de una a otra
+              y con eso arma el camino de cada uno. En esta foto encontró {FIG.lines.length} renglones.
             </p>
           </div>
         ),
@@ -167,7 +169,7 @@ export function contentEs(): PostContent {
             </h2>
             <p>
               Lo leído tiene errores, como <span className="he">יהות</span> en vez de <span className="he">יהוה</span> o <span className="he">ביואב</span> en vez de <span className="he">מואב</span>. Por eso, buscar el texto tal cual
-              no serviría. En cambio, cada palabra leída vota dónde empieza la foto.
+              no serviría. En cambio, cada palabra leída vota dónde empieza la foto. Esta parte ya pasa en el servidor, que recibe el texto y no la foto.
             </p>
             <p>
               Por ejemplo, <span className="he">{ex.word}</span> es la palabra {ex.k + 1} de lo leído, y en la Torá está en la posición {nf.format(ex.position)}. Entonces vota que la foto empieza en la posición{" "}
@@ -196,13 +198,13 @@ export function contentEs(): PostContent {
               <span className="step">Paso 8</span>¿Está segura?
             </h2>
             <p>
-              Encontrar un lugar no alcanza para dar una respuesta. La app compara el mejor lugar con el segundo, y acá el mejor ({r.parasha?.es}, columna {r.column}) sacó {nf.format(r.score)} puntos contra{" "}
+              Encontrar un lugar no alcanza para dar una respuesta. La app pide un mínimo de palabras alineadas en más de un renglón y compara el mejor lugar con el segundo. Acá el mejor ({r.parasha?.es}, columna {r.column}) sacó {nf.format(r.score)} puntos contra{" "}
               {nf.format(r.second ?? 0)} del segundo, con {r.alignedTokens} palabras alineadas en {r.linesCovered} renglones.
             </p>
             <ScoreFigure lang="es" caption="El puntaje de la alineación del mejor lugar contra el del segundo." />
             <p>
               Cuando los dos primeros se parecen, la app no adivina. Esto pasa, por ejemplo, en Bamidbar 7, donde la ofrenda de cada uno de los doce nesiim se repite casi igual. En ese caso, la app muestra las opciones y pide otra
-              foto, mejor si se ve el principio de la columna. En 2.000 pruebas con hasta la mitad de las letras mal leídas, nunca dio un lugar equivocado con confianza.
+              foto, mejor si se ve el principio de la columna. En 2.000 pruebas simuladas con hasta la mitad de las letras mal leídas, nunca dio un lugar equivocado con confianza.
             </p>
           </div>
         ),
@@ -215,12 +217,12 @@ export function contentEs(): PostContent {
               <span className="step">Paso 9</span>Para qué lado mover el sefer
             </h2>
             <p>
-              El resultado de todo esto es una posición en palabras. Como no depende de cómo está armado el sefer, sirve para cualquiera. En los sifrei que siguen el formato estándar de 245 columnas, además, se sabe la columna exacta.
-              Esta foto es de la columna {r.column}, y Devarim 1:1 está en la {FIG.navigation.targetColumn}.
+              El resultado de todo esto es una posición en palabras, que sirve para cualquier sefer. Para contar columnas, la app usa el formato estándar de 245 columnas. Esta foto es de la columna {r.column}, y Devarim 1:1 está en la{" "}
+              {FIG.navigation.targetColumn}.
             </p>
             <p>
-              Como el texto va de derecha a izquierda, ir hacia Devarim es ir hacia la izquierda, en este caso {FIG.navigation.columns} columnas. Si el sefer tiene otro formato, la app estima cuántas columnas faltan con las palabras
-              por columna que midió en la foto, y la cuenta mejora con cada foto nueva. Cuando llegás, te dice en qué renglón empieza la lectura.
+              Como el texto va de derecha a izquierda, ir hacia Devarim es ir hacia la izquierda, en este caso {FIG.navigation.columns} columnas. Si el sefer sigue el formato estándar, la cuenta es exacta. Si no, es una aproximación,
+              y conviene escanear de nuevo cuando llegás. Al llegar, la app te dice en qué renglón empieza la lectura.
             </p>
             <MoveFigure lang="es" caption="Las columnas alrededor de la foto, de derecha a izquierda como en el sefer." />
           </div>
@@ -230,16 +232,21 @@ export function contentEs(): PostContent {
     outro: (
       <>
         <h2>¿Qué se manda al servidor?</h2>
-        <p>Solo el texto leído. La foto se queda en el teléfono, salvo que alguien la mande a propósito para ayudar a mejorar la red.</p>
+        <p>
+          El texto leído y algunos datos del escaneo (cuánto tardó, qué lectura buscabas y un número al azar que identifica al teléfono). La foto se queda en el teléfono, salvo que alguien la mande a propósito para ayudar a
+          mejorar la red.
+        </p>
         <h2>Lo que todavía no hace bien</h2>
         <ul>
           <li>Las dos canciones escritas en forma de ladrillos, Shirat HaIam y Haazinu, porque el buscador de renglones no las sigue.</li>
           <li>Los pasajes que se repiten, como el de los nesiim. Ahí la app avisa que hay más de una opción en lugar de elegir una.</li>
+          <li>Los sifrei que no siguen el formato estándar, donde la cuenta de columnas es aproximada.</li>
         </ul>
         <h2>El código</h2>
         <p>
           El código es abierto y está en <a href={GITHUB}>GitHub</a>. Los resultados de cada prueba están en <a href={`${GITHUB}/blob/main/docs/evaluation.md`}>la evaluación</a>, y el script que generó las figuras de este
-          artículo está en <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>.
+          artículo está en <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>. Ese script corre en una computadora el mismo código que la app corre en el teléfono. Las sumas de tinta de los
+          pasos 3 y 4, los votos y la comparación palabra por palabra están recalculados con el mismo método para poder dibujarlos.
         </p>
       </>
     ),

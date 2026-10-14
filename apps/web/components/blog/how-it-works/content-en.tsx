@@ -33,7 +33,7 @@ export function contentEn(): PostContent {
         </p>
         <p>
           To find its place, the app <strong>reads</strong> the column (mistakes and all) and <strong>searches</strong> for those words among the Torah's 80,316. It doesn't need to know what each column looks like, so it works
-          with any sefer. The photo in this post is a frame from one of the tests we recorded, and everything drawn over it came from running the app on it.
+          with any sefer. The photo in this post is a frame from one of the tests we recorded, and what's drawn over it comes from running the app's code on it.
         </p>
       </>
     ),
@@ -46,10 +46,11 @@ export function contentEn(): PostContent {
               <span className="step">Step 1</span>The photo
             </h2>
             <p>
-              This is the photo as the camera took it, {FIG.width} by {FIG.height} pixels. The parchment is yellowed and stained, the column looks narrower at the top than at the bottom because the phone wasn't parallel to the sefer,
-              and the lines bend a little because the parchment isn't flat. Parts of the neighboring columns show at the sides, too.
+              The photo is a frame from the screen recording of one of our tests, cropped to what the camera showed (we painted out the app's yellow guide). It's {FIG.width} by {FIG.height} pixels, roughly a quarter of the
+              resolution the app takes photos at. The parchment is yellowed and stained, the column looks narrower at the top than at the bottom because the phone wasn't parallel to the sefer, and the lines bend a little because the
+              parchment isn't flat. Parts of the neighboring columns show at the sides, too.
             </p>
-            <p>Everything that follows, up to the text being read, happens on the phone. The photo isn't sent anywhere.</p>
+            <p>In the app, everything that follows up to the text being read happens on the phone, and the photo isn't sent anywhere.</p>
           </div>
         ),
       },
@@ -65,7 +66,7 @@ export function contentEn(): PostContent {
               pixel to the next.
             </p>
             <p>
-              To pull them apart, the app shrinks the photo to 160 pixels on its long side. In that tiny copy, each point takes the lightest value among its neighbors. Since the letters are thin, they vanish, and only the background is
+              To pull them apart, the app makes a tiny copy of the photo, 160 pixels on its long side. In that copy, each point takes the lightest value among its neighbors. Since the letters are thin, they vanish, and only the background is
               left. Then the app divides the photo by that background. That is, where there is parchment the result is white, and where there is ink it stays dark, in shade or in light.
             </p>
             <p>If you drag the line over the photo, you'll see the stains and the yellow go away while the letters stay.</p>
@@ -85,7 +86,7 @@ export function contentEn(): PostContent {
             </p>
             <p>
               The column is the stretch of text that contains the middle of the photo, between two of those dips. Since the phone may be crooked, before summing the app tries tilting the sum a few degrees each way and keeps the angle
-              that gives the sharpest edges. It also measures the edges in five horizontal bands separately, so they follow the perspective. In this photo the column is {Math.round(top.x1 - top.x0)} pixels wide at the top and{" "}
+              that gives the sharpest edges. It also measures the edges in several horizontal bands separately (in this photo, {FIG.edges.length}), so they follow the perspective. The column is {Math.round(top.x1 - top.x0)} pixels wide at the top and{" "}
               {Math.round(bottom.x1 - bottom.x0)} at the bottom.
             </p>
           </div>
@@ -102,12 +103,13 @@ export function contentEn(): PostContent {
               In a sefer, the lines hang from the <em>sirtut</em>, the rules the scribe scores before writing. That's why they are parallel and evenly spaced, and the app takes advantage of it.
             </p>
             <p>
-              First it cuts the column into {FIG.strips.x.length - 1} vertical strips and, in each strip, sums the ink row by row. Each line makes a peak (the sums for the first and last strips are drawn at the sides of the photo).
-              The distance from one peak to the next is the line pitch, {nf.format(FIG.pitch)} pixels in this photo.
+              First it measures that spacing. It cuts the column into six narrow strips, sums the ink row by row in each, and looks for how many pixels the pattern takes to repeat. In this photo the lines are{" "}
+              {nf.format(FIG.pitch)} pixels apart.
             </p>
             <p>
-              If the phone is crooked or the parchment curves, the peaks in one strip don't sit at the same height as those in the next. By comparing neighboring strips, the app measures how much each line rises or falls from one to
-              the other, and builds each line's path from that. In this photo it found {FIG.lines.length} lines.
+              Then it cuts the column into wider strips ({FIG.strips.x.length - 1} in this photo). In each, the row-by-row sum makes one peak per line (the sums for the first and last strips are drawn at the sides of the photo). If
+              the phone is crooked or the parchment curves, the peaks in one strip don't sit at the same height as those in the next. By comparing neighboring strips, the app measures how much each line rises or falls from one to the
+              other, and builds each line's path from that. In this photo it found {FIG.lines.length} lines.
             </p>
           </div>
         ),
@@ -166,7 +168,7 @@ export function contentEn(): PostContent {
             </h2>
             <p>
               The reading has mistakes, like <span className="he">יהות</span> instead of <span className="he">יהוה</span> or <span className="he">ביואב</span> instead of <span className="he">מואב</span>. So searching for the text as
-              read would get nowhere. Instead, every word read votes for where the photo starts.
+              read would get nowhere. Instead, every word read votes for where the photo starts. This part happens on the server, which gets the text and not the photo.
             </p>
             <p>
               For example, <span className="he">{ex.word}</span> is word {ex.k + 1} of the reading, and in the Torah it sits at position {nf.format(ex.position)}. So it votes for the photo starting at position{" "}
@@ -195,13 +197,13 @@ export function contentEn(): PostContent {
               <span className="step">Step 8</span>Is it sure?
             </h2>
             <p>
-              Finding a place isn't enough to give an answer. The app compares the best place with the runner-up, and here the best ({r.parasha?.en}, column {r.column}) scored {nf.format(r.score)} points against{" "}
+              Finding a place isn't enough to give an answer. The app requires a minimum of aligned words over more than one line, and compares the best place with the runner-up. Here the best ({r.parasha?.en}, column {r.column}) scored {nf.format(r.score)} points against{" "}
               {nf.format(r.second ?? 0)} for the runner-up, with {r.alignedTokens} words aligned over {r.linesCovered} lines.
             </p>
             <ScoreFigure lang="en" caption="The alignment score of the best place against the runner-up's." />
             <p>
               When the top two are close, the app doesn't guess. That happens, for example, in Bamidbar 7, where the offering of each of the twelve nesiim is repeated almost word for word. In that case the app shows the options and asks
-              for another photo, ideally with the top of the column in view. In 2,000 tests with up to half the letters misread, it never gave a wrong place with confidence.
+              for another photo, ideally with the top of the column in view. In 2,000 simulated tests with up to half the letters misread, it never gave a wrong place with confidence.
             </p>
           </div>
         ),
@@ -214,12 +216,12 @@ export function contentEn(): PostContent {
               <span className="step">Step 9</span>Which way to move the sefer
             </h2>
             <p>
-              What comes out of all this is a position in words. Since it doesn't depend on how the sefer is laid out, it works for any sefer. In sifrei that follow the standard 245-column layout, the exact column is known too. This
-              photo is of column {r.column}, and Deuteronomy 1:1 is in {FIG.navigation.targetColumn}.
+              What comes out of all this is a position in words, which works for any sefer. To count columns, the app uses the standard 245-column layout. This photo is of column {r.column}, and Deuteronomy 1:1 is in{" "}
+              {FIG.navigation.targetColumn}.
             </p>
             <p>
-              Since the text runs right to left, going toward Devarim means going left, {FIG.navigation.columns} columns here. If the sefer has another layout, the app estimates how many columns are left from the words per column it
-              measured in the photo, and the count improves with every new photo. Once you're there, it tells you which line the reading starts on.
+              Since the text runs right to left, going toward Devarim means going left, {FIG.navigation.columns} columns here. If the sefer follows the standard layout, the count is exact. If not, it's an approximation, and it's
+              worth scanning again when you get there. Once there, the app tells you which line the reading starts on.
             </p>
             <MoveFigure lang="en" caption="The columns around the photo, right to left as in the sefer." />
           </div>
@@ -229,16 +231,21 @@ export function contentEn(): PostContent {
     outro: (
       <>
         <h2>What goes to the server?</h2>
-        <p>Only the text that was read. The photo stays on the phone, unless someone sends it on purpose to help improve the network.</p>
+        <p>
+          The text that was read and a few details of the scan (how long it took, which reading you were looking for, and a random number that identifies the phone). The photo stays on the phone, unless someone sends it on purpose
+          to help improve the network.
+        </p>
         <h2>What it doesn't do well yet</h2>
         <ul>
           <li>The two songs written as brickwork, Shirat HaYam and Haazinu, because the line finder doesn't follow them.</li>
           <li>Repeated passages, like the nesiim. There the app says there is more than one option instead of picking one.</li>
+          <li>Sifrei that don't follow the standard layout, where the column count is approximate.</li>
         </ul>
         <h2>The code</h2>
         <p>
           The code is open and on <a href={GITHUB}>GitHub</a>. The results of every test are in <a href={`${GITHUB}/blob/main/docs/evaluation.md`}>the evaluation</a>, and the script that made this post's figures is in{" "}
-          <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>.
+          <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>. That script runs on a computer the same code the app runs on the phone. The ink sums in steps 3 and 4, the votes and the word-by-word
+          comparison are recomputed with the same method so they can be drawn.
         </p>
       </>
     ),
