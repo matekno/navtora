@@ -248,7 +248,10 @@ export function contentEs(): PostContent {
         <ul>
           <li>Las dos canciones escritas en forma de ladrillos, Shirat HaIam y Haazinu, porque el buscador de renglones no las sigue.</li>
           <li>Los pasajes que se repiten, como el de los nesiim. Ahí la app avisa que hay más de una opción en lugar de elegir una.</li>
-          <li>Los sifrei que no siguen el formato estándar, donde la cuenta de columnas es aproximada.</li>
+          <li>
+            Los sifrei que no siguen el formato estándar. La app cuenta las columnas siempre con el formato estándar de 245 columnas, y todavía no detecta cuando un sefer tiene otro. En esos sifrei la cuenta puede no
+            coincidir, así que conviene escanear de nuevo cuando llegás.
+          </li>
         </ul>
         <h2>El código</h2>
         <p>

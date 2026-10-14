@@ -247,7 +247,10 @@ export function contentEn(): PostContent {
         <ul>
           <li>The two songs written as brickwork, Shirat HaYam and Haazinu, because the line finder doesn't follow them.</li>
           <li>Repeated passages, like the nesiim. There the app says there is more than one option instead of picking one.</li>
-          <li>Sifrei that don't follow the standard layout, where the column count is approximate.</li>
+          <li>
+            Sifrei that don't follow the standard layout. The app always counts columns with the standard 245-column layout, and it doesn't detect yet when a sefer has another one. On those sifrei the count can be off, so
+            it's worth scanning again when you get there.
+          </li>
         </ul>
         <h2>The code</h2>
         <p>
