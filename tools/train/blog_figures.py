@@ -1,5 +1,5 @@
 """
-Images for the training appendix of the blog post on how the reader works:
+Images for the blog post on how the network was trained:
 one synthetic photo step by step, a few finished ones, the fonts, and line
 crops with their labels. Everything comes from the same code as the training
 set; the samples are the first ones of the training set itself (seed 11).
@@ -8,7 +8,7 @@ set; the samples are the first ones of the training set itself (seed 11).
     pnpm crops --in data/blog --out data/blog-crops
     python blog_figures.py --samples data/blog --crops data/blog-crops
 
-Writes images to apps/web/public/blog/how-it-works/training/ and what the post
+Writes images to apps/web/public/blog/training/ and what the post
 says about them to apps/web/lib/blog/training-figures.json.
 """
 
@@ -111,7 +111,7 @@ def main() -> None:
     ap.add_argument("--stage", type=int, default=21, help="sample shown step by step")
     ap.add_argument("--gallery", default="4,8,16,19,23,1")
     ap.add_argument("--lines", default="000021_02.png,000021_11.png,000021_15.png,000004_03.png")
-    ap.add_argument("--out-public", default=str(WEB / "public/blog/how-it-works/training"))
+    ap.add_argument("--out-public", default=str(WEB / "public/blog/training"))
     ap.add_argument("--out-data", default=str(WEB / "lib/blog/training-figures.json"))
     args = ap.parse_args()
     synth.check_raqm()

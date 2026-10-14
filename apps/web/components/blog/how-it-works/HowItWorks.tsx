@@ -11,8 +11,6 @@ export interface PostContent {
   intro: ReactNode;
   steps: Array<{ stage: StageStep; content: ReactNode }>;
   outro: ReactNode;
-  /** after the post, each with its own anchor */
-  appendices: Array<{ id: string; content: ReactNode }>;
 }
 
 /** "From a photo to the exact column": one real photo followed through the reader, step by step. */
@@ -31,11 +29,6 @@ export function HowItWorks({ lang }: { lang: Locale }) {
       </div>
       <div className="mx-auto mt-4 max-w-6xl px-5 sm:px-6">
         <div className="prose-blog max-w-3xl">{c.outro}</div>
-        {c.appendices.map((a) => (
-          <section key={a.id} id={a.id} className="mt-20 max-w-3xl scroll-mt-20 border-t border-line/60 pt-14">
-            {a.content}
-          </section>
-        ))}
       </div>
     </article>
   );

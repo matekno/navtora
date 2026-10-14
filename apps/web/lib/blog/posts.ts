@@ -1,7 +1,7 @@
 /** Blog posts: one entry per post, in the order the index shows them. Slugs are shared by both languages. */
 import type { Locale } from "@/lib/i18n";
 
-export type PostSlug = "halacha" | "how-it-works" | "about" | "story";
+export type PostSlug = "halacha" | "how-it-works" | "training" | "first-version" | "about" | "story";
 
 export interface PostMeta {
   slug: PostSlug;
@@ -30,7 +30,7 @@ export const POSTS: PostMeta[] = [
   {
     slug: "how-it-works",
     date: "2026-10-14",
-    minutes: 16,
+    minutes: 11,
     title: {
       es: "Cómo NavTorá sabe en qué columna está abierto el sefer",
       en: "How NavTorah knows which column the sefer is open at",
@@ -38,6 +38,32 @@ export const POSTS: PostMeta[] = [
     description: {
       es: "Seguimos paso a paso una foto real de un sefer, desde que la app separa la tinta del pergamino hasta que ubica la columna entre las 80.316 palabras de la Torá.",
       en: "We follow one real photo of a sefer step by step, from separating the ink from the parchment to placing the column among the Torah's 80,316 words.",
+    },
+  },
+  {
+    slug: "training",
+    date: "2026-10-14",
+    minutes: 8,
+    title: {
+      es: "Cómo entrenamos la red que lee el sefer",
+      en: "How we trained the network that reads the sefer",
+    },
+    description: {
+      es: "Las fotos sintéticas con las que aprendió a leer, las fuentes, y cómo la probamos con cuatro sifrei reales que nunca vio, entre ellos uno del siglo XV.",
+      en: "The synthetic photos it learned to read from, the fonts, and how we tested it on four real sifrei it had never seen, one of them from the 15th century.",
+    },
+  },
+  {
+    slug: "first-version",
+    date: "2026-10-14",
+    minutes: 5,
+    title: {
+      es: "La primera versión de NavTorá, con la API de Anthropic",
+      en: "NavTorah's first version, with the Anthropic API",
+    },
+    description: {
+      es: "Cómo leía las columnas Claude en el MVP, cuánto tardaba y costaba, y por qué pasamos a una red propia en el teléfono.",
+      en: "How Claude read the columns in the MVP, how long it took and what it cost, and why we moved to our own network on the phone.",
     },
   },
   {

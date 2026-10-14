@@ -2,6 +2,7 @@
 import { BOOK_NAMES, isConfusable } from "@navtora/core";
 import { FIG, KIND_COLOR, type PairKind } from "@/lib/blog/how-it-works";
 import type { Locale } from "@/lib/i18n";
+import { Figure } from "../Figure";
 
 const IMG = "/blog/how-it-works";
 
@@ -39,15 +40,6 @@ const TEXT = {
     votesLabel: "Votes for where the photo starts, across the whole Torah",
   },
 } satisfies Record<Locale, unknown>;
-
-export function Figure({ children, caption }: { children: React.ReactNode; caption?: React.ReactNode }) {
-  return (
-    <figure className="my-8">
-      <div className="rounded-2xl border border-line/70 bg-panel p-4 sm:p-5">{children}</div>
-      {caption && <figcaption className="mt-3 text-sm leading-relaxed text-muted">{caption}</figcaption>}
-    </figure>
-  );
-}
 
 /** One line crop out of lines.webp; `flip` shows it the way people read it rather than the way the network gets it, and `trim` cuts that many pixels off the top and bottom. */
 export function Crop({ index, flip = false, from = 0, to, trim = 0, className = "" }: { index: number; flip?: boolean; from?: number; to?: number; trim?: number; className?: string }) {

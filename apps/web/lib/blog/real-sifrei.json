@@ -1,0 +1,336 @@
+{
+ "bl-sheet": {
+  "width": 1400,
+  "height": 1002
+ },
+ "shannon": {
+  "width": 560,
+  "height": 725,
+  "status": "confident",
+  "linesRead": 40,
+  "parasha": {
+   "en": "Bereshit",
+   "he": "בְּרֵאשִׁית",
+   "es": "Bereshit"
+  },
+  "book": {
+   "en": "Genesis",
+   "he": "בראשית",
+   "es": "Bereshit"
+  },
+  "column": 1,
+  "verses": {
+   "start": {
+    "book": 1,
+    "chapter": 1,
+    "verse": 1
+   },
+   "end": {
+    "book": 1,
+    "chapter": 1,
+    "verse": 25
+   }
+  },
+  "alignedWords": 293,
+  "linesCovered": 40,
+  "words": 302,
+  "same": 211
+ },
+ "kokhav": {
+  "width": 342,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 46,
+  "parasha": {
+   "en": "Bereshit",
+   "he": "בְּרֵאשִׁית",
+   "es": "Bereshit"
+  },
+  "book": {
+   "en": "Genesis",
+   "he": "בראשית",
+   "es": "Bereshit"
+  },
+  "column": 1,
+  "verses": {
+   "start": {
+    "book": 1,
+    "chapter": 1,
+    "verse": 1
+   },
+   "end": {
+    "book": 1,
+    "chapter": 1,
+    "verse": 26
+   }
+  },
+  "alignedWords": 291,
+  "linesCovered": 46,
+  "words": 323,
+  "same": 120
+ },
+ "makhonot": {
+  "width": 504,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 48,
+  "parasha": {
+   "en": "Lech-Lecha",
+   "he": "לֶךְ־לְךָ",
+   "es": "Lej Lejá"
+  },
+  "book": {
+   "en": "Genesis",
+   "he": "בראשית",
+   "es": "Bereshit"
+  },
+  "column": 14,
+  "verses": {
+   "start": {
+    "book": 1,
+    "chapter": 14,
+    "verse": 20
+   },
+   "end": {
+    "book": 1,
+    "chapter": 16,
+    "verse": 8
+   }
+  },
+  "alignedWords": 421,
+  "linesCovered": 48,
+  "words": 434,
+  "same": 322
+ },
+ "bl1": {
+  "width": 315,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 48,
+  "parasha": {
+   "en": "Terumah",
+   "he": "תְּרוּמָה",
+   "es": "Terumá"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 92,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 27,
+    "verse": 13
+   },
+   "end": {
+    "book": 2,
+    "chapter": 28,
+    "verse": 14
+   }
+  },
+  "alignedWords": 237,
+  "linesCovered": 48,
+  "words": 458,
+  "same": 104
+ },
+ "bl2": {
+  "width": 155,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 48,
+  "parasha": {
+   "en": "Tetzaveh",
+   "he": "תְּצַוֶּה",
+   "es": "Tetzavé"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 93,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 28,
+    "verse": 15
+   },
+   "end": {
+    "book": 2,
+    "chapter": 28,
+    "verse": 38
+   }
+  },
+  "alignedWords": 243,
+  "linesCovered": 45,
+  "words": 272,
+  "same": 123
+ },
+ "bl3": {
+  "width": 157,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 48,
+  "parasha": {
+   "en": "Tetzaveh",
+   "he": "תְּצַוֶּה",
+   "es": "Tetzavé"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 94,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 28,
+    "verse": 38
+   },
+   "end": {
+    "book": 2,
+    "chapter": 29,
+    "verse": 17
+   }
+  },
+  "alignedWords": 223,
+  "linesCovered": 44,
+  "words": 257,
+  "same": 114
+ },
+ "bl4": {
+  "width": 185,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 48,
+  "parasha": {
+   "en": "Tetzaveh",
+   "he": "תְּצַוֶּה",
+   "es": "Tetzavé"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 95,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 29,
+    "verse": 19
+   },
+   "end": {
+    "book": 2,
+    "chapter": 29,
+    "verse": 37
+   }
+  },
+  "alignedWords": 229,
+  "linesCovered": 46,
+  "words": 268,
+  "same": 101
+ },
+ "bl5": {
+  "width": 162,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 46,
+  "parasha": {
+   "en": "Tetzaveh",
+   "he": "תְּצַוֶּה",
+   "es": "Tetzavé"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 96,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 29,
+    "verse": 38
+   },
+   "end": {
+    "book": 2,
+    "chapter": 30,
+    "verse": 15
+   }
+  },
+  "alignedWords": 222,
+  "linesCovered": 46,
+  "words": 279,
+  "same": 110
+ },
+ "bl6": {
+  "width": 168,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 46,
+  "parasha": {
+   "en": "Ki Tisa",
+   "he": "כִּי תִשָּׂא",
+   "es": "Ki Tisá"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 97,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 30,
+    "verse": 15
+   },
+   "end": {
+    "book": 2,
+    "chapter": 31,
+    "verse": 5
+   }
+  },
+  "alignedWords": 248,
+  "linesCovered": 45,
+  "words": 274,
+  "same": 126
+ },
+ "bl7": {
+  "width": 173,
+  "height": 1100,
+  "status": "confident",
+  "linesRead": 47,
+  "parasha": {
+   "en": "Ki Tisa",
+   "he": "כִּי תִשָּׂא",
+   "es": "Ki Tisá"
+  },
+  "book": {
+   "en": "Exodus",
+   "he": "שמות",
+   "es": "Shemot"
+  },
+  "column": 98,
+  "verses": {
+   "start": {
+    "book": 2,
+    "chapter": 31,
+    "verse": 6
+   },
+   "end": {
+    "book": 2,
+    "chapter": 32,
+    "verse": 4
+   }
+  },
+  "alignedWords": 208,
+  "linesCovered": 38,
+  "words": 230,
+  "same": 98
+ }
+}

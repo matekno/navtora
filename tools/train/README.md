@@ -33,7 +33,7 @@ pnpm --filter @navtora/eval local -- --synth ../train/data/synth/eval
 
 Everything under `data/`, `fonts/` and `runs/` is generated and not committed.
 
-`blog_figures.py` makes the images of the training appendix in the blog post on how the reader works, from the first 24 photos of the training set (the command is in the script's docstring).
+`blog_figures.py` makes the images of the blog post on how the network was trained, from the first 24 photos of the training set (the command is in the script's docstring).
 
 ## Next steps
 

@@ -1,9 +1,11 @@
 /**
- * The synthetic training photos shown in the "how it works" post's training
- * appendix, written by tools/train/blog_figures.py next to the images in
- * public/blog/how-it-works/training/.
+ * The figures of the post on how the network was trained: synthetic training
+ * photos, written by tools/train/blog_figures.py next to the images in
+ * public/blog/training/, and real sifrei read by the app, written by
+ * tools/eval/src/blog-real.ts next to the images in public/blog/training/real/.
  */
 import raw from "./training-figures.json";
+import realRaw from "./real-sifrei.json";
 
 export type SynthStage = "text" | "ink" | "parchment" | "camera" | "light" | "final";
 
@@ -36,3 +38,28 @@ export const FAMILY_NAMES: Record<string, string> = {
   Nachlieli: "Nachlieli",
   Yehuda: "Yehuda",
 };
+
+type Names = { en: string; es: string; he: string };
+type Verse = { book: number; chapter: number; verse: number };
+
+/** One photo of a real sefer as the app read it: <id>.webp and <id>-analysis.webp in public/blog/training/real/. */
+export interface RealRead {
+  width: number;
+  height: number;
+  status: string;
+  linesRead: number;
+  parasha: Names | null;
+  book: Names | null;
+  column: number | null;
+  verses: { start: Verse; end: Verse } | null;
+  alignedWords: number;
+  linesCovered: number;
+  words: number;
+  same: number;
+}
+
+const { "bl-sheet": sheet, ...reads } = realRaw;
+/** what was read in each photo, by id */
+export const REAL = reads as unknown as Record<string, RealRead>;
+/** a whole sheet of the British Library scroll, shown as is */
+export const BL_SHEET: { width: number; height: number } = sheet;
