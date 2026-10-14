@@ -15,7 +15,8 @@ export default async function BlogLayout({ children, params }: { children: React
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
           <a href={`/${t.lang}`} className="flex items-center gap-2 text-lg font-semibold tracking-tight">
             <img src="/icon.svg" alt="" width={24} height={24} className="rounded-md" />
-            {t.app.name}
+            {/* on narrow phones the icon alone leaves room for the links */}
+            <span className="max-[419px]:sr-only">{t.app.name}</span>
           </a>
           <nav className="flex items-center gap-1 text-sm text-muted sm:gap-2">
             <a href={`/${t.lang}/blog`} className="rounded-full px-2.5 py-1.5 hover:text-fg sm:px-3">
