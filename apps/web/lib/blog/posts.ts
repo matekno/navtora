@@ -17,14 +17,14 @@ export const POSTS: PostMeta[] = [
   {
     slug: "halacha",
     date: "2026-10-14",
-    minutes: 12,
+    minutes: 9,
     title: {
-      es: "Usar NavTorá en Shabat: la responsa y las fuentes",
-      en: "Using NavTorah on Shabbat: the responsum and the sources",
+      es: "Preparar el sefer antes de Shabat: la halajá y las fuentes",
+      en: "Preparing the sefer before Shabbat: the halacha and the sources",
     },
     description: {
-      es: "Desde dónde pensé la app, para quién es, y las fuentes a favor y en contra de usar un teléfono en Shabat y Iom Tov.",
-      en: "Where the app comes from, who it is for, and the sources for and against using a phone on Shabbat and Yom Tov.",
+      es: "NavTorá es para dejar el rollo listo antes de Shabat y de Iom Tov, no para usarla en Shabat. Por qué preparar el rollo antes, y por qué el teléfono queda afuera, con las fuentes.",
+      en: "NavTorah is for getting the scroll ready before Shabbat and Yom Tov, not for use on Shabbat. Why prepare the scroll beforehand, and why the phone stays out, with the sources.",
     },
   },
   {

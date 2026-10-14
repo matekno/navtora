@@ -28,8 +28,8 @@ export function contentEn(): PostContent {
     intro: (
       <>
         <p>
-          It's Shabbat morning. The sefer was left open at Masei, at the end of Bamidbar, and today's reading starts at Deuteronomy 1:1. How far do you roll it, and which way? Let's follow one real photo, taken with the app over a
-          sefer, from the moment it leaves the camera until the app says “2 columns to the left”.
+          It's Friday, and the sefer has to be ready for Shabbat. It was left open at Masei, at the end of Bamidbar, and tomorrow's reading starts at Deuteronomy 1:1. How far do you roll it, and which way? Let's follow one real
+          photo, taken with the app over a sefer, from the moment it leaves the camera until the app says “2 columns to the left”.
         </p>
         <p>
           One thing first: NavTorah doesn't “recognize” the image, and it doesn't know what each column looks like. It does something simpler and sturdier: it <strong>reads</strong> the column, mistakes and all, and then{" "}

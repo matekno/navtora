@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
 import { contentEn } from "./content-en";
 import { contentEs } from "./content-es";
+import { PrepareNote } from "../PrepareNote";
 import { SourceCard } from "./SourceCard";
 import { SOURCES } from "./sources";
 
@@ -12,11 +13,12 @@ export interface HalachaContent {
   outro: ReactNode;
 }
 
-/** "Using NavTorah on Shabbat": the line the app relies on, and the other sources, for and against. */
+/** "Preparing the sefer before Shabbat": the app is for getting the scroll ready beforehand; the sources on both halves of that. */
 export function Halacha({ lang }: { lang: Locale }) {
   const c = lang === "es" ? contentEs : contentEn;
   return (
     <article className="mx-auto mt-10 max-w-3xl px-5 sm:px-6">
+      <PrepareNote lang={lang} className="mb-10" />
       <div className="prose-blog">{c.intro}</div>
       {c.sections.map((section) => (
         <section key={section.id} id={section.id} className="mt-16 scroll-mt-20">

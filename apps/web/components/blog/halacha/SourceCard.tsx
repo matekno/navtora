@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 
-export type Stance = "basis" | "permits" | "restricts" | "purpose" | "practice";
+export type Stance = "purpose" | "restricts" | "ask";
 
 export interface Source {
   id: string;
@@ -20,24 +20,20 @@ export interface Source {
 }
 
 const STANCE: Record<Stance, Record<Locale, string>> = {
-  basis: { es: "La línea de la app", en: "The app's line" },
-  permits: { es: "Permite, con condiciones", en: "Permits, with conditions" },
-  restricts: { es: "Prohíbe o restringe", en: "Forbids or restricts" },
-  purpose: { es: "Sobre el kavod del tzibur", en: "On the congregation's dignity" },
-  practice: { es: "Práctica", en: "Practice" },
+  purpose: { es: "Preparar el rollo", en: "Preparing the scroll" },
+  restricts: { es: "No en Shabat", en: "Not on Shabbat" },
+  ask: { es: "Para consultar", en: "Where to ask" },
 };
 
 const STANCE_STYLE: Record<Stance, string> = {
-  basis: "border-accent/60 text-accent",
-  permits: "border-ok/50 text-ok",
+  purpose: "border-ok/50 text-ok",
   restricts: "border-bad/50 text-bad",
-  purpose: "border-line text-muted",
-  practice: "border-line text-muted",
+  ask: "border-line text-muted",
 };
 
 export function SourceCard({ source: s, lang }: { source: Source; lang: Locale }) {
   return (
-    <article id={s.id} className={`scroll-mt-20 rounded-2xl border bg-panel p-5 sm:p-6 ${s.stance === "basis" ? "border-accent/50" : "border-line/70"}`}>
+    <article id={s.id} className="scroll-mt-20 rounded-2xl border border-line/70 bg-panel p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className={`rounded-full border px-2 py-0.5 font-medium ${STANCE_STYLE[s.stance]}`}>{STANCE[s.stance][lang]}</span>
         {s.year && <span className="text-muted">{s.year}</span>}

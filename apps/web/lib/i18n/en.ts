@@ -353,13 +353,15 @@ export const en: Dictionary = {
   },
   blog: {
     title: "Blog",
-    lead: "How NavTorah works, why it exists, and what the sources say about using it.",
+    lead: "How NavTorah works, why it exists, and what the sources say about preparing the sefer.",
     minutes: (n) => `${n} min read`,
     soon: "Coming soon",
     soonText: "This post hasn't been written yet.",
     all: "All posts",
     read: "Read",
     figure: "Figure",
+    prepareTitle: "For preparing only",
+    prepareText: "NavTorah is used before Shabbat and Yom Tov, to get the scroll ready. Phones are not used on Shabbat or Yom Tov.",
   },
 };
 

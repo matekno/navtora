@@ -306,7 +306,8 @@ button,
   letter-spacing: -0.01em;
   color: var(--color-fg);
 }
-.prose-blog > h2:first-child {
+.prose-blog > h2:first-child,
+.prose-blog > h3:first-child {
   margin-top: 0;
 }
 .prose-blog > h3 {

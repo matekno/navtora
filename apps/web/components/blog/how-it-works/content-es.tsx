@@ -28,8 +28,8 @@ export function contentEs(): PostContent {
     intro: (
       <>
         <p>
-          Es Shabat a la mañana. El sefer quedó abierto en Masei, al final de Bamidbar, y hoy hay que leer desde Devarim 1:1. ¿Cuánto hay que enrollar, y para qué lado? Vamos a seguir una foto real, tomada con la app sobre un sefer, desde
-          que sale de la cámara hasta que la app dice «2 columnas a la izquierda».
+          Es viernes y hay que dejar el sefer listo para Shabat. Quedó abierto en Masei, al final de Bamidbar, y mañana se lee desde Devarim 1:1. ¿Cuánto hay que enrollar, y para qué lado? Vamos a seguir una foto real, tomada con
+          la app sobre un sefer, desde que sale de la cámara hasta que la app dice «2 columnas a la izquierda».
         </p>
         <p>
           Una aclaración antes de empezar: NavTorá no «reconoce» la imagen ni sabe cómo se ve cada columna. Hace algo más simple y más robusto: <strong>lee</strong> la columna, con errores y todo, y después <strong>busca</strong> esas

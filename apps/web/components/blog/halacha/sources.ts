@@ -1,7 +1,7 @@
 /**
- * The sources of the halacha post. Each one was read in the original or, where
- * the original isn't online, in the texts that quote it; summaries only say
- * what those texts say.
+ * The sources of the halacha post: why the scroll is prepared beforehand, and
+ * why phones stay out of Shabbat and Yom Tov. Each summary only says what the
+ * source says, as read in it.
  */
 import type { Source } from "./SourceCard";
 
@@ -10,100 +10,8 @@ const RA = "https://www.rabbinicalassembly.org/sites/default/files";
 const SRL = "https://www.seminariorabinico.org/wp-content/uploads";
 
 export const SOURCES: Source[] = [
-  // ---------- the app's line ----------
-  {
-    id: "responsum-1950",
-    stance: "basis",
-    title: { es: "Un responsum sobre el Shabat", en: "A Responsum on the Sabbath" },
-    original: "A Responsum on the Sabbath",
-    cite: {
-      es: "Rabinos Morris Adler, Jacob Agus y Theodore Friedman, Comité de Leyes y Estándares (CJLS) de la Asamblea Rabínica",
-      en: "Rabbis Morris Adler, Jacob Agus and Theodore Friedman, Committee on Jewish Law and Standards (CJLS) of the Rabbinical Assembly",
-    },
-    year: "1950",
-    summary: {
-      es: "Trata el uso de la electricidad como una prohibición rabínica (shevut) y no como el fuego que prohíbe la Torá, y un shevut puede ceder ante una mitzvá. Concluye que se pueden usar luces eléctricas en Shabat «para aumentar el disfrute del Shabat, reducir una molestia o ayudar a cumplir una mitzvá». Sigue prohibiendo usar la electricidad para lo que sería una melajá por otros medios, como cocinar.",
-      en: "It treats the use of electricity as a rabbinic prohibition (shevut) rather than the fire the Torah forbids, and a shevut can give way to a mitzvah. It concludes that electric lights may be used on Shabbat “for the purpose of enhancing the enjoyment of the Sabbath, or reducing personal discomfort or of helping in the performance of a mitzvah.” Using electricity for what would be a melachah by other means, like cooking, stays forbidden.",
-    },
-    relevance: {
-      es: "«Ayudar a cumplir una mitzvá» es lo más cercano a lo que hace la app con la lectura de la Torá. El permiso, de todos modos, habla de luces eléctricas, no de aparatos que registran datos.",
-      en: "“Helping in the performance of a mitzvah” is the closest match to what the app does for the Torah reading. The permission, though, is about electric lights, not devices that record data.",
-    },
-    links: [{ label: { es: "Citado en la guía de estudio de la Asamblea Rabínica (PDF, inglés)", en: "Quoted in the Rabbinical Assembly's study guide (PDF)" }, url: `${RA}/2023-07/electric-car-study-guide.pdf` }],
-  },
-  {
-    id: "neulander-1950",
-    stance: "permits",
-    title: { es: "El uso de la electricidad en Shabat", en: "The Use of Electricity on the Sabbath" },
-    original: "The Use of Electricity on the Sabbath",
-    cite: { es: "Rab. Arthur Neulander, CJLS", en: "Rabbi Arthur Neulander, CJLS" },
-    year: "1950",
-    summary: {
-      es: "La electricidad no es fuego. Permite usarla para lo que no implique un trabajo prohibido en Shabat, siempre que el uso esté «en consonancia con el espíritu del Shabat»: el teléfono para acompañar a la familia o alegrar a un enfermo, sí; para compras o negocios, no.",
-      en: "Electricity is not fire. It may be used “for such uses as do not involve work prohibited on the Sabbath”, as long as the use is “in consonance with the spirit of the Sabbath”: the telephone to keep up family ties or cheer someone who is ill, yes; for shopping or business, no.",
-    },
-    relevance: {
-      es: "Con este criterio, un uso dedicado a la lectura de la Torá estaría en el espíritu del día. La pregunta que queda abierta es la de escribir (kotev), más abajo.",
-      en: "By this standard, a use devoted to the Torah reading would be in the spirit of the day. What stays open is the question of writing (kotev), below.",
-    },
-    links: [{ label: { es: "Citado en la guía de estudio de la Asamblea Rabínica (PDF, inglés)", en: "Quoted in the Rabbinical Assembly's study guide (PDF)" }, url: `${RA}/2023-07/electric-car-study-guide.pdf` }],
-  },
-  {
-    id: "fine-leff-2023",
-    stance: "permits",
-    title: { es: "Autos eléctricos en Shabat: un responsum renovado sobre el Shabat", en: "Electric Cars on Shabbat: A Renewed Responsum on the Sabbath" },
-    original: "Electric Cars on Shabbat: A Renewed Responsum on the Sabbath",
-    cite: { es: "Rabinos David Fine y Barry Leff, CJLS (aprobado por 10 votos, 6 en contra y 5 abstenciones)", en: "Rabbis David Fine and Barry Leff, CJLS (approved 10–6–5)" },
-    year: "2023",
-    summary: {
-      es: "Retoma la línea de 1950 y sostiene que la electricidad no está prohibida en sí misma en Shabat. Es la posición más permisiva que aprobó el CJLS. Su tema concreto es manejar autos eléctricos.",
-      en: "It picks up the 1950 line and holds that electricity is not forbidden in itself on Shabbat. It is the most permissive position the CJLS has approved. Its specific subject is driving electric cars.",
-    },
-    relevance: {
-      es: "No trata teléfonos ni cámaras; lo que importa para la app es su punto de partida: la electricidad en sí no es una melajá.",
-      en: "It doesn't deal with phones or cameras; what matters for the app is where it starts: electricity in itself is not a melachah.",
-    },
-    links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/2023-07/fine_leff_shabbat-final-7.26.pdf` }],
-  },
-  {
-    id: "spitz-2012",
-    stance: "permits",
-    title: { es: "Sobre el uso limitado de la electrónica en Shabat", en: "On the Limited Use of Electronics on Shabbat" },
-    original: "On the Limited Use of Electronics on Shabbat",
-    cite: { es: "Rab. Elie Kaplan Spitz, CJLS. Es una opinión en disidencia, no la posición oficial", en: "Rabbi Elie Kaplan Spitz, CJLS. A dissent, not the official position" },
-    year: "2012",
-    summary: {
-      es: "Permitiría algunos usos limitados: leer en un lector electrónico y hablar por teléfono o videollamada con seres queridos. «Leer un texto no es lo mismo que crearlo»: leer en una pantalla es, en esencia, prender y apagar luces, algo que el movimiento ya permite. Confía en que quien cuida el Shabat sepa distinguir los usos.",
-      en: "It would allow some limited uses: reading on an e-reader and talking by phone or video call with loved ones. “Reading text is not the same as creating it”: reading on a screen is essentially turning lights on and off, which the movement already permits. It trusts those who keep Shabbat to tell the uses apart.",
-    },
-    relevance: {
-      es: "Es el texto conservador más cercano a un uso como el de NavTorá: mirar una pantalla y leer lo que dice. Es una opinión minoritaria.",
-      en: "It's the Conservative text closest to a use like NavTorah's: looking at a screen and reading what it says. It is a minority opinion.",
-    },
-    links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/assets/public/halakhah/teshuvot/2011-2020/limited-electronics-spitz.pdf` }],
-  },
-  {
-    id: "heller-2020",
-    stance: "permits",
-    title: { es: "Transmisión vía streaming de las tefilot de Shabat y Iom Tov", en: "Streaming Services on Shabbat and Yom Tov" },
-    original: "Streaming Services on Shabbat and Yom Tov",
-    cite: { es: "Rab. Joshua Heller, CJLS (19 votos, 3 en contra y 3 abstenciones). El Seminario Rabínico Latinoamericano publicó su traducción", en: "Rabbi Joshua Heller, CJLS (approved 19–3–3). The Seminario Rabínico Latinoamericano published it in Spanish" },
-    year: "2020",
-    summary: {
-      es: "Permite que una comunidad transmita sus servicios de Shabat y Iom Tov si el equipo queda configurado antes del día santo o funciona con temporizador. Los participantes, en cambio, deben acceder «de una manera que no implique su interacción directa con un dispositivo electrónico». Para circunstancias inusuales analiza atenuantes: hacer algo de una manera inusual (kelajar iad), designar el aparato antes de Shabat para un uso permitido, la situación apremiante (shaat hadejak).",
-      en: "It lets a congregation stream its Shabbat and Yom Tov services if the equipment is set up before the holy day or runs on a timer. Participants, though, must access the stream “in a way that doesn't involve direct interaction with an electronic device”. For unusual circumstances it weighs mitigations: doing something in an unusual way (kelachar yad), designating the device before Shabbat for a permitted use, and pressing need (sha'at hadechak).",
-    },
-    relevance: {
-      es: "Es el texto conservador en castellano más detallado sobre aparatos en Shabat. Tal como está, su permiso no cubre tomar el teléfono, apuntar la cámara y tocar la pantalla: eso es interacción directa. Sí ofrece el marco con el que se puede pensar un caso como este.",
-      en: "It's the most detailed Conservative text on devices on Shabbat available in Spanish. As it stands, its permission doesn't cover picking up the phone, pointing the camera and tapping the screen: that is direct interaction. It does lay out the framework for thinking about a case like this one.",
-    },
-    links: [
-      { label: { es: "PDF en castellano (Seminario)", en: "Spanish PDF (Seminario)" }, url: `${SRL}/RA-Responsa-Rab.-Joshua-Heller.pdf` },
-      { label: { es: "Original en inglés", en: "Original (PDF)" }, url: `${RA}/2020-05/Streaming%20on%20Shabbat%20and%20Yom%20Tov%20Heller.pdf` },
-    ],
-  },
 
-  // ---------- the congregation's dignity ----------
+  // ---------- why prepare the scroll beforehand ----------
   {
     id: "yoma-mishnah",
     stance: "purpose",
@@ -144,8 +52,8 @@ export const SOURCES: Source[] = [
       en: "The scroll is not rolled in public, for the congregation's honor. But if the community has only one scroll and two passages must be read, it is rolled, and the congregation's honor gives way.",
     },
     relevance: {
-      es: "Con un solo rollo, enrollar en público está permitido. La app no evita una prohibición: acorta una espera.",
-      en: "With a single scroll, rolling in public is allowed. The app doesn't avoid a prohibition: it shortens a wait.",
+      es: "Con un solo rollo, enrollar en público está permitido. Dejar el rollo preparado no evita una prohibición: ahorra una espera.",
+      en: "With a single scroll, rolling in public is allowed. Preparing the scroll beforehand doesn't avoid a prohibition: it saves a wait.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.144.3" }],
   },
@@ -160,8 +68,8 @@ export const SOURCES: Source[] = [
       en: "With two scrolls, one can be rolled while the other is read, and better still is “the custom today, to roll and search while the congregation says Pesukei deZimrah.” The congregation's honor is affected because it would be left waiting in silence.",
     },
     relevance: {
-      es: "Describe el momento exacto en que se usa la app: el gabai que busca el lugar mientras la kehilá reza.",
-      en: "It describes exactly when the app is used: the gabbai searching for the place while the congregation prays.",
+      es: "Buscar el lugar es una tarea que tiene que estar hecha antes de la lectura. Con la app se puede hacer todavía antes: el día anterior.",
+      en: "Finding the place is a task that has to be done before the reading. With the app it can be done earlier still: the day before.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Mishnah_Berurah.144.13" }],
   },
@@ -192,8 +100,8 @@ export const SOURCES: Source[] = [
       en: "It distinguishes the Temple, where all Israel was present and no one waived their honor, from the synagogue, where there are few and they probably waive it.",
     },
     relevance: {
-      es: "Un matiz: que el público espere no es una catástrofe halájica. La app hace la lectura más fluida, nada más.",
-      en: "A nuance: a waiting congregation is no halachic catastrophe. The app makes the reading smoother, nothing more.",
+      es: "Un matiz: que el público espere no es una catástrofe halájica. Dejar el rollo preparado hace la lectura más fluida, nada más.",
+      en: "A nuance: a waiting congregation is no halachic catastrophe. A scroll prepared beforehand makes the reading smoother, nothing more.",
     },
     links: [{ label: SEFARIA, url: "https://www.sefaria.org/Magen_Avraham.144.7" }],
   },
@@ -207,8 +115,8 @@ export const SOURCES: Source[] = [
       en: "When Rosh Chodesh Tevet falls on Shabbat, three scrolls come out: the parashah, Rosh Chodesh and Chanukah. If three are needed and the community has two, the second is not rolled for the third reading; the first is taken again.",
     },
     relevance: {
-      es: "Son los días en que más ayuda la app: Iom Tov, Rosh Jódesh, Janucá o las cuatro parashiot, con varios rollos abiertos en lugares distintos.",
-      en: "These are the days the app helps most: Yom Tov, Rosh Chodesh, Chanukah or the four parashiyot, with several scrolls open at different places.",
+      es: "Son los días en que más ayuda la app: para Iom Tov, Rosh Jódesh, Janucá o las cuatro parashiot hay que dejar, la víspera, varios rollos abiertos en lugares distintos.",
+      en: "These are the days the app helps most: for Yom Tov, Rosh Chodesh, Chanukah or the four parashiyot, several scrolls must be left open at different places the day before.",
     },
     links: [
       { label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.684.3" },
@@ -246,8 +154,8 @@ export const SOURCES: Source[] = [
       en: "If several inexperienced readers must find their place in the scroll without a gabbai to help, “this is a tircha d'tzibura and also a possible embarrassment for them.” It recommends sticky-note flags between the columns, not touching the letters, at the start of each aliyah: “this could even be done on Shabbat.”",
     },
     relevance: {
-      es: "Es el texto del movimiento más cercano al problema que resuelve la app, y está en castellano. Su solución es analógica, y combina bien con preparar el rollo con la app el día anterior.",
-      en: "It's the movement's text closest to the problem the app solves. Its solution is analog, and pairs well with preparing the scroll with the app the day before.",
+      es: "Es el texto del movimiento más cercano al problema que resuelve la app, y está en castellano. Las notas se pueden pegar el día anterior, en los lugares que encontrás con la app.",
+      en: "It's the movement's text closest to the problem the app solves. The notes can go in the day before, at the places you find with the app.",
     },
     links: [
       { label: { es: "PDF en castellano (Seminario)", en: "Spanish PDF (Seminario)" }, url: `${SRL}/RA-Lectura-de-Tor%C3%A1-durante-COVID.pdf` },
@@ -255,7 +163,7 @@ export const SOURCES: Source[] = [
     ],
   },
 
-  // ---------- forbids or restricts: within the movement ----------
+  // ---------- why not on Shabbat: within the Conservative movement ----------
   {
     id: "nevins-2012",
     stance: "restricts",
@@ -268,8 +176,8 @@ export const SOURCES: Source[] = [
       en: "Electricity in itself is neither melachah nor shevut. But recording text, sound, images or other data with an electronic device is toledat kotev, derived from writing, so operating “any electronic recording device, camera, computer, tablet, or cellular phone” on Shabbat and Yom Tov is forbidden. It distinguishes a screen, which clears itself, from permanent memory, but rejects distinctions between apps on the same device. Kevod habriyot overrides rabbinic prohibitions, not a melachah.",
     },
     relevance: {
-      es: "En su tabla, usar NavTorá en Shabat cae en «teléfono celular» y en «cámara digital», las dos marcadas como prohibidas.",
-      en: "In its table, using NavTorah on Shabbat falls under “cellular/smart phone” and “digital camera”, both marked forbidden.",
+      es: "En su tabla, el teléfono celular y la cámara digital están prohibidos en Shabat y en Iom Tov. Por eso NavTorá se usa antes.",
+      en: "In its table, the cellular phone and the digital camera are forbidden on Shabbat and Yom Tov. That is why NavTorah is used beforehand.",
     },
     links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/2020-05/ElectricSabbathSpring2012.pdf` }],
   },
@@ -281,12 +189,12 @@ export const SOURCES: Source[] = [
     cite: { es: "Rabinos Schwartz y Weiner, CJLS (11 votos, 5 en contra y 5 abstenciones)", en: "Rabbis Schwartz and Weiner, CJLS (approved 11–5–5)" },
     year: "2023",
     summary: {
-      es: "Aprobado el mismo día que el de Fine y Leff, sostiene lo contrario: todo uso de la electricidad en Shabat está prohibido como shevut.",
-      en: "Approved the same day as Fine and Leff's, it holds the opposite: any use of electricity on Shabbat is forbidden as a shevut.",
+      es: "Sostiene que todo uso de la electricidad en Shabat está prohibido como shevut.",
+      en: "It holds that any use of electricity on Shabbat is forbidden as a shevut.",
     },
     relevance: {
-      es: "Muestra que el movimiento conservador tiene hoy, oficialmente, más de una posición sobre la electricidad.",
-      en: "It shows that the Conservative movement officially holds more than one position on electricity today.",
+      es: "El mismo día el Comité aprobó también otra posición, de los rabinos Fine y Leff, según la cual la electricidad en sí no está prohibida. Ninguna de las dos se ocupa de celulares ni de cámaras: de eso se ocupa Nevins.",
+      en: "The same day the Committee also approved another position, by Rabbis Fine and Leff, under which electricity in itself is not forbidden. Neither deals with phones or cameras: Nevins does.",
     },
     links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/2023-07/schwartz-weiner-sabbath-final-7.26.pdf` }],
   },
@@ -298,8 +206,8 @@ export const SOURCES: Source[] = [
     cite: { es: "Rabina Amy Levin, CJLS. El Seminario Rabínico Latinoamericano publicó su traducción", en: "Rabbi Amy Levin, CJLS. The Seminario Rabínico Latinoamericano published it in Spanish" },
     year: "2020",
     summary: {
-      es: "Disiente del permiso de Heller: no acepta que la pandemia sea una situación apremiante, teme que se termine arreglando el equipo en Shabat, y recuerda con Nevins que registrar datos es kotev. Mientras no exista algo como una computadora apta para Shabat, el marco de Heller «parece inaceptable».",
-      en: "It dissents from Heller's permission: it doesn't accept the pandemic as a pressing need, worries that people will end up fixing equipment on Shabbat, and recalls with Nevins that recording data is kotev. Until something like a Shabbat-compliant computer exists, Heller's framework “seems unacceptable”.",
+      es: "Disiente del permiso del Comité para transmitir los servicios de Shabat por internet: no acepta que la pandemia sea una situación apremiante, teme que se termine arreglando el equipo en Shabat, y recuerda con Nevins que registrar datos es kotev. Mientras no exista algo como una computadora apta para Shabat, ese permiso «parece inaceptable».",
+      en: "It dissents from the Committee's permission to stream Shabbat services: it doesn't accept the pandemic as a pressing need, worries that people will end up fixing equipment on Shabbat, and recalls with Nevins that recording data is kotev. Until something like a Shabbat-compliant computer exists, that permission “seems unacceptable”.",
     },
     links: [
       { label: { es: "PDF en castellano (Seminario)", en: "Spanish PDF (Seminario)" }, url: `${SRL}/RA-Transmisi%C3%B3n-Shabat-y-Iom-Tov-%E2%80%93-Levin.pdf` },
@@ -335,8 +243,8 @@ export const SOURCES: Source[] = [
       en: "Photographing, like recording, can be classed as writing (ketivah), and is forbidden on Shabbat.",
     },
     relevance: {
-      es: "Es el antecedente conservador más directo sobre la cámara. La app usa la cámara sin guardar la foto; si procesar una imagen sin guardarla cuenta como escribir es una pregunta que ninguna fuente resuelve.",
-      en: "It's the most direct Conservative precedent on the camera. The app uses the camera without saving the photo; whether processing an image without saving it counts as writing is a question no source settles.",
+      es: "Es el antecedente conservador más directo sobre usar una cámara en Shabat.",
+      en: "It's the most direct Conservative precedent on using a camera on Shabbat.",
     },
     links: [{ label: "Rabbinical Assembly (PDF)", url: `${RA}/assets/public/halakhah/teshuvot/20012004/45.pdf` }],
   },
@@ -352,13 +260,13 @@ export const SOURCES: Source[] = [
       en: "He writes that many in the movement rely on the 1950 responsa, and that he doesn't find that approach convincing: using electricity on Shabbat is “the antithesis of the ‘Palace in Time’” of Heschel. During the pandemic he suggested meeting on Zoom before candle lighting for Minchah and Kabbalat Shabbat, then turning it off and praying Maariv at home.",
     },
     relevance: {
-      es: "Es la postura masortí más estricta. Su salida, hacer las cosas antes de Shabat, es la misma que usar la app el día anterior.",
-      en: "It's the strictest Masorti position. Its way out, doing things before Shabbat, is the same as using the app the day before.",
+      es: "Su salida, hacer las cosas antes de que empiece Shabat, es la misma que propone NavTorá.",
+      en: "Its way out, doing things before Shabbat begins, is the same one NavTorah takes.",
     },
     links: [{ label: "Schechter", url: "https://schechter.edu/?p=897" }],
   },
 
-  // ---------- forbids or restricts: classical and Orthodox ----------
+  // ---------- why not on Shabbat: classical and Orthodox ----------
   {
     id: "chazon-ish",
     stance: "restricts",
@@ -463,8 +371,8 @@ export const SOURCES: Source[] = [
       en: "Writing two letters is one of the 39 melachot, and drawing shapes is derived from writing. An object used mainly for something forbidden (kli shemelachto le'issur) isn't moved on Shabbat except to use it for something permitted or to clear its place; touching it without moving it isn't forbidden. And without an eruv, nothing may be carried from home to the synagogue.",
     },
     relevance: {
-      es: "Para usar la app hay que levantar el teléfono, no solo tocarlo, y llevarlo hasta la bimá. Para quien lo considera muktzé, eso ya es una pregunta aparte de la electricidad.",
-      en: "Using the app means picking the phone up, not just touching it, and bringing it to the bimah. For those who consider it muktzeh, that is a question of its own, apart from electricity.",
+      es: "Usar la app implica levantar el teléfono y llevarlo hasta el rollo: aun antes de la pantalla y la cámara, eso ya choca con estas leyes.",
+      en: "Using the app means picking the phone up and bringing it to the scroll: even before the screen and the camera, that already runs into these laws.",
     },
     links: [
       { label: { es: "Mishná Shabat 7:2", en: "Mishnah Shabbat 7:2" }, url: "https://www.sefaria.org/Mishnah_Shabbat.7.2" },
@@ -484,8 +392,8 @@ export const SOURCES: Source[] = [
       en: "Honor Shabbat “by not going your own ways.” For the Ramban, shabbaton is a commandment to rest that covers things that aren't melachah too. From it comes the idea of uvdin dechol: weekday activities that, even if not forbidden, don't belong to Shabbat.",
     },
     relevance: {
-      es: "Es la base del argumento «aunque estuviera permitido, un celular en la bimá no es del Shabat». Lo usan Nevins, Golinkin y R. Feinstein.",
-      en: "It underlies the argument that “even if permitted, a phone at the bimah doesn't belong to Shabbat.” Nevins, Golinkin and R. Feinstein all use it.",
+      es: "Es la base de la idea de que un celular en la bimá no es del Shabat. La usan Nevins, Golinkin y R. Feinstein.",
+      en: "It underlies the idea that a phone at the bimah doesn't belong to Shabbat. Nevins, Golinkin and R. Feinstein all use it.",
     },
     links: [
       { label: { es: "Isaías 58:13", en: "Isaiah 58:13" }, url: "https://www.sefaria.org/Isaiah.58.13" },
@@ -493,52 +401,10 @@ export const SOURCES: Source[] = [
     ],
   },
 
-  // ---------- practice ----------
-  {
-    id: "before-shabbat",
-    stance: "practice",
-    title: { es: "Lo que se deja en marcha antes de Shabat", en: "What is set going before Shabbat" },
-    cite: { es: "Shulján Aruj, Óraj Jaim 252:5; Talmud Bavlí, Shabat 18a", en: "Shulchan Aruch, Orach Chayim 252:5; Babylonian Talmud, Shabbat 18a" },
-    summary: {
-      es: "Se puede poner en marcha antes de Shabat un proceso que sigue solo, como un molino de agua.",
-      en: "A process that keeps going by itself, like a water mill, may be set going before Shabbat.",
-    },
-    relevance: {
-      es: "Es la base de dejar el teléfono con la app abierta desde antes. El uso activo durante Shabat (apuntar, tocar) no queda cubierto.",
-      en: "It's the basis for leaving the phone with the app open from before. Active use during Shabbat (pointing, tapping) isn't covered.",
-    },
-    links: [{ label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.252.5" }],
-  },
-  {
-    id: "kevod-habriyot",
-    stance: "practice",
-    title: { es: "La dignidad de las personas", en: "Human dignity" },
-    original: "וּמִשּׁוּם כְּבוֹדוֹ שְׁרוֹ רַבָּנַן",
-    cite: { es: "Talmud Bavlí, Brajot 19b", en: "Babylonian Talmud, Berakhot 19b" },
-    summary: {
-      es: "La dignidad de las personas (kevod habriyot) desplaza prohibiciones rabínicas, no las de la Torá.",
-      en: "Human dignity (kevod habriyot) overrides rabbinic prohibitions, not Torah ones.",
-    },
-    relevance: {
-      es: "Evitarle la vergüenza al lector o al gabai que no encuentra el lugar podría ser kevod habriyot, pero solo si el uso del teléfono es una prohibición rabínica, como en Spitz o en la teoría de R. Auerbach. Para Nevins es un derivado de escribir y este argumento no alcanza. Ninguna fuente lo aplica a este caso.",
-      en: "Sparing the reader or the gabbai who can't find the place from embarrassment could be kevod habriyot, but only if using the phone is a rabbinic prohibition, as in Spitz or in R. Auerbach's theory. For Nevins it is derived from writing and this argument falls short. No source applies it to this case.",
-    },
-    links: [{ label: SEFARIA, url: "https://www.sefaria.org/Berakhot.19b.11" }],
-  },
-  {
-    id: "kelachar-yad",
-    stance: "practice",
-    title: { es: "Hacerlo de una manera inusual", en: "Doing it in an unusual way" },
-    cite: { es: "Rema, Óraj Jaim 259:7; Heller 2020", en: "Rema, Orach Chayim 259:7; Heller 2020" },
-    summary: {
-      es: "Si no hay otra forma, se hace «con un pequeño cambio». Heller sugiere, para circunstancias apremiantes, tocar con la mano no habitual o con el nudillo, y aclara que usar un aparato electrónico no es en sí mismo algo inusual.",
-      en: "If there is no other way, it is done “with a small change.” For pressing circumstances Heller suggests using the non-dominant hand or a knuckle, and notes that using an electronic device is not unusual in itself.",
-    },
-    links: [{ label: SEFARIA, url: "https://www.sefaria.org/Shulchan_Arukh,_Orach_Chayim.259.7" }],
-  },
+  // ---------- where to ask ----------
   {
     id: "srl-halacha",
-    stance: "practice",
+    stance: "ask",
     title: { es: "Centro de Estudios de la Halajá del Seminario", en: "The Seminario's Center for Halakhic Studies" },
     cite: { es: "Seminario Rabínico Latinoamericano, Buenos Aires", en: "Seminario Rabínico Latinoamericano, Buenos Aires" },
     summary: {

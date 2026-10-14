@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { POSTS } from "@/lib/blog/posts";
 import { postDate } from "@/components/blog/PostHeader";
+import { PrepareNote } from "@/components/blog/PrepareNote";
 import { DEFAULT_LOCALE, getDictionary, hasLocale, LOCALES } from "@/lib/i18n";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -21,6 +22,7 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: st
     <main className="mx-auto max-w-3xl px-5 pb-10 pt-14 sm:px-6 sm:pt-20">
       <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{t.blog.title}</h1>
       <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">{t.blog.lead}</p>
+      <PrepareNote lang={lang} className="mt-8 max-w-xl" />
       <ul className="mt-12 grid gap-4">
         {POSTS.map((p) => {
           const written = p.date !== null;

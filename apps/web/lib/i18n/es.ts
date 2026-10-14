@@ -360,13 +360,15 @@ export const es = {
   },
   blog: {
     title: "Blog",
-    lead: "Cómo funciona NavTorá, por qué existe y qué dicen las fuentes sobre usarla.",
+    lead: "Cómo funciona NavTorá, por qué existe y qué dicen las fuentes sobre preparar el sefer.",
     minutes: (n: number) => `${n} min de lectura`,
     soon: "Próximamente",
     soonText: "Este texto todavía no está escrito.",
     all: "Todos los artículos",
     read: "Leer",
     figure: "Figura",
+    prepareTitle: "Solo para preparar",
+    prepareText: "NavTorá se usa antes de Shabat y de Iom Tov, para dejar el rollo listo. En Shabat y en Iom Tov el celular no se usa.",
   },
 };
 
