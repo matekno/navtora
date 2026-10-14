@@ -1,8 +1,6 @@
 import Link from "next/link";
 import type { HalachaContent } from "./Halacha";
 
-const SRL_HALAJA = "https://www.seminariorabinico.org/halaja/";
-
 export const contentEn: HalachaContent = {
   intro: (
     <>
@@ -76,18 +74,6 @@ export const contentEn: HalachaContent = {
       ),
       sources: [],
     },
-    {
-      id: "ask",
-      text: (
-        <>
-          <h2>Where to ask</h2>
-          <p>
-            This is not a halachic ruling. If you have questions about your own case or your community&apos;s, ask your rabbi. The <a href={SRL_HALAJA}>Center for Halakhic Studies</a> of the Seminario Rabínico Latinoamericano takes
-            questions too (in Spanish).
-          </p>
-        </>
-      ),
-      sources: [],
-    },
   ],
+  outro: <p className="text-[15px] text-muted">This is not a halachic ruling. I&apos;m only bringing a CJLS responsum and explaining how NavTorah helps.</p>,
 };

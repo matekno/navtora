@@ -1,8 +1,6 @@
 import Link from "next/link";
 import type { HalachaContent } from "./Halacha";
 
-const SRL_HALAJA = "https://www.seminariorabinico.org/halaja/";
-
 export const contentEs: HalachaContent = {
   intro: (
     <>
@@ -81,17 +79,6 @@ export const contentEs: HalachaContent = {
       ),
       sources: [],
     },
-    {
-      id: "consultar",
-      text: (
-        <>
-          <h2>Para consultar</h2>
-          <p>
-            Esto no es un psak halajá. Si tenés dudas sobre tu caso o el de tu kehilá, preguntale a tu rab. El <a href={SRL_HALAJA}>Centro de Estudios de la Halajá</a> del Seminario Rabínico Latinoamericano también recibe preguntas.
-          </p>
-        </>
-      ),
-      sources: [],
-    },
   ],
+  outro: <p className="text-[15px] text-muted">Esto no es un psak halajá. Solo traigo una responsa del CJLS y explico cómo ayuda NavTorá.</p>,
 };
