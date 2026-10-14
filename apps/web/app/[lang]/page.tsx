@@ -18,8 +18,9 @@ const GITHUB_URL = "https://github.com/matekno/navtora";
 export const dynamic = "force-dynamic";
 
 const DEMO_VIDEOS = [
+  { name: "masei-to-devarim", width: 480, height: 1068 },
+  { name: "balak-to-noach", width: 480, height: 1068 },
   { name: "worn-sefer", width: 480, height: 1068 },
-  { name: "printed-tikkun", width: 474, height: 1068 },
 ];
 
 function GitHubMark() {
@@ -157,7 +158,7 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
         <section id="demo" className="scroll-mt-14 px-6 py-24">
           <div className="mx-auto max-w-6xl">
             <h2 className="reveal text-3xl font-semibold tracking-tight sm:text-4xl">{t.landing.demoTitle}</h2>
-            <div className="mt-12 grid gap-14 sm:grid-cols-2">
+            <div className="mt-12 grid gap-14 md:grid-cols-3 md:gap-10">
               {DEMO_VIDEOS.map((v, i) => (
                 <figure key={v.name} className="reveal flex flex-col items-center" style={{ "--i": i } as React.CSSProperties}>
                   <AutoplayVideo

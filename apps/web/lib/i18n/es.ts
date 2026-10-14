@@ -334,16 +334,21 @@ export const es = {
       { value: 245, suffix: "", label: "columnas del sefer estándar, con columna y línea exactas" },
       { value: 2, suffix: " s", label: "por escaneo, leído en el teléfono y sin mandar la foto" },
     ],
-    demoTitle: "Probada con sifrei reales",
-    demoNote: "Grabados con una versión anterior de la app, sólo en español.",
+    demoTitle: "Probada en kehilot",
+    demoNote:
+      "Los dos primeros se grabaron con la versión actual, en inglés. El tercero, con una versión anterior que mandaba la foto a la nube y tardaba 17 s; ahora la app la lee en el teléfono.",
     demos: [
+      {
+        title: "A dos columnas",
+        caption: "Objetivo: Devarim 1:1. El sefer está abierto en Masei, columna 198, y la app indica 2 columnas a la izquierda. Al moverlo, aparece el comienzo de Devarim.",
+      },
+      {
+        title: "De punta a punta",
+        caption: "Objetivo: la primera aliá de Nóaj. El sefer está abierto en Balak, columna 184, y la app indica 178 columnas a la derecha.",
+      },
       {
         title: "Un sefer gastado",
         caption: "Objetivo: la primera aliá de Yom Kipur. El sefer está abierto en Ajarei Mot, columna 132, y la app indica 1 columna a la derecha.",
-      },
-      {
-        title: "Un tikún impreso",
-        caption: "Objetivo: el maftir de Rosh Hashaná. El tikún está abierto en Balak, columna 181, y la app indica 9 columnas a la izquierda.",
       },
     ],
     openTitle: "Gratis y de código abierto",

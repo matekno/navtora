@@ -79,14 +79,16 @@ In Chromium, with a fake camera streaming the worn-sefer frame, the app reads th
 
 ## Field tests
 
-Two recordings on physical scrolls, both with the default configuration (Opus 5, effort low, 14 lines). The videos are in `apps/web/public/demo/`.
+Recordings on physical scrolls. The first two used the earlier default reader (Opus 5, effort low, 14 lines); the last two, recorded on 2026-10-13, used the local reader on the phone. The videos are in `apps/web/public/demo/`.
 
-| Scroll | Target | Placed at | Instruction | Scan time |
-|---|---|---|---|---|
-| Worn sefer, stained and faded parchment | Yom Kippur, first aliyah (Vayikra 16:1, column 131) | Acharei Mot, Vayikra 16:8-15, column 132 | 1 column to the right | 17 s |
-| Printed tikkun | Rosh Hashanah maftir (Bamidbar 29:1, column 190) | Balak, Bamidbar 22:4-10, column 181 | 9 columns to the left | 16 s |
+| Scroll | Target | Placed at | Instruction | Reader | Scan time |
+|---|---|---|---|---|---|
+| Worn sefer, stained and faded parchment | Yom Kippur, first aliyah (Vayikra 16:1, column 131) | Acharei Mot, Vayikra 16:8-15, column 132 | 1 column to the right | Opus 5 | 17 s |
+| Printed tikkun | Rosh Hashanah maftir (Bamidbar 29:1, column 190) | Balak, Bamidbar 22:4-10, column 181 | 9 columns to the left | Opus 5 | 16 s |
+| Sefer | Devarim 1:1 (column 200) | Masei, Bamidbar 34:27-35:11, column 198 | 2 columns to the left | Local | 1 s |
+| Same sefer | Noach, first aliyah (Bereshit 6:9, column 6) | Balak, Bamidbar 24:5-24, column 184 | 178 columns to the right | Local | 2 s |
 
-Both placements and column counts match the standard layout data.
+All column counts match the standard layout data. The sefer of the last two is shifted against that layout near the end of Bamidbar: the photographed Masei column holds the end of standard column 198 and the start of 199, and Devarim starts near the top of a column instead of on line 40 of column 200. With that shift, 2 columns still lead to the column where Devarim starts, and the recording ends with it in view. Another scan of the same Masei column came back as not confident (17 lines read, too noisy); its closest match was the right column.
 
 ## Does the model read or recite?
 
