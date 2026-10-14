@@ -1,6 +1,9 @@
 import { FIG } from "@/lib/blog/how-it-works";
+import { FAMILY_NAMES, TRAIN } from "@/lib/blog/training";
 import { AlignmentFigure, CropsFigure, CtcFigure, MoveFigure, ScoreFigure, VotesFigure } from "./Figures";
 import type { PostContent } from "./HowItWorks";
+import { CLAUDE_CALL } from "./snippets";
+import { FontsFigure, LabeledCropsFigure, SynthGalleryFigure, SynthStagesFigure } from "./Training";
 
 const GITHUB = "https://github.com/matekno/navtora";
 const nf = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
@@ -22,7 +25,7 @@ export function contentEn(): PostContent {
         lines: "On the sides, in green, the ink summed row by row in the first and last strips (one peak per line). In yellow, each line's path.",
         crops: "The band cut out around each line.",
         read: "What the network read on each line. In orange, the letters it couldn't read.",
-        match: "Green: same as in the sefer. Yellow: easily confused letters, or ?. Red: different. Gray: not used.",
+        match: "Each word read, painted where the network read it. Green: same as in the sefer. Yellow: easily confused letters, or ?. Red: different. Gray: extra. Dotted: left out of the comparison.",
       },
     },
     intro: (
@@ -139,19 +142,24 @@ export function contentEn(): PostContent {
               <span className="step">Step 6</span>Reading letter by letter
             </h2>
             <p>
-              To read, the app uses a small neural network, 1.8 MB, that runs on the phone. A few convolutional layers look at the shapes of the strokes, and an LSTM that looks both ways along the line adds context. The network moves
-              along the strip 4 pixels at a time and, at each step, says which letter it thinks it sees, or “nothing”.
+              To read, the app uses a small neural network, 1.8 MB, that runs on the phone (the first version read with Claude, which I tell about in the <a href="#appendix-mvp">second appendix</a>). A few convolutional layers look
+              at the shapes of the strokes, and an LSTM that looks both ways along the line adds context. The network moves along the strip 4 pixels at a time and, at each step, says which letter it thinks it sees, or “nothing”.
             </p>
             <p>
               To get from steps to letters, repeats are merged and the “nothings” dropped (this is called CTC decoding). When the most likely letter over a stretch stays below 50%, the app doesn't guess and writes <code>?</code>.
             </p>
             <CtcFigure
               lang="en"
-              caption={`The start of line ${FIG.ctc.line + 1} of the photo. Under the strip is what the network said at each step. The letters in orange stayed below 50% and became ?, and two steps in a row with the same letter count as one.`}
+              caption={`The first two words of line ${FIG.ctc.line + 1} of the photo. Under each crop is what the network said at each step, with its probability. Then come the letters that are left and, at the bottom, the sefer's.`}
             />
             <p>
-              The network doesn't know the Torah by heart. It was trained only on synthetic photos, made from real columns set in STA&quot;M fonts and aged by computer, with stains, shadows, glare and curves. In 30% of those photos the
-              words were shuffled at random. That way the network can't guess the next word from context and has to read each letter.
+              In the first word, the network read <span className="he">ב</span> where it says <span className="he">מ</span>, and <span className="he">ה</span> where it says <span className="he">ת</span> (two letters that look alike in
+              STA&quot;M). It also hesitated on two letters, which became <code>?</code>. In the second word, the <span className="he">א</span> shows up in two steps in a row and counts as one, and the word comes out perfect.
+            </p>
+            <p>
+              The network doesn't know the Torah by heart. <a href="#appendix-training">It was trained only on synthetic photos</a>, made from real columns set in STA&quot;M fonts and aged by computer, with stains, shadows, glare and
+              curves. In 30% of those photos the words were shuffled at random. That way the network can't guess the next word from context and has to read each letter. How those photos are made, with examples, is in the{" "}
+              <a href="#appendix-training">first appendix</a>, at the end of the post.
             </p>
             <p>
               So it makes plenty of mistakes. Over the photo is what it read on each line, and there's a lot of orange, especially at the bottom, where the photo is blurrier. Still, the next step doesn't need a perfect reading.
@@ -209,7 +217,7 @@ export function contentEn(): PostContent {
         ),
       },
       {
-        stage: "photo",
+        stage: "none",
         content: (
           <div className="prose-blog">
             <h2>
@@ -245,9 +253,209 @@ export function contentEn(): PostContent {
         <p>
           The code is open and on <a href={GITHUB}>GitHub</a>. The results of every test are in <a href={`${GITHUB}/blob/main/docs/evaluation.md`}>the evaluation</a>, and the script that made this post's figures is in{" "}
           <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>. That script runs on a computer the same code the app runs on the phone. The ink sums in steps 3 and 4, the votes and the word-by-word
-          comparison are recomputed with the same method so they can be drawn.
+          comparison are recomputed with the same method so they can be drawn. The photos in the first appendix come from the <a href={`${GITHUB}/blob/main/tools/train/blog_figures.py`}>same code</a> that made the training photos.
         </p>
       </>
     ),
+    appendices: [
+      {
+        id: "appendix-training",
+        content: (
+          <div className="prose-blog">
+            <h2>
+              <span className="step">Appendix 1</span>How we trained the network
+            </h2>
+            <p>
+              For a network to learn to read, it needs lots of lines along with the text they say. No such set of sefer photos exists, so we made one by computer. A script, <code>synth.py</code>, takes a piece of a real column of the
+              standard layout, writes it in a Hebrew font and then ages it until it looks like a photo taken with a phone.
+            </p>
+            <h3>One photo, step by step</h3>
+            <p>
+              This is one of the first photos of the training set. It's a piece of column {TRAIN.stage.column}, in Vayakhel, written in the {FAMILY_NAMES[TRAIN.stage.family]} font. Each step adds something that happens in a real
+              photo.
+            </p>
+            <SynthStagesFigure lang="en" caption="How a synthetic photo is made, from the clean text to the photo used for training." />
+            <ol>
+              <li>
+                <strong>The text:</strong> the column's lines, justified as in a sefer, with parts of the neighboring columns at the sides.
+              </li>
+              <li>
+                <strong>The ink:</strong> thicker or thinner strokes, faded patches and small cracks in the letters.
+              </li>
+              <li>
+                <strong>The parchment:</strong> one of seven background colors, with texture and stains, and one of five ink colors. Sometimes a dark band is added at the top or bottom, like the edge of the scroll or the table.
+              </li>
+              <li>
+                <strong>The camera:</strong> perspective, a small turn and the curve of the parchment. The photo is also shrunk, so that lines end up 14 to 48 pixels apart.
+              </li>
+              <li>
+                <strong>The light:</strong> one side darker than the other, sometimes the shadow of a hand or the phone, and sometimes glare.
+              </li>
+              <li>
+                <strong>The final photo:</strong> blur, sometimes motion, noise and JPEG compression.
+              </li>
+            </ol>
+            <p>Each step picks its values at random, so no two photos are alike. In 30% of them, the words of each line are also replaced with Torah words picked at random, as I told in step 6.</p>
+            <SynthGalleryFigure lang="en" caption="Six more photos from the training set. The ones marked “shuffled words” have Torah words picked at random." />
+            <h3>The fonts</h3>
+            <p>
+              The fonts come from Culmus, a project of free Hebrew fonts. The two STA&quot;M ones, Stam Ashkenaz and Stam Sefarad, appear in almost two out of three photos. The rest are book fonts, so the network sees other shapes of
+              the same letters.
+            </p>
+            <FontsFigure lang="en" caption="The twelve font families, with the share of photos written in each." />
+            <h3>From the photo to the line</h3>
+            <p>
+              The network reads one line at a time. To cut the lines out of each photo we use the same code the app runs, the one in steps 2 to 5. Since the script knows what text it wrote on each line and where that line ended up
+              after the photo was warped, it labels each crop with its text. If a crop doesn't match a line cleanly, it's dropped, so the network doesn't learn from a wrong label.
+            </p>
+            <LabeledCropsFigure
+              lang="en"
+              caption="Four cropped lines, flipped back for reading, with the text used for training. The first three are from the photo above, and the last one from a photo with shuffled words."
+            />
+            <h3>The training</h3>
+            <p>
+              We made 4,000 photos for training and 300 to keep measuring how it was learning. Another 200, all with real text, were kept aside for the final test. The network is small (about 450,000 parameters) and was trained on a
+              computer's processor, without a graphics card. The version the app uses went 5 times through all the training lines.
+            </p>
+            <p>
+              Training uses the CTC loss, which goes hand in hand with the decoding in step 6. That is, the network only needs the text of each line, without knowing where in the strip each letter is.
+            </p>
+            <h3>How it did</h3>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Test</th>
+                    <th className="num">Placed with confidence</th>
+                    <th className="num">Wrong</th>
+                    <th className="num">Letter error rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>200 synthetic photos not used for training</td>
+                    <td className="num">95.5%</td>
+                    <td className="num">0</td>
+                    <td className="num">14.9%</td>
+                  </tr>
+                  <tr>
+                    <td>10 frames from two recorded tests, on a worn sefer and on a printed tikkun</td>
+                    <td className="num">10 of 10</td>
+                    <td className="num">0</td>
+                    <td className="num">30.6%</td>
+                  </tr>
+                  <tr>
+                    <td>246 scanned columns of Elihu Shannon&apos;s sefer</td>
+                    <td className="num">241</td>
+                    <td className="num">0</td>
+                    <td className="num"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The network gets many letters wrong, around 30% on the test frames if every <code>?</code> counts as an error. Still, as steps 7 and 8 show, it's enough to place the column, and in none of these tests did it give a wrong
+              place with confidence.
+            </p>
+            <p>
+              What can improve it most is real photos. That's why, when a scan doesn't go well, the app offers to send the photo to add it to the training. It's only sent if the person ticks the box.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "appendix-mvp",
+        content: (
+          <div className="prose-blog">
+            <h2>
+              <span className="step">Appendix 2</span>The MVP, with the Anthropic API
+            </h2>
+            <p>
+              The first version of NavTorah, in September 2026, had no network of its own. The app took the photo, shrank it to 1,800 pixels on the long side and sent it to the server, which passed it to Claude Opus 5 through the
+              Anthropic API. Claude transcribed the lines, and from there everything went on as it does now, with the same search as in steps 7 and 8.
+            </p>
+            <p>
+              From the start, the idea was for the model only to read. The position and the confidence are decided by the search, which can be tested and measured without spending anything. So what we asked of Claude was quite narrow:
+            </p>
+            <ul>
+              <li>Transcribe the first 14 lines, letters only, without nikkud, cantillation or punctuation.</li>
+              <li>Keep the final letter forms and the spaces between words.</li>
+              <li>
+                Write <code>?</code> for each letter that can't be read.
+              </li>
+              <li>Count every visible line, even the ones it doesn't transcribe.</li>
+              <li>Read the ink and don't fill in from memory. If the parchment says something other than what's expected, write what the parchment says.</li>
+            </ul>
+            <p>
+              The answer came in a fixed format (structured output, with a JSON schema). It held the lines, which ones were doubtful, where there were blank spaces and how many lines were visible. This is the call, shortened.
+            </p>
+            <pre>
+              <code>{CLAUDE_CALL}</code>
+            </pre>
+            <p>
+              The full code is still in <a href={`${GITHUB}/blob/main/tools/eval/src/claude-ocr.ts`}>tools/eval</a>, where we use it to compare both ways of reading on the same photos.
+            </p>
+            <h3>Does it read or recite?</h3>
+            <p>
+              Claude knows the Torah, so we had to check that it read what was written and not what it remembers. To test it, we made a column with six words swapped for other real Hebrew words. Claude transcribed all six as written,
+              and none went back to the original text. When the image cut off the start of the lines, it transcribed only what was visible.
+            </p>
+            <h3>How it did</h3>
+            <p>
+              It read very well. We tried how much the model could think (the <code>effort</code> parameter) and how many lines it transcribed, on scanned columns of the Shannon sefer. All of them were placed correctly.
+            </p>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Configuration</th>
+                    <th className="num">Time per photo</th>
+                    <th className="num">Letter error rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Opus 5, full column, medium effort</td>
+                    <td className="num">52 s</td>
+                    <td className="num">0.19%</td>
+                  </tr>
+                  <tr>
+                    <td>Opus 5, 14 lines, low effort</td>
+                    <td className="num">15 s</td>
+                    <td className="num">0.38%</td>
+                  </tr>
+                  <tr>
+                    <td>Sonnet 5, 14 lines, low effort</td>
+                    <td className="num">12 s</td>
+                    <td className="num">0.60%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              14 lines were enough to place the column, and transcribing less cut the time and the cost a lot. With Opus 5, low effort and 14 lines, each photo cost about 3 US cents. On 78 scanned images from 4 sifrei it never gave a
+              wrong position, and in the tests on real sifrei each scan took 16 or 17 seconds.
+            </p>
+            <h3>Why did we change it?</h3>
+            <p>The MVP worked, but it had three problems for use in a congregation:</p>
+            <ul>
+              <li>
+                <strong>Time:</strong> 16 seconds with the phone pointed at the sefer is a lot, especially if you have to scan more than once.
+              </li>
+              <li>
+                <strong>Cost:</strong> every photo cost money, so the app couldn't be opened to anyone.
+              </li>
+              <li>
+                <strong>The photo:</strong> it had to leave the phone and go through a server.
+              </li>
+            </ul>
+            <p>
+              With our own network, in the tests on a sefer each scan took 1 or 2 seconds. It costs nothing per scan and the photo doesn't leave the phone. In exchange, it reads quite a bit worse, with many more wrong letters or{" "}
+              <code>?</code>. Since the search is designed for readings with mistakes, it still gets to the right column.
+            </p>
+          </div>
+        ),
+      },
+    ],
   };
 }

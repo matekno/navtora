@@ -1,6 +1,9 @@
 import { FIG } from "@/lib/blog/how-it-works";
+import { FAMILY_NAMES, TRAIN } from "@/lib/blog/training";
 import { AlignmentFigure, CropsFigure, CtcFigure, MoveFigure, ScoreFigure, VotesFigure } from "./Figures";
 import type { PostContent } from "./HowItWorks";
+import { CLAUDE_CALL } from "./snippets";
+import { FontsFigure, LabeledCropsFigure, SynthGalleryFigure, SynthStagesFigure } from "./Training";
 
 const GITHUB = "https://github.com/matekno/navtora";
 const nf = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
@@ -22,7 +25,7 @@ export function contentEs(): PostContent {
         lines: "A los costados, en verde, la tinta sumada fila por fila en la primera y la última tira (un pico por renglón). En amarillo, el camino de cada renglón.",
         crops: "La franja que se recorta alrededor de cada renglón.",
         read: "Lo que leyó la red en cada renglón. En naranja, las letras que no pudo leer.",
-        match: "Verde: igual que en el sefer. Amarillo: letras que se confunden, o ?. Rojo: distinta. Gris: no se usó.",
+        match: "Cada palabra leída, pintada donde la leyó la red. Verde: igual que en el sefer. Amarillo: letras que se confunden, o con ?. Rojo: distinta. Gris: sobra. Punteado: quedó afuera de la comparación.",
       },
     },
     intro: (
@@ -140,19 +143,24 @@ export function contentEs(): PostContent {
               <span className="step">Paso 6</span>Leer letra por letra
             </h2>
             <p>
-              Para leer, la app usa una red neuronal chica, de 1,8 MB, que corre en el teléfono. Unas capas convolucionales miran la forma de los trazos, y una LSTM, que mira hacia los dos lados del renglón, suma el contexto. La red
-              avanza por la tira de a 4 píxeles y en cada paso dice qué letra cree ver, o «nada».
+              Para leer, la app usa una red neuronal chica, de 1,8 MB, que corre en el teléfono (la primera versión leía con Claude, y lo cuento en el <a href="#anexo-mvp">segundo anexo</a>). Unas capas convolucionales miran la
+              forma de los trazos, y una LSTM, que mira hacia los dos lados del renglón, suma el contexto. La red avanza por la tira de a 4 píxeles y en cada paso dice qué letra cree ver, o «nada».
             </p>
             <p>
               Para pasar de pasos a letras, se juntan las repeticiones y se borran los «nada» (esto se llama decodificación CTC). Si en un tramo la letra más probable no llega al 50 %, la app no se la juega y escribe <code>?</code>.
             </p>
             <CtcFigure
               lang="es"
-              caption={`El comienzo del renglón ${FIG.ctc.line + 1} de la foto. Abajo de la tira está lo que dijo la red en cada paso. Las letras en naranja no llegaron al 50 % y quedaron como ?, y dos pasos seguidos con la misma letra cuentan como una sola.`}
+              caption={`Las dos primeras palabras del renglón ${FIG.ctc.line + 1} de la foto. Abajo de cada recorte está lo que dijo la red en cada paso, con su probabilidad. Después vienen las letras que quedan y, abajo de todo, las del sefer.`}
             />
             <p>
-              La red no se sabe la Torá de memoria. Se entrenó solo con fotos sintéticas, armadas con columnas reales escritas con fuentes STA&quot;M y envejecidas por computadora, con manchas, sombras, reflejos y curvas. En un 30 % de
-              esas fotos las palabras estaban mezcladas al azar. De esa forma, la red no puede adivinar la palabra siguiente por el contexto y tiene que leer cada letra.
+              En la primera palabra, la red leyó <span className="he">ב</span> donde dice <span className="he">מ</span>, y <span className="he">ה</span> donde dice <span className="he">ת</span> (dos letras que en STA&quot;M se
+              parecen). Además, dudó en dos letras, que quedaron como <code>?</code>. En la segunda palabra, la <span className="he">א</span> aparece en dos pasos seguidos y cuenta como una sola, y la palabra sale perfecta.
+            </p>
+            <p>
+              La red no se sabe la Torá de memoria. <a href="#anexo-entrenamiento">Se entrenó solo con fotos sintéticas</a>, armadas con columnas reales escritas con fuentes STA&quot;M y envejecidas por computadora, con manchas,
+              sombras, reflejos y curvas. En un 30 % de esas fotos las palabras estaban mezcladas al azar. De esa forma, la red no puede adivinar la palabra siguiente por el contexto y tiene que leer cada letra. Cómo se arman esas
+              fotos, con ejemplos, está en el <a href="#anexo-entrenamiento">primer anexo</a>, al final del artículo.
             </p>
             <p>
               Por eso se equivoca bastante. Sobre la foto está lo que leyó en cada renglón, y hay mucho naranja, sobre todo abajo, donde la foto está más borrosa. Sin embargo, para el paso siguiente no hace falta una lectura perfecta.
@@ -210,7 +218,7 @@ export function contentEs(): PostContent {
         ),
       },
       {
-        stage: "photo",
+        stage: "none",
         content: (
           <div className="prose-blog">
             <h2>
@@ -246,9 +254,210 @@ export function contentEs(): PostContent {
         <p>
           El código es abierto y está en <a href={GITHUB}>GitHub</a>. Los resultados de cada prueba están en <a href={`${GITHUB}/blob/main/docs/evaluation.md`}>la evaluación</a>, y el script que generó las figuras de este
           artículo está en <a href={`${GITHUB}/blob/main/tools/eval/src/blog-figures.ts`}>tools/eval</a>. Ese script corre en una computadora el mismo código que la app corre en el teléfono. Las sumas de tinta de los
-          pasos 3 y 4, los votos y la comparación palabra por palabra están recalculados con el mismo método para poder dibujarlos.
+          pasos 3 y 4, los votos y la comparación palabra por palabra están recalculados con el mismo método para poder dibujarlos. Las fotos del primer anexo salen del <a href={`${GITHUB}/blob/main/tools/train/blog_figures.py`}>mismo
+          código</a> que armó las fotos de entrenamiento.
         </p>
       </>
     ),
+    appendices: [
+      {
+        id: "anexo-entrenamiento",
+        content: (
+          <div className="prose-blog">
+            <h2>
+              <span className="step">Anexo 1</span>Cómo entrenamos la red
+            </h2>
+            <p>
+              Para que una red aprenda a leer, hacen falta muchos renglones junto con el texto que dicen. No existe un conjunto así de fotos de sifrei, así que lo armamos por computadora. Un script, <code>synth.py</code>, toma un
+              pedazo de una columna real del formato estándar, lo escribe con una fuente hebrea y después lo envejece hasta que parece una foto sacada con el teléfono.
+            </p>
+            <h3>Una foto, paso a paso</h3>
+            <p>
+              Esta es una de las primeras fotos del set de entrenamiento. Es un pedazo de la columna {TRAIN.stage.column}, en Vaiakhel, escrito con la fuente {FAMILY_NAMES[TRAIN.stage.family]}. Cada paso le suma algo que pasa en una
+              foto real.
+            </p>
+            <SynthStagesFigure lang="es" caption="Cómo se arma una foto sintética, desde el texto limpio hasta la foto que se usó para entrenar." />
+            <ol>
+              <li>
+                <strong>El texto:</strong> los renglones de la columna, justificados como en un sefer, con partes de las columnas vecinas a los costados.
+              </li>
+              <li>
+                <strong>La tinta:</strong> trazos más gruesos o más finos, partes desteñidas y pequeñas grietas en las letras.
+              </li>
+              <li>
+                <strong>El pergamino:</strong> uno de siete colores de fondo, con textura y manchas, y uno de cinco colores de tinta. A veces se suma una franja oscura arriba o abajo, como el borde del rollo o la mesa.
+              </li>
+              <li>
+                <strong>La cámara:</strong> perspectiva, un giro chico y la curva del pergamino. También se achica la foto, para que los renglones queden a entre 14 y 48 píxeles de distancia.
+              </li>
+              <li>
+                <strong>La luz:</strong> un lado más oscuro que el otro, a veces la sombra de una mano o del teléfono y a veces un reflejo.
+              </li>
+              <li>
+                <strong>La foto final:</strong> desenfoque, a veces movimiento, ruido y compresión JPEG.
+              </li>
+            </ol>
+            <p>Cada paso elige sus valores al azar, así que no hay dos fotos iguales. En un 30 % de ellas, además, las palabras de cada renglón se cambian por palabras de la Torá elegidas al azar, como conté en el paso 6.</p>
+            <SynthGalleryFigure lang="es" caption="Seis fotos más del set de entrenamiento. Las que dicen «palabras mezcladas» tienen palabras de la Torá elegidas al azar." />
+            <h3>Las fuentes</h3>
+            <p>
+              Las fuentes son de Culmus, un proyecto de fuentes hebreas libres. Las dos de STA&quot;M, Stam Ashkenaz y Stam Sefarad, aparecen en casi dos de cada tres fotos. El resto son fuentes de libros, para que la red vea otras
+              formas de las mismas letras.
+            </p>
+            <FontsFigure lang="es" caption="Las doce familias de fuentes, con la proporción de fotos que se escribe con cada una." />
+            <h3>De la foto al renglón</h3>
+            <p>
+              La red lee de a un renglón. Para cortar los renglones de cada foto usamos el mismo código que corre en la app, el de los pasos 2 a 5. Como el script sabe qué texto escribió en cada renglón y dónde quedó ese renglón
+              después de deformar la foto, a cada recorte le pone su texto. Si un recorte no coincide bien con un renglón, se descarta, para que la red no aprenda de una etiqueta equivocada.
+            </p>
+            <LabeledCropsFigure
+              lang="es"
+              caption="Cuatro renglones recortados, dados vuelta para leerlos, con el texto que se usó para entrenar. Los tres primeros son de la foto de arriba, y el último, de una foto con las palabras mezcladas."
+            />
+            <h3>El entrenamiento</h3>
+            <p>
+              Armamos 4.000 fotos para entrenar y 300 para ir midiendo cómo aprendía. Otras 200, todas con texto real, quedaron aparte para la prueba final. La red es chica (unos 450.000 parámetros) y se entrenó en el procesador de
+              una computadora, sin placa de video. La versión que usa la app recorrió 5 veces todos los renglones de entrenamiento.
+            </p>
+            <p>
+              Para entrenar se usa la pérdida CTC, que va de la mano con la decodificación del paso 6. Es decir, a la red solo le hace falta el texto de cada renglón, sin saber en qué lugar de la tira está cada letra.
+            </p>
+            <h3>Cómo le fue</h3>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Prueba</th>
+                    <th className="num">Ubicadas con confianza</th>
+                    <th className="num">Equivocadas</th>
+                    <th className="num">Error por letra</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>200 fotos sintéticas que no se usaron para entrenar</td>
+                    <td className="num">95,5 %</td>
+                    <td className="num">0</td>
+                    <td className="num">14,9 %</td>
+                  </tr>
+                  <tr>
+                    <td>10 cuadros de dos pruebas grabadas, en un sefer gastado y en un tikún impreso</td>
+                    <td className="num">10 de 10</td>
+                    <td className="num">0</td>
+                    <td className="num">30,6 %</td>
+                  </tr>
+                  <tr>
+                    <td>246 columnas escaneadas del sefer de Elihu Shannon</td>
+                    <td className="num">241</td>
+                    <td className="num">0</td>
+                    <td className="num"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              La red se equivoca en muchas letras, cerca de un 30 % en los cuadros de las pruebas si se cuenta cada <code>?</code> como error. Sin embargo, como se ve en los pasos 7 y 8, para ubicar la columna alcanza, y en ninguna de
+              estas pruebas dio un lugar equivocado con confianza.
+            </p>
+            <p>
+              Lo que más la puede mejorar son fotos reales. Por eso, cuando un escaneo no sale bien, la app ofrece mandar la foto para sumarla al entrenamiento. Solo se manda si la persona lo marca.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "anexo-mvp",
+        content: (
+          <div className="prose-blog">
+            <h2>
+              <span className="step">Anexo 2</span>El MVP, con la API de Anthropic
+            </h2>
+            <p>
+              La primera versión de NavTorá, en septiembre de 2026, no tenía una red propia. La app sacaba la foto, la achicaba a 1.800 píxeles en el lado más largo y la mandaba al servidor, que se la pasaba a Claude Opus 5 por la API
+              de Anthropic. Claude transcribía los renglones, y desde ahí todo seguía como ahora, con la misma búsqueda de los pasos 7 y 8.
+            </p>
+            <p>
+              Desde el principio, la idea fue que el modelo solo lea. La posición y la confianza las decide la búsqueda, que se puede probar y medir sin gastar nada. Por eso, lo que le pedíamos a Claude era bastante acotado:
+            </p>
+            <ul>
+              <li>Transcribir los primeros 14 renglones, solo con letras, sin nikud, teamim ni puntuación.</li>
+              <li>Respetar las letras finales y los espacios entre palabras.</li>
+              <li>
+                Escribir <code>?</code> en cada letra que no se puede leer.
+              </li>
+              <li>Contar todos los renglones que se ven, aunque no los transcriba.</li>
+              <li>Leer la tinta y no completar de memoria. Si el pergamino dice algo distinto de lo esperado, escribir lo que dice el pergamino.</li>
+            </ul>
+            <p>
+              La respuesta venía con un formato fijo (salida estructurada, con un esquema JSON). Traía los renglones, cuáles eran dudosos, dónde había espacios en blanco y cuántos renglones se veían. Esta es la llamada, simplificada.
+            </p>
+            <pre>
+              <code>{CLAUDE_CALL}</code>
+            </pre>
+            <p>
+              El código completo sigue en <a href={`${GITHUB}/blob/main/tools/eval/src/claude-ocr.ts`}>tools/eval</a>, donde lo usamos para comparar las dos formas de leer sobre las mismas fotos.
+            </p>
+            <h3>¿Lee o recita?</h3>
+            <p>
+              Claude conoce la Torá, así que había que chequear que leyera lo escrito y no lo que recuerda. Para probarlo, armamos una columna con seis palabras cambiadas por otras palabras hebreas reales. Claude transcribió las seis
+              tal como estaban escritas, y ninguna volvió al texto original. Cuando la imagen cortaba el principio de los renglones, transcribió solo lo que se veía.
+            </p>
+            <h3>Cómo le fue</h3>
+            <p>
+              Leía muy bien. Probamos cuánto podía pensar el modelo (el parámetro <code>effort</code>) y cuántos renglones transcribía, sobre columnas escaneadas del sefer de Shannon. Todas quedaron bien ubicadas.
+            </p>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Configuración</th>
+                    <th className="num">Tiempo por foto</th>
+                    <th className="num">Error por letra</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Opus 5, columna completa, esfuerzo medio</td>
+                    <td className="num">52 s</td>
+                    <td className="num">0,19 %</td>
+                  </tr>
+                  <tr>
+                    <td>Opus 5, 14 renglones, esfuerzo bajo</td>
+                    <td className="num">15 s</td>
+                    <td className="num">0,38 %</td>
+                  </tr>
+                  <tr>
+                    <td>Sonnet 5, 14 renglones, esfuerzo bajo</td>
+                    <td className="num">12 s</td>
+                    <td className="num">0,60 %</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Con 14 renglones alcanzaba para ubicar la columna, y transcribir menos bajaba mucho el tiempo y el costo. Con Opus 5, esfuerzo bajo y 14 renglones, cada foto costaba unos 3 centavos de dólar. En 78 imágenes escaneadas de
+              4 sifrei nunca dio una posición equivocada, y en las pruebas con sifrei de verdad cada escaneo tardó 16 o 17 segundos.
+            </p>
+            <h3>¿Por qué lo cambiamos?</h3>
+            <p>El MVP funcionaba, pero tenía tres problemas para usarlo en una kehilá:</p>
+            <ul>
+              <li>
+                <strong>El tiempo:</strong> 16 segundos con el teléfono apuntando al sefer es mucho, sobre todo si hay que escanear más de una vez.
+              </li>
+              <li>
+                <strong>El costo:</strong> cada foto costaba plata, así que no se podía abrir la app a cualquiera.
+              </li>
+              <li>
+                <strong>La foto:</strong> tenía que salir del teléfono y pasar por un servidor.
+              </li>
+            </ul>
+            <p>
+              Con la red propia, en las pruebas con un sefer cada escaneo tardó 1 o 2 segundos. No cuesta nada por escaneo y la foto no sale del teléfono. A cambio, lee bastante peor, con muchas más letras equivocadas o con{" "}
+              <code>?</code>. Como la búsqueda está pensada para lecturas con errores, igual llega a la columna correcta.
+            </p>
+          </div>
+        ),
+      },
+    ],
   };
 }

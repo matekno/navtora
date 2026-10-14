@@ -30,7 +30,7 @@ export const POSTS: PostMeta[] = [
   {
     slug: "how-it-works",
     date: "2026-10-14",
-    minutes: 10,
+    minutes: 16,
     title: {
       es: "Cómo NavTorá sabe en qué columna está abierto el sefer",
       en: "How NavTorah knows which column the sefer is open at",

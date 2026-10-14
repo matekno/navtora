@@ -78,6 +78,27 @@ function ctcSteps(l: LineLogits | undefined): Array<{ c: string; p: number }> {
   return out;
 }
 
+/**
+ * Where each word of a decoded line sits: the time steps of its first and last
+ * letter. Words are split where the network output a space, as in ctcDecode.
+ */
+function wordSteps(steps: Array<{ c: string }>): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
+  let open: [number, number] | null = null;
+  for (let t = 0; t < steps.length; t++) {
+    const c = steps[t]!.c;
+    if (c === " ") {
+      if (open) out.push(open);
+      open = null;
+    } else if (c !== "") {
+      if (open) open[1] = t;
+      else open = [t, t];
+    }
+  }
+  if (open) out.push(open);
+  return out;
+}
+
 type PairKind = "same" | "confusable" | "wildcard" | "different" | "extra";
 
 /** Kind of difference between a word as read and the word in the scroll. */
@@ -252,6 +273,13 @@ async function main(): Promise<void> {
   const ctcFrom = firstPaired >= 0 ? alignment[firstPaired]!.position! - (firstPaired - lineStart) : -1;
   const ctcTruth = ctcFrom >= 0 ? words.slice(ctcFrom, ctcFrom + 2) : [];
 
+  // each word's letters as time steps of its line, to place the word on the photo
+  const lineWordSteps = crops.map((_, k) => wordSteps(ctcSteps(logits[k])));
+  lineWordSteps.forEach((ws, k) => {
+    const n = (read.decoded[k]?.text ?? "").split(" ").filter(Boolean).length;
+    if (ws.length !== n) throw new Error(`line ${k}: ${ws.length} word spans for ${n} words`);
+  });
+
   const figures = {
     source: path.basename(photo),
     width: W,
@@ -269,6 +297,7 @@ async function main(): Promise<void> {
       cut: l.cut,
       crop: { width: crops[k]!.width, top: k * LINE_HEIGHT },
       text: read.decoded[k]?.text ?? "",
+      words: lineWordSteps[k]!,
       confidence: r3(read.decoded[k]?.confidence ?? 0),
       ocrLine: lineOrder.get(k) ?? null,
     })),

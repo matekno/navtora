@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { edgesAt, FIG, fmtPoints, KIND_COLOR, lineWords, lineYAt, linePoints } from "@/lib/blog/how-it-works";
+import { edgesAt, FIG, fmtPoints, KIND_COLOR, lineWords, lineYAt, linePoints, wordSpans } from "@/lib/blog/how-it-works";
 
-export type StageStep = "photo" | "ink" | "column" | "lines" | "crops" | "read" | "match";
+/** what is drawn over the photo; "none" hides it */
+export type StageStep = "photo" | "ink" | "column" | "lines" | "crops" | "read" | "match" | "none";
 
 export interface StageLabels {
   photo: string;
   ink: string;
   compare: string;
   /** one line under the photo per step, saying what is drawn */
-  captions: Record<StageStep, string>;
+  captions: Record<Exclude<StageStep, "none">, string>;
 }
 
 const W = FIG.width;
@@ -106,7 +107,7 @@ function CropsLayer() {
 }
 
 /** Each line covered by what the network read there, stretched to the line's width and tilted like it. */
-function ReadLayer({ colorBy }: { colorBy: "unsure" | "match" }) {
+function ReadLayer() {
   const words = lineWords();
   const h = FIG.band * 0.92;
   return (
@@ -136,18 +137,16 @@ function ReadLayer({ colorBy }: { colorBy: "unsure" | "match" }) {
               fill="var(--color-fg)"
             >
               {ws.map((w, j) => (
-                <tspan key={j} fill={colorBy === "match" ? (w.kind ? KIND_COLOR[w.kind] : "var(--color-muted)") : undefined}>
-                  {colorBy === "unsure"
-                    ? w.read.split(/(\?+)/).map((part, k) =>
-                        part.startsWith("?") ? (
-                          <tspan key={k} fill="var(--color-warn)">
-                            {part}
-                          </tspan>
-                        ) : (
-                          part
-                        ),
-                      )
-                    : w.read}
+                <tspan key={j}>
+                  {w.read.split(/(\?+)/).map((part, k) =>
+                    part.startsWith("?") ? (
+                      <tspan key={k} fill="var(--color-warn)">
+                        {part}
+                      </tspan>
+                    ) : (
+                      part
+                    ),
+                  )}
                   {j < ws.length - 1 ? " " : ""}
                 </tspan>
               ))}
@@ -155,6 +154,31 @@ function ReadLayer({ colorBy }: { colorBy: "unsure" | "match" }) {
           </g>
         );
       })}
+    </g>
+  );
+}
+
+/** Each word read, painted over the ink where the network read it, in the color of how it compares to the scroll. */
+function MatchLayer() {
+  const words = lineWords();
+  const half = (FIG.band * 0.8) / 2;
+  return (
+    <g>
+      <rect width={W} height={H} fill="rgb(11 12 16 / 0.3)" />
+      {FIG.lines.map((l, i) =>
+        wordSpans(l).map(([a, b], j) => {
+          const kind = words[i]?.[j]?.kind ?? null;
+          // a small gap between neighboring words
+          const x0 = a + 1.5;
+          const x1 = Math.max(x0 + 2, b - 1.5);
+          const box = [...linePoints(l, -half, 6, x0, x1), ...linePoints(l, half, 6, x0, x1).reverse()];
+          return kind ? (
+            <polygon key={`${i}-${j}`} points={fmtPoints(box)} fill={KIND_COLOR[kind]} fillOpacity={0.38} stroke={KIND_COLOR[kind]} strokeWidth={1.2} strokeLinejoin="round" />
+          ) : (
+            <polygon key={`${i}-${j}`} points={fmtPoints(box)} fill="none" stroke="rgb(242 242 239 / 0.45)" strokeWidth={1} strokeDasharray="3 3" />
+          );
+        }),
+      )}
     </g>
   );
 }
@@ -178,8 +202,8 @@ export function PhotoStage({ step, labels, className = "" }: { step: StageStep; 
           {step === "column" && <ColumnLayer />}
           {step === "lines" && <LinesLayer key="lines" />}
           {step === "crops" && <CropsLayer />}
-          {step === "read" && <ReadLayer colorBy="unsure" />}
-          {step === "match" && <ReadLayer colorBy="match" />}
+          {step === "read" && <ReadLayer />}
+          {step === "match" && <MatchLayer />}
         </svg>
         {step === "ink" && (
           <>
@@ -200,7 +224,7 @@ export function PhotoStage({ step, labels, className = "" }: { step: StageStep; 
           </>
         )}
       </div>
-      <figcaption className="mt-3 text-sm leading-relaxed text-muted">{labels.captions[step]}</figcaption>
+      {step !== "none" && <figcaption className="mt-3 text-sm leading-relaxed text-muted">{labels.captions[step]}</figcaption>}
     </figure>
   );
 }

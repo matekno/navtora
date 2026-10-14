@@ -1,5 +1,5 @@
 /** The figures between the paragraphs of the "how it works" post, all drawn from FIG. */
-import { BOOK_NAMES } from "@navtora/core";
+import { BOOK_NAMES, isConfusable } from "@navtora/core";
 import { FIG, KIND_COLOR, type PairKind } from "@/lib/blog/how-it-works";
 import type { Locale } from "@/lib/i18n";
 
@@ -7,8 +7,10 @@ const IMG = "/blog/how-it-works";
 
 const TEXT = {
   es: {
-    steps: "pasos de 4 píxeles (el punto es «nada»)",
-    unsure: "menos del 50 %",
+    blank: "nada (cada casillero es un paso de 4 píxeles)",
+    unsure: "menos del 50 %, queda como ?",
+    collapse: "se juntan las repeticiones y se borran los «nada»",
+    letterKinds: { same: "igual", confusable: "letras que se confunden", wildcard: "?", different: "distinta" } as Record<string, string>,
     read: "Leyó",
     scroll: "En el sefer",
     kinds: { same: "igual", confusable: "letras que se confunden", wildcard: "con ?", different: "distinta", extra: "sobra" } as Record<PairKind, string>,
@@ -21,8 +23,10 @@ const TEXT = {
     votesLabel: "Votos por el lugar donde empieza la foto, a lo largo de toda la Torá",
   },
   en: {
-    steps: "4-pixel steps (a dot means “nothing”)",
-    unsure: "below 50%",
+    blank: "nothing (each cell is a 4-pixel step)",
+    unsure: "below 50%, becomes ?",
+    collapse: "repeats merge and the “nothing”s are dropped",
+    letterKinds: { same: "same", confusable: "easily confused letters", wildcard: "?", different: "different" } as Record<string, string>,
     read: "Read",
     scroll: "In the sefer",
     kinds: { same: "same", confusable: "easily confused letters", wildcard: "with ?", different: "different", extra: "extra" } as Record<PairKind, string>,
@@ -45,12 +49,12 @@ export function Figure({ children, caption }: { children: React.ReactNode; capti
   );
 }
 
-/** One line crop out of lines.webp; `flip` shows it the way people read it rather than the way the network gets it. */
-export function Crop({ index, flip = false, from = 0, to, className = "" }: { index: number; flip?: boolean; from?: number; to?: number; className?: string }) {
+/** One line crop out of lines.webp; `flip` shows it the way people read it rather than the way the network gets it, and `trim` cuts that many pixels off the top and bottom. */
+export function Crop({ index, flip = false, from = 0, to, trim = 0, className = "" }: { index: number; flip?: boolean; from?: number; to?: number; trim?: number; className?: string }) {
   const line = FIG.lines[index]!;
   const x1 = to ?? line.crop.width;
   return (
-    <svg viewBox={`${from} ${line.crop.top} ${x1 - from} ${FIG.cropHeight}`} className={`block w-full ${flip ? "-scale-x-100" : ""} ${className}`} role="img" aria-hidden>
+    <svg viewBox={`${from} ${line.crop.top + trim} ${x1 - from} ${FIG.cropHeight - 2 * trim}`} className={`block w-full ${flip ? "-scale-x-100" : ""} ${className}`} role="img" aria-hidden>
       <image href={`${IMG}/lines.webp`} x={0} y={0} width={FIG.cropWidth} height={FIG.cropHeight * FIG.lines.length} preserveAspectRatio="none" />
     </svg>
   );
@@ -80,54 +84,118 @@ export function CropsFigure({ lang, caption }: { lang: Locale; caption: React.Re
   );
 }
 
-/** What the network says at each step of one line, how the steps collapse into letters, and the scroll's words. */
-export function CtcFigure({ lang, caption }: { lang: Locale; caption: React.ReactNode }) {
+/** A run of equal time steps: the network's best class there and the highest probability it got in the run. */
+interface Run {
+  c: string;
+  p: number;
+  steps: number;
+}
+
+function runsOf(steps: Array<{ c: string; p: number }>): Run[] {
+  const runs: Run[] = [];
+  for (const s of steps) {
+    const last = runs.at(-1);
+    // blanks stay one cell each; a letter repeated over several steps is one run
+    if (last && s.c !== "" && last.c === s.c) {
+      last.steps++;
+      last.p = Math.max(last.p, s.p);
+    } else runs.push({ c: s.c, p: s.p, steps: 1 });
+  }
+  return runs;
+}
+
+/** How a letter as read compares to the scroll's letter, with the matcher's rules. */
+function letterKind(read: string, truth: string): PairKind {
+  if (read === truth) return "same";
+  if (read === "?") return "wildcard";
+  return isConfusable(read, truth) ? "confusable" : "different";
+}
+
+/** One word of the CTC figure: its crop over the network's time steps, the letters they collapse into, and the scroll's word. */
+function CtcWord({ lang, from, to, truth }: { lang: Locale; from: number; to: number; truth: string }) {
   const t = TEXT[lang];
-  const steps = FIG.ctc.steps;
-  // the first two words: up to the second space
-  const spaces = steps.flatMap((s, i) => (s.c === " " ? [i] : []));
-  const end = Math.min(steps.length, spaces[1] ?? 40);
-  const shown = steps.slice(0, end);
-  const { read, truth } = FIG.ctc;
+  const n = to - from;
+  const runs = runsOf(FIG.ctc.steps.slice(from, to));
+  const letters = runs.filter((r) => r.c !== "");
+  const read = letters.map((r) => (r.p < 0.5 ? "?" : r.c));
+  const pct = new Intl.NumberFormat(lang === "es" ? "es-AR" : "en-US", { style: "percent" });
+  const sameLength = read.length === [...truth].length;
+  const chip = "flex h-10 w-9 flex-col items-center justify-center rounded-lg bg-panel-2 scroll-text text-2xl leading-none";
   return (
-    <Figure caption={caption}>
-      {/* rtl so that on narrow screens it opens scrolled to the start of the line, on the right */}
-      <div className="overflow-x-auto" dir="rtl">
-        <div className="min-w-[520px]" dir="ltr">
-          <div className="rounded-md bg-white p-1">
-            <Crop index={FIG.ctc.line} flip from={0} to={end * 4} />
-          </div>
-          <div className="mt-1 flex" dir="rtl">
-            {shown.map((s, i) => (
-              <span
-                key={i}
-                className={`scroll-text flex-1 border-s border-line/40 text-center text-[15px] leading-7 ${s.c === "" ? "text-muted/50" : s.c === " " ? "" : s.p < 0.5 ? "text-warn" : "text-fg"}`}
-                style={s.c && s.c !== " " ? { opacity: 0.35 + 0.65 * s.p } : undefined}
-                title={s.c ? `${Math.round(s.p * 100)}%` : undefined}
-              >
-                {s.c === "" ? "·" : s.c === " " ? "␣" : s.c}
-              </span>
-            ))}
-          </div>
-          <p className="mt-2 text-xs text-muted">
-            {t.steps} · <span className="text-warn">{t.unsure}</span> → ?
-          </p>
-        </div>
+    <div className="mx-auto w-full" style={{ maxWidth: `${n * 18}px` }}>
+      <div className="rounded-md bg-white py-1">
+        <Crop index={FIG.ctc.line} flip from={from * 4} to={to * 4} trim={5} />
       </div>
-      <dl className="mt-5 grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-2">
-        <dt className="text-sm text-muted">{t.read}</dt>
-        <dd className="scroll-text text-2xl" dir="rtl">
-          {read.map((w, i) => (
-            <span key={i}>
-              {w.split(/(\?+)/).map((p, k) => (p.startsWith("?") ? <span key={k} className="text-warn">{p}</span> : p))}{" "}
+      <div className="mt-2 grid items-start" dir="rtl" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` }}>
+        {runs.map((r, i) =>
+          r.c === "" ? (
+            <span key={i} className="text-center text-lg leading-7 text-muted/50">
+              ·
+            </span>
+          ) : (
+            <div key={i} className={`flex flex-col items-center ${r.p < 0.5 ? "text-warn" : "text-fg"}`} style={{ gridColumn: `span ${r.steps}` }}>
+              <div className={`flex w-full justify-around ${r.steps > 1 ? "rounded-b border-b-2 border-accent" : ""}`}>
+                {Array.from({ length: r.steps }, (_, k) => (
+                  <span key={k} className="scroll-text text-xl leading-7">
+                    {r.c}
+                  </span>
+                ))}
+              </div>
+              <span className="mt-0.5 whitespace-nowrap text-[10px] tabular-nums leading-4" dir="ltr">
+                {pct.format(r.p)}
+              </span>
+            </div>
+          ),
+        )}
+      </div>
+      <p className="my-3 text-center text-xs text-muted">↓ {t.collapse}</p>
+      <dl className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2">
+        <dt className="text-xs text-muted">{t.read}</dt>
+        <dd className="flex justify-end gap-1.5" dir="rtl">
+          {read.map((c, i) => (
+            <span key={i} className={`${chip} ${c === "?" ? "text-warn" : "text-fg"}`}>
+              {c}
             </span>
           ))}
         </dd>
-        <dt className="text-sm text-muted">{t.scroll}</dt>
-        <dd className="scroll-text text-2xl text-ok" dir="rtl">
-          {truth.join(" ")}
+        <dt className="text-xs text-muted">{t.scroll}</dt>
+        <dd className="flex justify-end gap-1.5" dir="rtl">
+          {[...truth].map((c, i) => (
+            <span key={i} className={`${chip} border-b-[3px] text-fg`} style={{ borderColor: sameLength ? KIND_COLOR[letterKind(read[i]!, c)] : "transparent" }}>
+              {c}
+            </span>
+          ))}
         </dd>
       </dl>
+    </div>
+  );
+}
+
+/** What the network says at each time step of the first two words of a line, how the steps collapse into letters, and the scroll's words. */
+export function CtcFigure({ lang, caption }: { lang: Locale; caption: React.ReactNode }) {
+  const t = TEXT[lang];
+  const steps = FIG.ctc.steps;
+  const spaces = steps.flatMap((s, i) => (s.c === " " ? [i] : []));
+  // each word runs from just after one space to just before the next
+  const words = [0, 1].map((w) => ({ from: w === 0 ? 0 : spaces[0]! + 1, to: spaces[w]!, truth: FIG.ctc.truth[w] ?? "" }));
+  const kinds: PairKind[] = ["same", "confusable", "wildcard", "different"];
+  return (
+    <Figure caption={caption}>
+      <div className="space-y-10">
+        {words.map((w, i) => (
+          <CtcWord key={i} lang={lang} {...w} />
+        ))}
+      </div>
+      <div className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-line/60 pt-4 text-xs text-muted">
+        <span>· {t.blank}</span>
+        <span className="text-warn">{t.unsure}</span>
+        {kinds.map((k) => (
+          <span key={k} className="inline-flex items-center gap-1.5">
+            <span className="inline-block h-[3px] w-4 rounded" style={{ background: KIND_COLOR[k] }} />
+            {t.letterKinds[k]}
+          </span>
+        ))}
+      </div>
     </Figure>
   );
 }

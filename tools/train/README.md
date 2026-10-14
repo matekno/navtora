@@ -3,7 +3,7 @@
 The local OCR reads a column on the phone, with no API and no cost. It has two parts:
 
 - `packages/vision` (TypeScript, no dependencies) turns a photo into line crops: it flattens the lighting, finds the column between its blank margins, follows each line across the column (tilt and curvature included), and cuts a 32-pixel-high strip per line.
-- A small CRNN (CNN + bidirectional LSTM, about 0.3M parameters) reads each strip into letter probabilities, trained with CTC. Greedy decoding turns them into text, and letters the model is unsure of become `?`, which the matcher treats as a cheap wildcard.
+- A small CRNN (CNN + bidirectional LSTM, about 0.45M parameters) reads each strip into letter probabilities, trained with CTC. Greedy decoding turns them into text, and letters the model is unsure of become `?`, which the matcher treats as a cheap wildcard.
 
 The model is `apps/web/public/models/stam-crnn.onnx`. The app runs it with ONNX Runtime Web; the eval runs it with ONNX Runtime for Node.
 
@@ -32,6 +32,8 @@ pnpm --filter @navtora/eval local -- --synth ../train/data/synth/eval
 ```
 
 Everything under `data/`, `fonts/` and `runs/` is generated and not committed.
+
+`blog_figures.py` makes the images of the training appendix in the blog post on how the reader works, from the first 24 photos of the training set (the command is in the script's docstring).
 
 ## Next steps
 

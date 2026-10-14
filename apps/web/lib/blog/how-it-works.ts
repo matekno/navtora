@@ -17,6 +17,8 @@ export interface FigureLine {
   crop: { width: number; top: number };
   /** what the network read; letters it wasn't sure of are `?` */
   text: string;
+  /** each word read: the time steps (4 crop pixels each) of its first and last letter */
+  words: Array<[number, number]>;
   confidence: number;
   /** index among the lines sent to the matcher, null if it read nothing */
   ocrLine: number | null;
@@ -97,12 +99,24 @@ export function edgesAt(y: number): [number, number] {
   return [a.x0 + t * (b.x0 - a.x0), a.x1 + t * (b.x1 - a.x1)];
 }
 
-/** Points along a line from its first to its last ink, at `step` px. */
-export function linePoints(line: FigureLine, offset = 0, step = 8): Array<[number, number]> {
+/** Points along a line from x0 to x1 (by default its first and last ink), at `step` px. */
+export function linePoints(line: FigureLine, offset = 0, step = 8, x0 = line.x0, x1 = line.x1): Array<[number, number]> {
   const pts: Array<[number, number]> = [];
-  for (let x = line.x0; x < line.x1; x += step) pts.push([x, lineYAt(line, x) + offset]);
-  pts.push([line.x1, lineYAt(line, line.x1) + offset]);
+  for (let x = x0; x < x1; x += step) pts.push([x, lineYAt(line, x) + offset]);
+  pts.push([x1, lineYAt(line, x1) + offset]);
   return pts;
+}
+
+/**
+ * Where each word read sits on the photo, as [left, right] x. The crop runs
+ * from the line's right end leftwards, a time step is 4 crop pixels, and
+ * neighboring words split the space between them.
+ */
+export function wordSpans(line: FigureLine): Array<[number, number]> {
+  const scale = FIG.band / FIG.cropHeight;
+  const u = line.words.map(([a, b]) => [a * 4, (b + 1) * 4] as const);
+  const cuts = [0, ...u.slice(1).map(([a], i) => (u[i]![1] + a) / 2), line.crop.width];
+  return u.map((_, i) => [line.x1 - cuts[i + 1]! * scale, line.x1 - cuts[i]! * scale]);
 }
 
 export const fmtPoints = (pts: Array<[number, number]>) => pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
