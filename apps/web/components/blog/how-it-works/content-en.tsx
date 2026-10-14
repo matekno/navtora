@@ -227,7 +227,7 @@ export function contentEn(): PostContent {
             </p>
             <p>
               Since the text runs right to left, going toward Devarim means going left, {FIG.navigation.columns} columns here. If the sefer follows the standard layout, the count is exact. If not, it's an approximation, and it's
-              worth scanning again when you get there. Once there, the app tells you which line the reading starts on.
+              worth scanning again. Once there, the app tells you which line the reading starts on.
             </p>
             <MoveFigure lang="en" caption="The columns around the photo, right to left as in the sefer." />
           </div>

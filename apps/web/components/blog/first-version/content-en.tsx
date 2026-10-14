@@ -42,8 +42,8 @@ export const contentEn = (
 
     <h2>How it did</h2>
     <p>
-      It read very well. We tried how much the model could think (the <code>effort</code> parameter) and how many lines it transcribed, on scanned columns of Elihu Shannon&apos;s sefer, a standard-layout sefer that a sofer in
-      Israel published on Wikimedia Commons. All of them were placed correctly.
+      It read very well. We tried how much the model could think (the <code>effort</code> parameter) and how many lines it transcribed, on scanned columns of Elihu Shannon&apos;s sefer, which follows the standard layout and is
+      published on Wikimedia Commons. All of them were placed correctly.
     </p>
     <div className="table-wrap">
       <table>

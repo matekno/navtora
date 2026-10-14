@@ -48,7 +48,7 @@ export const contentEn = (
   <>
     <p>
       NavTorah reads each column with a small neural network that runs on the phone (how it uses it, step by step, is in <Link href={HOW}>How NavTorah knows which column the sefer is open at</Link>). For a network to learn to
-      read, it needs lots of lines along with the text they say. No such set of sefer photos exists, so we made one by computer.
+      read, it needs lots of lines along with the text they say. Since no set of sefer photos with their text exists, we made one by computer.
     </p>
     <p>
       A script, <code>synth.py</code>, takes a piece of a real column of the standard layout, writes it in a Hebrew font and then ages it until it looks like a photo taken with a phone.
@@ -130,7 +130,7 @@ export const contentEn = (
     <ul>
       <li>
         <strong>Elihu Shannon&apos;s sefer:</strong> Elihu Shannon is a sofer from Kibbutz Sa&apos;ad, in Israel. In 2011 he sent photos of every column of his second sefer Torah to be published on Wikimedia Commons, with
-        permission to use them freely. That sefer follows the standard layout of 245 columns of 42 lines, so for each photo we know exactly which column it is. That is, it&apos;s a test with the answers.
+        permission to use them freely. That sefer follows the standard layout of 245 columns of 42 lines, so for each photo we know exactly which column it is. So it&apos;s a test that comes with the answers.
       </li>
       <li>
         <strong>David Kokhav&apos;s sefer:</strong> commissioned by Rabbi David Kokhav. It&apos;s written on gevil and follows the custom of Yemenite sifrei, in 226 columns.
@@ -211,7 +211,7 @@ export const contentEn = (
       nesiim of Bamidbar 7, where two columns look too much alike.
     </p>
     <p>
-      In the British Library one, 21 columns land before the previous one, but all of them are the first column of a new photo. 16 fall on a column that was already there, because a photo repeats the end of the one before, and 5
+      In the British Library one, 21 columns land before the previous one, but all of them are the first column of a new photo. Of those, 16 fall on a column that was already there, because a photo repeats the end of the one before, and 5
       fill gaps that had been left. None contradicts its neighbors.
     </p>
 
@@ -221,8 +221,7 @@ export const contentEn = (
       single mistake, even though the network got about 30% of the letters wrong (counting every <code>?</code> as an error).
     </p>
     <p>
-      That is, the network gets many letters wrong, but it&apos;s enough to place the column. What can improve it most is real photos. That&apos;s why, when a scan doesn&apos;t go well, the app offers to send the photo to add it to
-      the training. It&apos;s only sent if the person ticks the box.
+      What can improve the network most is real photos. That&apos;s why, when a scan doesn&apos;t go well, the app offers to send the photo to add it to the training. It&apos;s only sent if the person ticks the box.
     </p>
 
     <h2>The code</h2>

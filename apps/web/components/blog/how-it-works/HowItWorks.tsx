@@ -1,6 +1,5 @@
 import { Fragment, type ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
-import { PrepareNote } from "../PrepareNote";
 import { contentEn } from "./content-en";
 import { contentEs } from "./content-es";
 import type { StageLabels, StageStep } from "./PhotoStage";
@@ -21,7 +20,6 @@ export function HowItWorks({ lang }: { lang: Locale }) {
   return (
     <article>
       <div className="mx-auto mt-10 max-w-6xl px-5 sm:px-6">
-        <PrepareNote lang={lang} className="mb-10 max-w-3xl" />
         <div className="prose-blog max-w-3xl">{c.intro}</div>
       </div>
       <div className="mx-auto mt-6 max-w-6xl px-5 sm:px-6">

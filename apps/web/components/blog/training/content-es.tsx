@@ -48,7 +48,7 @@ export const contentEs = (
   <>
     <p>
       NavTorá lee cada columna con una red neuronal chica que corre en el teléfono (cómo la usa, paso a paso, está en <Link href={HOW}>Cómo NavTorá sabe en qué columna está abierto el sefer</Link>). Para que una red aprenda a
-      leer, hacen falta muchos renglones junto con el texto que dicen. No existe un conjunto así de fotos de sifrei, así que lo armamos por computadora.
+      leer, hacen falta muchos renglones junto con el texto que dicen. Como no existe un conjunto de fotos de sifrei con su texto, lo armamos por computadora.
     </p>
     <p>
       Un script, <code>synth.py</code>, toma un pedazo de una columna real del formato estándar, lo escribe con una fuente hebrea y después lo envejece hasta que parece una foto sacada con el teléfono.
@@ -132,7 +132,7 @@ export const contentEs = (
     <ul>
       <li>
         <strong>El sefer de Elihu Shannon:</strong> Elihu Shannon es un sofer del kibutz Saad, en Israel. En 2011 mandó las fotos de todas las columnas de su segundo sefer Torá para publicarlas en Wikimedia Commons, con permiso para
-        usarlas libremente. Ese sefer sigue el formato estándar de 245 columnas de 42 renglones, así que para cada foto sabemos exactamente qué columna es. Es decir, es una prueba con las respuestas.
+        usarlas libremente. Ese sefer sigue el formato estándar de 245 columnas de 42 renglones, así que para cada foto sabemos exactamente qué columna es. Por lo tanto, es una prueba que ya trae las respuestas.
       </li>
       <li>
         <strong>El sefer de David Kokhav:</strong> lo encargó el rabino David Kokhav. Está escrito sobre guevil y sigue la costumbre de los sifrei yemenitas, en 226 columnas.
@@ -146,7 +146,7 @@ export const contentEs = (
       </li>
     </ul>
     <p>
-      Con los tres últimos no sabemos de antemano qué columna es cada foto, pero sí sabemos que las columnas van en orden. Por eso, la prueba es que cada columna que la app ubica con confianza quede después de la anterior.
+      Con los tres últimos no sabemos de antemano qué columna es cada foto, pero sí sabemos que las columnas van en orden. La prueba, entonces, es que cada columna que la app ubica con confianza quede después de la anterior.
     </p>
     <RealSifreiFigure
       lang="es"
@@ -213,7 +213,7 @@ export const contentEs = (
       sigue, y los nesiim de Bamidbar 7, donde dos columnas se parecen demasiado.
     </p>
     <p>
-      En el de la British Library hay 21 columnas que quedan antes de la anterior, pero todas son la primera columna de una foto nueva. 16 caen sobre una columna que ya estaba, porque una foto repite el final de la anterior, y 5
+      En el de la British Library hay 21 columnas que quedan antes de la anterior, pero todas son la primera columna de una foto nueva. De esas, 16 caen sobre una columna que ya estaba, porque una foto repite el final de la anterior, y 5
       completan huecos que habían quedado. Ninguna contradice a sus vecinas.
     </p>
 
@@ -223,8 +223,7 @@ export const contentEs = (
       ubicó los 10 sin ningún error, aunque la red se equivocó en cerca del 30 % de las letras (contando cada <code>?</code> como error).
     </p>
     <p>
-      Es decir, la red se equivoca en muchas letras, pero para ubicar la columna alcanza. Lo que más la puede mejorar son fotos reales. Por eso, cuando un escaneo no sale bien, la app ofrece mandar la foto para sumarla al
-      entrenamiento. Solo se manda si la persona lo marca.
+      Lo que más puede mejorar la red son fotos reales. Por eso, cuando un escaneo no sale bien, la app ofrece mandar la foto para sumarla al entrenamiento. Solo se manda si la persona lo marca.
     </p>
 
     <h2>El código</h2>

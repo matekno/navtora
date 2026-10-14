@@ -6,8 +6,8 @@ export const contentEn: HalachaContent = {
   intro: (
     <>
       <p>
-        Finding someone who can read Torah is a challenge for many communities, especially in the diaspora, where most people don't know enough Hebrew. What does a community do when there is no one? In May 2026, the Rabbinical
-        Assembly's Committee on Jewish Law and Standards (CJLS) approved a responsum that answers exactly that. The reading isn't dropped, and everything possible should be done to read from the scroll.
+        Finding someone who can read Torah is a challenge for many communities, especially in the diaspora, where most people don't know enough Hebrew. In May 2026, the Rabbinical Assembly's Committee on Jewish Law and
+        Standards (CJLS) approved a responsum on what to do when there is no one who can read. Its answer is that the reading isn't dropped, and that everything possible should be done to read from the scroll.
       </p>
       <p>I designed NavTorah to help in that situation.</p>
     </>
@@ -128,8 +128,8 @@ export const contentEn: HalachaContent = {
   ],
   outro: (
     <p>
-      Is a source missing, or something misquoted? The sources on this page live in the <a href="https://github.com/matekno/navtora/blob/main/apps/web/components/blog/halacha/sources.ts">code</a>, and can be corrected like any other
-      part of the app.
+      If a source is missing or something is misquoted, it can be corrected like any other part of the app, since the sources on this page live in the{" "}
+      <a href="https://github.com/matekno/navtora/blob/main/apps/web/components/blog/halacha/sources.ts">code</a>.
     </p>
   ),
 };

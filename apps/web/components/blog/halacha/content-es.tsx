@@ -6,8 +6,8 @@ export const contentEs: HalachaContent = {
   intro: (
     <>
       <p>
-        Encontrar a alguien que sepa leer la Torá es un desafío para muchas kehilot, sobre todo en la diáspora, donde la mayoría no sabe suficiente hebreo. ¿Qué hace una kehilá cuando no hay nadie? En mayo de 2026, el Comité de
-        Leyes y Estándares de la Asamblea Rabínica (CJLS) aprobó una responsa que responde justamente eso. La lectura no se deja, y hay que hacer todo lo posible para leer del rollo.
+        Encontrar a alguien que sepa leer la Torá es un desafío para muchas kehilot, sobre todo en la diáspora, donde la mayoría no sabe suficiente hebreo. En mayo de 2026, el Comité de Leyes y Estándares de la Asamblea
+        Rabínica (CJLS) aprobó una responsa sobre qué hacer cuando no hay nadie que sepa leer. Su respuesta es que la lectura no se deja, y que hay que hacer todo lo posible para leer del rollo.
       </p>
       <p>Pensé NavTorá para ayudar en esa situación.</p>
     </>
@@ -133,8 +133,8 @@ export const contentEs: HalachaContent = {
   ],
   outro: (
     <p>
-      ¿Falta una fuente, o hay algo mal citado? Las fuentes de esta página están en el <a href="https://github.com/matekno/navtora/blob/main/apps/web/components/blog/halacha/sources.ts">código</a>, y se pueden corregir como
-      cualquier otra parte de la app.
+      Si falta una fuente o hay algo mal citado, se puede corregir como cualquier otra parte de la app, porque las fuentes de esta página están en el{" "}
+      <a href="https://github.com/matekno/navtora/blob/main/apps/web/components/blog/halacha/sources.ts">código</a>.
     </p>
   ),
 };

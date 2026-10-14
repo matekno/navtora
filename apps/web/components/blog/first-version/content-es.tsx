@@ -42,8 +42,8 @@ export const contentEs = (
 
     <h2>Cómo le fue</h2>
     <p>
-      Leía muy bien. Probamos cuánto podía pensar el modelo (el parámetro <code>effort</code>) y cuántos renglones transcribía, sobre columnas escaneadas del sefer de Elihu Shannon, un sefer de formato estándar que un sofer de
-      Israel publicó en Wikimedia Commons. Todas quedaron bien ubicadas.
+      Leía muy bien. Probamos cuánto podía pensar el modelo (el parámetro <code>effort</code>) y cuántos renglones transcribía, sobre columnas escaneadas del sefer de Elihu Shannon, que sigue el formato estándar y está publicado
+      en Wikimedia Commons. Todas quedaron bien ubicadas.
     </p>
     <div className="table-wrap">
       <table>

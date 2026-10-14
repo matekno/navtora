@@ -87,7 +87,7 @@ export function contentEs(): PostContent {
             </p>
             <p>
               La columna es el tramo con texto que contiene el centro de la foto, entre dos de esos huecos. Como el teléfono puede estar torcido, antes de sumar la app prueba inclinar la suma unos grados para cada lado y se queda con el
-              ángulo que deja los bordes más nítidos. Además, mide los bordes en varias franjas de altura por separado (en esta foto, {FIG.edges.length}), para que sigan la perspectiva. La columna mide {Math.round(top.x1 - top.x0)} píxeles de ancho
+              ángulo que deja los bordes más nítidos. También mide los bordes en varias franjas de altura por separado (en esta foto, {FIG.edges.length}), para que sigan la perspectiva. La columna mide {Math.round(top.x1 - top.x0)} píxeles de ancho
               arriba y {Math.round(bottom.x1 - bottom.x0)} abajo.
             </p>
           </div>
@@ -153,7 +153,7 @@ export function contentEs(): PostContent {
             />
             <p>
               En la primera palabra, la red leyó <span className="he">ב</span> donde dice <span className="he">מ</span>, y <span className="he">ה</span> donde dice <span className="he">ת</span> (dos letras que en STA&quot;M se
-              parecen). Además, dudó en dos letras, que quedaron como <code>?</code>. En la segunda palabra, la <span className="he">א</span> aparece en dos pasos seguidos y cuenta como una sola, y la palabra sale perfecta.
+              parecen). En otras dos letras dudó, y quedaron como <code>?</code>. En la segunda palabra, la <span className="he">א</span> aparece en dos pasos seguidos y cuenta como una sola, y la palabra sale perfecta.
             </p>
             <p>
               La red no se sabe la Torá de memoria. <Link href="/es/blog/training">Se entrenó solo con fotos sintéticas</Link>, armadas con columnas reales escritas con fuentes STA&quot;M y envejecidas por computadora, con manchas,
@@ -174,7 +174,7 @@ export function contentEs(): PostContent {
               <span className="step">Paso 7</span>Buscar entre 80.316 palabras
             </h2>
             <p>
-              Lo leído tiene errores, como <span className="he">יהות</span> en vez de <span className="he">יהוה</span> o <span className="he">ביואב</span> en vez de <span className="he">מואב</span>. Por eso, buscar el texto tal cual
+              Lo leído tiene errores, como <span className="he">יהות</span> en vez de <span className="he">יהוה</span> o <span className="he">ביואב</span> en vez de <span className="he">מואב</span>. Por lo tanto, buscar el texto tal cual
               no serviría. En cambio, cada palabra leída vota dónde empieza la foto. Esta parte ya pasa en el servidor, que recibe el texto y no la foto.
             </p>
             <p>
@@ -228,7 +228,7 @@ export function contentEs(): PostContent {
             </p>
             <p>
               Como el texto va de derecha a izquierda, ir hacia Devarim es ir hacia la izquierda, en este caso {FIG.navigation.columns} columnas. Si el sefer sigue el formato estándar, la cuenta es exacta. Si no, es una aproximación,
-              y conviene escanear de nuevo cuando llegás. Al llegar, la app te dice en qué renglón empieza la lectura.
+              y conviene volver a escanear. Al llegar, la app te dice en qué renglón empieza la lectura.
             </p>
             <MoveFigure lang="es" caption="Las columnas alrededor de la foto, de derecha a izquierda como en el sefer." />
           </div>
