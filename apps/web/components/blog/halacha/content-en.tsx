@@ -6,86 +6,111 @@ export const contentEn: HalachaContent = {
   intro: (
     <>
       <p>
-        NavTorah is used to get the Torah scroll ready before Shabbat and Yom Tov. On Friday, or the day before the holiday, the gabbai picks the next day's reading in the app, scans the open column and rolls the scroll to where it
-        says. The next morning, the scroll is already at its place.
+        Finding someone who can read Torah is a challenge for many communities, especially in the diaspora, where most people don't know enough Hebrew. What does a community do when there is no one? In May 2026, the Rabbinical
+        Assembly's Committee on Jewish Law and Standards (CJLS) approved a responsum that answers exactly that. The reading isn't dropped, and everything possible should be done to read from the scroll.
       </p>
-      <p>On Shabbat and Yom Tov the app isn't used, because phones aren't.</p>
+      <p>I designed NavTorah to help in that situation.</p>
     </>
   ),
   sections: [
     {
-      id: "who-for",
+      id: "what-the-halacha-says",
       text: (
         <>
-          <h2>Who it's for</h2>
+          <h2>What the halacha says</h2>
           <p>
-            I'm from the Conservative movement, and I designed NavTorah for people who keep Shabbat and need to get the scroll ready beforehand. For them, not having the phone is one more limit of
-            the day, and the app helps keep that limit from showing in the reading. The day before, each scroll is set at its place, and in the morning nobody has to search.
+            The Shulchan Aruch already pictured a community where no one could read the Torah well. Its answer is that the Torah is read anyway, with the blessing. The Mishnah Berurah and the Aruch HaShulchan explain how. Someone
+            who can read from a chumash whispers to the one reading from the scroll, who repeats it aloud, “because there is no other choice”.
+          </p>
+          <p>At the same time, the reading is done with the cantillation, and the Talmud is harsh on whoever reads without the melody.</p>
+        </>
+      ),
+      sources: ["sa-142-2", "mb-142-8", "ahs-142-5", "megillah-32a"],
+    },
+    {
+      id: "the-responsum",
+      text: (
+        <>
+          <h2>The Conservative responsum</h2>
+          <p>
+            The responsum is by Rabbi David J. Fine and is called “When No One Can Read Torah” (OH 142:2.2026a). It asks what options a community has when no one can read from the Torah scroll properly, and whether a printed
+            chumash may be used.
+          </p>
+          <p>
+            Its ruling is that reading from a chumash <strong>doesn't fulfill the obligation of the public reading</strong>, which is done from the handwritten scroll. From there, it ranks these options from best to least good:
+          </p>
+          <ol>
+            <li>A capable reader reads from the scroll in the traditional way. Each community must encourage its readers and encourage more people to learn to read Torah, or hire a capable reader.</li>
+            <li>A capable minor reads, while someone else says the blessings.</li>
+            <li>The reader glances at a chumash now and then, between phrases, but reads every word from the Torah scroll.</li>
+            <li>The gabbaim help the reader, whispering each phrase into their ear for them to repeat aloud, gently correcting, or giving hand signals.</li>
+            <li>In a pressing situation (she'at hadechak), some would have someone read aloud from a chumash while the reader follows each word in the scroll, mouthing it.</li>
+          </ol>
+          <p>
+            Fine also rules out reading without the cantillation, because it is a halachic requirement and a tradition worth every effort to keep. If the lack of a reader is permanent, he suggests reading straight from the chumash,
+            without opening the Torah scroll and without blessings, so no one thinks it replaces reading from the scroll. He also notes that the scroll isn't marked, not in pencil and not with transparent sheets over it, following a
+            1981 answer by Rabbi Ben Zion Bokser.
+          </p>
+          <p>
+            The responsum was approved with 7 votes in favor, 11 against and 5 abstentions. In the CJLS, a responsum with 6 or more votes in favor is an official position of the Committee, even if more vote against it. Among those
+            who voted in favor is Rabbi Marcelo Polakoff, of Córdoba, Argentina.
           </p>
         </>
       ),
-      sources: [],
+      sources: ["fine-2026"],
     },
     {
-      id: "how-to-prepare",
+      id: "the-dissent",
       text: (
         <>
-          <h2>How to use it to prepare</h2>
+          <h2>The dissent</h2>
+          <p>
+            Rabbis Daniel Nevins and Joel Pitkowsky voted against it and explained why. They agree with almost all of the responsum and only reject the fifth option. For them, if there is no way to read from the scroll even with
+            help, it's better to study the parashah from the chumash, without aliyot, and read the missed portion the next Shabbat.
+          </p>
+        </>
+      ),
+      sources: ["nevins-pitkowsky-2026"],
+    },
+    {
+      id: "where-it-helps",
+      text: (
+        <>
+          <h2>Where NavTorah helps</h2>
+          <p>
+            The first four options have something in common. In all of them the Torah is read from the scroll, and for that the scroll has to be at the right place and the reader has to know where their aliyah starts. In a community
+            without a regular reader, whoever prepares the scroll often doesn't know the text by heart. That's where the app helps:
+          </p>
           <ul>
             <li>
-              <strong>The day before:</strong> on Friday, or the day before Yom Tov, you pick the next day's reading, scan the open column and roll to where the app says. The scroll is ready before the holiday begins.
+              <strong>Preparing the scroll:</strong> the day before, the gabbai picks the reading and scans the open column, and the app says how many columns to roll and on which line each aliyah starts. There's no need to know the
+              text by heart.
             </li>
             <li>
-              <strong>Several scrolls:</strong> on days with two or three readings (Rosh Chodesh, Chanukah, the four parashiyot, Yom Tov), you prepare each scroll at its place.
+              <strong>Getting more people to read:</strong> someone who is learning can go to their community's sefer during the week and find in the scroll the aliyah they prepared from a chumash or a tikkun. That's the
+              responsum's first option, more people learning to read.
             </li>
             <li>
-              <strong>Markers:</strong> if each aliyah is read by someone else, sticky notes can go between the columns, not touching the letters, at the start of each aliyah, as a guidance from the movement recommends: you find the
-              places with the app the day before.
-            </li>
-            <li>
-              <strong>Weekdays:</strong> Mondays, Thursdays and Rosh Chodesh on a weekday don't have the Shabbat problem, so the app can be used that same day. It's good for practice too.
+              <strong>Without touching the scroll:</strong> the app doesn't mark the scroll or put anything on it, so it respects what the responsum asks.
             </li>
           </ul>
+          <p>Personally, I think this is where the app helps most. A person still does the reading, from the scroll and with the cantillation, and the app makes sure that person finds their place.</p>
         </>
       ),
       sources: [],
     },
     {
-      id: "why-prepare",
+      id: "respect-for-the-congregation",
       text: (
         <>
-          <h2>Why prepare the scroll beforehand</h2>
-          <p>These sources say nothing about phones. They explain why keeping the community waiting while the sefer is rolled is a problem in itself, and whose job it is to avoid it.</p>
-        </>
-      ),
-      sources: ["yoma-mishnah", "yoma-70a", "sa-144-3", "mb-144", "ahs-144-6", "magen-avraham-144", "several-scrolls", "berakhot-12b", "cjls-torah-reading-2020"],
-    },
-    {
-      id: "why-not-on-shabbat",
-      text: (
-        <>
-          <h2>Why not on Shabbat or Yom Tov</h2>
+          <h2>Respect for the congregation</h2>
           <p>
-            Using the app means picking up the phone and bringing it to the scroll, turning on the screen, using the camera and sending data to a server. In 1950 the Conservative movement allowed electric lights on Shabbat. However,
-            its current position on electronic devices, from 2012, forbids the cellular phone and the camera. Outside the movement, the great majority of poskim forbid using electrical devices on Shabbat.
-          </p>
-          <h3>Within the Conservative movement</h3>
-        </>
-      ),
-      sources: ["nevins-2012", "schwartz-weiner-2023", "levin-2020", "reisner-2012", "photography-1984", "golinkin-2020"],
-    },
-    {
-      id: "outside-the-movement",
-      text: (
-        <>
-          <h3>Outside the movement</h3>
-          <p>
-            In the Orthodox world, the debate is mostly over why it's forbidden (building, creating something new, a custom to uphold, or the spirit of the day). Beyond the device itself, there are the laws of writing, muktzeh
-            and carrying.
+            Preparing the scroll before the service has its own halacha too. A Torah scroll isn't rolled in front of the congregation, out of respect for it, and the Aruch HaShulchan says preparing it beforehand is the duty of the
+            shamash or the reader.
           </p>
         </>
       ),
-      sources: ["chazon-ish", "beit-yitzchak", "auerbach", "feinstein", "pninei-halacha", "bleich-cameras", "melachot", "uvdin-dechol"],
+      sources: ["yoma-70a", "sa-144-3", "ahs-144-6", "cjls-torah-reading-2020"],
     },
     {
       id: "ask",
@@ -98,7 +123,7 @@ export const contentEn: HalachaContent = {
           </p>
         </>
       ),
-      sources: ["srl-halacha"],
+      sources: [],
     },
   ],
   outro: (

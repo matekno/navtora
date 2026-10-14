@@ -13,7 +13,7 @@ export interface HalachaContent {
   outro: ReactNode;
 }
 
-/** "Preparing the sefer before Shabbat": the app is for getting the scroll ready beforehand; the sources on both halves of that. */
+/** "What to do when no one can read Torah": the Conservative responsum on it, where the app helps, and the sources. */
 export function Halacha({ lang }: { lang: Locale }) {
   const c = lang === "es" ? contentEs : contentEn;
   return (

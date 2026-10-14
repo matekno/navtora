@@ -6,87 +6,117 @@ export const contentEs: HalachaContent = {
   intro: (
     <>
       <p>
-        NavTorá se usa para dejar el Séfer Torá listo antes de Shabat y de Iom Tov. El viernes, o la víspera de la fiesta, el gabai elige en la app la lectura del día siguiente, escanea la columna abierta y enrolla hasta donde le
-        indica. A la mañana siguiente, el rollo ya está en su lugar.
+        Encontrar a alguien que sepa leer la Torá es un desafío para muchas kehilot, sobre todo en la diáspora, donde la mayoría no sabe suficiente hebreo. ¿Qué hace una kehilá cuando no hay nadie? En mayo de 2026, el Comité de
+        Leyes y Estándares de la Asamblea Rabínica (CJLS) aprobó una responsa que responde justamente eso. La lectura no se deja, y hay que hacer todo lo posible para leer del rollo.
       </p>
-      <p>En Shabat y en Iom Tov la app no se usa, porque el celular no se usa.</p>
+      <p>Pensé NavTorá para ayudar en esa situación.</p>
     </>
   ),
   sections: [
     {
-      id: "para-quien",
+      id: "que-dice-la-halaja",
       text: (
         <>
-          <h2>Para quién es</h2>
+          <h2>Qué dice la halajá</h2>
           <p>
-            Soy del movimiento conservador, y pensé NavTorá para quienes guardan el Shabat y necesitan dejar el rollo preparado antes. Para ellos, no tener el teléfono es una limitación más del día, y
-            la app ayuda a que esa limitación no se note en la lectura. La víspera, cada rollo queda en su lugar, y a la mañana nadie tiene que buscar.
+            El Shulján Aruj ya se imaginaba una comunidad donde nadie supiera leer bien la Torá. Su respuesta es que, aun así, se lee con la brajá. La Mishná Berurá y el Aruj HaShulján explican cómo hacerlo. Alguien que sabe leer de
+            un jumash le va susurrando al que lee del rollo, y este repite en voz alta, «porque no hay otra opción».
+          </p>
+          <p>Al mismo tiempo, la lectura se hace con las teamim, y el Talmud es duro con quien lee sin la melodía.</p>
+        </>
+      ),
+      sources: ["sa-142-2", "mb-142-8", "ahs-142-5", "megillah-32a"],
+    },
+    {
+      id: "la-responsa",
+      text: (
+        <>
+          <h2>La responsa conservadora</h2>
+          <p>
+            La responsa es del rabino David J. Fine y se llama «Cuando nadie puede leer la Torá» (OH 142:2.2026a). Pregunta qué opciones tiene una kehilá cuando nadie puede leer del Séfer Torá como corresponde, y si se puede leer
+            de un jumash impreso.
+          </p>
+          <p>
+            Su psak es que leer de un jumash <strong>no cumple la obligación de la lectura pública</strong>, que se hace del rollo escrito a mano. A partir de ahí, ordena estas opciones de la mejor a la menos buena:
+          </p>
+          <ol>
+            <li>
+              Que lea del rollo, de la forma tradicional, alguien que sepa hacerlo. Cada kehilá tiene que alentar a sus lectores y a que más gente aprenda a leer Torá, o contratar a un lector.
+            </li>
+            <li>Que lea un menor que sepa leer, y otra persona diga las brajot.</li>
+            <li>Que el lector mire un jumash de vez en cuando, entre frase y frase, pero lea cada palabra del Séfer Torá.</li>
+            <li>Que los gabaim ayuden al lector, susurrándole cada frase al oído para que la repita en voz alta, corrigiéndolo con suavidad o haciéndole señas.</li>
+            <li>
+              En una situación apremiante (shaat hadejak), algunos permitirían que alguien lea en voz alta de un jumash mientras el lector sigue cada palabra en el rollo moviendo los labios.
+            </li>
+          </ol>
+          <p>
+            Fine también descarta leer sin las teamim, porque son un requisito de la halajá y una tradición que hay que hacer todo lo posible por mantener. Si la falta de lector es permanente, propone leer directamente del jumash,
+            sin abrir el Séfer Torá y sin brajot, para que nadie piense que eso reemplaza la lectura del rollo. Además, aclara que el rollo no se marca, ni con lápiz ni con láminas transparentes encima, siguiendo una respuesta del
+            rabino Ben Zion Bokser de 1981.
+          </p>
+          <p>
+            La responsa se aprobó con 7 votos a favor, 11 en contra y 5 abstenciones. En el CJLS, una responsa con 6 votos a favor o más es una posición oficial del Comité, aunque haya más votos en contra. Entre quienes votaron a
+            favor está el rabino Marcelo Polakoff, de Córdoba.
           </p>
         </>
       ),
-      sources: [],
+      sources: ["fine-2026"],
     },
     {
-      id: "como-se-usa",
+      id: "el-disenso",
       text: (
         <>
-          <h2>Cómo se usa para preparar</h2>
+          <h2>El disenso</h2>
+          <p>
+            Los rabinos Daniel Nevins y Joel Pitkowsky votaron en contra y explicaron por qué. Están de acuerdo con casi toda la responsa y solo rechazan la quinta opción. Para ellos, si no hay forma de leer del rollo ni siquiera con
+            ayuda, es mejor estudiar la parashá del jumash, sin aliot, y leer la parte que faltó el Shabat siguiente.
+          </p>
+        </>
+      ),
+      sources: ["nevins-pitkowsky-2026"],
+    },
+    {
+      id: "donde-ayuda",
+      text: (
+        <>
+          <h2>Dónde ayuda NavTorá</h2>
+          <p>
+            Las cuatro primeras opciones tienen algo en común. En todas se lee del rollo, y para eso el rollo tiene que estar en el lugar correcto y quien lee tiene que saber dónde empieza su aliá. En una kehilá sin un lector fijo,
+            el que prepara el rollo muchas veces no se sabe el texto de memoria. Ahí es donde ayuda la app:
+          </p>
           <ul>
             <li>
-              <strong>La víspera:</strong> el viernes, o la víspera de Iom Tov, elegís la lectura del día siguiente, escaneás la columna abierta y enrollás hasta donde te indica la app. Así, el rollo queda listo antes de que empiece la
-              fiesta.
+              <strong>Preparar el rollo:</strong> la víspera, el gabai elige la lectura y escanea la columna abierta, y la app le dice cuántas columnas enrollar y en qué renglón empieza cada aliá. No hace falta saberse el texto de
+              memoria.
             </li>
             <li>
-              <strong>Varios rollos:</strong> en los días con dos o tres lecturas (Rosh Jódesh, Janucá, las cuatro parashiot, Iom Tov), preparás cada rollo en su lugar.
+              <strong>Que más gente se anime a leer:</strong> quien está aprendiendo puede ir en la semana al sefer de su kehilá y encontrar en el rollo la aliá que preparó con un jumash o un tikún. Es la primera opción de la
+              responsa, que más gente aprenda a leer.
             </li>
             <li>
-              <strong>Marcadores:</strong> si cada aliá la lee alguien distinto, se pueden pegar notas adhesivas entre las columnas en el comienzo de cada aliá, sin tocar las letras, como recomienda una guía del movimiento. Los lugares
-              los encontrás con la app la víspera.
-            </li>
-            <li>
-              <strong>Días de semana:</strong> los lunes, los jueves y Rosh Jódesh en día de semana no tienen el problema del Shabat, así que la app se puede usar ese mismo día. También sirve para practicar.
+              <strong>Sin tocar el rollo:</strong> la app no marca el rollo ni pone nada encima, así que respeta lo que pide la responsa.
             </li>
           </ul>
+          <p>
+            Personalmente, creo que acá es donde la app más ayuda. La lectura la sigue haciendo una persona, del rollo y con las teamim, y la app se ocupa de que esa persona encuentre su lugar.
+          </p>
         </>
       ),
       sources: [],
     },
     {
-      id: "por-que-preparar",
+      id: "respeto-al-publico",
       text: (
         <>
-          <h2>Por qué preparar el rollo antes</h2>
-          <p>Estas fuentes no hablan de teléfonos. Explican por qué hacer esperar a la kehilá mientras se enrolla el sefer es un problema en sí mismo, y de quién es la tarea de evitarlo.</p>
-        </>
-      ),
-      sources: ["yoma-mishnah", "yoma-70a", "sa-144-3", "mb-144", "ahs-144-6", "magen-avraham-144", "several-scrolls", "berakhot-12b", "cjls-torah-reading-2020"],
-    },
-    {
-      id: "por-que-no-en-shabat",
-      text: (
-        <>
-          <h2>Por qué no en Shabat ni en Iom Tov</h2>
+          <h2>El respeto al público</h2>
           <p>
-            Usar la app implica levantar el teléfono y llevarlo hasta el rollo, prender la pantalla, usar la cámara y mandar datos a un servidor. En 1950, el movimiento conservador permitió usar luces eléctricas en Shabat. Sin embargo,
-            su posición vigente sobre aparatos electrónicos, de 2012, prohíbe el teléfono celular y la cámara. Fuera del movimiento, la gran mayoría de los poskim prohíben usar aparatos eléctricos en Shabat.
-          </p>
-          <h3>Dentro del movimiento conservador</h3>
-        </>
-      ),
-      sources: ["nevins-2012", "schwartz-weiner-2023", "levin-2020", "reisner-2012", "photography-1984", "golinkin-2020"],
-    },
-    {
-      id: "fuera-del-movimiento",
-      text: (
-        <>
-          <h3>Fuera del movimiento</h3>
-          <p>
-            En el mundo ortodoxo, lo que se discute es sobre todo por qué está prohibido (si es construir, crear algo nuevo, una costumbre que hay que mantener o el espíritu del día). Además del aparato en sí, están las leyes de
-            escribir, muktzé y transportar.
+            Dejar el rollo preparado antes de la tefilá también tiene su propia halajá. No se enrolla el Séfer Torá delante del público, por respeto al público, y el Aruj HaShulján dice que prepararlo antes es obligación del
+            shamash o del lector.
           </p>
         </>
       ),
-      sources: ["chazon-ish", "beit-yitzchak", "auerbach", "feinstein", "pninei-halacha", "bleich-cameras", "melachot", "uvdin-dechol"],
+      sources: ["yoma-70a", "sa-144-3", "ahs-144-6", "cjls-torah-reading-2020"],
     },
     {
       id: "consultar",
@@ -98,7 +128,7 @@ export const contentEs: HalachaContent = {
           </p>
         </>
       ),
-      sources: ["srl-halacha"],
+      sources: [],
     },
   ],
   outro: (

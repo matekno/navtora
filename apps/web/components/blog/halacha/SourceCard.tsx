@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 
-export type Stance = "purpose" | "restricts" | "ask";
+export type Stance = "reading" | "responsum" | "dissent" | "purpose";
 
 export interface Source {
   id: string;
@@ -20,20 +20,22 @@ export interface Source {
 }
 
 const STANCE: Record<Stance, Record<Locale, string>> = {
+  reading: { es: "Cuando nadie sabe leer", en: "When no one can read" },
+  responsum: { es: "Responsa conservadora", en: "Conservative responsum" },
+  dissent: { es: "Disenso", en: "Dissent" },
   purpose: { es: "Preparar el rollo", en: "Preparing the scroll" },
-  restricts: { es: "No en Shabat", en: "Not on Shabbat" },
-  ask: { es: "Para consultar", en: "Where to ask" },
 };
 
 const STANCE_STYLE: Record<Stance, string> = {
+  reading: "border-line text-muted",
+  responsum: "border-accent/60 text-accent",
+  dissent: "border-line text-muted",
   purpose: "border-ok/50 text-ok",
-  restricts: "border-bad/50 text-bad",
-  ask: "border-line text-muted",
 };
 
 export function SourceCard({ source: s, lang }: { source: Source; lang: Locale }) {
   return (
-    <article id={s.id} className="scroll-mt-20 rounded-2xl border border-line/70 bg-panel p-5 sm:p-6">
+    <article id={s.id} className={`scroll-mt-20 rounded-2xl border bg-panel p-5 sm:p-6 ${s.stance === "responsum" ? "border-accent/50" : "border-line/70"}`}>
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className={`rounded-full border px-2 py-0.5 font-medium ${STANCE_STYLE[s.stance]}`}>{STANCE[s.stance][lang]}</span>
         {s.year && <span className="text-muted">{s.year}</span>}

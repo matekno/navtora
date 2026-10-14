@@ -17,14 +17,14 @@ export const POSTS: PostMeta[] = [
   {
     slug: "halacha",
     date: "2026-10-14",
-    minutes: 9,
+    minutes: 7,
     title: {
-      es: "Por qué NavTorá se usa antes de Shabat",
-      en: "Why NavTorah is used before Shabbat",
+      es: "Qué hacer cuando nadie sabe leer la Torá",
+      en: "What to do when no one can read Torah",
     },
     description: {
-      es: "NavTorá se usa la víspera de Shabat y de Iom Tov para dejar el rollo listo. Acá están las fuentes sobre preparar el rollo antes y sobre por qué el celular no se usa en Shabat.",
-      en: "NavTorah is used the day before Shabbat and Yom Tov to get the scroll ready. Here are the sources on preparing the scroll beforehand and on why phones aren't used on Shabbat.",
+      es: "La halajá pide no dejar la lectura de la Torá aunque nadie la sepa leer bien. Qué dice la responsa conservadora de 2026 y cómo ayuda NavTorá a leer del rollo.",
+      en: "The halacha asks not to drop the Torah reading even when no one can read it well. What the 2026 Conservative responsum says, and how NavTorah helps read from the scroll.",
     },
   },
   {

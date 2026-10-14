@@ -353,7 +353,7 @@ export const en: Dictionary = {
   },
   blog: {
     title: "Blog",
-    lead: "Posts on how NavTorah works and on the halacha of preparing the sefer.",
+    lead: "Posts on how NavTorah works and on the halacha of the Torah reading.",
     minutes: (n) => `${n} min read`,
     soon: "Coming soon",
     soonText: "This post hasn't been written yet.",
