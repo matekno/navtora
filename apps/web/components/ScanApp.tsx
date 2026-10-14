@@ -2,14 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { LocateResult, Navigation, OcrResult } from "@navtora/core";
+import { getClientId } from "@/lib/client-id";
 import { useI18n } from "@/lib/i18n/context";
 import { loadLocalOcr, readPhotoLocally, type ReadOverlay } from "@/lib/local-ocr";
-import { DEFAULT_MODEL, FALLBACK_MODEL, isOcrModel, OCR_MODELS, type OcrModelId } from "@/lib/models";
 import { speechForNavigation } from "@/lib/say";
 import { primeSpeech, speak } from "@/lib/speech";
+import type { DedicationView, SupportInfo } from "@/lib/support-types";
 import type { ScrollInfo, TargetInfo } from "@/lib/target-types";
 import { Camera } from "./Camera";
 import { ConsentGate } from "./ConsentGate";
+import { DedicationNote } from "./DedicationNote";
+import { Feedback } from "./Feedback";
 import { ManualInput } from "./ManualInput";
 import { NavigationCard } from "./NavigationCard";
 import { ResultCard, type ScanMeta } from "./ResultCard";
@@ -18,8 +21,6 @@ import { UncertainCard } from "./UncertainCard";
 
 const KEYS = {
   consent: "navtora.consent.v1",
-  // v2: the default became the local reader
-  model: "navtora.model.v2",
   targets: "navtora.targets.v1",
   voice: "navtora.voice.v1",
   wpc: "navtora.wpc.v1",
@@ -34,10 +35,10 @@ interface Outcome {
   navigation: Navigation | null;
   scroll: ScrollInfo | null;
   error: string | null;
-  /** the reader that produced this outcome, to offer a second opinion after a local reading */
-  model: OcrModelId | null;
-  /** the server can read with Claude */
-  claude?: boolean;
+  /** to attach feedback to the scan */
+  scanId: string | null;
+  /** the photo that was read, which the person can choose to send with feedback; null for typed text */
+  photo: Blob | null;
 }
 
 interface TargetState {
@@ -51,7 +52,7 @@ interface ApiResponse {
   meta?: ScanMeta;
   navigation?: Navigation | null;
   scroll?: ScrollInfo;
-  claude?: boolean;
+  scanId?: string | null;
   error?: string;
 }
 
@@ -73,48 +74,46 @@ function save(key: string, value: unknown): void {
 
 const EMPTY: LocateResult = { status: "insufficient", best: null, alternatives: [], reasons: [], suggestions: [] };
 
-function failure(error: string): Outcome {
-  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, model: null };
+function failure(error: string, photo: Blob | null = null): Outcome {
+  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, scanId: null, photo };
 }
 
-export function ScanApp() {
+interface Props {
+  support: SupportInfo;
+  /** who this week or jag is dedicated by */
+  dedications: DedicationView[];
+}
+
+export function ScanApp({ support, dedications }: Props) {
   const { t, lang, tag } = useI18n();
   const [screen, setScreen] = useState<Screen>("consent");
   const [busy, setBusy] = useState(false);
-  // the reader running now, and the photo it reads when it was not just taken (a second opinion)
-  const [reading, setReading] = useState<{ model: OcrModelId; photo: Blob | null; overlay?: ReadOverlay } | null>(null);
+  // the photo being read, with the lines the phone found in it
+  const [reading, setReading] = useState<{ overlay?: ReadOverlay } | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [returnTo, setReturnTo] = useState<"camera" | "manual">("camera");
-  const [model, setModel] = useState<OcrModelId>(DEFAULT_MODEL);
   const [targetState, setTargetState] = useState<TargetState>({ targets: [], active: 0 });
   const [autoVoice, setAutoVoice] = useState(false);
   // words per column seen in this sefer, when it doesn't follow the standard layout
   const wpcRef = useRef<number[]>([]);
-  // the last photo, kept in memory only, so a local reading can be retried with Claude
-  const lastPhotoRef = useRef<Blob | null>(null);
 
   useEffect(() => {
     if (load<boolean>(KEYS.consent)) setScreen("camera");
-    const saved = load<string>(KEYS.model);
-    if (isOcrModel(saved)) setModel(saved);
     const ts = load<TargetState>(KEYS.targets);
     if (ts && Array.isArray(ts.targets)) setTargetState({ targets: ts.targets, active: Math.min(ts.active ?? 0, Math.max(0, ts.targets.length - 1)) });
     setAutoVoice(load<boolean>(KEYS.voice) === true);
     wpcRef.current = load<number[]>(KEYS.wpc) ?? [];
     navigator.serviceWorker?.register("/sw.js").catch(() => undefined);
+    // counts this anonymous client as active today
+    void fetch("/api/hello", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ client: getClientId(), lang }) }).catch(() => undefined);
   }, []);
 
   const activeTarget = targetState.targets[targetState.active] ?? null;
 
   // load the local reader while the camera is open, so the first scan doesn't wait for it
   useEffect(() => {
-    if (screen === "camera" && model === "local") loadLocalOcr().catch(() => undefined);
-  }, [screen, model]);
-
-  const changeModel = useCallback((m: OcrModelId) => {
-    setModel(m);
-    save(KEYS.model, m);
-  }, []);
+    if (screen === "camera") loadLocalOcr().catch(() => undefined);
+  }, [screen]);
 
   const accept = useCallback(() => {
     save(KEYS.consent, true);
@@ -142,30 +141,25 @@ export function ScanApp() {
   );
 
   const handleCapture = useCallback(
-    async (blob: Blob, reader: OcrModelId = model) => {
+    async (blob: Blob) => {
       setBusy(true);
-      setReading({ model: reader, photo: reader === model ? null : blob });
+      setReading({});
       setReturnTo("camera");
-      lastPhotoRef.current = blob;
       if (autoVoice) primeSpeech();
       try {
         const form = new FormData();
-        if (reader === "local") {
-          const t0 = performance.now();
-          let read;
-          try {
-            read = await readPhotoLocally(blob);
-          } catch (err) {
-            setOutcome({ ...failure(t.errors.local((err as Error).message)), model: reader });
-            return;
-          }
-          setReading((r) => (r ? { ...r, overlay: read.overlay } : r));
-          form.append("ocr", JSON.stringify(read.result));
-          form.append("ocrMs", String(Math.round(performance.now() - t0)));
-        } else {
-          form.append("image", blob, "column.jpg");
-          form.append("model", reader);
+        const t0 = performance.now();
+        let read;
+        try {
+          read = await readPhotoLocally(blob);
+        } catch (err) {
+          setOutcome(failure(t.errors.local((err as Error).message), blob));
+          return;
         }
+        setReading({ overlay: read.overlay });
+        form.append("ocr", JSON.stringify(read.result));
+        form.append("ocrMs", String(Math.round(performance.now() - t0)));
+        form.append("client", getClientId());
         form.append("lang", lang);
         if (activeTarget) {
           const { word, endWord, label, ref } = activeTarget;
@@ -178,7 +172,7 @@ export function ScanApp() {
         const res = await fetch("/api/scan", { method: "POST", body: form });
         const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) {
-          setOutcome({ ...failure(body.error ?? t.errors.http(res.status)), model: reader });
+          setOutcome(failure(body.error ?? t.errors.http(res.status)));
           return;
         }
         const best = body.locate.best;
@@ -187,35 +181,28 @@ export function ScanApp() {
           save(KEYS.wpc, wpcRef.current);
         }
         const navigation = body.navigation ?? null;
-        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null, model: reader, claude: body.claude === true });
+        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null, scanId: body.scanId ?? null, photo: blob });
         if (autoVoice) sayNavigation(navigation);
       } catch (err) {
-        setOutcome({ ...failure(t.errors.connect((err as Error).message)), model: reader });
+        setOutcome(failure(t.errors.connect((err as Error).message)));
       } finally {
         setBusy(false);
         setReading(null);
         setScreen("result");
       }
     },
-    [model, lang, activeTarget, autoVoice, sayNavigation, t],
+    [lang, activeTarget, autoVoice, sayNavigation, t],
   );
-
-  const secondOpinion = useCallback(() => {
-    const photo = lastPhotoRef.current;
-    if (!photo) return;
-    setScreen("camera");
-    void handleCapture(photo, FALLBACK_MODEL);
-  }, [handleCapture]);
 
   const handleManual = useCallback(
     async (text: string) => {
       setBusy(true);
       setReturnTo("manual");
       try {
-        const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, lang }) });
+        const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, client: getClientId(), lang }) });
         const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) setOutcome(failure(body.error ?? t.errors.http(res.status)));
-        else setOutcome({ locate: body.locate, ocr: null, meta: null, navigation: null, scroll: body.scroll ?? null, error: null, model: null });
+        else setOutcome({ locate: body.locate, ocr: null, meta: null, navigation: null, scroll: body.scroll ?? null, error: null, scanId: body.scanId ?? null, photo: null });
       } catch (err) {
         setOutcome(failure(t.errors.connect((err as Error).message)));
       } finally {
@@ -226,7 +213,7 @@ export function ScanApp() {
     [lang, t],
   );
 
-  if (screen === "consent") return <ConsentGate onAccept={accept} />;
+  if (screen === "consent") return <ConsentGate onAccept={accept} dedications={dedications} />;
   if (screen === "target") {
     return (
       <TargetPicker
@@ -242,6 +229,12 @@ export function ScanApp() {
   if (screen === "result" && outcome) {
     const best = outcome.locate.best;
     if (outcome.locate.status === "confident" && best && !outcome.error) {
+      const footer = (
+        <>
+          <Feedback key={outcome.scanId ?? "result"} scanId={outcome.scanId} photo={outcome.photo} variant="result" navigating={outcome.navigation !== null} support={support} />
+          <DedicationNote dedications={dedications} />
+        </>
+      );
       if (outcome.navigation && activeTarget) {
         return (
           <NavigationCard
@@ -250,6 +243,7 @@ export function ScanApp() {
             placement={best}
             scroll={outcome.scroll}
             meta={outcome.meta}
+            footer={footer}
             hasNext={targetState.active < targetState.targets.length - 1}
             autoVoice={autoVoice}
             onToggleAutoVoice={toggleAutoVoice}
@@ -269,6 +263,7 @@ export function ScanApp() {
           ocr={outcome.ocr}
           meta={outcome.meta}
           scroll={outcome.scroll}
+          footer={footer}
           onAgain={() => setScreen(returnTo)}
           onPickTarget={() => setScreen("target")}
         />
@@ -280,7 +275,7 @@ export function ScanApp() {
         ocr={outcome.ocr}
         meta={outcome.meta}
         error={outcome.error}
-        secondOpinion={outcome.model === "local" && outcome.claude && returnTo === "camera" && lastPhotoRef.current ? { label: OCR_MODELS[FALLBACK_MODEL].label, onTry: secondOpinion } : null}
+        footer={<Feedback key={outcome.scanId ?? "uncertain"} scanId={outcome.scanId} photo={outcome.photo} variant="uncertain" support={support} />}
         onAgain={() => setScreen(returnTo)}
         onManual={() => setScreen("manual")}
       />
@@ -289,9 +284,7 @@ export function ScanApp() {
   return (
     <Camera
       busy={busy}
-      model={model}
       reading={reading}
-      onModelChange={changeModel}
       onCapture={handleCapture}
       onManual={() => setScreen("manual")}
       targetLabel={activeTarget?.short ?? null}

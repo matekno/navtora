@@ -23,6 +23,8 @@
     "@navtora/ocr": "workspace:*",
     "@navtora/vision": "workspace:*",
     "onnxruntime-node": "^1.30.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "@anthropic-ai/sdk": "^0.90.0",
+    "zod": "^4.0.0"
   }
 }

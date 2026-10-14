@@ -4,15 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/context";
 import { canvasToJpeg, captureFrame, meanLuminance } from "@/lib/image";
 import type { ReadOverlay } from "@/lib/local-ocr";
-import { OCR_MODELS, type OcrModelId } from "@/lib/models";
 import { ScanProgress } from "./ScanProgress";
 
 interface Props {
   busy: boolean;
-  model: OcrModelId;
-  /** the reader running now; its photo is set when it was not just taken here (a second opinion) */
-  reading: { model: OcrModelId; photo: Blob | null; overlay?: ReadOverlay } | null;
-  onModelChange: (m: OcrModelId) => void;
+  /** the lines the phone found in the photo being read */
+  reading: { overlay?: ReadOverlay } | null;
   onCapture: (blob: Blob) => void;
   onManual: () => void;
   /** short label of the active target, or null when just locating */
@@ -23,10 +20,10 @@ interface Props {
 
 type CamState = "starting" | "ready" | "denied" | "unavailable";
 
-/** measured typical scan time per model, to pace the progress bar */
-const EXPECTED_MS: Record<OcrModelId, number> = { local: 2500, "claude-opus-5": 15000, "claude-sonnet-5": 12000 };
+/** measured typical scan time, to pace the progress bar */
+const EXPECTED_MS = 2500;
 
-export function Camera({ busy, model, reading, onModelChange, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
+export function Camera({ busy, reading, onCapture, onManual, targetLabel, onPickTarget, onClearTarget }: Props) {
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -72,14 +69,6 @@ export function Camera({ busy, model, reading, onModelChange, onCapture, onManua
       streamRef.current = null;
     };
   }, []);
-
-  // a second opinion reads a photo taken earlier: show it frozen
-  useEffect(() => {
-    if (busy && reading?.photo && !photoUrl) {
-      videoRef.current?.pause();
-      setPhotoUrl(URL.createObjectURL(reading.photo));
-    }
-  }, [busy, reading, photoUrl]);
 
   // release the frozen photo when the scan ends
   useEffect(() => {
@@ -136,31 +125,11 @@ export function Camera({ busy, model, reading, onModelChange, onCapture, onManua
         {!busy && <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />}
 
         {busy && photoUrl && (
-          <ScanProgress
-            photoUrl={photoUrl}
-            local={(reading?.model ?? model) === "local"}
-            modelLabel={OCR_MODELS[reading?.model ?? model].label}
-            expectedMs={EXPECTED_MS[reading?.model ?? model]}
-            overlay={reading?.overlay ?? null}
-          />
+          <ScanProgress photoUrl={photoUrl} expectedMs={EXPECTED_MS} overlay={reading?.overlay ?? null} />
         )}
 
         {!busy && (
           <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex flex-col items-center gap-2 px-4">
-            <div role="radiogroup" aria-label={t.camera.modelGroup} className="flex rounded-full bg-ink/70 p-1 backdrop-blur">
-              {(Object.keys(OCR_MODELS) as OcrModelId[]).map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  role="radio"
-                  aria-checked={model === id}
-                  onClick={() => onModelChange(id)}
-                  className={`h-9 rounded-full px-4 text-sm font-medium ${model === id ? "bg-accent text-ink" : "text-fg"}`}
-                >
-                  {OCR_MODELS[id].label}
-                </button>
-              ))}
-            </div>
             {targetLabel ? (
               <div className="flex max-w-full items-center gap-1 rounded-full bg-ink/70 p-1 pl-3 backdrop-blur">
                 <span className="truncate text-sm">

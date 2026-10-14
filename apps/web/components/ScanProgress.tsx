@@ -7,9 +7,6 @@ import type { ReadOverlay } from "@/lib/local-ocr";
 interface Props {
   /** object URL of the captured photo, shown frozen */
   photoUrl: string;
-  /** read on the phone: nothing is sent */
-  local: boolean;
-  modelLabel: string;
   /** expected scan time, to pace the bar */
   expectedMs: number;
   /** lines the phone found, drawn over the photo */
@@ -17,7 +14,7 @@ interface Props {
 }
 
 /** Waiting screen: frozen photo, a scan line sweeping it, and a progress bar paced to the expected time. */
-export function ScanProgress({ photoUrl, local, modelLabel, expectedMs, overlay }: Props) {
+export function ScanProgress({ photoUrl, expectedMs, overlay }: Props) {
   const { t } = useI18n();
   const [elapsed, setElapsed] = useState(0);
 
@@ -32,12 +29,7 @@ export function ScanProgress({ photoUrl, local, modelLabel, expectedMs, overlay 
   const progress = ratio < 1 ? 88 * (1 - Math.pow(1 - ratio, 2)) : 88 + 10 * (1 - Math.exp(-(ratio - 1) * 1.5));
   const secs = Math.floor(elapsed / 1000);
 
-  let stage: string;
-  if (local) stage = overlay ? t.progress.foundLines(overlay.lines.length) : ratio < 1.4 ? t.progress.readingLocal : t.progress.loadingLocal;
-  else if (elapsed < 1500) stage = t.progress.sending;
-  else if (ratio < 0.75) stage = t.progress.reading(modelLabel);
-  else if (ratio < 1.4) stage = t.progress.searching;
-  else stage = t.progress.slow;
+  const stage = overlay ? t.progress.foundLines(overlay.lines.length) : ratio < 1.4 ? t.progress.readingLocal : t.progress.loadingLocal;
 
   return (
     <div className="absolute inset-0 bg-ink">
@@ -74,7 +66,7 @@ export function ScanProgress({ photoUrl, local, modelLabel, expectedMs, overlay 
         <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-line" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)}>
           <div className="h-full rounded-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${progress}%` }} />
         </div>
-        <div className="mt-2 text-xs text-muted">{local ? t.progress.noteLocal : t.progress.note}</div>
+        <div className="mt-2 text-xs text-muted">{t.progress.noteLocal}</div>
       </div>
     </div>
   );

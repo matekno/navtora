@@ -17,6 +17,8 @@ interface Props {
   placement: Placement;
   scroll: ScrollInfo | null;
   meta: ScanMeta | null;
+  /** feedback and dedication, above the meta line */
+  footer?: React.ReactNode;
   hasNext: boolean;
   autoVoice: boolean;
   onToggleAutoVoice: () => void;
@@ -27,7 +29,7 @@ interface Props {
 }
 
 export function NavigationCard(props: Props) {
-  const { navigation: nav, target, placement: p, scroll, meta, hasNext, onAgain, onNextTarget, onChangeTarget } = props;
+  const { navigation: nav, target, placement: p, scroll, meta, footer, hasNext, onAgain, onNextTarget, onChangeTarget } = props;
   const { t, lang } = useI18n();
   const here = nav.status === "here";
   // text runs right to left, so Bereshit is to the right
@@ -112,6 +114,7 @@ export function NavigationCard(props: Props) {
         <Links links={target.links} compact />
       </section>
 
+      {footer}
       {meta && <MetaLine meta={meta} />}
 
       <div className="mt-auto flex flex-col gap-3 pt-6">

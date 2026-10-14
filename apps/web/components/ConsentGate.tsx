@@ -1,8 +1,10 @@
 "use client";
 
 import { LanguageSwitch, Rich, useI18n } from "@/lib/i18n/context";
+import type { DedicationView } from "@/lib/support-types";
+import { DedicationNote } from "./DedicationNote";
 
-export function ConsentGate({ onAccept }: { onAccept: () => void }) {
+export function ConsentGate({ onAccept, dedications }: { onAccept: () => void; dedications: DedicationView[] }) {
   const { t } = useI18n();
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-between px-6 py-10">
@@ -24,6 +26,7 @@ export function ConsentGate({ onAccept }: { onAccept: () => void }) {
             </li>
           ))}
         </ul>
+        <DedicationNote dedications={dedications} className="mt-8" />
       </div>
       <button type="button" onClick={onAccept} className="mt-10 h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
         {t.consent.accept}

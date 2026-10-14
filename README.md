@@ -2,7 +2,7 @@
 
 Find your place in a Sefer Torah with your phone. Point the camera at the open column and NavTorah tells you the book, parashah, aliyah and verses, and how many columns to move to reach the reading you want. When it isn't sure, it says so instead of guessing.
 
-The app is available in English and Spanish.
+The app is free, with no ads and no sign-up, and available in English and Spanish. The phone reads the photo itself; only the text goes to the server.
 
 ## Demo
 
@@ -25,7 +25,7 @@ Positions are word indexes, so any layout works. On scrolls with the standard 24
 
 By default the phone reads the photo itself, with no API and no cost, and sends only the text. Classical image processing (`packages/vision`) flattens the lighting, finds the column between its blank margins and follows each line across it, through tilt and curvature. A small neural network (a CRNN of 0.45M parameters, run with ONNX Runtime Web) then reads each line. It reads worse than a large vision model, but the matcher doesn't need a perfect reading: letters the network is unsure of come out as `?`, which the matcher treats as a wildcard, so it still places the column or says it can't.
 
-The network was trained on synthetic photos of real columns in STA"M fonts, aged and photographed in software; see [tools/train](tools/train/README.md). When the local reading isn't enough, the app offers to send that same photo to Claude.
+The network was trained on synthetic photos of real columns in STA"M fonts, aged and photographed in software; see [tools/train](tools/train/README.md). When a scan fails, the app asks whether the person wants to send that photo to improve the reader: real photos are what will help the model most.
 
 ## Navigation
 
@@ -33,26 +33,63 @@ Pick a target: the reading for a date, a holiday or special day, a parashah and 
 
 After each scan NavTorah says how many columns to move and which way. The count is exact on standard-layout scrolls and estimated on others, getting better with each scan. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
 
-## Running it
+## Feedback and dedications
 
-Requires Node 22+ and pnpm.
+After each result the app asks "Did it help?". A "no" asks what went wrong and offers to send the photo, unticked by default; after a scan it couldn't place, it offers to send the photo too. A "yes" shows how to support the app: dedicating a week (shown with that Shabbat's parashah) or a jag (shown the week before and during it). People get in touch through the contact you configure, and you add the dedication in the admin panel; the app and the landing page then show who the week is dedicated by.
+
+## Admin panel
+
+At `/es/admin` or `/en/admin`, with `ADMIN_PASSWORD`. It shows people and scans per day, how many were placed, ambiguous or not placed, the 👍 and 👎 with their comments and photos, the latest scans with the text that was read, and the dedications, where you add and remove them. Each phone gets a random anonymous id to count people; there are no accounts and no IP addresses are stored.
+
+## Running it on a server
+
+Requires Docker with Compose. The app, its SQLite database and the photos sent with feedback run in one container, with the data in a volume.
+
+```bash
+cp .env.example .env    # set ADMIN_PASSWORD, CONTACT_EMAIL, CONTACT_WHATSAPP, TZ
+docker compose up -d --build
+```
+
+It listens on `127.0.0.1:3000` (`BIND_ADDRESS` and `PORT` in `.env`). Point your reverse proxy there, for example with nginx:
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+The proxy must serve HTTPS: phones only open the camera on a secure page. If the proxy runs in another container, set `BIND_ADDRESS=0.0.0.0` or put both on the same Docker network. The app limits requests per IP using `X-Forwarded-For`, so don't expose its port directly to the internet.
+
+| Variable | What it does |
+|---|---|
+| `ADMIN_PASSWORD` | Password for the admin panel. Without it the panel is disabled. |
+| `CONTACT_EMAIL`, `CONTACT_WHATSAPP` | How people reach you to dedicate a week or a jag. WhatsApp in international format, e.g. `5491112345678`. |
+| `DONATE_URL` | Optional https link to a donation page (Buy Me a Coffee, Mercado Pago…). |
+| `TZ` | Time zone for the daily stats and for when a week starts, e.g. `America/Argentina/Buenos_Aires`. |
+
+Updating: `git pull && docker compose up -d --build`. Logs: `docker compose logs -f`. The data is in the `navtora-data` volume (`navtora.db` and `photos/`). To back up the database while the app runs:
+
+```bash
+docker compose exec navtora node -e "require('fs').rmSync('/data/backup.db', { force: true }); new (require('node:sqlite').DatabaseSync)('/data/navtora.db').exec(\"VACUUM INTO '/data/backup.db'\")"
+docker compose cp navtora:/data/backup.db ./navtora-backup.db
+```
+
+## Developing
+
+Requires Node 22.13+ and pnpm.
 
 ```bash
 pnpm install
 pnpm test
+pnpm dev     # Next.js with local HTTPS, to test the camera from a phone on the same network
 ```
 
-The local reader needs no configuration. To also offer the Claude models, copy `apps/web/.env.example` to `apps/web/.env.local` and set `ANTHROPIC_API_KEY`. To try the Claude path of the UI without a key, use the oracle provider, which returns the real text of a column with simulated OCR noise:
+The reader needs no configuration. For the admin panel and the support options, copy `apps/web/.env.example` to `apps/web/.env.local`. The database goes to `apps/web/data/` unless `DATA_DIR` says otherwise.
 
-```bash
-OCR_PROVIDER=oracle OCR_ORACLE_COLUMN=50 pnpm --filter @navtora/web dev:http
-```
-
-The camera only works in a secure context. To test from a phone on the same network, `pnpm dev` runs Next.js with local HTTPS.
-
-The site has a public landing page at `/en` and `/es`; the app itself is at `/en/app` and `/es/app`. If you host a copy, set `ADMIN_PASSWORD` to require a password for the app and its API, so strangers can't spend your API credits. Without it, the app is open.
-
-A local scan takes a second or two and costs nothing. With Claude (Opus 5, effort low, 14 lines) a scan takes about 15 seconds and costs about 3 US cents; `OCR_MODEL=claude-sonnet-5` brings it to about 1 cent with similar accuracy on clean scrolls.
+The site has a public landing page at `/en` and `/es`; the app itself is at `/en/app` and `/es/app`. A scan takes a second or two and costs nothing.
 
 ## Repository layout
 
@@ -61,9 +98,9 @@ A local scan takes a second or two and costs nothing. With Claude (Opus 5, effor
 | `packages/core` | The engine, in plain TypeScript: normalization, index, STA"M-aware distance, matcher, navigation. |
 | `packages/data` | Torah text, the standard 245-column layout, and parashot with aliyot, built from tikkun.io. |
 | `packages/vision` | Image processing for the local reader: lighting, column and line detection, line crops. No dependencies. |
-| `packages/ocr` | OCR providers: local (vision + CRNN, with the model runner injected), Claude vision, an oracle for testing without a key, and a disk cache for evaluation. |
-| `apps/web` | The Next.js PWA: camera, results, navigation, target picker, manual entry. |
-| `tools/eval` | Evaluation on openly licensed scanned sifrei, on simulated noise, and of the local reader. |
+| `packages/ocr` | OCR providers: local (vision + CRNN, with the model runner injected), an oracle that simulates OCR noise, and a disk cache for evaluation. |
+| `apps/web` | The Next.js PWA: camera, results, navigation, target picker, manual entry, feedback, dedications and the admin panel. |
+| `tools/eval` | Evaluation on openly licensed scanned sifrei, on simulated noise, and of the local reader; also a Claude vision reader, only to compare against. |
 | `tools/train` | Synthetic training data and training of the local reader. |
 
 `packages/data/dist` is committed. `pnpm build:data` regenerates it from `packages/data/raw`.
@@ -78,7 +115,7 @@ The local reader, trained only on synthetic photos, placed 241 of the 246 column
 
 ## Privacy
 
-With the local reader, the photo never leaves the phone: only the transcribed text goes to the server. A photo is sent only when you choose a Claude model, or ask Claude for a second opinion; then it goes to the server and to the Anthropic API for transcription. NavTorah never stores images. The server logs only timings, token counts and the result status.
+The photo never leaves the phone: only the transcribed text goes to the server. There are no accounts. To know whether the app works, the server keeps each scan's result, timing and transcribed text, with a random id the phone makes up; it stores no IP addresses. A photo is sent and kept only when the person ticks the box to send it with feedback, to train the reader.
 
 ## License
 

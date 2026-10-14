@@ -1,6 +1,6 @@
 /**
- * Loads ANTHROPIC_API_KEY, OCR_MODEL and OCR_EFFORT from apps/web/.env.local
- * when not already set, so the eval uses the same configuration as the app.
+ * Loads ANTHROPIC_API_KEY, OCR_MODEL and OCR_EFFORT from tools/eval/.env.local
+ * when not already set, for the Claude provider used to compare readers.
  * That file is not in git.
  */
 import fs from "node:fs";
@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const envFile = path.resolve(here, "../../../apps/web/.env.local");
+const envFile = path.resolve(here, "../.env.local");
 
 if (fs.existsSync(envFile)) {
   for (const raw of fs.readFileSync(envFile, "utf8").split(/\r?\n/)) {

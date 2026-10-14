@@ -10,6 +10,8 @@ coverage/
 !.env.example
 .DS_Store
 .vercel
+# runtime data: SQLite database and feedback photos
+apps/web/data/
 # eval scans and OCR cache
 tools/eval/data/
 *.tsbuildinfo

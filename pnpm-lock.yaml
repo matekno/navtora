@@ -87,23 +87,20 @@ importers:
 
   packages/ocr:
     dependencies:
-      '@anthropic-ai/sdk':
-        specifier: ^0.90.0
-        version: 0.90.0(zod@4.5.4)
       '@navtora/core':
         specifier: workspace:*
         version: link:../core
       '@navtora/vision':
         specifier: workspace:*
         version: link:../vision
-      zod:
-        specifier: ^4.0.0
-        version: 4.5.4
 
   packages/vision: {}
 
   tools/eval:
     dependencies:
+      '@anthropic-ai/sdk':
+        specifier: ^0.90.0
+        version: 0.90.0(zod@4.5.4)
       '@navtora/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -122,6 +119,9 @@ importers:
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
+      zod:
+        specifier: ^4.0.0
+        version: 4.5.4
 
   tools/train:
     dependencies:

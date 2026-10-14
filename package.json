@@ -5,7 +5,7 @@
   "description": "Find your place in a Sefer Torah with the phone camera, and navigate to an aliyah",
   "packageManager": "pnpm@11.1.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.13"
   },
   "scripts": {
     "build:data": "pnpm --filter @navtora/data build",
