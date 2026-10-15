@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { POSTS } from "@/lib/blog/posts";
 import { PostCard } from "@/components/blog/PostCard";
-import { PrepareNote } from "@/components/blog/PrepareNote";
 import { DEFAULT_LOCALE, getDictionary, hasLocale } from "@/lib/i18n";
 import { alternates } from "@/lib/site";
 
@@ -24,7 +23,6 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: st
     <main className="mx-auto max-w-5xl px-5 pb-10 pt-14 sm:px-6 sm:pt-20">
       <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{t.blog.title}</h1>
       <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">{t.blog.lead}</p>
-      <PrepareNote lang={lang} className="mt-8 max-w-xl" />
       {/* the first post across the top, the rest two by two; an odd one out at the end goes across too */}
       <ul className="mt-12 grid gap-5 sm:grid-cols-2">
         {POSTS.map((p, i) => {
