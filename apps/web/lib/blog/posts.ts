@@ -68,10 +68,13 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "about",
-    date: null,
-    minutes: null,
+    date: "2026-10-15",
+    minutes: 3,
     title: { es: "Sobre mí", en: "About me" },
-    description: { es: "Quién hace NavTorá.", en: "Who makes NavTorah." },
+    description: {
+      es: "Mi trabajo mejorando procesos, mis 11 años en Bet Hilel y lo que estudio en La Ieshive.",
+      en: "My work improving processes, my 11 years at Bet Hilel and what I study at La Ieshive.",
+    },
   },
   {
     slug: "story",

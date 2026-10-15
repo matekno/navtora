@@ -414,7 +414,7 @@ button,
 .prose-blog td.num {
   white-space: nowrap;
 }
-/* the story post floats its photos beside the text; each section starts below them */
-.prose-story > h2 {
+/* the personal posts float their photos beside the text; each section starts below them */
+.prose-prints > h2 {
   clear: both;
 }

@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Photo, PhotoPair } from "./Photos";
+import { Photo, PhotoPair } from "../Prints";
+import { STORY } from "./Photos";
 
 export const contentEs = (
   <>
     <p>
-      En mi Bar Mitzvá, como en casi todas las kehilot conservadoras, tuve una formación muy buena, pero no me enseñaron a leer Torá. Me enseñaron a leer mi aliá.
+      En mi Bar Mitzvá, como en casi todas las kehilot conservadoras, tuve una formación muy buena y muy completa, pero no me enseñaron a leer Torá. Me enseñaron a leer mi aliá.
     </p>
     <p>
       Por mi educación formal, puedo leer un texto en hebreo, aunque para hablar mi nivel no es muy alto. Si preparo el texto y repaso las palabras con un moré, puedo leer aliot. Hace poco aprendí taamei hamikrá, y me ayuda
@@ -15,9 +16,9 @@ export const contentEs = (
     <p>
       Vengo estudiando con el rab Meir Szames en <a href="https://www.instagram.com/la_ieshive/">La Ieshive</a>, y él me presentó la oportunidad de ir a oficiar Iamim Noraim en la kehilá de Formosa.
     </p>
-    <Photo side="right" tilt={2.5} id="bima" alt="Mati y Bet Fleischer con talit, sentados frente al arón hakódesh" caption="Con Bet Fleischer, en Formosa." />
+    <Photo side="right" tilt={2.5} photo={STORY.bima} alt="Mati y Bet Fleischer con talit, sentados frente al arón hakódesh" caption="Con Bet Fleischer, en Formosa." />
     <p>
-      Tengo formación comunitaria y ya había oficiado servicios de juventud en mi comunidad, Bet Hilel. Sin embargo, nunca había oficiado tanto, ni lejos de casa. Me daba mucho miedo por varios lados: leer tantas aliot, tocar
+      Tengo formación comunitaria (la cuento en <Link href="/es/blog/about">Sobre mí</Link>) y ya había oficiado servicios de juventud en mi comunidad, Bet Hilel. Sin embargo, nunca había oficiado tanto, ni lejos de casa. Me daba mucho miedo por varios lados: leer tantas aliot, tocar
       el shofar, responder preguntas y aprender la tefilá.
     </p>
     <p>
@@ -36,7 +37,7 @@ export const contentEs = (
     </p>
 
     <h2>En el Beit HaKneset</h2>
-    <Photo side="left" tilt={-2} id="puerta" alt="Mati y Bet Fleischer en la puerta de la Sociedad Israelita" caption="En la puerta de la Sociedad Israelita." />
+    <Photo side="left" tilt={-2} photo={STORY.puerta} alt="Mati y Bet Fleischer en la puerta de la Sociedad Israelita" caption="En la puerta de la Sociedad Israelita." />
     <p>
       Cuando llegué a Formosa y fuimos al Beit HaKneset, una de las primeras cosas que hicimos fue poner el sefer en su lugar. De forma totalmente orgánica, se empezaron a acercar los chicos que estaban ayudando a sus padres a
       preparar todo para la primera noche de Rosh Hashaná. Querían ver y entender ese pergamino que yo estaba usando (¡y que también les pertenece!).
@@ -50,8 +51,8 @@ export const contentEs = (
     </p>
     <PhotoPair
       prints={[
-        { id: "telefono", tilt: -3, alt: "Mati con el teléfono frente al sefer abierto sobre la bimá", caption: "Buscando el lugar en el sefer." },
-        { id: "chicos", tilt: 2.5, alt: "Mati mostrándoles el sefer abierto a dos chicos", caption: "Los chicos, mirando el sefer." },
+        { photo: STORY.telefono, tilt: -3, alt: "Mati con el teléfono frente al sefer abierto sobre la bimá", caption: "Buscando el lugar en el sefer." },
+        { photo: STORY.chicos, tilt: 2.5, alt: "Mati mostrándoles el sefer abierto a dos chicos", caption: "Los chicos, mirando el sefer." },
       ]}
     />
 

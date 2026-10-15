@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Photo, PhotoPair } from "./Photos";
+import { Photo, PhotoPair } from "../Prints";
+import { STORY } from "./Photos";
 
 export const contentEn = (
   <>
     <p>
-      At my Bar Mitzvah, as in almost every Conservative congregation, I got a very good education, but I wasn&apos;t taught to read Torah. I was taught to read my aliyah.
+      At my Bar Mitzvah, as in almost every Conservative congregation, I got a very good and very thorough education, but I wasn&apos;t taught to read Torah. I was taught to read my aliyah.
     </p>
     <p>
       From my formal education, I can read a text in Hebrew, though my spoken Hebrew isn&apos;t very good. If I prepare the text and go over the words with a teacher, I can read aliyot. Not long ago I learned taamei hamikra,
@@ -16,9 +17,9 @@ export const contentEn = (
       I&apos;ve been studying with Rabbi Meir Szames at <a href="https://www.instagram.com/la_ieshive/">La Ieshive</a>, and he offered me the chance to lead the High Holiday services at the Jewish community of Formosa, in
       northern Argentina.
     </p>
-    <Photo side="right" tilt={2.5} id="bima" alt="Mati and Bet Fleischer wearing tallitot, seated in front of the ark" caption="With Bet Fleischer, in Formosa." />
+    <Photo side="right" tilt={2.5} photo={STORY.bima} alt="Mati and Bet Fleischer wearing tallitot, seated in front of the ark" caption="With Bet Fleischer, in Formosa." />
     <p>
-      I have a community background, and I had led youth services at my own community, Bet Hilel. Still, I had never led so much, or so far from home. I was scared on several fronts: reading so many aliyot, blowing the shofar,
+      I have a community background (I tell about it in <Link href="/en/blog/about">About me</Link>), and I had led youth services at my own community, Bet Hilel. Still, I had never led so much, or so far from home. I was scared on several fronts: reading so many aliyot, blowing the shofar,
       answering questions and learning the prayers.
     </p>
     <p>
@@ -36,7 +37,7 @@ export const contentEn = (
     </p>
 
     <h2>At the synagogue</h2>
-    <Photo side="left" tilt={-2} id="puerta" alt="Mati and Bet Fleischer at the door of the Sociedad Israelita" caption="At the door of the Sociedad Israelita." />
+    <Photo side="left" tilt={-2} photo={STORY.puerta} alt="Mati and Bet Fleischer at the door of the Sociedad Israelita" caption="At the door of the Sociedad Israelita." />
     <p>
       When I got to Formosa and we went to the synagogue, one of the first things we did was put the sefer in place. Quite naturally, the kids who were helping their parents get everything ready for the first night of Rosh
       Hashanah started coming over. They wanted to see and understand that parchment I was using (which belongs to them too!).
@@ -50,8 +51,8 @@ export const contentEn = (
     </p>
     <PhotoPair
       prints={[
-        { id: "telefono", tilt: -3, alt: "Mati with his phone in front of the open sefer on the bimah", caption: "Finding the place in the sefer." },
-        { id: "chicos", tilt: 2.5, alt: "Mati showing the open sefer to two kids", caption: "The kids, looking at the sefer." },
+        { photo: STORY.telefono, tilt: -3, alt: "Mati with his phone in front of the open sefer on the bimah", caption: "Finding the place in the sefer." },
+        { photo: STORY.chicos, tilt: 2.5, alt: "Mati showing the open sefer to two kids", caption: "The kids, looking at the sefer." },
       ]}
     />
 
