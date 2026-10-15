@@ -5,10 +5,6 @@ export type PostSlug = "halacha" | "how-it-works" | "training" | "first-version"
 
 export interface PostMeta {
   slug: PostSlug;
-  /** ISO date of the last substantial update; null while the post is unwritten */
-  date: string | null;
-  /** reading time in minutes */
-  minutes: number | null;
   title: Record<Locale, string>;
   description: Record<Locale, string>;
 }
@@ -16,8 +12,6 @@ export interface PostMeta {
 export const POSTS: PostMeta[] = [
   {
     slug: "halacha",
-    date: "2026-10-14",
-    minutes: 4,
     title: {
       es: "Qué hacer cuando nadie sabe leer la Torá",
       en: "What to do when no one can read Torah",
@@ -29,8 +23,6 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "how-it-works",
-    date: "2026-10-14",
-    minutes: 11,
     title: {
       es: "Cómo NavTorá sabe en qué columna está abierto el sefer",
       en: "How NavTorah knows which column the sefer is open at",
@@ -42,8 +34,6 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "training",
-    date: "2026-10-14",
-    minutes: 8,
     title: {
       es: "Cómo entrenamos la red que lee el sefer",
       en: "How we trained the network that reads the sefer",
@@ -55,8 +45,6 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "first-version",
-    date: "2026-10-14",
-    minutes: 5,
     title: {
       es: "La primera versión de NavTorá, con la API de Anthropic",
       en: "NavTorah's first version, with the Anthropic API",
@@ -68,8 +56,6 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "about",
-    date: "2026-10-15",
-    minutes: 3,
     title: { es: "Sobre mí", en: "About me" },
     description: {
       es: "Mi trabajo mejorando procesos, mis 11 años en Bet Hilel y lo que estudio en La Ieshive.",
@@ -78,8 +64,6 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "story",
-    date: "2026-10-15",
-    minutes: 4,
     title: { es: "Por qué hice NavTorá", en: "Why I made NavTorah" },
     description: {
       es: "Antes de oficiar Iamim Noraim en Formosa, uno de mis mayores miedos era no encontrar las aliot en el sefer. Así empezó esta app.",

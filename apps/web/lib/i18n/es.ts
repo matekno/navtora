@@ -361,9 +361,6 @@ export const es = {
   blog: {
     title: "Blog",
     lead: "Artículos sobre cómo funciona NavTorá y sobre la halajá de la lectura de la Torá.",
-    minutes: (n: number) => `${n} min de lectura`,
-    soon: "Próximamente",
-    soonText: "Este texto todavía no está escrito.",
     all: "Todos los artículos",
     read: "Leer",
     figure: "Figura",

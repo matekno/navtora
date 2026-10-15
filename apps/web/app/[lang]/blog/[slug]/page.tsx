@@ -27,8 +27,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: `${post.title[lang]} · ${t.app.name}`,
     description: post.description[lang],
     alternates: { languages: Object.fromEntries(LOCALES.map((l) => [l, `/${l}/blog/${post.slug}`])) },
-    // unwritten posts are reachable but not indexed
-    robots: post.date ? undefined : { index: false },
     openGraph: { title: post.title[lang], description: post.description[lang], type: "article" },
   };
 }
@@ -38,7 +36,6 @@ export default async function PostPage({ params }: { params: Promise<{ lang: str
   const lang = hasLocale(raw) ? raw : DEFAULT_LOCALE;
   const post = getPost(slug);
   if (!post) notFound();
-  const t = getDictionary(lang);
 
   return (
     <main>
@@ -49,11 +46,6 @@ export default async function PostPage({ params }: { params: Promise<{ lang: str
       {post.slug === "first-version" && <FirstVersion lang={lang} />}
       {post.slug === "story" && <Story lang={lang} />}
       {post.slug === "about" && <About lang={lang} />}
-      {post.date === null && (
-        <div className="mx-auto max-w-3xl px-5 sm:px-6">
-          <p className="mt-12 rounded-3xl border border-dashed border-line/70 p-8 text-center text-muted">{t.blog.soonText}</p>
-        </div>
-      )}
     </main>
   );
 }
