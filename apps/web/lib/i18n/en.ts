@@ -362,7 +362,7 @@ export const en: Dictionary = {
     figure: "Figure",
     tryTitle: "Try NavTorah",
     tryText:
-      "It's free and there's no sign-up. Pick the reading, scan the column the sefer is open at, and it tells you how many columns to move it and which way. The idea is to use it before Shabbat, so you come to the reading with everything ready.",
+      "It's free and there's no sign-up. Pick the reading, scan the column the sefer is open at, and it tells you how many columns to move it and which way.",
     prepareTitle: "For use before Shabbat",
     prepareText:
       "NavTorah is meant for preparing the scroll before Shabbat or Yom Tov. In the Masorti (Conservative) movement, the halachic position is not to use a phone during Shabbat or Yom Tov, so the idea is to use it beforehand and come to the reading with everything ready.",
