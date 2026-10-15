@@ -12,15 +12,15 @@ export const contentEs = (
     </p>
 
     <h2>Bet Hilel</h2>
-    <Photo side="left" tilt={-2} photo={ABOUT.servicio} alt="Un grupo de jóvenes con instrumentos en un servicio de juventud" caption="Un servicio de juventud." />
+    <Photo side="left" tilt={-2} photo={ABOUT.servicio} alt="Un grupo de jóvenes con instrumentos antes de un Kabalat Shabat de juventud" caption="Previo a un Kabalat Shabat de juventud." />
     <p>
       Hace 11 años participo en mi comunidad, Bet Hilel, y pasé por todos los roles. Fui janij, madrij y moré de Talmud Torá. Hoy soy mejanej en Majón Guesher, la escuela de líderes y madrijim de la kehilá. Ahí acompaño a mis
       talmidim durante tres años, para educarlos de forma transversal en los valores de nuestro pueblo.
     </p>
     <PhotoPair
       prints={[
-        { photo: ABOUT.caja, tilt: -3, alt: "Mati sosteniendo una caja de cartón en una actividad", caption: "En la hadrajá." },
-        { photo: ABOUT.campo, tilt: 2.5, alt: "Un grupo acostado en el pasto formando una figura, visto desde un dron", caption: "Una actividad, vista desde arriba." },
+        { photo: ABOUT.caja, tilt: -3, alt: "Mati sosteniendo una caja de cartón en el día de materiales", caption: "Día de materiales antes de majané." },
+        { photo: ABOUT.campo, tilt: 2.5, alt: "Un grupo acostado en el pasto formando una figura, visto desde un dron", caption: "Peulá vista desde el cielo." },
       ]}
     />
 
@@ -32,7 +32,7 @@ export const contentEs = (
     <p>Intento llevar la misma forma de trabajar de mi profesión a todas las actividades comunitarias que hago, con o sin software.</p>
 
     <h2>La Ieshive</h2>
-    <Photo side="right" tilt={2} photo={ABOUT.rab} alt="Mati con el rab Meir Szames en su oficina" caption="Con el rab Meir Szames, en su oficina." />
+    <Photo side="right" tilt={2} photo={ABOUT.rab} alt="Mati con el rab Meir Szames en su oficina" caption="Estudiando con el rab Meir Szames." />
     <p>
       Después del 7 de octubre, y de vivir el Simjat Torá más oscuro de nuestra vida y de nuestra generación, empecé a estudiar en <a href="https://www.instagram.com/la_ieshive/">La Ieshive</a> con el rab Meir Szames. Así empecé a
       darle más contenido a algo que siempre supe que me interesaba.

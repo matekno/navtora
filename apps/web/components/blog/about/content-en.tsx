@@ -12,15 +12,15 @@ export const contentEn = (
     </p>
 
     <h2>Bet Hilel</h2>
-    <Photo side="left" tilt={-2} photo={ABOUT.servicio} alt="A group of young people with instruments at a youth service" caption="A youth service." />
+    <Photo side="left" tilt={-2} photo={ABOUT.servicio} alt="A group of young people with instruments before a youth Kabbalat Shabbat" caption="Before a youth Kabbalat Shabbat." />
     <p>
       For 11 years I&apos;ve been part of my community, Bet Hilel, and I&apos;ve been through every role. I was a janij, a madrij and a Talmud Torah teacher. Today I&apos;m a mejanej at Majon Guesher, the community&apos;s school for
       leaders and madrijim. There I accompany my students over three years, to educate them across the board in the values of our people.
     </p>
     <PhotoPair
       prints={[
-        { photo: ABOUT.caja, tilt: -3, alt: "Mati holding a cardboard box at an activity", caption: "At the hadrajá." },
-        { photo: ABOUT.campo, tilt: 2.5, alt: "A group lying on the grass forming a shape, seen from a drone", caption: "An activity, seen from above." },
+        { photo: ABOUT.caja, tilt: -3, alt: "Mati holding a cardboard box on materials day", caption: "Materials day before majané." },
+        { photo: ABOUT.campo, tilt: 2.5, alt: "A group lying on the grass forming a shape, seen from a drone", caption: "A peulá seen from the sky." },
       ]}
     />
 
@@ -32,7 +32,7 @@ export const contentEn = (
     <p>I try to bring the same way of working from my profession to every community activity I do, with or without software.</p>
 
     <h2>La Ieshive</h2>
-    <Photo side="right" tilt={2} photo={ABOUT.rab} alt="Mati with Rabbi Meir Szames in his office" caption="With Rabbi Meir Szames, in his office." />
+    <Photo side="right" tilt={2} photo={ABOUT.rab} alt="Mati with Rabbi Meir Szames in his office" caption="Studying with Rabbi Meir Szames." />
     <p>
       After October 7, and after living through the darkest Simchat Torah of our lives and our generation, I started studying at <a href="https://www.instagram.com/la_ieshive/">La Ieshive</a> with Rabbi Meir Szames. That&apos;s how
       I started giving more substance to something I always knew interested me.
