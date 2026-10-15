@@ -6,7 +6,8 @@ import { contentEs } from "./content-es";
 export function Story({ lang }: { lang: Locale }) {
   return (
     <article className="mx-auto mt-10 max-w-3xl px-5 sm:px-6">
-      <div className="prose-blog">{lang === "es" ? contentEs : contentEn}</div>
+      {/* flow-root keeps the floated photos inside the article */}
+      <div className="prose-blog prose-story flow-root">{lang === "es" ? contentEs : contentEn}</div>
     </article>
   );
 }
