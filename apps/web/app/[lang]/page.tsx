@@ -45,7 +45,8 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-6">
           <a href="#top" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
             <img src="/icon.svg" alt="" width={24} height={24} className="rounded-md" />
-            {t.app.name}
+            {/* on narrow phones the icon alone leaves room for the links */}
+            <span className="max-[419px]:sr-only">{t.app.name}</span>
           </a>
           <nav className="flex items-center gap-1 text-sm text-muted sm:gap-2">
             <a href="#how" className="hidden rounded-full px-3 py-1.5 hover:text-fg sm:block">
@@ -54,11 +55,14 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
             <a href="#demo" className="hidden rounded-full px-3 py-1.5 hover:text-fg sm:block">
               {t.landing.nav.demo}
             </a>
+            <a href={`/${t.lang}/blog`} className="rounded-full px-2.5 py-1.5 hover:text-fg sm:px-3">
+              {t.landing.nav.blog}
+            </a>
             <a href={GITHUB_URL} className="hidden rounded-full px-3 py-1.5 hover:text-fg sm:block">
               {t.landing.nav.code}
             </a>
             <LanguageSwitch className="h-8 rounded-full border border-line px-3 text-sm text-muted hover:text-fg" />
-            <a href={`/${t.lang}/app`} className="inline-flex h-8 items-center rounded-full bg-accent px-3 text-sm font-semibold text-ink transition hover:brightness-110">
+            <a href={`/${t.lang}/app`} className="inline-flex h-8 items-center whitespace-nowrap rounded-full bg-accent px-3 text-sm font-semibold text-ink transition hover:brightness-110">
               {t.landing.nav.app}
             </a>
           </nav>
@@ -211,9 +215,14 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
 
       <footer className="mx-auto flex max-w-6xl items-center justify-between px-6 pb-10 text-sm text-muted">
         <span>{t.landing.license}</span>
-        <a href={`/${t.lang}/login`} className="text-muted/70 hover:text-fg">
-          {t.landing.admin}
-        </a>
+        <div className="flex items-center gap-5">
+          <a href={`/${t.lang}/blog`} className="hover:text-fg">
+            {t.landing.nav.blog}
+          </a>
+          <a href={`/${t.lang}/login`} className="text-muted/70 hover:text-fg">
+            {t.landing.admin}
+          </a>
+        </div>
       </footer>
     </div>
   );

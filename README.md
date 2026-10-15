@@ -31,7 +31,7 @@ The network was trained on synthetic photos of real columns in STA"M fonts, aged
 
 Pick a target: the reading for a date, a holiday or special day, a parashah and aliyah, or a verse. The calendar comes from [hebcal](https://github.com/hebcal) and handles each year's variants: Rosh Hashanah on Shabbat, chol hamoed, fast days, Rosh Chodesh, and special Shabbatot with a maftir from a second sefer.
 
-After each scan NavTorah says how many columns to move and which way. The count is exact on standard-layout scrolls and estimated on others, getting better with each scan. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
+After each scan NavTorah says how many columns to move and which way. It counts with the standard 245-column layout, so the count is exact on standard-layout scrolls. On scrolls with another layout it can be off, and the app doesn't detect that yet, so scan again when you get there. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
 
 ## Feedback and dedications
 
@@ -89,7 +89,7 @@ pnpm dev     # Next.js with local HTTPS, to test the camera from a phone on the 
 
 The reader needs no configuration. For the admin panel and the support options, copy `apps/web/.env.example` to `apps/web/.env.local`. The database goes to `apps/web/data/` unless `DATA_DIR` says otherwise.
 
-The site has a public landing page at `/en` and `/es`; the app itself is at `/en/app` and `/es/app`. A scan takes a second or two and costs nothing.
+The site has a public landing page at `/en` and `/es` and a blog at `/en/blog` and `/es/blog`; the app itself is at `/en/app` and `/es/app`. A scan takes a second or two and costs nothing.
 
 ## Repository layout
 

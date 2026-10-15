@@ -332,9 +332,8 @@ def finish(rng: np.random.Generator, img: np.ndarray, pitch: float) -> np.ndarra
 # ---------------------------------------------------------------- one sample
 
 
-def make_sample(args: tuple[int, int, str, bool]) -> dict | None:
-    idx, seed, out, shuffle_ok = args
-    rng = np.random.default_rng(seed)
+def render_sample(rng: np.random.Generator, shuffle_ok: bool, stages: dict[str, np.ndarray] | None = None) -> tuple[np.ndarray, dict]:
+    """One synthetic photo and its labels. If `stages` is given, it receives the image after each step."""
     ncols = len(COLUMNS)
     c = int(rng.integers(ncols))
     col = COLUMNS[c]
@@ -372,7 +371,8 @@ def make_sample(args: tuple[int, int, str, bool]) -> dict | None:
     sheet = np.pad(sheet, ((pitch * 2, pitch * 2), (0, 0)))
     y0 += pitch * 2
     y1 += pitch * 2
-    ink = degrade_ink(rng, sheet[y0:y1, max(0, x0) : x1], pitch)
+    clean = sheet[y0:y1, max(0, x0) : x1]
+    ink = degrade_ink(rng, clean, pitch)
     # centerline points of each line of the middle column, in window coordinates
     xs = np.linspace(x_col, x_col + cw, 9)
     pts = [np.stack([xs - max(0, x0), np.full(9, cy + pitch * 2 - y0)], axis=1) for cy in centers]
@@ -388,12 +388,10 @@ def make_sample(args: tuple[int, int, str, bool]) -> dict | None:
 
     out_pitch = math.exp(rng.uniform(math.log(14), math.log(48)))
     warped, mapped = camera(rng, img, pts, out_pitch / pitch)
-    warped = light(rng, warped, out_pitch)
-    final = finish(rng, warped, out_pitch)
-
-    name = f"{idx:06d}"
-    q = int(rng.integers(35, 95))
-    Image.fromarray(final).save(Path(out) / f"{name}.jpg", quality=q)
+    lit = light(rng, warped, out_pitch)
+    final = finish(rng, lit, out_pitch)
+    if stages is not None:
+        stages.update(text=clean, ink=ink, parchment=img, camera=warped, light=lit, final=final)
     meta = {
         "column": c + 1,
         "font": font,
@@ -404,6 +402,16 @@ def make_sample(args: tuple[int, int, str, bool]) -> dict | None:
             for line, p in zip(lines, mapped)
         ],
     }
+    return final, meta
+
+
+def make_sample(args: tuple[int, int, str, bool]) -> dict | None:
+    idx, seed, out, shuffle_ok = args
+    rng = np.random.default_rng(seed)
+    final, meta = render_sample(rng, shuffle_ok)
+    name = f"{idx:06d}"
+    q = int(rng.integers(35, 95))
+    Image.fromarray(final).save(Path(out) / f"{name}.jpg", quality=q)
     (Path(out) / f"{name}.json").write_text(json.dumps(meta, ensure_ascii=False))
     return meta
 

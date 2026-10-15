@@ -310,7 +310,7 @@ export const es = {
     now: "Ahora",
   },
   landing: {
-    nav: { how: "Cómo funciona", demo: "Demo", code: "Código", app: "Abrir la app" },
+    nav: { how: "Cómo funciona", demo: "Demo", code: "Código", blog: "Blog", app: "Abrir la app" },
     eyebrow: "Probada con sifrei reales",
     headline: "Ubicarse en el Sefer Torá desde el celular",
     lead: "Apuntás la cámara a la columna abierta y NavTorá te dice libro, parashá y aliá, y cuántas columnas faltan para llegar a la lectura.",
@@ -357,6 +357,16 @@ export const es = {
     runYourOwn: "Cómo correr tu copia",
     admin: "Admin",
     license: "Código abierto, licencia MIT",
+  },
+  blog: {
+    title: "Blog",
+    lead: "Artículos sobre cómo funciona NavTorá y sobre la halajá de la lectura de la Torá.",
+    all: "Todos los artículos",
+    read: "Leer",
+    figure: "Figura",
+    prepareTitle: "Para usar antes de Shabat",
+    prepareText:
+      "NavTorá está pensada para preparar el rollo antes de Shabat o de Iom Tov. En el movimiento masortí, la postura halájica es no usar el celular durante Shabat ni Iom Tov, así que la idea es usarla antes y llegar a la lectura con todo listo.",
   },
 };
 
