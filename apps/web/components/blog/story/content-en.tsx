@@ -43,7 +43,7 @@ export const contentEn = (
     </p>
     <p>
       It&apos;s a heavy parchment, which even I find intimidating, for the words and teachings it holds, and also for its script, which they had seen very few times. Even so, it has the magic of drawing them in and making them
-      want to know what it&apos;s about. To me, that&apos;s the Jewish intuition in their hearts.
+      want to know what it&apos;s about. The sefer feels familiar to them because it&apos;s our age-old tradition, even though they&apos;re seeing it almost for the first time.
     </p>
     <p>
       With that same curiosity, I tried to hide my fear. And there, the MVP of this app, which I had made for myself, worked. The kids helped me roll the scroll, and we turned it into a very valuable moment of learning.

@@ -43,7 +43,7 @@ export const contentEs = (
     </p>
     <p>
       Es un pergamino pesado, que hasta a mí me intimida por las palabras y las enseñanzas que tiene, y también por su letra, que ellos vieron poquísimas veces. Aun así, tiene la magia de atraerlos y de que quieran conocer de qué
-      se trata. Para mí, es la intuición judía que tienen en el corazón.
+      se trata. El sefer les resulta familiar porque es nuestra tradición milenaria, aunque lo estén viendo casi por primera vez.
     </p>
     <p>
       Con esa misma curiosidad, yo intentaba disimular mi miedo. En eso, el MVP de esta app, que había hecho para mí, me dio resultado. Los chicos me ayudaron a enrollar, y lo convertimos en un momento educativo muy valioso.
