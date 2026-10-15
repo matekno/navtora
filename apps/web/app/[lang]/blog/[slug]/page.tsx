@@ -7,6 +7,7 @@ import { HowItWorks } from "@/components/blog/how-it-works/HowItWorks";
 import { Story } from "@/components/blog/story/Story";
 import { Training } from "@/components/blog/training/Training";
 import { PostHeader } from "@/components/blog/PostHeader";
+import { TryApp } from "@/components/blog/TryApp";
 import { COVER, coverSrc, getPost, POSTS } from "@/lib/blog/posts";
 import { DEFAULT_LOCALE, getDictionary, hasLocale } from "@/lib/i18n";
 import { alternates } from "@/lib/site";
@@ -44,16 +45,18 @@ export default async function PostPage({ params }: { params: Promise<{ lang: str
   const lang = hasLocale(raw) ? raw : DEFAULT_LOCALE;
   const post = getPost(slug);
   if (!post) notFound();
+  const wide = post.slug === "how-it-works";
 
   return (
     <main>
-      <PostHeader post={post} lang={lang} wide={post.slug === "how-it-works"} />
+      <PostHeader post={post} lang={lang} wide={wide} />
       {post.slug === "how-it-works" && <HowItWorks lang={lang} />}
       {post.slug === "halacha" && <Halacha lang={lang} />}
       {post.slug === "training" && <Training lang={lang} />}
       {post.slug === "first-version" && <FirstVersion lang={lang} />}
       {post.slug === "story" && <Story lang={lang} />}
       {post.slug === "about" && <About lang={lang} />}
+      <TryApp lang={lang} wide={wide} />
     </main>
   );
 }

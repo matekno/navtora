@@ -367,6 +367,9 @@ export const es = {
     all: "Todos los artículos",
     read: "Leer",
     figure: "Figura",
+    tryTitle: "Te invitamos a probar NavTorá",
+    tryText:
+      "Es gratis y no hace falta registrarse. Elegís la lectura, escaneás la columna en la que está abierto el sefer y te dice cuántas columnas moverlo y para qué lado.",
     prepareTitle: "Para usar antes de Shabat",
     prepareText:
       "NavTorá está pensada para preparar el rollo antes de Shabat o de Iom Tov. En el movimiento masortí, la postura halájica es no usar el celular durante Shabat ni Iom Tov, así que la idea es usarla antes y llegar a la lectura con todo listo.",

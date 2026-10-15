@@ -1,6 +1,6 @@
 import { getDictionary, type Locale } from "@/lib/i18n";
 
-/** The blog's disclaimer: the app is for getting the scroll ready beforehand, never for use on Shabbat or Yom Tov. */
+/** The halacha post's disclaimer: the app is for getting the scroll ready beforehand, never for use on Shabbat or Yom Tov. */
 export function PrepareNote({ lang, className = "" }: { lang: Locale; className?: string }) {
   const t = getDictionary(lang);
   return (
