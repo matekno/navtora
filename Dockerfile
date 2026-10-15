@@ -19,6 +19,8 @@ COPY tools/eval/package.json tools/eval/
 COPY tools/train/package.json tools/train/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --filter "@navtora/web..."
 COPY . .
+# the blog pages are built ahead, with their canonical links and link previews
+ARG SITE_URL
 RUN pnpm --filter @navtora/web build
 
 FROM node:22-bookworm-slim AS run

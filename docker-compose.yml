@@ -5,7 +5,10 @@
 # proxy, which must serve it over HTTPS: phones only open the camera on HTTPS.
 services:
   navtora:
-    build: .
+    build:
+      context: .
+      args:
+        SITE_URL: ${SITE_URL:-}
     image: navtora:latest
     restart: unless-stopped
     environment:
@@ -13,6 +16,7 @@ services:
       CONTACT_EMAIL: ${CONTACT_EMAIL:-}
       CONTACT_WHATSAPP: ${CONTACT_WHATSAPP:-}
       DONATE_URL: ${DONATE_URL:-}
+      SITE_URL: ${SITE_URL:-}
       TZ: ${TZ:-UTC}
     ports:
       - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:3000"

@@ -68,6 +68,7 @@ The proxy must serve HTTPS: phones only open the camera on a secure page. If the
 | `ADMIN_PASSWORD` | Password for the admin panel. Without it the panel is disabled. |
 | `CONTACT_EMAIL`, `CONTACT_WHATSAPP` | How people reach you to dedicate a week or a jag. WhatsApp in international format, e.g. `5491112345678`. |
 | `DONATE_URL` | Optional https link to a donation page (Buy Me a Coffee, Mercado Pago…). |
+| `SITE_URL` | The site's public address, e.g. `https://navtorah.com`. Search engines get canonical links and `/sitemap.xml` with it, and shared blog links show the post's cover. The blog is built ahead, so change it with `--build`. |
 | `TZ` | Time zone for the daily stats and for when a week starts, e.g. `America/Argentina/Buenos_Aires`. |
 
 Updating: `git pull && docker compose up -d --build`. Logs: `docker compose logs -f`. The data is in the `navtora-data` volume (`navtora.db` and `photos/`). To back up the database while the app runs:

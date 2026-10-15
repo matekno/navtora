@@ -321,6 +321,7 @@ export const en: Dictionary = {
     ],
     statsTitle: "Built not to guess",
     statsLead: "When it isn't sure where you are, it says so. We measured it.",
+    statsMore: "How it does it, step by step",
     stats: [
       { value: 80316, suffix: "", label: "words of Torah, all indexed" },
       { value: 0, suffix: "", label: "confident wrong answers in 2,000 trials, even with half the letters misread" },
@@ -344,6 +345,8 @@ export const en: Dictionary = {
         caption: "Target: the first aliyah of Yom Kippur. The scroll is open at Acharei Mot, column 132, and the app says 1 column to the right.",
       },
     ],
+    blogTitle: "Read the blog",
+    blogLead: "Why I made NavTorah, how it places the column step by step, and what halacha says when no one can read Torah.",
     openTitle: "Free and open source",
     status: "NavTorah is free, with no ads and no sign-up: open the app and scan. The code is open source, so you can also run your own copy.",
     supportTitle: "Dedicate NavTorah",
