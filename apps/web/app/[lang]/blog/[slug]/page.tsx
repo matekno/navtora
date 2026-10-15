@@ -7,8 +7,9 @@ import { HowItWorks } from "@/components/blog/how-it-works/HowItWorks";
 import { Story } from "@/components/blog/story/Story";
 import { Training } from "@/components/blog/training/Training";
 import { PostHeader } from "@/components/blog/PostHeader";
-import { getPost, POSTS } from "@/lib/blog/posts";
-import { DEFAULT_LOCALE, getDictionary, hasLocale, LOCALES } from "@/lib/i18n";
+import { COVER, coverSrc, getPost, POSTS } from "@/lib/blog/posts";
+import { DEFAULT_LOCALE, getDictionary, hasLocale } from "@/lib/i18n";
+import { alternates } from "@/lib/site";
 
 /** Only the posts in lib/blog/posts.ts exist. */
 export const dynamicParams = false;
@@ -26,8 +27,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: `${post.title[lang]} · ${t.app.name}`,
     description: post.description[lang],
-    alternates: { languages: Object.fromEntries(LOCALES.map((l) => [l, `/${l}/blog/${post.slug}`])) },
-    openGraph: { title: post.title[lang], description: post.description[lang], type: "article" },
+    alternates: alternates(lang, `/blog/${post.slug}`),
+    openGraph: {
+      title: post.title[lang],
+      description: post.description[lang],
+      type: "article",
+      siteName: t.app.name,
+      images: [{ url: coverSrc(post.slug), ...COVER }],
+    },
+    twitter: { card: "summary_large_image" },
   };
 }
 

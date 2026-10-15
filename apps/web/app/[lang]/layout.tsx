@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DEFAULT_LOCALE, getDictionary, LOCALES, hasLocale, type Locale } from "@/lib/i18n";
 import { I18nProvider } from "@/lib/i18n/context";
+import { siteUrl } from "@/lib/site";
 import "../globals.css";
 
 /** Only /es and /en exist; proxy.ts redirects / by browser language. */
@@ -14,13 +15,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = getDictionary(lang);
   return {
+    metadataBase: siteUrl(),
     title: t.app.name,
     description: t.app.description,
     applicationName: t.app.name,
     manifest: `/${lang}/manifest.webmanifest`,
     appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: t.app.name },
     icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
-    alternates: { languages: Object.fromEntries(LOCALES.map((l) => [l, `/${l}`])) },
   };
 }
 

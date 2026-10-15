@@ -328,6 +328,7 @@ export const es = {
     ],
     statsTitle: "Hecha para no adivinar",
     statsLead: "Si no está segura de dónde estás, te lo dice. Lo medimos.",
+    statsMore: "Cómo lo logra, paso a paso",
     stats: [
       { value: 80316, suffix: "", label: "palabras de la Torá, todas indexadas" },
       { value: 0, suffix: "", label: "ubicaciones equivocadas con confianza en 2.000 pruebas, aun con la mitad de las letras mal leídas" },
@@ -351,6 +352,8 @@ export const es = {
         caption: "Objetivo: la primera aliá de Yom Kipur. El sefer está abierto en Ajarei Mot, columna 132, y la app indica 1 columna a la derecha.",
       },
     ],
+    blogTitle: "Leé el blog",
+    blogLead: "Por qué hice NavTorá, cómo ubica la columna paso a paso y qué dice la halajá cuando nadie sabe leer la Torá.",
     openTitle: "Gratis y de código abierto",
     status: "NavTorá es gratis, sin publicidad y sin registro: abrís la app y escaneás. El código es abierto, así que también podés correr tu propia copia.",
     supportTitle: "Dedicá NavTorá",

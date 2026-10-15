@@ -72,6 +72,17 @@ export const POSTS: PostMeta[] = [
   },
 ];
 
+/**
+ * Each post's cover, at public/blog/covers/<slug>.jpg: cut from photos in the post itself, shown on
+ * the blog index and the landing, and as the image of the link preview. JPEG, since not every app
+ * that previews links reads WebP.
+ */
+export const COVER = { width: 960, height: 600 };
+
+export function coverSrc(slug: PostSlug): string {
+  return `/blog/covers/${slug}.jpg`;
+}
+
 export function getPost(slug: string): PostMeta | null {
   return POSTS.find((p) => p.slug === slug) ?? null;
 }

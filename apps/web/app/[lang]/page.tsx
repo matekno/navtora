@@ -1,13 +1,17 @@
+import type { Metadata } from "next";
 import { Frank_Ruhl_Libre } from "next/font/google";
+import { PostCard } from "@/components/blog/PostCard";
 import { DedicationNote } from "@/components/DedicationNote";
 import { AutoplayVideo } from "@/components/landing/AutoplayVideo";
 import { CountUp } from "@/components/landing/CountUp";
 import { ScrollStory } from "@/components/landing/ScrollStory";
 import { SupportPanel } from "@/components/SupportPanel";
+import { getPost, type PostSlug } from "@/lib/blog/posts";
 import { activeDedications } from "@/lib/dedications";
 import { DEFAULT_LOCALE, getDictionary, hasLocale } from "@/lib/i18n";
 import { LanguageSwitch } from "@/lib/i18n/context";
 import { landingStory } from "@/lib/landing-story";
+import { alternates } from "@/lib/site";
 import { getSupport } from "@/lib/support";
 import { hasSupport } from "@/lib/support-types";
 
@@ -16,6 +20,9 @@ const scrollFont = Frank_Ruhl_Libre({ subsets: ["hebrew"], weight: ["400", "500"
 const GITHUB_URL = "https://github.com/matekno/navtora";
 // the week's dedication and the contact settings are read on each request
 export const dynamic = "force-dynamic";
+
+/** The posts the landing invites people to read: the story first, then how it works, then the halacha. */
+const LANDING_POSTS: PostSlug[] = ["story", "how-it-works", "halacha"];
 
 const DEMO_VIDEOS = [
   { name: "masei-to-devarim", width: 480, height: 1068 },
@@ -31,13 +38,20 @@ function GitHubMark() {
   );
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return { alternates: alternates(hasLocale(lang) ? lang : DEFAULT_LOCALE) };
+}
+
 export default async function Landing({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const t = getDictionary(lang);
   const story = landingStory();
   const words = t.landing.headline.split(" ");
   const support = getSupport();
-  const dedications = activeDedications(hasLocale(lang) ? lang : DEFAULT_LOCALE);
+  const locale = hasLocale(lang) ? lang : DEFAULT_LOCALE;
+  const dedications = activeDedications(locale);
+  const posts = LANDING_POSTS.map(getPost).filter((p) => p !== null);
 
   return (
     <div className={`${scrollFont.variable} landing overflow-x-clip`}>
@@ -144,6 +158,9 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
           <div className="mx-auto max-w-6xl">
             <h2 className="reveal text-3xl font-semibold tracking-tight sm:text-4xl">{t.landing.statsTitle}</h2>
             <p className="reveal mt-3 max-w-xl text-lg text-muted">{t.landing.statsLead}</p>
+            <a href={`/${t.lang}/blog/how-it-works`} className="reveal mt-4 inline-flex items-center gap-1 font-medium text-accent hover:underline hover:underline-offset-4">
+              {t.landing.statsMore} <span aria-hidden>→</span>
+            </a>
             <dl className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {t.landing.stats.map((s, i) => (
                 <div key={s.label} className="reveal rounded-3xl border border-line/70 bg-panel p-6" style={{ "--i": i } as React.CSSProperties}>
@@ -180,6 +197,28 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
               ))}
             </div>
             <p className="reveal mt-10 text-center text-sm text-muted">{t.landing.demoNote}</p>
+          </div>
+        </section>
+
+        {/* blog */}
+        <section id="blog" className="scroll-mt-14 px-6 pb-24 pt-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+              <div>
+                <h2 className="reveal text-3xl font-semibold tracking-tight sm:text-4xl">{t.landing.blogTitle}</h2>
+                <p className="reveal mt-3 max-w-xl text-lg text-muted">{t.landing.blogLead}</p>
+              </div>
+              <a href={`/${t.lang}/blog`} className="reveal inline-flex h-11 items-center gap-2 rounded-2xl border border-line px-5 text-fg transition hover:bg-panel">
+                {t.blog.all} <span aria-hidden>→</span>
+              </a>
+            </div>
+            <ul className="mt-12 grid gap-5 md:grid-cols-3">
+              {posts.map((p, i) => (
+                <li key={p.slug} className="reveal" style={{ "--i": i } as React.CSSProperties}>
+                  <PostCard post={p} lang={locale} heading="h3" />
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
