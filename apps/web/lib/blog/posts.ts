@@ -73,9 +73,9 @@ export const POSTS: PostMeta[] = [
 ];
 
 /**
- * Each post's cover, at public/blog/covers/<slug>.jpg: cut from photos in the post itself, shown on
- * the blog index and the landing, and as the image of the link preview. JPEG, since not every app
- * that previews links reads WebP.
+ * Each post's cover, at public/blog/covers/<slug>.jpg: cut from the post's own photos and figures,
+ * except the story's, a photo of Mati holding the app. Shown on the blog index and the landing, and
+ * as the image of the link preview. JPEG, since not every app that previews links reads WebP.
  */
 export const COVER = { width: 960, height: 600 };
 
