@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { FirstVersion } from "@/components/blog/first-version/FirstVersion";
 import { Halacha } from "@/components/blog/halacha/Halacha";
 import { HowItWorks } from "@/components/blog/how-it-works/HowItWorks";
+import { Story } from "@/components/blog/story/Story";
 import { Training } from "@/components/blog/training/Training";
 import { PostHeader } from "@/components/blog/PostHeader";
 import { getPost, POSTS } from "@/lib/blog/posts";
@@ -45,6 +46,7 @@ export default async function PostPage({ params }: { params: Promise<{ lang: str
       {post.slug === "halacha" && <Halacha lang={lang} />}
       {post.slug === "training" && <Training lang={lang} />}
       {post.slug === "first-version" && <FirstVersion lang={lang} />}
+      {post.slug === "story" && <Story lang={lang} />}
       {post.date === null && (
         <div className="mx-auto max-w-3xl px-5 sm:px-6">
           <p className="mt-12 rounded-3xl border border-dashed border-line/70 p-8 text-center text-muted">{t.blog.soonText}</p>

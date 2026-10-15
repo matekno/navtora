@@ -75,10 +75,13 @@ export const POSTS: PostMeta[] = [
   },
   {
     slug: "story",
-    date: null,
-    minutes: null,
+    date: "2026-10-15",
+    minutes: 4,
     title: { es: "Por qué hice NavTorá", en: "Why I made NavTorah" },
-    description: { es: "La historia detrás de la app.", en: "The story behind the app." },
+    description: {
+      es: "Antes de oficiar Iamim Noraim en Formosa, uno de mis mayores miedos era no encontrar las aliot en el sefer. Así empezó esta app.",
+      en: "Before leading the High Holiday services in Formosa, one of my biggest fears was not finding the aliyot in the sefer. That's how this app started.",
+    },
   },
 ];
 
