@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { openDatabase, setDb } from "@/lib/db";
-import { adminStats, deleteFeedback, feedbackExists, localDay, parseClientId, recordFeedback, recordScan, touchClient, updateFeedback } from "@/lib/stats";
+import { adminStats, deleteFeedback, feedbackExists, localDay, parseClientId, recordFeedback, recordNavigation, recordScan, touchClient, updateFeedback } from "@/lib/stats";
 
 const NOW = new Date("2026-10-08T12:00:00");
 const YESTERDAY = new Date("2026-10-07T12:00:00");
@@ -43,6 +43,14 @@ describe("stats", () => {
 
     expect(deleteFeedback(down)).toEqual({ deleted: true, photo: `${down}.jpg` });
     expect(feedbackExists(down, "client-bbbb")).toBe(false);
+  });
+
+  it("notes a target chosen after the scan on that scan, only for its client", () => {
+    const id = recordScan({ client: "client-aaaa", kind: "camera", status: "confident", column: 78 }, NOW)!;
+    recordNavigation(id, "client-bbbb", "Beshalach, cuarta aliá", "3");
+    expect(adminStats(NOW).scans[0]).toMatchObject({ target: null, nav: null });
+    recordNavigation(id, "client-aaaa", "Beshalach, cuarta aliá", "3");
+    expect(adminStats(NOW).scans[0]).toMatchObject({ target: "Beshalach, cuarta aliá", nav: "3" });
   });
 
   it("keeps working without a database", () => {

@@ -31,7 +31,7 @@ export const es = {
       "La foto se lee en tu teléfono y no sale de ahí.",
       "**No hace falta registrarse.** NavTorá cuenta los escaneos de forma anónima para saber si anda bien. No guarda fotos, salvo que elijas mandar una para mejorar el lector.",
       "Si no está segura de dónde estás, te lo dice en vez de adivinar.",
-      "Es una ayuda. La última palabra la tienen el sofer y el rav.",
+      "Es una búsqueda: lee unas líneas de la columna y las encuentra en el texto de la Torá.",
     ],
     accept: "Empezar",
   },
@@ -68,7 +68,8 @@ export const es = {
     startsWith: "Empieza con",
     aliyahStartsHere: "En esta columna empieza una aliá.",
     ocrSummary: (n: number) => `Texto leído (${n} líneas)`,
-    goTo: "Ir a…",
+    goTo: "Elegir a dónde ir",
+    goToHint: "Elegí a dónde ir y te digo cuántas columnas mover desde acá, sin volver a escanear.",
     scanAgain: "Escanear de nuevo",
     mapTitle: "Dónde estás en el rollo",
   },
@@ -131,6 +132,7 @@ export const es = {
     special: (n: number | "M", reason: string, ref: string) =>
       `${n === "M" ? "Maftir especial" : `${n}ª aliá especial`}: ${reason}, ${ref}. Suele leerse de un segundo sefer.`,
     startFromFirst: "Empezar por la primera aliá",
+    computing: "Calculando desde la columna que escaneaste…",
   },
   aliyah: {
     /** "tercera aliá", "maftir" */

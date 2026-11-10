@@ -210,6 +210,8 @@ export function estimatePitch(profiles: Float32Array[], minLag = 6): number | nu
   const maxLag = Math.floor(n / 3);
   if (maxLag <= minLag + 2) return null;
   const ac = new Float32Array(maxLag + 2);
+  // each profile's own autocorrelation, normalized to 1 at lag 0
+  const own: Float32Array[] = [];
   for (const prof of profiles) {
     let mean = 0;
     for (let i = 0; i < n; i++) mean += prof[i]!;
@@ -217,20 +219,40 @@ export function estimatePitch(profiles: Float32Array[], minLag = 6): number | nu
     let norm = 0;
     for (let i = 0; i < n; i++) norm += (prof[i]! - mean) ** 2;
     if (norm <= 0) continue;
+    const o = new Float32Array(maxLag + 2);
     for (let lag = minLag; lag <= maxLag + 1; lag++) {
       let s = 0;
       for (let i = 0; i + lag < n; i++) s += (prof[i]! - mean) * (prof[i + lag]! - mean);
+      o[lag] = s / norm;
       ac[lag] = ac[lag]! + s / norm;
     }
+    own.push(o);
   }
+  const isPeak = (a: Float32Array, lag: number) => a[lag]! > 0 && a[lag]! >= a[lag - 1]! && a[lag]! > a[lag + 1]!;
   const peaks: Array<{ lag: number; v: number }> = [];
   for (let lag = minLag + 1; lag <= maxLag; lag++) {
-    if (ac[lag]! > 0 && ac[lag]! >= ac[lag - 1]! && ac[lag]! > ac[lag + 1]!) peaks.push({ lag, v: ac[lag]! });
+    if (isPeak(ac, lag)) peaks.push({ lag, v: ac[lag]! });
   }
   if (peaks.length === 0) return null;
   const top = peaks.reduce((a, b) => (b.v > a.v ? b : a));
   // the strongest peak can be a multiple of the pitch; take the first strong one
-  const first = peaks.find((p) => p.v >= 0.5 * top.v) ?? top;
+  let first = peaks.find((p) => p.v >= 0.5 * top.v) ?? top;
+  // In the songs written as brickwork (Shirat HaYam), most strips have text
+  // only on every other line, so twice the pitch correlates best overall. The
+  // strips at the edges of the column still have text on every line. A clear
+  // peak at half the lag, overall or in one strip, means that is the pitch:
+  // halfway between the lines of plain text the profile is anti-correlated,
+  // so there is no peak there.
+  const half = peaks.find((p) => p.lag > minLag + 1 && Math.abs(p.lag - first.lag / 2) <= 0.1 * first.lag);
+  if (half) {
+    const inStrip = own.some((o) => {
+      for (let lag = Math.max(minLag + 1, half.lag - 2); lag <= Math.min(maxLag, half.lag + 2); lag++) {
+        if (isPeak(o, lag) && o[lag]! >= 0.4 && o[lag]! >= 0.5 * o[first.lag]!) return true;
+      }
+      return false;
+    });
+    if (half.v >= 0.15 * first.v || inStrip) first = half;
+  }
   const a = ac[first.lag - 1]!;
   const b = ac[first.lag]!;
   const c = ac[first.lag + 1]!;
@@ -240,18 +262,109 @@ export function estimatePitch(profiles: Float32Array[], minLag = 6): number | nu
 
 /** Shift d (|d| <= maxShift) that best aligns profile b(y + d) with a(y), restricted to rows [y0, y1). */
 function bestShift(a: Float32Array, b: Float32Array, maxShift: number, y0: number, y1: number): number {
-  let best = 0;
-  let bestScore = -Infinity;
   const n = a.length;
-  for (let d = -maxShift; d <= maxShift; d++) {
+  const score = (d: number) => {
     let s = 0;
     for (let y = Math.max(y0, -d); y < Math.min(y1, n - d); y++) s += a[y]! * b[y + d]!;
+    return s;
+  };
+  // no shift unless another one is better: a blank strip (the gap in the middle of Haazinu) stays put
+  let best = 0;
+  let bestScore = score(0);
+  for (let d = -maxShift; d <= maxShift; d++) {
+    if (d === 0) continue;
+    const s = score(d);
     if (s > bestScore) {
       bestScore = s;
       best = d;
     }
   }
   return best;
+}
+
+/** A column narrower than this, in line pitches, can be half of a line of Haazinu (about 8). Columns of a sefer are about 18. */
+const HALF_MAX_PITCHES = 9.5;
+/** The blank between the halves of Haazinu is wide, several line pitches; the space between words is not. */
+const SPLIT_MIN_GAP_PITCHES = 2;
+/** The two halves of Haazinu, with the gap between them, are no wider than this. */
+const SPLIT_MAX_PITCHES = 26;
+
+/**
+ * Haazinu is written in two halves per line with a wide blank between them,
+ * so each half looks like a narrow column of its own and only that half would
+ * be read. A column much narrower than a sefer's, with a twin about as wide
+ * across a wide blank, is joined with it so that each line is read whole.
+ * Neighboring columns of a sefer are too wide to be taken for halves. Returns
+ * null when there is nothing to join.
+ */
+export function joinHalves(ink: Plane, col: ColumnBounds, pitch: number): ColumnBounds | null {
+  const { width: w, height: h } = ink;
+  const [m0, m1] = columnEdgesAt(col, h / 2);
+  const cw = m1 - m0;
+  if (cw >= HALF_MAX_PITCHES * pitch) return null;
+  // ink summed down the rows, in pixels from the column's left edge (so it follows tilt), reaching past both sides
+  const reach = Math.round(2 * cw + 2 * pitch);
+  const n = Math.round(cw) + 2 * reach;
+  const prof = new Float32Array(n);
+  const seen = new Uint32Array(n);
+  for (let y = 0; y < h; y++) {
+    const base = Math.round(columnEdgesAt(col, y)[0]) - reach;
+    const row = y * w;
+    for (let i = Math.max(0, -base); i < Math.min(n, w - base); i++) {
+      prof[i] = prof[i]! + ink.data[row + base + i]!;
+      seen[i] = seen[i]! + 1;
+    }
+  }
+  const sm = smooth1d(prof, Math.max(1, pitch / 3));
+  const i0 = reach;
+  const i1 = reach + Math.round(cw);
+  const level = quantile(Array.from(sm.slice(i0, i1)), 0.5);
+  if (level <= 0) return null;
+  const inside = (i: number) => i >= 0 && i < n && seen[i]! >= 0.8 * h;
+  // not blank: the lines above and below the song cross the gap
+  const low = (i: number) => sm[i]! < 0.35 * level;
+  const minGap = Math.max(2, Math.round(0.8 * pitch));
+
+  /** The run of text beyond the gap on one side: how far it starts from the column, how wide the blank is, and its width. */
+  const twin = (dir: -1 | 1): { offset: number; gap: number; width: number } | null => {
+    const edge = dir > 0 ? i1 : i0;
+    let i = edge;
+    // out of the column's own ink, then across the gap
+    while (inside(i) && !low(i)) i += dir;
+    const gapStart = i;
+    while (inside(i) && low(i)) i += dir;
+    if (!inside(i)) return null;
+    const runStart = i;
+    // The twin ends at the next gap, or as soon as the ink thins once it is about as wide as the column (the
+    // edge of the parchment can follow closely). Reaching the photo's edge first means it is cut: it can't be judged.
+    const found = (width: number) => ({ offset: Math.abs(runStart - edge), gap: Math.abs(runStart - gapStart), width });
+    let blank = 0;
+    for (; inside(i); i += dir) {
+      blank = low(i) ? blank + 1 : 0;
+      const width = Math.abs(i - runStart) - blank + 1;
+      if (blank >= minGap || (blank > 0 && width >= 0.8 * cw)) return found(width);
+      if (width > 1.6 * cw) return found(width); // too wide to be a half
+    }
+    return null;
+  };
+
+  let best: { dir: -1 | 1; offset: number; gap: number; width: number } | null = null;
+  for (const dir of [-1, 1] as const) {
+    const t = twin(dir);
+    if (!t) continue;
+    const ok =
+      t.gap >= SPLIT_MIN_GAP_PITCHES * pitch &&
+      t.offset <= 1.5 * Math.max(cw, t.width) &&
+      t.width >= 0.6 * cw &&
+      t.width <= 1.6 * cw &&
+      t.width < HALF_MAX_PITCHES * pitch &&
+      cw + t.offset + t.width <= SPLIT_MAX_PITCHES * pitch;
+    // with a twin on each side (the next column holds Haazinu too), the nearer one is the other half
+    if (ok && (!best || t.offset < best.offset)) best = { dir, ...t };
+  }
+  if (!best) return null;
+  const add = best.offset + best.width;
+  return { edges: col.edges.map((e) => (best.dir > 0 ? { ...e, x1: e.x1 + add } : { ...e, x0: e.x0 - add })) };
 }
 
 export interface SegmentOptions {
@@ -263,18 +376,21 @@ export interface SegmentOptions {
 
 /** Column, line pitch and lines of a photo, from its ink map. */
 export function segmentColumn(ink: Plane, opts: SegmentOptions = {}): ColumnLayout | null {
-  const col = findColumn(ink);
-  if (!col) return null;
+  const found = findColumn(ink);
+  if (!found) return null;
   const { height: h } = ink;
-  const [m0, m1] = columnEdgesAt(col, h / 2);
-  const colW = m1 - m0;
 
   // pitch from a few coarse strips (tilt barely matters over a narrow strip)
   const coarse = 6;
   const coarseProfiles: Float32Array[] = [];
-  for (let k = 0; k < coarse; k++) coarseProfiles.push(smooth1d(stripProfile(ink, col, k / coarse, (k + 1) / coarse), 1));
+  for (let k = 0; k < coarse; k++) coarseProfiles.push(smooth1d(stripProfile(ink, found, k / coarse, (k + 1) / coarse), 1));
   const pitch = estimatePitch(coarseProfiles);
   if (!pitch || pitch < 6) return null;
+  // the pitch measured on one half of Haazinu holds for the whole line
+  const joined = joinHalves(ink, found, pitch);
+  const col = joined ?? found;
+  const [m0, m1] = columnEdgesAt(col, h / 2);
+  const colW = m1 - m0;
 
   const K = opts.strips ?? Math.max(3, Math.min(12, Math.round(colW / (pitch * 6))));
   const profiles: Float32Array[] = [];

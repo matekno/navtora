@@ -44,10 +44,17 @@ The local reader (`packages/vision` plus a 0.45M-parameter CRNN; see [tools/trai
 
 | Sefer | Columns | Confident | Wrong | Abstained | Notes |
 |---|---|---|---|---|---|
-| Elihu Shannon, standard layout | 246 | 241, 240 with the exact column number | 0 | 2 ambiguous, 3 insufficient | The ambiguous pair is Bamidbar 7, the offerings of the nesiim. The insufficient ones are the songs in brick layout, which the line finder doesn't follow: Shirat HaYam (column 78) and Haazinu (columns 242 and 243). |
+| Elihu Shannon, standard layout | 246 | 244, 243 with the exact column number | 0 | 2 ambiguous | The ambiguous pair is Bamidbar 7, the offerings of the nesiim, which repeat almost word for word. |
 | David Kokhav, Yemenite conventions, 226 columns | 226 | 225 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
 | Makhon Ot, Germany ca. 1920, 190 columns | 190 | 189 | 0 inconsistent | 1 ambiguous | Every confident placement comes after the previous one. |
 | British Library Or. 1462, 15th century, single columns cropped from 55 sheets | 233 | 187 | 0 inconsistent | 45 insufficient, 1 ambiguous | 21 placements go back, all at the first column of a new photo: 16 land on a column already placed (consecutive photos overlap) and 5 fill gaps between columns placed before. |
+
+**The songs.** Shirat HaYam (column 78) and Haazinu (columns 242 and 243) used to come back insufficient, because the line finder didn't follow how they are written:
+
+- Shirat HaYam is written as brickwork, with pieces of text over the gaps of the line above. Most of the column has text only on every other line, so twice the line pitch correlated best, and the line finder read each pair of lines as one. Now a clear autocorrelation peak at half that lag, over the whole column or in one strip of it, sets the pitch: the strips at the column's edges still have text on every line, and halfway between the lines of plain text the profile is anti-correlated, so plain text has no such peak.
+- Haazinu is written in two halves per line with a wide blank between them, so each half looked like a narrow column and only one half was read. Now a column narrower than 9.5 line pitches with a twin across a blank of at least 2 pitches (about as wide, and the two together no wider than 26 pitches) is joined with it, and each line is read whole. A Haazinu half is about 8 pitches wide; the other columns are 16 to 18 pitches wide in the Shannon and Kokhav sifrei and about 12 in the British Library's, and none of them is joined to its neighbor.
+
+All three columns are now placed with the exact column number, and so are crops of the songs alone, like a phone photo: 5 of 5 of Shirat HaYam and 5 of 5 of Haazinu, from the top, middle and bottom. No other placement changed, in the Shannon, Kokhav or British Library sets. Crops of the arayot (Vayikra 18 and 20, columns 134, 135 and 137), whose verses repeat the same few words, were placed 21 of 21, down to 8 lines.
 
 Reading takes about 0.35 to 0.4 s per column on a CPU in Node. The Shannon and Kokhav pages come from Commons thumbnails 1920 px wide (`download --pages`), scaled to 1800 px on the long edge like the scans used for Claude.
 

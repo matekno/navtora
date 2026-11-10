@@ -31,7 +31,7 @@ The network was trained on synthetic photos of real columns in STA"M fonts, aged
 
 Pick a target: the reading for a date, a holiday or special day, a parashah and aliyah, or a verse. The calendar comes from [hebcal](https://github.com/hebcal) and handles each year's variants: Rosh Hashanah on Shabbat, chol hamoed, fast days, Rosh Chodesh, and special Shabbatot with a maftir from a second sefer.
 
-After each scan NavTorah says how many columns to move and which way. It counts with the standard 245-column layout, so the count is exact on standard-layout scrolls. On scrolls with another layout it can be off, and the app doesn't detect that yet, so scan again when you get there. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
+After each scan NavTorah says how many columns to move and which way. You can also scan first, without a target: it tells you where the sefer is open, and when you then choose where to go it works out the way from that scan, without scanning again. It counts with the standard 245-column layout, so the count is exact on standard-layout scrolls. On scrolls with another layout it can be off, and the app doesn't detect that yet, so scan again when you get there. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
 
 ## Feedback and dedications
 
@@ -112,7 +112,7 @@ On a scanned standard-layout sefer with known positions, every column was placed
 
 It has also been used on a worn sefer, a printed tikkun and a third sefer; see the [demo](#demo) and the [field tests](docs/evaluation.md#field-tests).
 
-The local reader, trained only on synthetic photos, placed 241 of the 246 columns of the Shannon sefer, 240 of them with the exact column number (the rest are the nesiim and the two songs in brick layout), 225 of 226 of the Kokhav sefer, 189 of 190 of Makhon Ot and 187 of 233 British Library crops, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
+The local reader, trained only on synthetic photos, placed 244 of the 246 columns of the Shannon sefer, 243 of them with the exact column number (the other two are the nesiim, which repeat almost word for word), Shirat HaYam and Haazinu included, 225 of 226 of the Kokhav sefer, 189 of 190 of Makhon Ot and 187 of 233 British Library crops, with no wrong or out-of-order answer. It also placed all 10 real frames from the two recordings.
 
 ## Privacy
 

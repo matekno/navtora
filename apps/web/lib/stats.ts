@@ -107,6 +107,17 @@ export function recordScan(s: ScanRecord, now: Date = new Date()): string | null
   );
 }
 
+/** Notes the target chosen after a scan, and how far it was, on that scan. */
+export function recordNavigation(scanId: string, client: string | null, target: string, nav: string): void {
+  const db = getDb();
+  if (!db || !/^[A-Za-z0-9_-]{8,64}$/.test(scanId)) return;
+  safely(
+    "navigation",
+    () => db.prepare("UPDATE scans SET target = ?, nav = ? WHERE id = ? AND client IS ?").run(target.slice(0, 200), nav, scanId, client),
+    undefined,
+  );
+}
+
 export const VOTES = ["up", "down"] as const;
 export type Vote = (typeof VOTES)[number];
 export const FEEDBACK_REASONS = ["wrong-place", "wrong-move", "slow", "confusing", "other", "uncertain"] as const;

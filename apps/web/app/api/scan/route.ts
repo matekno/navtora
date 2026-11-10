@@ -18,6 +18,8 @@ export interface ScanResponse {
   meta: OcrMeta & { totalMs: number };
   /** to attach feedback to this scan; null when the server isn't counting */
   scanId: string | null;
+  /** where each line read starts in the text, to navigate later from this same scan (see /api/navigate) */
+  lineStarts: Array<number | null> | null;
 }
 
 function parseTarget(raw: FormDataEntryValue | null): NavTarget | null {
@@ -86,9 +88,9 @@ export async function POST(req: Request): Promise<Response> {
   const locator = getLocator();
   const locate = locator.locate(result);
   let navigation: Navigation | null = null;
+  const lineStarts = locate.status === "confident" ? (locate.debug?.candidates[0]?.lineStarts ?? null) : null;
   if (target && locate.status === "confident" && locate.best) {
-    const lineStarts = locate.debug?.candidates[0]?.lineStarts;
-    navigation = navigate(locate.best, target, { text: locator.text, layout: getLayout(), learnedWordsPerColumn: learnedWpc }, lineStarts);
+    navigation = navigate(locate.best, target, { text: locator.text, layout: getLayout(), learnedWordsPerColumn: learnedWpc }, lineStarts ?? undefined);
   }
   // the client does not need the candidate details
   delete locate.debug;
@@ -110,7 +112,7 @@ export async function POST(req: Request): Promise<Response> {
     text: result.lines.map((l) => l.text).join("\n"),
     lang,
   });
-  const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs }, scanId };
+  const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs }, scanId, lineStarts };
   console.info(
     JSON.stringify({
       evt: "scan",

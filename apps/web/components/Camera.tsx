@@ -131,20 +131,28 @@ export function Camera({ busy, reading, onCapture, onManual, targetLabel, onPick
         {!busy && (
           <div className="absolute left-0 right-0 top-[max(0.75rem,env(safe-area-inset-top))] flex flex-col items-center gap-2 px-4">
             {targetLabel ? (
-              <div className="flex max-w-full items-center gap-1 rounded-full bg-ink/70 p-1 pl-3 backdrop-blur">
-                <span className="truncate text-sm">
+              <div className="flex max-w-full items-center gap-1 rounded-full border border-accent/50 bg-ink/75 p-1 pl-4 backdrop-blur">
+                <span className="truncate text-base">
                   <span className="text-muted">{t.camera.targetPrefix}</span>
-                  <span className="font-medium text-accent">{targetLabel}</span>
+                  <span className="font-semibold text-accent">{targetLabel}</span>
                 </span>
-                <button type="button" onClick={onPickTarget} className="h-8 rounded-full px-3 text-xs text-fg">
+                <button type="button" onClick={onPickTarget} className="h-11 shrink-0 rounded-full bg-fg/10 px-4 text-sm font-medium text-fg active:bg-fg/20">
                   {t.camera.change}
                 </button>
-                <button type="button" onClick={onClearTarget} aria-label={t.camera.removeTarget} className="h-8 rounded-full px-3 text-xs text-muted">
+                <button type="button" onClick={onClearTarget} aria-label={t.camera.removeTarget} className="h-11 w-11 shrink-0 rounded-full text-base text-muted active:bg-fg/10">
                   ✕
                 </button>
               </div>
             ) : (
-              <button type="button" onClick={onPickTarget} className="h-9 rounded-full bg-ink/70 px-4 text-sm font-medium text-accent backdrop-blur">
+              <button
+                type="button"
+                onClick={onPickTarget}
+                className="flex h-14 items-center gap-2 rounded-full border-2 border-accent bg-ink/75 px-6 text-lg font-semibold text-accent shadow-lg backdrop-blur active:scale-[0.98]"
+              >
+                <svg aria-hidden viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
                 {t.camera.pickTarget}
               </button>
             )}

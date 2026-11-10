@@ -29,7 +29,7 @@ export const en: Dictionary = {
       "The photo is read on your phone and stays there.",
       "**No sign-up needed.** NavTorah counts scans anonymously to know whether it works well. It stores no photos, unless you choose to send one to improve the reader.",
       "When it isn't sure where you are, it says so instead of guessing.",
-      "It's a helper. The sofer and the rav have the final word.",
+      "It's a search: it reads a few lines of the column and finds them in the text of the Torah.",
     ],
     accept: "Start",
   },
@@ -66,7 +66,8 @@ export const en: Dictionary = {
     startsWith: "Starts with",
     aliyahStartsHere: "An aliyah starts in this column.",
     ocrSummary: (n) => `Text read (${n} lines)`,
-    goTo: "Go to…",
+    goTo: "Choose where to go",
+    goToHint: "Choose where to go and it tells you how many columns to move from here, without scanning again.",
     scanAgain: "Scan again",
     mapTitle: "Where you are in the scroll",
   },
@@ -129,6 +130,7 @@ export const en: Dictionary = {
     special: (n, reason, ref) =>
       `${n === "M" ? "Special maftir" : `Special ${SHORT[n] ?? String(n)} aliyah`}: ${reason}, ${ref}. Usually read from a second sefer.`,
     startFromFirst: "Start from the first aliyah",
+    computing: "Working it out from the column you scanned…",
   },
   aliyah: {
     label: (n) => (n === "M" ? "maftir" : `${ORDINALS[n] ?? String(n)} aliyah`),
