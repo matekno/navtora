@@ -10,6 +10,7 @@ import { Links } from "./Links";
 import { MetaLine, type ScanMeta } from "./ResultCard";
 import { ScrollMap } from "./ScrollMap";
 import { VoiceControls } from "./VoiceControls";
+import { ActionBar } from "./ActionBar";
 
 interface Props {
   navigation: Navigation;
@@ -37,7 +38,7 @@ export function NavigationCard(props: Props) {
   const side = right ? t.nav.toTheRight : t.nav.toTheLeft;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pt-6">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-xs uppercase tracking-wide text-muted">{t.nav.objective}</div>
@@ -114,20 +115,22 @@ export function NavigationCard(props: Props) {
         <Links links={target.links} compact />
       </section>
 
+      <div className="mt-4">
+        <VoiceControls available={speechAvailable()} auto={props.autoVoice} onToggleAuto={props.onToggleAutoVoice} onListen={props.onListen} />
+      </div>
       {footer}
       {meta && <MetaLine meta={meta} />}
 
-      <div className="mt-auto flex flex-col gap-3 pt-6">
-        <VoiceControls available={speechAvailable()} auto={props.autoVoice} onToggleAuto={props.onToggleAutoVoice} onListen={props.onListen} />
+      <ActionBar>
         {here && hasNext && (
-          <button type="button" onClick={onNextTarget} className="h-12 w-full rounded-xl border border-line text-sm">
+          <button type="button" onClick={onNextTarget} className="h-14 flex-1 rounded-2xl border border-line px-2 text-[15px] text-fg">
             {t.nav.nextAliyah}
           </button>
         )}
-        <button type="button" onClick={onAgain} className="h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
+        <button type="button" onClick={onAgain} className="h-14 flex-1 rounded-2xl bg-accent px-2 text-[15px] font-semibold text-ink active:scale-[0.99]">
           {here ? t.nav.verifyAgain : t.nav.movedScanAgain}
         </button>
-      </div>
+      </ActionBar>
     </main>
   );
 }
