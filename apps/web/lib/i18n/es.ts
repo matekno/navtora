@@ -31,7 +31,7 @@ export const es = {
       "La foto se lee en tu teléfono y no sale de ahí.",
       "**No hace falta registrarse.** NavTorá cuenta los escaneos de forma anónima para saber si anda bien. No guarda fotos, salvo que elijas mandar una para mejorar el lector.",
       "Si no está segura de dónde estás, te lo dice en vez de adivinar.",
-      "Es una ayuda. La última palabra la tienen el sofer y el rav.",
+      "Es una búsqueda: lee unas líneas de la columna y las encuentra en el texto de la Torá.",
     ],
     accept: "Empezar",
   },

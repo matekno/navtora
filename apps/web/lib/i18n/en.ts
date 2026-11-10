@@ -29,7 +29,7 @@ export const en: Dictionary = {
       "The photo is read on your phone and stays there.",
       "**No sign-up needed.** NavTorah counts scans anonymously to know whether it works well. It stores no photos, unless you choose to send one to improve the reader.",
       "When it isn't sure where you are, it says so instead of guessing.",
-      "It's a helper. The sofer and the rav have the final word.",
+      "It's a search: it reads a few lines of the column and finds them in the text of the Torah.",
     ],
     accept: "Start",
   },
