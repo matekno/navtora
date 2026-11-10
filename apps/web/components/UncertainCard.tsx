@@ -4,6 +4,7 @@ import type { LocateResult, OcrResult } from "@navtora/core";
 import { aliyotLabel, capitalize, parashotLabel, versesLabel } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/context";
 import { MetaLine, OcrLines, type ScanMeta } from "./ResultCard";
+import { ActionBar } from "./ActionBar";
 
 interface Props {
   result: LocateResult;
@@ -20,7 +21,7 @@ export function UncertainCard({ result, ocr, meta, error, footer, onAgain, onMan
   const { t, lang } = useI18n();
   const ambiguous = result.status === "ambiguous";
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pt-6">
       <span className={`self-start rounded-full px-3 py-1 text-sm font-medium ${ambiguous ? "bg-warn/15 text-warn" : "bg-bad/15 text-bad"}`}>
         {error ? t.uncertain.error : ambiguous ? t.uncertain.ambiguous : t.uncertain.insufficient}
       </span>
@@ -74,14 +75,14 @@ export function UncertainCard({ result, ocr, meta, error, footer, onAgain, onMan
       {footer}
       {meta && <MetaLine meta={meta} />}
 
-      <div className="mt-auto flex gap-3 pt-6">
+      <ActionBar>
         <button type="button" onClick={onManual} className="h-14 flex-1 rounded-2xl border border-line text-base text-fg">
           {t.uncertain.typeWords}
         </button>
         <button type="button" onClick={onAgain} className="h-14 flex-[2] rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
           {t.uncertain.rescan}
         </button>
-      </div>
+      </ActionBar>
     </main>
   );
 }

@@ -7,6 +7,7 @@ import { linksFor } from "@/lib/links";
 import type { ScrollInfo } from "@/lib/target-types";
 import { Links } from "./Links";
 import { ScrollMap } from "./ScrollMap";
+import { ActionBar } from "./ActionBar";
 
 export interface ScanMeta {
   provider?: string;
@@ -30,7 +31,7 @@ export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, o
   const { t, lang } = useI18n();
   const col = p.standardColumn;
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pt-6">
       <div className="flex items-center justify-between">
         <span className="rounded-full bg-ok/15 px-3 py-1 text-sm font-medium text-ok">{t.result.badge}</span>
         <span className="text-xs text-muted">{t.result.matchStat(p.confidence.alignedTokens, p.confidence.linesCovered)}</span>
@@ -67,15 +68,14 @@ export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, o
       {footer}
       {meta && <MetaLine meta={meta} />}
 
-      <p className="mt-auto pt-6 text-center text-sm text-muted">{t.result.goToHint}</p>
-      <div className="mt-3 flex flex-col gap-3">
-        <button type="button" onClick={onPickTarget} className="h-14 rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
-          {t.result.goTo}
-        </button>
-        <button type="button" onClick={onAgain} className="h-12 rounded-2xl border border-line text-base text-fg">
+      <ActionBar>
+        <button type="button" onClick={onAgain} className="h-14 flex-1 rounded-2xl border border-line px-2 text-[15px] text-fg">
           {t.result.scanAgain}
         </button>
-      </div>
+        <button type="button" onClick={onPickTarget} className="h-14 flex-1 rounded-2xl bg-accent px-2 text-[15px] font-semibold text-ink active:scale-[0.99]">
+          {t.result.goTo}
+        </button>
+      </ActionBar>
     </main>
   );
 }
