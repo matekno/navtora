@@ -2,12 +2,13 @@
 
 import { LanguageSwitch, Rich, useI18n } from "@/lib/i18n/context";
 import type { DedicationView } from "@/lib/support-types";
+import { ActionBar } from "./ActionBar";
 import { DedicationNote } from "./DedicationNote";
 
 export function ConsentGate({ onAccept, dedications }: { onAccept: () => void; dedications: DedicationView[] }) {
   const { t } = useI18n();
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-between px-6 py-10">
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-6 pt-10">
       <div>
         <div className="flex items-start justify-between gap-4">
           <h1 className="text-3xl font-semibold tracking-tight">{t.app.name}</h1>
@@ -28,9 +29,11 @@ export function ConsentGate({ onAccept, dedications }: { onAccept: () => void; d
         </ul>
         <DedicationNote dedications={dedications} className="mt-8" />
       </div>
-      <button type="button" onClick={onAccept} className="mt-10 h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
-        {t.consent.accept}
-      </button>
+      <ActionBar gutter={6}>
+        <button type="button" onClick={onAccept} className="h-14 w-full rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
+          {t.consent.accept}
+        </button>
+      </ActionBar>
     </main>
   );
 }
