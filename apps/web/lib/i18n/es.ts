@@ -68,7 +68,8 @@ export const es = {
     startsWith: "Empieza con",
     aliyahStartsHere: "En esta columna empieza una aliá.",
     ocrSummary: (n: number) => `Texto leído (${n} líneas)`,
-    goTo: "Ir a…",
+    goTo: "Elegir a dónde ir",
+    goToHint: "Elegí a dónde ir y te digo cuántas columnas mover desde acá, sin volver a escanear.",
     scanAgain: "Escanear de nuevo",
     mapTitle: "Dónde estás en el rollo",
   },
@@ -131,6 +132,7 @@ export const es = {
     special: (n: number | "M", reason: string, ref: string) =>
       `${n === "M" ? "Maftir especial" : `${n}ª aliá especial`}: ${reason}, ${ref}. Suele leerse de un segundo sefer.`,
     startFromFirst: "Empezar por la primera aliá",
+    computing: "Calculando desde la columna que escaneaste…",
   },
   aliyah: {
     /** "tercera aliá", "maftir" */

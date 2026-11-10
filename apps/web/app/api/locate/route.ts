@@ -41,5 +41,6 @@ export async function POST(req: Request): Promise<Response> {
     text,
     lang,
   });
-  return NextResponse.json({ locate, scroll: getScrollInfo(), scanId });
+  const lineStarts = locate.status === "confident" ? (locate.debug?.candidates[0]?.lineStarts ?? null) : null;
+  return NextResponse.json({ locate, scroll: getScrollInfo(), scanId, lineStarts });
 }

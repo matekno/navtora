@@ -67,11 +67,12 @@ export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, o
       {footer}
       {meta && <MetaLine meta={meta} />}
 
-      <div className="mt-auto flex gap-3 pt-6">
-        <button type="button" onClick={onPickTarget} className="h-14 flex-1 rounded-2xl border border-line text-base text-fg">
+      <p className="mt-auto pt-6 text-center text-sm text-muted">{t.result.goToHint}</p>
+      <div className="mt-3 flex flex-col gap-3">
+        <button type="button" onClick={onPickTarget} className="h-14 rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
           {t.result.goTo}
         </button>
-        <button type="button" onClick={onAgain} className="h-14 flex-[2] rounded-2xl bg-accent text-lg font-semibold text-ink active:scale-[0.99]">
+        <button type="button" onClick={onAgain} className="h-12 rounded-2xl border border-line text-base text-fg">
           {t.result.scanAgain}
         </button>
       </div>

@@ -39,6 +39,8 @@ interface Outcome {
   scanId: string | null;
   /** the photo that was read, which the person can choose to send with feedback; null for typed text */
   photo: Blob | null;
+  /** where each line read starts in the text, to navigate from this position without scanning again */
+  lineStarts: Array<number | null> | null;
 }
 
 interface TargetState {
@@ -53,6 +55,7 @@ interface ApiResponse {
   navigation?: Navigation | null;
   scroll?: ScrollInfo;
   scanId?: string | null;
+  lineStarts?: Array<number | null> | null;
   error?: string;
 }
 
@@ -72,10 +75,15 @@ function save(key: string, value: unknown): void {
   } catch {}
 }
 
+/** Words per column learned for this sefer, when it doesn't follow the standard layout. */
+function averageWpc(seen: number[]): number | null {
+  return seen.length > 0 ? Math.round(seen.reduce((s, x) => s + x, 0) / seen.length) : null;
+}
+
 const EMPTY: LocateResult = { status: "insufficient", best: null, alternatives: [], reasons: [], suggestions: [] };
 
 function failure(error: string, photo: Blob | null = null): Outcome {
-  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, scanId: null, photo };
+  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, scanId: null, photo, lineStarts: null };
 }
 
 interface Props {
@@ -93,6 +101,9 @@ export function ScanApp({ support, dedications }: Props) {
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [returnTo, setReturnTo] = useState<"camera" | "manual">("camera");
   const [targetState, setTargetState] = useState<TargetState>({ targets: [], active: 0 });
+  // the target picker was opened from a result: picking navigates from that same scan
+  const [pickFromResult, setPickFromResult] = useState(false);
+  const [navBusy, setNavBusy] = useState(false);
   const [autoVoice, setAutoVoice] = useState(false);
   // words per column seen in this sefer, when it doesn't follow the standard layout
   const wpcRef = useRef<number[]>([]);
@@ -134,10 +145,61 @@ export function ScanApp({ support, dedications }: Props) {
   }, []);
 
   const sayNavigation = useCallback(
-    (nav: Navigation | null) => {
-      if (nav && activeTarget) void speak(speechForNavigation(nav, activeTarget.label, t, tag));
+    (nav: Navigation | null, target: TargetInfo | null = activeTarget) => {
+      if (nav && target) void speak(speechForNavigation(nav, target.label, t, tag));
     },
     [activeTarget, t, tag],
+  );
+
+  const openPicker = useCallback((fromResult: boolean) => {
+    setPickFromResult(fromResult);
+    setScreen("target");
+  }, []);
+
+  /**
+   * After a scan, choosing where to go needs no other scan: the sefer is
+   * still open where it was read, so the app works out the way from there.
+   */
+  const pickTarget = useCallback(
+    async (targets: TargetInfo[], active: number) => {
+      setTargets(targets, active);
+      const target = targets[active];
+      const from = pickFromResult ? outcome : null;
+      const best = from?.locate.best;
+      if (!from || !target || from.error || from.locate.status !== "confident" || !best) {
+        setScreen("camera");
+        return;
+      }
+      if (autoVoice) primeSpeech();
+      setNavBusy(true);
+      try {
+        const { word, endWord, label, ref } = target;
+        const res = await fetch("/api/navigate", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            placement: { span: best.span, standardColumn: best.standardColumn, layout: best.layout },
+            lineStarts: from.lineStarts ?? undefined,
+            target: { word, endWord, label, ref },
+            wpc: averageWpc(wpcRef.current) ?? undefined,
+            scanId: from.scanId ?? undefined,
+            client: getClientId(),
+          }),
+        });
+        const body = (await res.json()) as { navigation?: Navigation; error?: string };
+        if (!res.ok || !body.navigation) throw new Error(body.error ?? t.errors.http(res.status));
+        const navigation = body.navigation;
+        setOutcome({ ...from, navigation });
+        setScreen("result");
+        if (autoVoice) sayNavigation(navigation, target);
+      } catch {
+        // without an answer, scanning again still works
+        setScreen("camera");
+      } finally {
+        setNavBusy(false);
+      }
+    },
+    [pickFromResult, outcome, autoVoice, setTargets, sayNavigation, t],
   );
 
   const handleCapture = useCallback(
@@ -165,10 +227,8 @@ export function ScanApp({ support, dedications }: Props) {
           const { word, endWord, label, ref } = activeTarget;
           form.append("target", JSON.stringify({ word, endWord, label, ref }));
         }
-        if (wpcRef.current.length > 0) {
-          const avg = wpcRef.current.reduce((s, x) => s + x, 0) / wpcRef.current.length;
-          form.append("wpc", String(Math.round(avg)));
-        }
+        const wpc = averageWpc(wpcRef.current);
+        if (wpc !== null) form.append("wpc", String(wpc));
         const res = await fetch("/api/scan", { method: "POST", body: form });
         const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) {
@@ -181,7 +241,17 @@ export function ScanApp({ support, dedications }: Props) {
           save(KEYS.wpc, wpcRef.current);
         }
         const navigation = body.navigation ?? null;
-        setOutcome({ locate: body.locate, ocr: body.ocr ?? null, meta: body.meta ?? null, navigation, scroll: body.scroll ?? null, error: null, scanId: body.scanId ?? null, photo: blob });
+        setOutcome({
+          locate: body.locate,
+          ocr: body.ocr ?? null,
+          meta: body.meta ?? null,
+          navigation,
+          scroll: body.scroll ?? null,
+          error: null,
+          scanId: body.scanId ?? null,
+          photo: blob,
+          lineStarts: body.lineStarts ?? null,
+        });
         if (autoVoice) sayNavigation(navigation);
       } catch (err) {
         setOutcome(failure(t.errors.connect((err as Error).message)));
@@ -202,7 +272,18 @@ export function ScanApp({ support, dedications }: Props) {
         const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, client: getClientId(), lang }) });
         const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) setOutcome(failure(body.error ?? t.errors.http(res.status)));
-        else setOutcome({ locate: body.locate, ocr: null, meta: null, navigation: null, scroll: body.scroll ?? null, error: null, scanId: body.scanId ?? null, photo: null });
+        else
+          setOutcome({
+            locate: body.locate,
+            ocr: null,
+            meta: null,
+            navigation: null,
+            scroll: body.scroll ?? null,
+            error: null,
+            scanId: body.scanId ?? null,
+            photo: null,
+            lineStarts: body.lineStarts ?? null,
+          });
       } catch (err) {
         setOutcome(failure(t.errors.connect((err as Error).message)));
       } finally {
@@ -216,13 +297,14 @@ export function ScanApp({ support, dedications }: Props) {
   if (screen === "consent") return <ConsentGate onAccept={accept} dedications={dedications} />;
   if (screen === "target") {
     return (
-      <TargetPicker
-        onPick={(targets, active) => {
-          setTargets(targets, active);
-          setScreen("camera");
-        }}
-        onCancel={() => setScreen("camera")}
-      />
+      <>
+        <TargetPicker onPick={(targets, active) => void pickTarget(targets, active)} onCancel={() => setScreen(pickFromResult && outcome ? "result" : "camera")} />
+        {navBusy && (
+          <div role="status" className="fixed inset-0 z-10 flex items-center justify-center bg-ink/70 p-8 text-center text-base backdrop-blur-sm">
+            {t.target.computing}
+          </div>
+        )}
+      </>
     );
   }
   if (screen === "manual") return <ManualInput busy={busy} onSubmit={handleManual} onBack={() => setScreen("camera")} />;
@@ -253,7 +335,7 @@ export function ScanApp({ support, dedications }: Props) {
               setTargets(targetState.targets, targetState.active + 1);
               setScreen("camera");
             }}
-            onChangeTarget={() => setScreen("target")}
+            onChangeTarget={() => openPicker(true)}
           />
         );
       }
@@ -265,7 +347,7 @@ export function ScanApp({ support, dedications }: Props) {
           scroll={outcome.scroll}
           footer={footer}
           onAgain={() => setScreen(returnTo)}
-          onPickTarget={() => setScreen("target")}
+          onPickTarget={() => openPicker(true)}
         />
       );
     }
@@ -288,7 +370,7 @@ export function ScanApp({ support, dedications }: Props) {
       onCapture={handleCapture}
       onManual={() => setScreen("manual")}
       targetLabel={activeTarget?.short ?? null}
-      onPickTarget={() => setScreen("target")}
+      onPickTarget={() => openPicker(false)}
       onClearTarget={() => setTargets([], 0)}
     />
   );
