@@ -6,14 +6,17 @@ import { analyzeColumn, columnEdgesAt, lineYAt } from "../src";
  * gets darker to the right, rotated a little. Lines of the middle column are
  * at known positions.
  */
-function fakePhoto(opts: { width: number; height: number; pitch: number; lines: number; angleDeg: number; seed: number }) {
+/** Where a line of the middle column has text, as fractions of its width from the left; plain lines are full. */
+type LineShape = (line: number) => Array<[number, number]>;
+
+function fakePhoto(opts: { width: number; height: number; pitch: number; lines: number; angleDeg: number; seed: number; colFrac?: number; shape?: LineShape }) {
   const { width: w, height: h, pitch, lines, angleDeg } = opts;
   let seed = opts.seed;
   const rnd = () => {
     seed = (seed * 1103515245 + 12345) & 0x7fffffff;
     return seed / 0x7fffffff;
   };
-  const colW = Math.round(w * 0.5);
+  const colW = Math.round(w * (opts.colFrac ?? 0.5));
   const gap = Math.round(pitch * 1.5);
   const x0 = Math.round((w - colW) / 2);
   const columns = [x0 - gap - colW, x0, x0 + colW + gap];
@@ -24,14 +27,18 @@ function fakePhoto(opts: { width: number; height: number; pitch: number; lines: 
   for (const cx of columns) {
     for (let l = 0; l < lines; l++) {
       const yc = top + l * pitch + pitch / 2;
-      let x = cx + colW;
-      while (x > cx) {
-        const ww = Math.round(pitch * (0.8 + rnd() * 2));
-        const x1 = Math.max(cx, x - ww);
-        for (let y = Math.round(yc - letterH / 2); y < Math.round(yc + letterH / 2); y++) {
-          for (let xx = x1; xx < x; xx++) if (xx >= 0 && xx < w && y >= 0 && y < h && rnd() < 0.6) ink[y * w + xx] = 1;
+      const pieces: Array<[number, number]> = cx === x0 && opts.shape ? opts.shape(l) : [[0, 1]];
+      for (const [a, b] of pieces) {
+        const left = cx + Math.round(a * colW);
+        let x = cx + Math.round(b * colW);
+        while (x > left) {
+          const ww = Math.round(pitch * (0.8 + rnd() * 2));
+          const x1 = Math.max(left, x - ww);
+          for (let y = Math.round(yc - letterH / 2); y < Math.round(yc + letterH / 2); y++) {
+            for (let xx = x1; xx < x; xx++) if (xx >= 0 && xx < w && y >= 0 && y < h && rnd() < 0.6) ink[y * w + xx] = 1;
+          }
+          x = x1 - Math.round(pitch * 0.35);
         }
-        x = x1 - Math.round(pitch * 0.35);
       }
     }
   }
@@ -94,6 +101,62 @@ describe("analyzeColumn", () => {
         const nearest = Math.min(...Array.from({ length: 26 }, (_, l) => Math.abs(p.truthY(l, x) - y)));
         expect(nearest).toBeLessThan(6);
       }
+    }
+  });
+
+  it("finds every line of a song written as brickwork, where most of the column has text on every other line", () => {
+    // Shirat HaYam: three pieces over two, alternately
+    const brick: LineShape = (l) =>
+      l % 2 === 0
+        ? [
+            [0, 0.15],
+            [0.3, 0.7],
+            [0.85, 1],
+          ]
+        : [
+            [0, 0.42],
+            [0.58, 1],
+          ];
+    const p = fakePhoto({ width: 1000, height: 1300, pitch: 40, lines: 28, angleDeg: 0, seed: 3, colFrac: 0.7, shape: brick });
+    const L = analyzeColumn(p.rgb, p.w, p.h, 3).layout!;
+    expect(L).not.toBeNull();
+    expect(Math.abs(L.pitch - 40)).toBeLessThan(2.5);
+    expect(L.lines.length).toBe(28);
+    L.lines.forEach((line, i) => {
+      for (const x of [line.x0 + 10, line.x1 - 10]) expect(Math.abs(lineYAt(line, x) - p.truthY(i, x))).toBeLessThan(6);
+    });
+  });
+
+  it("reads both halves of Haazinu as one line", () => {
+    const halves: LineShape = () => [
+      [0, 0.38],
+      [0.62, 1],
+    ];
+    // the photo's middle falls in the blank between the halves
+    const p = fakePhoto({ width: 1400, height: 1200, pitch: 40, lines: 24, angleDeg: 0, seed: 4, colFrac: 0.42, shape: halves });
+    const L = analyzeColumn(p.rgb, p.w, p.h, 3).layout!;
+    expect(L).not.toBeNull();
+    const [e0, e1] = columnEdgesAt(L, p.h / 2);
+    expect(Math.abs(e0 - p.colX[0])).toBeLessThan(20);
+    expect(Math.abs(e1 - p.colX[1])).toBeLessThan(20);
+    expect(L.lines.length).toBe(24);
+    for (const line of L.lines) {
+      expect(line.x0).toBeLessThan(p.colX[0] + 20);
+      expect(line.x1).toBeGreaterThan(p.colX[1] - 20);
+    }
+  });
+
+  it("doesn't join narrow columns of plain text", () => {
+    // 10 line pitches wide, and 7 with the usual space between columns
+    for (const [colFrac, seed] of [
+      [0.29, 5],
+      [0.2, 6],
+    ] as const) {
+      const p = fakePhoto({ width: 1400, height: 1200, pitch: 40, lines: 24, angleDeg: 0, seed, colFrac });
+      const L = analyzeColumn(p.rgb, p.w, p.h, 3).layout!;
+      const [e0, e1] = columnEdgesAt(L, p.h / 2);
+      expect(Math.abs(e0 - p.colX[0])).toBeLessThan(20);
+      expect(Math.abs(e1 - p.colX[1])).toBeLessThan(20);
     }
   });
 
