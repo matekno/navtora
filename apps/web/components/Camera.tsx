@@ -32,6 +32,18 @@ export function Camera({ busy, reading, onCapture, onManual, targetLabel, onPick
   const [torch, setTorch] = useState<{ supported: boolean; on: boolean }>({ supported: false, on: false });
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
+  // The camera fills the window and nothing else is on the page, so the page
+  // must not scroll: on Android a page sized with 100dvh can be taller than
+  // the window, and dragging would move the camera and hide its buttons.
+  useEffect(() => {
+    const root = document.documentElement;
+    const before = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = before;
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     async function start() {
@@ -118,8 +130,8 @@ export function Camera({ busy, reading, onCapture, onManual, targetLabel, onPick
   }, [onCapture]);
 
   return (
-    <div className="relative flex min-h-dvh flex-col bg-ink">
-      <div className="relative flex-1 overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-ink">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         <video ref={videoRef} playsInline muted className="absolute inset-0 h-full w-full object-cover" />
         {/* framing guide: one tall column */}
         {!busy && <div aria-hidden className="pointer-events-none absolute inset-x-[12%] inset-y-[8%] rounded-lg border-2 border-accent/70" />}
