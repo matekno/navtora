@@ -180,9 +180,9 @@ export const contentEs = (
           <tr>
             <td>Elihu Shannon</td>
             <td className="num">246</td>
-            <td className="num">241</td>
+            <td className="num">244</td>
             <td className="num">0</td>
-            <td className="num">5</td>
+            <td className="num">2</td>
           </tr>
           <tr>
             <td>David Kokhav</td>
@@ -209,8 +209,8 @@ export const contentEs = (
       </table>
     </div>
     <p>
-      En el sefer de Shannon, 240 de las 241 dieron además el número de columna exacto. Las que quedaron sin respuesta son las dos canciones escritas en forma de ladrillos (Shirat HaIam y Haazinu), que el buscador de renglones no
-      sigue, y los nesiim de Bamidbar 7, donde dos columnas se parecen demasiado.
+      En el sefer de Shannon, 243 de las 244 dieron además el número de columna exacto. Las dos que quedaron sin respuesta son los nesiim de Bamidbar 7, donde dos columnas se parecen demasiado. Las dos canciones escritas en
+      forma de ladrillos (Shirat HaIam y Haazinu) también quedaban sin respuesta, hasta que la app aprendió a leerlas (lo cuento en <Link href={HOW}>el artículo sobre cómo funciona</Link>).
     </p>
     <p>
       En el de la British Library hay 21 columnas que quedan antes de la anterior, pero todas son la primera columna de una foto nueva. De esas, 16 caen sobre una columna que ya estaba, porque una foto repite el final de la anterior, y 5
