@@ -242,9 +242,32 @@ export function contentEs(): PostContent {
           El texto leído y algunos datos del escaneo (cuánto tardó, qué lectura buscabas y un número al azar que identifica al teléfono). La foto se queda en el teléfono, salvo que alguien la mande a propósito para ayudar a
           mejorar la red.
         </p>
+        <h2>Shirat HaIam y Haazinu</h2>
+        <p>
+          Las dos canciones de la Torá se escriben con una forma especial, y al principio la app no las podía ubicar. En el sefer de Shannon, eran tres de las cinco columnas que quedaban sin respuesta.
+        </p>
+        <p>
+          Shirat HaIam se escribe en forma de ladrillos. Un renglón tiene tres pedazos de texto y el siguiente tiene dos, con espacios en blanco entre ellos, y así se van alternando. Por eso, en casi todo el ancho de la columna
+          hay texto un renglón sí y uno no. Cuando la app medía la distancia entre renglones (el paso 4), lo que más se repetía era el patrón de cada dos renglones, y leía dos renglones como si fueran uno.
+        </p>
+        <p>
+          Ahora, si además encuentra una repetición clara a la mitad de esa distancia, se queda con esa. Las tiras de los bordes de la columna tienen texto en todos los renglones, así que ahí la repetición aparece. En un texto común nunca pasa,
+          porque a mitad de camino entre dos renglones no hay tinta.
+        </p>
+        <p>
+          Haazinu se escribe en dos mitades por renglón, con un espacio en blanco ancho en el medio. Como la app busca la columna entre dos huecos en blanco (el paso 3), cada mitad parecía una columna angosta y leía solo una.
+        </p>
+        <p>
+          Ahora, si la columna que encuentra es mucho más angosta que una columna común y del otro lado de un hueco ancho hay otra igual de angosta, las junta y lee cada renglón entero. Para medir el ancho usa la distancia entre
+          renglones. Una columna común mide entre 12 y 18 veces esa distancia, y una mitad de Haazinu, unas 8, así que la app no confunde dos columnas vecinas con las dos mitades. En las pruebas con tres sifrei no juntó
+          ninguna.
+        </p>
+        <p>
+          Con estos dos cambios, las tres columnas se ubican con el número de columna exacto, y también diez recortes que muestran solamente una parte de cada canción, como una foto sacada de cerca. En el resto de las columnas de
+          esos tres sifrei no cambió ninguna respuesta.
+        </p>
         <h2>Lo que todavía no hace bien</h2>
         <ul>
-          <li>Las dos canciones escritas en forma de ladrillos, Shirat HaIam y Haazinu, porque el buscador de renglones no las sigue.</li>
           <li>Los pasajes que se repiten, como el de los nesiim. Ahí la app avisa que hay más de una opción en lugar de elegir una.</li>
           <li>
             Los sifrei que no siguen el formato estándar. La app cuenta las columnas siempre con el formato estándar de 245 columnas, y todavía no detecta cuando un sefer tiene otro. En esos sifrei la cuenta puede no

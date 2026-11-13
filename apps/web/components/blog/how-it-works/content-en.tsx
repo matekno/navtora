@@ -241,9 +241,31 @@ export function contentEn(): PostContent {
           The text that was read and a few details of the scan (how long it took, which reading you were looking for, and a random number that identifies the phone). The photo stays on the phone, unless someone sends it on purpose
           to help improve the network.
         </p>
-        <h2>What it doesn't do well yet</h2>
+        <h2>Shirat HaYam and Haazinu</h2>
+        <p>
+          The two songs of the Torah are written in a special layout, and at first the app couldn&apos;t place them. In Shannon&apos;s sefer, they were three of the five columns left without an answer.
+        </p>
+        <p>
+          Shirat HaYam is written as brickwork. One line has three pieces of text and the next has two, with blank spaces between them, and so on, alternating. That&apos;s why, across almost the whole width of the column, there
+          is text on every other line. When the app measured the spacing between lines (step 4), the pattern that repeated most was the one every two lines, and it read two lines as if they were one.
+        </p>
+        <p>
+          Now, if it also finds a clear repetition at half that spacing, it takes that one. The strips at the edges of the column have text on every line, so that&apos;s where the repetition shows up. In plain text it never happens, because halfway between two
+          lines there is no ink.
+        </p>
+        <p>
+          Haazinu is written in two halves per line, with a wide blank in the middle. Since the app looks for the column between two blank gaps (step 3), each half looked like a narrow column and it read only one.
+        </p>
+        <p>
+          Now, if the column it finds is much narrower than a regular column and there&apos;s another one just as narrow across a wide gap, it joins them and reads each line whole. It measures the width in line spacings. A regular column is
+          12 to 18 of them wide and a half of Haazinu about 8, so the app doesn&apos;t mistake two neighboring columns for the two halves. In the tests with three sifrei it didn&apos;t join any.
+        </p>
+        <p>
+          With these two changes, the three columns are placed with the exact column number, and so are ten crops that show only part of each song, like a photo taken up close. In the rest of the columns of those three sifrei, no
+          answer changed.
+        </p>
+        <h2>What it doesn&apos;t do well yet</h2>
         <ul>
-          <li>The two songs written as brickwork, Shirat HaYam and Haazinu, because the line finder doesn't follow them.</li>
           <li>Repeated passages, like the nesiim. There the app says there is more than one option instead of picking one.</li>
           <li>
             Sifrei that don't follow the standard layout. The app always counts columns with the standard 245-column layout, and it doesn't detect yet when a sefer has another one. On those sifrei the count can be off, so

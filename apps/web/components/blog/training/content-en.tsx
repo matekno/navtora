@@ -178,9 +178,9 @@ export const contentEn = (
           <tr>
             <td>Elihu Shannon</td>
             <td className="num">246</td>
-            <td className="num">241</td>
+            <td className="num">244</td>
             <td className="num">0</td>
-            <td className="num">5</td>
+            <td className="num">2</td>
           </tr>
           <tr>
             <td>David Kokhav</td>
@@ -207,8 +207,8 @@ export const contentEn = (
       </table>
     </div>
     <p>
-      In Shannon&apos;s sefer, 240 of the 241 also gave the exact column number. The ones left without an answer are the two songs written as brickwork (Shirat HaYam and Haazinu), which the line finder doesn&apos;t follow, and the
-      nesiim of Bamidbar 7, where two columns look too much alike.
+      In Shannon&apos;s sefer, 243 of the 244 also gave the exact column number. The two left without an answer are the nesiim of Bamidbar 7, where two columns look too much alike. The two songs written as brickwork (Shirat
+      HaYam and Haazinu) were also left without an answer, until the app learned to read them (I explain it in <Link href={HOW}>the post on how it works</Link>).
     </p>
     <p>
       In the British Library one, 21 columns land before the previous one, but all of them are the first column of a new photo. Of those, 16 fall on a column that was already there, because a photo repeats the end of the one before, and 5
