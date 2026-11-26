@@ -8,7 +8,7 @@ import { loadLocalOcr, readPhotoLocally, type ReadOverlay } from "@/lib/local-oc
 import { speechForNavigation } from "@/lib/say";
 import { primeSpeech, speak } from "@/lib/speech";
 import type { DedicationView, SupportInfo } from "@/lib/support-types";
-import type { ScrollInfo, TargetInfo } from "@/lib/target-types";
+import type { ReadingPrefs, ScrollInfo, TargetInfo, TriennialPlacement } from "@/lib/target-types";
 import { Camera } from "./Camera";
 import { ConsentGate } from "./ConsentGate";
 import { DedicationNote } from "./DedicationNote";
@@ -24,7 +24,16 @@ const KEYS = {
   targets: "navtora.targets.v1",
   voice: "navtora.voice.v1",
   wpc: "navtora.wpc.v1",
+  reading: "navtora.reading.v1",
 };
+
+const DEFAULT_PREFS: ReadingPrefs = { il: false, cycle: "annual", weekday: "annual" };
+
+/** Saved preferences, ignoring anything that isn't a known value. */
+function readPrefs(saved: Partial<ReadingPrefs> | null): ReadingPrefs {
+  if (!saved) return DEFAULT_PREFS;
+  return { il: saved.il === true, cycle: saved.cycle === "triennial" ? "triennial" : "annual", weekday: saved.weekday === "triennial" ? "triennial" : "annual" };
+}
 
 type Screen = "consent" | "camera" | "manual" | "result" | "target";
 
@@ -41,6 +50,8 @@ interface Outcome {
   photo: Blob | null;
   /** where each line read starts in the text, to navigate from this position without scanning again */
   lineStarts: Array<number | null> | null;
+  /** under the triennial cycle: where the column falls in this year's reading */
+  triennial: TriennialPlacement | null;
 }
 
 interface TargetState {
@@ -56,6 +67,7 @@ interface ApiResponse {
   scroll?: ScrollInfo;
   scanId?: string | null;
   lineStarts?: Array<number | null> | null;
+  triennial?: TriennialPlacement | null;
   error?: string;
 }
 
@@ -83,7 +95,7 @@ function averageWpc(seen: number[]): number | null {
 const EMPTY: LocateResult = { status: "insufficient", best: null, alternatives: [], reasons: [], suggestions: [] };
 
 function failure(error: string, photo: Blob | null = null): Outcome {
-  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, scanId: null, photo, lineStarts: null };
+  return { locate: EMPTY, ocr: null, meta: null, navigation: null, scroll: null, error, scanId: null, photo, lineStarts: null, triennial: null };
 }
 
 interface Props {
@@ -105,6 +117,8 @@ export function ScanApp({ support, dedications }: Props) {
   const [pickFromResult, setPickFromResult] = useState(false);
   const [navBusy, setNavBusy] = useState(false);
   const [autoVoice, setAutoVoice] = useState(false);
+  // Israel calendar and reading cycle, as the person's community reads
+  const [prefs, setPrefsState] = useState<ReadingPrefs>(DEFAULT_PREFS);
   // words per column seen in this sefer, when it doesn't follow the standard layout
   const wpcRef = useRef<number[]>([]);
 
@@ -113,6 +127,7 @@ export function ScanApp({ support, dedications }: Props) {
     const ts = load<TargetState>(KEYS.targets);
     if (ts && Array.isArray(ts.targets)) setTargetState({ targets: ts.targets, active: Math.min(ts.active ?? 0, Math.max(0, ts.targets.length - 1)) });
     setAutoVoice(load<boolean>(KEYS.voice) === true);
+    setPrefsState(readPrefs(load<Partial<ReadingPrefs>>(KEYS.reading)));
     wpcRef.current = load<number[]>(KEYS.wpc) ?? [];
     navigator.serviceWorker?.register("/sw.js").catch(() => undefined);
     // counts this anonymous client as active today
@@ -135,6 +150,11 @@ export function ScanApp({ support, dedications }: Props) {
     const next = { targets, active };
     setTargetState(next);
     save(KEYS.targets, next);
+  }, []);
+
+  const setPrefs = useCallback((next: ReadingPrefs) => {
+    setPrefsState(next);
+    save(KEYS.reading, next);
   }, []);
 
   const toggleAutoVoice = useCallback(() => {
@@ -223,6 +243,10 @@ export function ScanApp({ support, dedications }: Props) {
         form.append("ocrMs", String(Math.round(performance.now() - t0)));
         form.append("client", getClientId());
         form.append("lang", lang);
+        if (prefs.cycle === "triennial") {
+          form.append("cycle", "triennial");
+          if (prefs.il) form.append("il", "1");
+        }
         if (activeTarget) {
           const { word, endWord, label, ref } = activeTarget;
           form.append("target", JSON.stringify({ word, endWord, label, ref }));
@@ -251,6 +275,7 @@ export function ScanApp({ support, dedications }: Props) {
           scanId: body.scanId ?? null,
           photo: blob,
           lineStarts: body.lineStarts ?? null,
+          triennial: body.triennial ?? null,
         });
         if (autoVoice) sayNavigation(navigation);
       } catch (err) {
@@ -261,7 +286,7 @@ export function ScanApp({ support, dedications }: Props) {
         setScreen("result");
       }
     },
-    [lang, activeTarget, autoVoice, sayNavigation, t],
+    [lang, prefs, activeTarget, autoVoice, sayNavigation, t],
   );
 
   const handleManual = useCallback(
@@ -269,7 +294,8 @@ export function ScanApp({ support, dedications }: Props) {
       setBusy(true);
       setReturnTo("manual");
       try {
-        const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, client: getClientId(), lang }) });
+        const cycle = prefs.cycle === "triennial" ? { cycle: "triennial", il: prefs.il } : {};
+        const res = await fetch("/api/locate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, client: getClientId(), lang, ...cycle }) });
         const body = (await res.json()) as ApiResponse;
         if (!res.ok || !body.locate) setOutcome(failure(body.error ?? t.errors.http(res.status)));
         else
@@ -283,6 +309,7 @@ export function ScanApp({ support, dedications }: Props) {
             scanId: body.scanId ?? null,
             photo: null,
             lineStarts: body.lineStarts ?? null,
+            triennial: body.triennial ?? null,
           });
       } catch (err) {
         setOutcome(failure(t.errors.connect((err as Error).message)));
@@ -291,14 +318,19 @@ export function ScanApp({ support, dedications }: Props) {
         setScreen("result");
       }
     },
-    [lang, t],
+    [lang, prefs, t],
   );
 
   if (screen === "consent") return <ConsentGate onAccept={accept} dedications={dedications} />;
   if (screen === "target") {
     return (
       <>
-        <TargetPicker onPick={(targets, active) => void pickTarget(targets, active)} onCancel={() => setScreen(pickFromResult && outcome ? "result" : "camera")} />
+        <TargetPicker
+          prefs={prefs}
+          onPrefs={setPrefs}
+          onPick={(targets, active) => void pickTarget(targets, active)}
+          onCancel={() => setScreen(pickFromResult && outcome ? "result" : "camera")}
+        />
         {navBusy && (
           <div role="status" className="fixed inset-0 z-10 flex items-center justify-center bg-ink/70 p-8 text-center text-base backdrop-blur-sm">
             {t.target.computing}
@@ -345,6 +377,7 @@ export function ScanApp({ support, dedications }: Props) {
           ocr={outcome.ocr}
           meta={outcome.meta}
           scroll={outcome.scroll}
+          triennial={outcome.triennial}
           footer={footer}
           onAgain={() => setScreen(returnTo)}
           onPickTarget={() => openPicker(true)}

@@ -20,6 +20,17 @@ export interface TargetInfo extends NavTarget {
   links: RefLinks;
 }
 
+/** Annual cycle (the whole parashah every year) or triennial (a third of it each year). */
+export type Cycle = "annual" | "triennial";
+
+/** How the person's community reads, kept on the phone. */
+export interface ReadingPrefs {
+  il: boolean;
+  cycle: Cycle;
+  /** Monday and Thursday under the triennial cycle: the annual weekday reading, or the start of the coming Shabbat's */
+  weekday: Cycle;
+}
+
 export interface ReadingInfo {
   name: string;
   type: string;
@@ -27,6 +38,20 @@ export interface ReadingInfo {
   targets: TargetInfo[];
   /** aliyot span more than one book: probably needs a second sefer */
   multipleBooks: boolean;
+  /** 1..3, when the reading follows the triennial cycle */
+  triennialYear?: number;
+  /** how this reading was chosen, e.g. that weekdays keep the annual cycle */
+  note?: string;
+}
+
+/** Where a scan falls in this year's triennial reading. */
+export interface TriennialPlacement {
+  /** 1..3 */
+  year: number;
+  /** aliyot of this year's reading in view; none when the column is outside it */
+  aliyot: Array<{ reading: string; n: number; startsHere: boolean }>;
+  /** what is read this year of each parashah in view, e.g. "Bereshit 34:1 a 35:15" */
+  portions: Array<{ name: string; summary: string }>;
 }
 
 /** A calendar date with a festive or special reading. */
@@ -46,10 +71,10 @@ export interface ScrollInfo {
 }
 
 export type TargetRequest = (
-  | { kind: "aliyah"; parasha: number; aliyah?: number | "M" }
+  | { kind: "aliyah"; parasha: number; aliyah?: number | "M"; cycle?: Cycle; il?: boolean; /** 1..3, triennial only; defaults to this year's */ triYear?: number }
   | { kind: "verse"; book: number; chapter: number; verse: number }
-  | { kind: "today"; date?: string; il?: boolean }
-  | { kind: "holidays"; year?: number; il?: boolean }
+  | { kind: "today"; date?: string; il?: boolean; cycle?: Cycle; weekday?: Cycle }
+  | { kind: "holidays"; year?: number; il?: boolean; cycle?: Cycle; weekday?: Cycle }
 ) & {
   /** label language; falls back to the cookie or Accept-Language */
   lang?: string;
@@ -64,6 +89,16 @@ export interface TargetResponse {
   year?: number;
   years?: number[];
   holidays?: HolidayItem[];
+  /** a parashah under the triennial cycle: which year is shown, and when it is read */
+  triennial?: {
+    year: number;
+    /** this year's number in the cycle */
+    current: number;
+    dateISO: string;
+    hebrewDate: string;
+    /** the combined reading, when that year it is read together with its neighbour */
+    together: string | null;
+  };
   error?: string;
 }
 

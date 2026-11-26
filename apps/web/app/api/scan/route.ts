@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { navigate, type LocateResult, type NavTarget, type Navigation, type OcrResult } from "@navtora/core";
 import type { OcrMeta } from "@navtora/ocr";
-import { langFromRequest } from "@/lib/i18n";
+import { getDictionary, langFromRequest } from "@/lib/i18n";
 import { getLayout, getLocator } from "@/lib/locator";
 import { limitRequest } from "@/lib/rate-limit";
 import { getScrollInfo } from "@/lib/scroll-info";
 import { parseClientId, recordScan } from "@/lib/stats";
-import type { ScrollInfo } from "@/lib/target-types";
+import type { ScrollInfo, TriennialPlacement } from "@/lib/target-types";
+import { triennialPlacement } from "@/lib/triennial";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,8 @@ export interface ScanResponse {
   scanId: string | null;
   /** where each line read starts in the text, to navigate later from this same scan (see /api/navigate) */
   lineStarts: Array<number | null> | null;
+  /** with cycle=triennial: where the column falls in this year's triennial reading */
+  triennial: TriennialPlacement | null;
 }
 
 function parseTarget(raw: FormDataEntryValue | null): NavTarget | null {
@@ -60,7 +63,8 @@ function parseLocalOcr(raw: string): OcrResult | null {
 /**
  * Locates a column in the Torah from the transcription the phone made.
  * Form fields: ocr (JSON transcription), ocrMs, target? (JSON NavTarget),
- * wpc? (words per column learned for this sefer), client? (anonymous id), lang?.
+ * wpc? (words per column learned for this sefer), client? (anonymous id), lang?,
+ * cycle? ("triennial" to get the triennial aliyah) and il? ("1" for the Israel calendar).
  * The photo never reaches this route.
  */
 export async function POST(req: Request): Promise<Response> {
@@ -112,7 +116,11 @@ export async function POST(req: Request): Promise<Response> {
     text: result.lines.map((l) => l.text).join("\n"),
     lang,
   });
-  const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs }, scanId, lineStarts };
+  const triennial =
+    form.get("cycle") === "triennial" && locate.status === "confident" && best
+      ? triennialPlacement(best.span, best.parashot.map((p) => p.n), form.get("il") === "1", getDictionary(lang))
+      : null;
+  const body: ScanResponse = { locate, ocr: result, navigation, scroll: getScrollInfo(), meta: { ...meta, totalMs }, scanId, lineStarts, triennial };
   console.info(
     JSON.stringify({
       evt: "scan",

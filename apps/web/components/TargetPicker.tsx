@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { BOOK_NAMES } from "@navtora/core";
 import { capitalize } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/context";
-import type { HolidayItem, ParashaListItem, ReadingInfo, TargetInfo, TargetRequest, TargetResponse } from "@/lib/target-types";
+import type { Cycle, HolidayItem, ParashaListItem, ReadingInfo, ReadingPrefs, TargetInfo, TargetRequest, TargetResponse } from "@/lib/target-types";
 
 interface Props {
+  /** Israel calendar and reading cycle, kept on the phone */
+  prefs: ReadingPrefs;
+  onPrefs: (prefs: ReadingPrefs) => void;
   onPick: (targets: TargetInfo[], active: number) => void;
   onCancel: () => void;
 }
@@ -22,13 +25,15 @@ function formatDate(iso: string, tag: string): string {
   return new Date(`${iso}T12:00:00`).toLocaleDateString(tag, { weekday: "short", day: "numeric", month: "short", year: "numeric" });
 }
 
-export function TargetPicker({ onPick, onCancel }: Props) {
+export function TargetPicker({ prefs, onPrefs, onPick, onCancel }: Props) {
   const { t, lang, tag } = useI18n();
   const [tab, setTab] = useState<Tab>("today");
   const [parashot, setParashot] = useState<ParashaListItem[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [il, setIl] = useState(false);
+  const { il, cycle, weekday } = prefs;
+  // readings already loaded depend on these
+  const prefsKey = `${il}-${cycle}-${weekday}`;
 
   const [parasha, setParasha] = useState<number>(1);
   const [book, setBook] = useState(1);
@@ -43,6 +48,10 @@ export function TargetPicker({ onPick, onCancel }: Props) {
   const [holidays, setHolidays] = useState<HolidayItem[] | null>(null);
   const [openHoliday, setOpenHoliday] = useState<string | null>(null);
   const [holidayReadings, setHolidayReadings] = useState<Record<string, ReadingInfo[]>>({});
+  // the triennial year picked on the Parashah tab; null for this year's
+  const [triYear, setTriYear] = useState<number | null>(null);
+  const [triReading, setTriReading] = useState<ReadingInfo | null>(null);
+  const [triInfo, setTriInfo] = useState<TargetResponse["triennial"] | null>(null);
 
   useEffect(() => {
     fetch("/api/target")
@@ -73,7 +82,7 @@ export function TargetPicker({ onPick, onCancel }: Props) {
   useEffect(() => {
     if (tab !== "today") return;
     let cancelled = false;
-    void resolve({ kind: "today", date, il }).then((body) => {
+    void resolve({ kind: "today", date, il, cycle, weekday }).then((body) => {
       if (cancelled || !body) return;
       setReadings(body.readings ?? []);
       setHebrewDate(body.hebrewDate ?? "");
@@ -82,7 +91,21 @@ export function TargetPicker({ onPick, onCancel }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [tab, date, il]);
+  }, [tab, date, il, cycle, weekday]);
+
+  useEffect(() => {
+    if (tab !== "aliyah" || cycle !== "triennial") return;
+    let cancelled = false;
+    setTriReading(null);
+    void resolve({ kind: "aliyah", parasha, cycle, il, ...(triYear !== null ? { triYear } : {}) }).then((body) => {
+      if (cancelled || !body) return;
+      setTriReading(body.readings?.[0] ?? null);
+      setTriInfo(body.triennial ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [tab, parasha, cycle, il, triYear]);
 
   useEffect(() => {
     if (tab !== "holidays") return;
@@ -104,13 +127,16 @@ export function TargetPicker({ onPick, onCancel }: Props) {
       return;
     }
     setOpenHoliday(h.dateISO);
-    if (!holidayReadings[h.dateISO]) {
-      const body = await resolve({ kind: "today", date: h.dateISO, il });
-      if (body) setHolidayReadings((prev) => ({ ...prev, [h.dateISO]: body.readings ?? [] }));
+    const key = `${prefsKey}|${h.dateISO}`;
+    if (!holidayReadings[key]) {
+      const body = await resolve({ kind: "today", date: h.dateISO, il, cycle, weekday });
+      if (body) setHolidayReadings((prev) => ({ ...prev, [key]: body.readings ?? [] }));
     }
   }
 
   const current = parashot.find((p) => p.n === parasha);
+  const shownYear = triYear ?? triInfo?.current ?? null;
+  const setCycle = (c: Cycle) => onPrefs({ ...prefs, cycle: c });
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
@@ -136,11 +162,40 @@ export function TargetPicker({ onPick, onCancel }: Props) {
         ))}
       </div>
 
-      {(tab === "today" || tab === "holidays") && (
-        <label className="mt-3 flex items-center gap-2 self-end text-sm text-muted">
-          <input type="checkbox" checked={il} onChange={(e) => setIl(e.target.checked)} className="size-4 accent-accent" />
-          {t.target.israelCalendar}
-        </label>
+      {tab !== "verse" && (
+        <div className="mt-3 flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm text-muted">
+          {/* on the Parashah tab the calendar only matters to the triennial cycle, for parashot read together some years */}
+          {(tab !== "aliyah" || cycle === "triennial") && (
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={il} onChange={(e) => onPrefs({ ...prefs, il: e.target.checked })} className="size-4 accent-accent" />
+              {t.target.israelCalendar}
+            </label>
+          )}
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={cycle === "triennial"} onChange={(e) => setCycle(e.target.checked ? "triennial" : "annual")} className="size-4 accent-accent" />
+            {t.target.triennialCycle}
+          </label>
+        </div>
+      )}
+
+      {tab === "today" && cycle === "triennial" && (
+        <div className="mt-2 flex items-center justify-end gap-2 text-sm text-muted">
+          <span id="weekday-label">{t.target.weekdayLabel}</span>
+          <div role="radiogroup" aria-labelledby="weekday-label" className="flex rounded-xl bg-panel p-1">
+            {(["annual", "triennial"] as const).map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="radio"
+                aria-checked={weekday === c}
+                onClick={() => onPrefs({ ...prefs, weekday: c })}
+                className={`h-9 whitespace-nowrap rounded-lg px-3 text-xs font-medium ${weekday === c ? "bg-accent text-ink" : "text-fg"}`}
+              >
+                {t.target.weekdayOptions[c]}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       {error && <div className="mt-4 rounded-xl bg-bad/15 px-4 py-3 text-sm text-bad">{error}</div>}
@@ -198,8 +253,8 @@ export function TargetPicker({ onPick, onCancel }: Props) {
                 </button>
                 {openHoliday === h.dateISO && (
                   <div className="space-y-3 px-4 pb-4">
-                    {!holidayReadings[h.dateISO] && <div className="text-sm text-muted">{t.target.loading}</div>}
-                    {holidayReadings[h.dateISO]?.map((r) => <ReadingBlock key={r.name} reading={r} onPick={onPick} bare />)}
+                    {!holidayReadings[`${prefsKey}|${h.dateISO}`] && <div className="text-sm text-muted">{t.target.loading}</div>}
+                    {holidayReadings[`${prefsKey}|${h.dateISO}`]?.map((r) => <ReadingBlock key={r.name} reading={r} onPick={onPick} bare />)}
                   </div>
                 )}
               </li>
@@ -222,7 +277,34 @@ export function TargetPicker({ onPick, onCancel }: Props) {
               </option>
             ))}
           </select>
-          {current && (
+          {cycle === "triennial" && (
+            <>
+              <div role="radiogroup" aria-label={t.target.triennialCycle} className="flex gap-2">
+                {[1, 2, 3].map((y) => (
+                  <button
+                    key={y}
+                    type="button"
+                    role="radio"
+                    aria-checked={shownYear === y}
+                    onClick={() => setTriYear(y)}
+                    className={`flex h-12 flex-1 flex-col items-center justify-center rounded-xl text-sm font-medium ${shownYear === y ? "bg-accent text-ink" : "border border-line text-fg"}`}
+                  >
+                    <span>{t.target.yearChip(y)}</span>
+                    {triInfo?.current === y && <span className="text-[10px] font-normal opacity-80">{t.target.thisYear}</span>}
+                  </button>
+                ))}
+              </div>
+              {triInfo && (
+                <div className="text-sm text-muted">
+                  {t.target.readOn(formatDate(triInfo.dateISO, tag))}
+                  {triInfo.together && ` ${t.target.readTogether(triInfo.together)}`}
+                </div>
+              )}
+              {busy && !triReading && <div className="text-sm text-muted">{t.target.loading}</div>}
+              {triReading && <ReadingBlock reading={triReading} onPick={onPick} />}
+            </>
+          )}
+          {cycle === "annual" && current && (
             <div className="grid grid-cols-4 gap-2">
               {current.aliyot.map((n) => (
                 <button
@@ -296,6 +378,9 @@ function ReadingBlock({ reading: r, onPick, bare = false }: { reading: ReadingIn
     <div className={bare ? "" : "rounded-2xl bg-panel p-4"}>
       <div className="text-base font-medium">{r.name}</div>
       <div className="text-xs text-muted">{r.summary}</div>
+      {(r.triennialYear || r.note) && (
+        <div className="mt-1 text-xs text-accent">{[r.triennialYear ? t.target.triennialYear(r.triennialYear) : null, r.note].filter(Boolean).join(" · ")}</div>
+      )}
       {r.multipleBooks && <div className="mt-1 text-xs text-warn">{t.target.multipleBooks}</div>}
       {r.targets
         .filter((x) => x.reason && x.aliyah !== undefined)

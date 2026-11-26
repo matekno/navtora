@@ -19,7 +19,7 @@
     "@navtora/core": "workspace:*"
   },
   "devDependencies": {
-    "@hebcal/core": "^6.9.0",
-    "@hebcal/leyning": "^10.0.0"
+    "@hebcal/core": "^6.16.0",
+    "@hebcal/leyning": "^10.1.0"
   }
 }
