@@ -2,6 +2,8 @@ import type { Locale } from "@/lib/i18n";
 
 export interface Source {
   id: string;
+  /** the badge, e.g. "Talmud"; a CJLS responsum when missing */
+  label?: Record<Locale, string>;
   /** title in the reader's language */
   title: Record<Locale, string>;
   /** the title as published, when it isn't in the reader's language (Hebrew, English…) */
@@ -23,7 +25,7 @@ export function SourceCard({ source: s, lang }: { source: Source; lang: Locale }
   return (
     <article id={s.id} className="scroll-mt-20 rounded-2xl border border-accent/50 bg-panel p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="rounded-full border border-accent/60 px-2 py-0.5 font-medium text-accent">{LABEL[lang]}</span>
+        <span className="rounded-full border border-accent/60 px-2 py-0.5 font-medium text-accent">{(s.label ?? LABEL)[lang]}</span>
         {s.year && <span className="text-muted">{s.year}</span>}
       </div>
       <h3 className="mt-3 text-lg font-semibold leading-snug text-fg">{s.title[lang]}</h3>

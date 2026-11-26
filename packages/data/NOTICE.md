@@ -20,5 +20,6 @@ version (public domain). https://www.sefaria.org
 
 `@hebcal/leyning` (BSD-2-Clause) and `@hebcal/core` (GPL-2.0) are used by the
 build script to cross-check aliyah boundaries. No hebcal code is included in the
-generated data. The web app uses them at runtime for the reading calendar; see
-the license note in the top-level README.
+generated data. The web app uses them at runtime for the reading calendar, and
+`@hebcal/triennial` (BSD-2-Clause) for the triennial cycle; see the license
+note in the top-level README.

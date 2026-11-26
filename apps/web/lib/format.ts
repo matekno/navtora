@@ -1,6 +1,7 @@
 /** Labels derived from a placement, in the app's language. Pure: client and server. */
 import type { Placement } from "@navtora/core";
 import type { Dictionary, Locale } from "./i18n";
+import type { TriennialPlacement } from "./target-types";
 
 /** "Bereshit 41:1-39" */
 export function versesLabel(p: Placement, t: Dictionary): string {
@@ -12,15 +13,27 @@ export function versesLabel(p: Placement, t: Dictionary): string {
 /** "third aliyah", or "seventh aliyah of Miketz and first aliyah of Vayigash" across two parashot */
 export function aliyotLabel(p: Placement, t: Dictionary): string {
   if (p.aliyot.length === 0) return t.aliyah.none;
-  const byParasha = new Map<string, Array<number | "M">>();
-  for (const a of p.aliyot) {
-    const key = a.parashaName[t.lang];
-    byParasha.set(key, [...(byParasha.get(key) ?? []), a.n]);
-  }
-  return [...byParasha.entries()]
-    .map(([parasha, ns]) => {
+  return groupedAliyot(
+    p.aliyot.map((a) => ({ group: a.parashaName[t.lang], n: a.n })),
+    t,
+  );
+}
+
+/** The same, by this year's triennial reading. */
+export function triennialAliyotLabel(tp: TriennialPlacement, t: Dictionary): string {
+  return groupedAliyot(
+    tp.aliyot.map((a) => ({ group: a.reading, n: a.n })),
+    t,
+  );
+}
+
+function groupedAliyot(items: Array<{ group: string; n: number | "M" }>, t: Dictionary): string {
+  const byGroup = new Map<string, Array<number | "M">>();
+  for (const a of items) byGroup.set(a.group, [...(byGroup.get(a.group) ?? []), a.n]);
+  return [...byGroup.entries()]
+    .map(([group, ns]) => {
       const text = t.format.list(ns.map(t.aliyah.label));
-      return byParasha.size > 1 ? t.aliyah.ofParasha(text, parasha) : text;
+      return byGroup.size > 1 ? t.aliyah.ofParasha(text, group) : text;
     })
     .join("; ");
 }

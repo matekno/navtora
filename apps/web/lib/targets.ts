@@ -4,7 +4,9 @@
  *
  * hebcal handles the year-to-year variants: Rosh Hashanah on Shabbat with seven
  * aliyot, chol hamoed by weekday, special Shabbatot with a maftir from a second
- * sefer, fast days with a mincha reading.
+ * sefer, fast days with a mincha reading. Under the triennial cycle the
+ * Shabbat readings, and the weekday ones if the community keeps the cycle on
+ * weekdays, come from ./triennial.
  */
 import "server-only";
 import { HDate, HebrewCalendar } from "@hebcal/core";
@@ -13,14 +15,31 @@ import { BOOK_NAMES, type ParashotData, type VerseRef } from "@navtora/core";
 import { getDictionary, type Dictionary, type Locale } from "./i18n";
 import { linksFor } from "./links";
 import { getLocator, getParashot } from "./locator";
-import type { HolidayItem, ParashaListItem, ReadingInfo, TargetInfo, TargetRequest, TargetResponse } from "./target-types";
+import type { Cycle, HolidayItem, ParashaListItem, ReadingInfo, TargetInfo, TargetRequest, TargetResponse } from "./target-types";
+import {
+  aliyahRefs,
+  cycleYear,
+  parashaReading,
+  readingName,
+  readingSummary,
+  readingYear,
+  shabbatReading,
+  verseCount,
+  weekdayReading,
+  type HebcalAliyah,
+  type HebcalAliyot,
+} from "./triennial";
 
-const BOOK_BY_EN: Record<string, number> = { Genesis: 1, Exodus: 2, Leviticus: 3, Numbers: 4, Deuteronomy: 5 };
+/** Fewer verses than this on a day when three are called up gets a warning (Megillah 21b, Shulchan Arukh OC 137:1). */
+const WEEKDAY_MIN_VERSES = 10;
 
-function parseCv(cv: string): { chapter: number; verse: number } {
-  const [c, v] = cv.split(":").map(Number);
-  return { chapter: c ?? 1, verse: v ?? 1 };
+/** How the community reads: annual or triennial, and on weekdays under the triennial cycle. */
+interface CycleOptions {
+  cycle: Cycle;
+  weekday: Cycle;
 }
+
+const ANNUAL: CycleOptions = { cycle: "annual", weekday: "annual" };
 
 function isoDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -74,19 +93,12 @@ function verseTarget(ref: VerseRef, lang: Locale): TargetInfo | null {
   return makeTarget(`verse-${ref.book}-${ref.chapter}-${ref.verse}`, label, label, ref, ref, lang);
 }
 
-interface HebcalAliyah {
-  k: string;
-  b: string;
-  e: string;
-  v?: number;
-  p?: number;
-  reason?: string;
-}
-
 interface HebcalReading {
   name: { en: string };
   type: string;
   summary: string;
+  /** the weekly parashah, on Shabbat and weekdays */
+  parsha?: string[];
   fullkriyah?: Record<string, HebcalAliyah>;
   weekday?: Record<string, HebcalAliyah>;
 }
@@ -97,49 +109,108 @@ function hebcalReadings(hd: HDate, il: boolean): HebcalReading[] {
   return list as unknown as HebcalReading[];
 }
 
+/** Targets for a reading's aliyot, plus the books they are in. */
+function aliyotTargets(aliyot: HebcalAliyot, idPrefix: string, name: string, t: Dictionary, extra: Partial<TargetInfo> = {}): { targets: TargetInfo[]; books: Set<number> } {
+  const targets: TargetInfo[] = [];
+  const books = new Set<number>();
+  for (const [key, a] of Object.entries(aliyot)) {
+    const refs = aliyahRefs(a);
+    if (!refs) continue; // outside the Torah, e.g. the haftarah
+    const n: number | "M" = key === "M" ? "M" : Number(key);
+    const target = makeTarget(`${idPrefix}-${key}`, t.aliyah.withParasha(name, t.aliyah.label(n)), `${name} · ${t.aliyah.short(n)}`, refs.start, refs.end, t.lang, {
+      aliyah: n,
+      ...extra,
+      ...(a.reason ? { reason: a.reason } : {}),
+      ...(a.p ? { parasha: { n: a.p, name: getParashot()[a.p - 1]?.name[t.lang] ?? String(a.p) } } : {}),
+    });
+    if (target) {
+      targets.push(target);
+      books.add(refs.start.book);
+    }
+  }
+  return { targets, books };
+}
+
+/** The aliyot of a hebcal reading, switched to the triennial cycle when the community follows it. */
+function cycleAliyot(
+  ley: HebcalReading,
+  hd: HDate,
+  il: boolean,
+  opts: CycleOptions,
+  t: Dictionary,
+): { aliyot: HebcalAliyot; triennialYear?: number; note?: string; warning?: ReadingInfo["warning"] } {
+  const annual = ley.fullkriyah ?? ley.weekday ?? {};
+  if (opts.cycle !== "triennial") return { aliyot: annual };
+  if (ley.type === "shabbat") {
+    const tri = shabbatReading(hd, il);
+    return tri ? { aliyot: tri.aliyot, triennialYear: tri.year } : { aliyot: annual };
+  }
+  if (ley.type !== "weekday") return { aliyot: annual }; // holidays read the same in both cycles
+  if (opts.weekday === "triennial" && ley.parsha) {
+    const tri = weekdayReading(hd, il, ley.parsha);
+    if (tri) {
+      const verses = verseCount(tri.aliyot);
+      // the app doesn't decide what to do: it says so, and points to the sources
+      const warning = verses < WEEKDAY_MIN_VERSES ? { text: t.target.shortWeekday(verses), href: `/${t.lang}/blog/triennial#${t.target.shortWeekdayAnchor}` } : undefined;
+      return { aliyot: tri.aliyot, triennialYear: tri.year, note: t.target.weekdayTriennialNote, ...(warning ? { warning } : {}) };
+    }
+  }
+  return { aliyot: annual, note: t.target.weekdayAnnualNote };
+}
+
 /** All Torah readings on a date, with aliyot resolved to word indexes. */
-function readingsForDate(hd: HDate, il: boolean, t: Dictionary): ReadingInfo[] {
+function readingsForDate(hd: HDate, il: boolean, t: Dictionary, opts: CycleOptions = ANNUAL): ReadingInfo[] {
   const readings: ReadingInfo[] = [];
   for (const ley of hebcalReadings(hd, il)) {
-    const aliyot = ley.fullkriyah ?? ley.weekday ?? {};
-    const targets: TargetInfo[] = [];
-    const books = new Set<number>();
-    for (const [key, a] of Object.entries(aliyot)) {
-      const book = BOOK_BY_EN[a.k];
-      if (!book) continue; // outside the Torah, e.g. the haftarah
-      const start: VerseRef = { book, ...parseCv(a.b) };
-      const end: VerseRef = { book, ...parseCv(a.e) };
-      const n: number | "M" = key === "M" ? "M" : Number(key);
-      const target = makeTarget(
-        `${isoDate(hd.greg())}-${ley.name.en}-${key}`,
-        t.aliyah.withParasha(ley.name.en, t.aliyah.label(n)),
-        `${ley.name.en} · ${t.aliyah.short(n)}`,
-        start,
-        end,
-        t.lang,
-        {
-          aliyah: n,
-          reading: ley.name.en,
-          ...(a.reason ? { reason: a.reason } : {}),
-          ...(a.p ? { parasha: { n: a.p, name: getParashot()[a.p - 1]?.name[t.lang] ?? String(a.p) } } : {}),
-        },
-      );
-      if (target) {
-        targets.push(target);
-        books.add(book);
-      }
-    }
+    const { aliyot, triennialYear, note, warning } = cycleAliyot(ley, hd, il, opts, t);
+    const idPrefix = `${isoDate(hd.greg())}-${ley.name.en}${triennialYear ? "-tri" : ""}`;
+    const { targets, books } = aliyotTargets(aliyot, idPrefix, ley.name.en, t, { reading: ley.name.en });
     if (targets.length === 0) continue;
-    readings.push({ name: ley.name.en, type: ley.type, summary: ley.summary, targets, multipleBooks: books.size > 1 });
+    readings.push({
+      name: ley.name.en,
+      type: ley.type,
+      summary: readingSummary(aliyot, t) || ley.summary,
+      targets,
+      multipleBooks: books.size > 1,
+      ...(triennialYear ? { triennialYear } : {}),
+      ...(note ? { note } : {}),
+      ...(warning ? { warning } : {}),
+    });
   }
   return readings;
 }
 
+/**
+ * A parashah under the triennial cycle, in year 1, 2 or 3 of the cycle under
+ * way (this year's by default), with the Shabbat it is read on.
+ */
+function triennialParasha(parasha: number, which: number | "M" | undefined, triYear: number | undefined, il: boolean, t: Dictionary, now: Date): TargetResponse {
+  const around = readingYear(new HDate(now), il);
+  const current = cycleYear(around);
+  const year = triYear ?? current;
+  const reading = parashaReading(parasha, year, around, il);
+  if (!reading) return { targets: [], error: t.api.aliyahNotFound };
+  const name = readingName(reading.parashot, t.lang);
+  const dateISO = isoDate(reading.date.greg());
+  const own = getParashot()[parasha - 1];
+  const { targets, books } = aliyotTargets(reading.aliyot, `tri-${dateISO}-${reading.parashot.join("-")}`, name, t, {
+    ...(own ? { parasha: { n: own.n, name: own.name[t.lang] } } : {}),
+  });
+  if (targets.length === 0) return { targets: [], error: t.api.aliyahNotFound };
+  const picked = which === undefined ? targets : targets.filter((x) => x.aliyah === which);
+  return {
+    targets: picked,
+    readings: [{ name, type: "shabbat", summary: readingSummary(reading.aliyot, t), targets, multipleBooks: books.size > 1, triennialYear: year }],
+    triennial: { year, current, dateISO, hebrewDate: reading.date.render("he"), together: reading.parashot.length > 1 ? name : null },
+    ...(picked.length === 0 ? { error: t.api.aliyahNotFound } : {}),
+  };
+}
+
 /** Next date with a reading, looking up to 10 days ahead. */
-function nextReading(from: HDate, il: boolean, t: Dictionary): TargetResponse["next"] {
+function nextReading(from: HDate, il: boolean, t: Dictionary, opts: CycleOptions): TargetResponse["next"] {
   for (let i = 1; i <= 10; i++) {
     const hd = from.add(i, "d");
-    const readings = readingsForDate(hd, il, t);
+    const readings = readingsForDate(hd, il, t, opts);
     if (readings.length > 0) {
       return { dateISO: isoDate(hd.greg()), hebrewDate: hd.render("he"), names: readings.map((r) => r.name) };
     }
@@ -148,7 +219,7 @@ function nextReading(from: HDate, il: boolean, t: Dictionary): TargetResponse["n
 }
 
 /** Dates in a Hebrew year with a festive or special reading. */
-function holidaysForYear(year: number, il: boolean): HolidayItem[] {
+function holidaysForYear(year: number, il: boolean, t: Dictionary): HolidayItem[] {
   const events = HebrewCalendar.calendar({ year, isHebrewYear: true, il, noModern: true, sedrot: false, candlelighting: false });
   const days = new Map<string, HDate>();
   for (const ev of events) days.set(ev.getDate().toString(), ev.getDate());
@@ -165,17 +236,18 @@ function holidaysForYear(year: number, il: boolean): HolidayItem[] {
       dateISO: isoDate(hd.greg()),
       hebrewDate: hd.render("he"),
       names: [...new Set(readings.map((r) => r.name.en))],
-      summary: readings.map((r) => r.summary).join(" · "),
+      summary: readings.map((r) => readingSummary(r.fullkriyah ?? r.weekday ?? {}, t) || r.summary).join(" · "),
     });
   }
   items.sort((a, b) => a.dateISO.localeCompare(b.dateISO));
   return items;
 }
 
-export function resolveTargets(req: TargetRequest, lang: Locale): TargetResponse {
+export function resolveTargets(req: TargetRequest, lang: Locale, now: Date = new Date()): TargetResponse {
   const t = getDictionary(lang);
   const parashot = getParashot();
   if (req.kind === "aliyah") {
+    if (req.cycle === "triennial") return triennialParasha(req.parasha, req.aliyah, req.triYear, req.il ?? false, t, now);
     const targets = aliyahTargets(parashot, req.parasha, req.aliyah, t);
     return targets.length ? { targets } : { targets: [], error: t.api.aliyahNotFound };
   }
@@ -185,21 +257,22 @@ export function resolveTargets(req: TargetRequest, lang: Locale): TargetResponse
   }
   if (req.kind === "holidays") {
     const il = req.il ?? false;
-    const now = new HDate();
-    const current = now.getFullYear();
+    const today = new HDate(now);
+    const current = today.getFullYear();
     // during Elul people are preparing for Rosh Hashanah, so default to next year
-    const defaultYear = now.getMonth() === 6 ? current + 1 : current;
+    const defaultYear = today.getMonth() === 6 ? current + 1 : current;
     const year = req.year ?? defaultYear;
-    return { targets: [], year, years: [current - 1, current, current + 1, current + 2], holidays: holidaysForYear(year, il) };
+    return { targets: [], year, years: [current - 1, current, current + 1, current + 2], holidays: holidaysForYear(year, il, t) };
   }
   const il = req.il ?? false;
-  const date = req.date ? new Date(`${req.date}T12:00:00`) : new Date();
+  const opts: CycleOptions = { cycle: req.cycle ?? "annual", weekday: req.weekday ?? "annual" };
+  const date = req.date ? new Date(`${req.date}T12:00:00`) : now;
   const hd = new HDate(date);
-  const readings = readingsForDate(hd, il, t);
+  const readings = readingsForDate(hd, il, t, opts);
   return {
     targets: readings.flatMap((r) => r.targets),
     readings,
     hebrewDate: hd.render("he"),
-    next: readings.length === 0 ? nextReading(hd, il, t) : null,
+    next: readings.length === 0 ? nextReading(hd, il, t, opts) : null,
   };
 }

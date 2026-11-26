@@ -31,6 +31,8 @@ The network was trained on synthetic photos of real columns in STA"M fonts, aged
 
 Pick a target: the reading for a date, a holiday or special day, a parashah and aliyah, or a verse. The calendar comes from [hebcal](https://github.com/hebcal) and handles each year's variants: Rosh Hashanah on Shabbat, chol hamoed, fast days, Rosh Chodesh, and special Shabbatot with a maftir from a second sefer.
 
+Communities that follow the triennial cycle can switch to it. On Shabbat the app then gives that year's third of the parashah, in the Rabbinical Assembly's system as [`@hebcal/triennial`](https://github.com/hebcal/hebcal-triennial) computes it (counted from 5744, with the 2012 and 2020 changes); holidays keep their readings. For Monday and Thursday it offers both customs (Dorff, CJLS 1987): the annual weekday reading, or the start of the coming Shabbat's triennial reading, which is its first three aliyot as they are. When those come to fewer than ten verses, the app says so and suggests asking the community's rabbi or gabbai what to do. The blog post "What the triennial cycle is" (`/en/blog/triennial`) tells where the cycle comes from and links to the sources. On the Parashah tab you choose the year of the cycle, and after a scan the result gives the aliyah in this year's reading, or says the column is outside it. These choices, and the Israel calendar, are kept on the phone.
+
 After each scan NavTorah says how many columns to move and which way. You can also scan first, without a target: it tells you where the sefer is open, and when you then choose where to go it works out the way from that scan, without scanning again. It counts with the standard 245-column layout, so the count is exact on standard-layout scrolls. On scrolls with another layout it can be off, and the app doesn't detect that yet, so scan again when you get there. Once you're there, it tells you the line and the first words. Instructions can be read aloud.
 
 ## Feedback and dedications
@@ -124,5 +126,5 @@ The code is [MIT](LICENSE).
 
 - The Torah text and standard layout come from [tikkun.io](https://github.com/akivajgordon/tikkun.io) (MIT). See [packages/data/NOTICE.md](packages/data/NOTICE.md).
 - The local reader runs on [ONNX Runtime Web](https://github.com/microsoft/onnxruntime) (MIT). Its training images are rendered with the [Culmus](https://culmus.sourceforge.io) fonts (GPL-2.0 with a font exception); the fonts are not distributed here.
-- The web app uses `@hebcal/core` (GPL-2.0) and `@hebcal/leyning` (BSD-2-Clause) for the reading calendar. If you distribute a build of `apps/web`, the GPL applies to that combined work.
+- The web app uses `@hebcal/core` (GPL-2.0), and `@hebcal/leyning` and `@hebcal/triennial` (BSD-2-Clause), for the reading calendar. If you distribute a build of `apps/web`, the GPL applies to that combined work.
 - The scans used for evaluation are not in this repository. `tools/eval/src/download.ts` lists their sources and licenses.

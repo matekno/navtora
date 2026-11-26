@@ -24,11 +24,14 @@ importers:
   apps/web:
     dependencies:
       '@hebcal/core':
-        specifier: ^6.9.2
-        version: 6.9.2
+        specifier: ^6.16.0
+        version: 6.16.0
       '@hebcal/leyning':
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^10.1.0
+        version: 10.1.0
+      '@hebcal/triennial':
+        specifier: ^6.4.0
+        version: 6.4.0
       '@navtora/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -79,11 +82,11 @@ importers:
         version: link:../core
     devDependencies:
       '@hebcal/core':
-        specifier: ^6.9.0
-        version: 6.9.2
+        specifier: ^6.16.0
+        version: 6.16.0
       '@hebcal/leyning':
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^10.1.0
+        version: 10.1.0
 
   packages/ocr:
     dependencies:
@@ -310,20 +313,24 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@hebcal/core@6.9.2':
-    resolution: {integrity: sha512-6GNcu3dWPAcngSWC4SB9nZebl99l+x2fN+GFQOrll+CXg+VX9yuXjzv91c9/Q/RF5HaHQwy1GkKTbCvQPPWIbA==}
+  '@hebcal/core@6.16.0':
+    resolution: {integrity: sha512-B0JrcDSkMCsgyX/zxSQeEGeARy9c8TQMxEehxsOUjUwUGD1MGI0yg2iDqzVrWo7P6IGTS5lckjIbudDISHdJbA==}
     engines: {node: '>= 18'}
 
-  '@hebcal/hdate@0.22.8':
-    resolution: {integrity: sha512-kTGFm9zHbF2qz6/Pst3e8Zr7TWzVLcYCWQLKu1HacDJAocKXITEqMPYS0AJpO2V4YTD26EkWR2BgMYL44Dh39w==}
+  '@hebcal/hdate@0.23.1':
+    resolution: {integrity: sha512-lpvYpDc1Oe23XPClptNH6XEe2NA8Tb8iaUJ9/5Er1k04H9iHYB5YQnWsAg83R8l5SPOEUQnybeYizvSRSbBKCg==}
 
-  '@hebcal/leyning@10.0.0':
-    resolution: {integrity: sha512-B01Pw41i+RoVsVvXE4Twd+vFX+1A3HFvueYVG3U0TDAlUqBsDrF046Kc0OEN9eDSigHSfBnt3JTAL9oOJvM59w==}
+  '@hebcal/leyning@10.1.0':
+    resolution: {integrity: sha512-98sDjJDPQwrXEOLurg3Gbns7mGK9WyKHn6QKIrq0Nbvwi08pha5O0rijmMLp2aaP490bOw5O/XjuAe3bI0ynMg==}
     engines: {node: '>=18'}
 
-  '@hebcal/noaa@0.12.3':
-    resolution: {integrity: sha512-CQId2yEpUPGl0EWVxditqkG2MvEd9uKibiQtrcEQux9UnTILTPM6mwyKMTygZmNBwJl1kXqvuPQCJm0NxqLykA==}
+  '@hebcal/noaa@0.12.4':
+    resolution: {integrity: sha512-M7bkeWUP54+h34OMlkyuu0ZuUV9URnEbG9dxakeA1totMhvIvHrVEVzKznmpykMbKkystC4C3BDg1fG7Qfl2pA==}
     engines: {node: '>=18'}
+
+  '@hebcal/triennial@6.4.0':
+    resolution: {integrity: sha512-8OEk6Lf33W3Cs4mgAiDebqpqD8UO+4qLDlJ+oi34OdyQFZUrW+E8dAvPFpMYFMLt8Fk3Cogb/CgNMSGZdyCLtg==}
+    engines: {node: '>= 18.0.0'}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -1400,14 +1407,14 @@ packages:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
 
-  temporal-polyfill@1.0.4:
-    resolution: {integrity: sha512-MLEU0qOD2uXlz24oINNtdLZQl8RgmMxSnRtKEGZGGetTJjlRwQJjk+VsJ4EREaUoiaTb8NJOcUiKtoAiWn9EBg==}
+  temporal-polyfill@1.0.8:
+    resolution: {integrity: sha512-RCCGa0GddT099XG49ijdD0tDf86L8vfuZun1+JyJiO4Y2NP9PACQsG0OnvNPXwVLisdvhr/zqL2nhKQmXXx08A==}
 
   temporal-spec@1.0.1:
     resolution: {integrity: sha512-wxVoanmDeavXie1vu2JaQ3WIc3JZnWAOYFBsJyATaVsXsycKYUflGsyBmrRSnoCpZJpwPyr38VpgSUlQ8CbFxg==}
 
-  temporal-utils@1.0.2:
-    resolution: {integrity: sha512-1B8Dl4KzrOvsNUlpoWGno2VLQlxroLjDgc5NBjVC9ax9ymdo+ezfyvhyjEMx+IVfhINr6CIG2gcnlP95iRrybQ==}
+  temporal-utils@1.0.4:
+    resolution: {integrity: sha512-4mAcgbWlaxe+gn23gk8g0iHxCVGVOhKzSCfF5HM3lfvH8BdT+/pBmH/R/E4CrIse+koUgs8ThkPzCLnui6Fi8w==}
 
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
@@ -1630,23 +1637,30 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@hebcal/core@6.9.2':
+  '@hebcal/core@6.16.0':
     dependencies:
-      '@hebcal/hdate': 0.22.8
-      '@hebcal/noaa': 0.12.3
+      '@hebcal/hdate': 0.23.1
+      '@hebcal/noaa': 0.12.4
       quick-lru: 7.3.0
-      temporal-polyfill: 1.0.4
+      temporal-polyfill: 1.0.8
 
-  '@hebcal/hdate@0.22.8': {}
+  '@hebcal/hdate@0.23.1': {}
 
-  '@hebcal/leyning@10.0.0':
+  '@hebcal/leyning@10.1.0':
     dependencies:
-      '@hebcal/core': 6.9.2
-      '@hebcal/hdate': 0.22.8
+      '@hebcal/core': 6.16.0
+      '@hebcal/hdate': 0.23.1
 
-  '@hebcal/noaa@0.12.3':
+  '@hebcal/noaa@0.12.4':
     dependencies:
-      temporal-polyfill: 1.0.4
+      temporal-polyfill: 1.0.8
+
+  '@hebcal/triennial@6.4.0':
+    dependencies:
+      '@hebcal/core': 6.16.0
+      '@hebcal/hdate': 0.23.1
+      '@hebcal/leyning': 10.1.0
+      quick-lru: 7.3.0
 
   '@img/colour@1.1.0': {}
 
@@ -2539,14 +2553,14 @@ snapshots:
 
   tapable@2.3.3: {}
 
-  temporal-polyfill@1.0.4:
+  temporal-polyfill@1.0.8:
     dependencies:
       temporal-spec: 1.0.1
-      temporal-utils: 1.0.2
+      temporal-utils: 1.0.4
 
   temporal-spec@1.0.1: {}
 
-  temporal-utils@1.0.2: {}
+  temporal-utils@1.0.4: {}
 
   tinybench@2.9.0: {}
 

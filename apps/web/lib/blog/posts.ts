@@ -1,7 +1,7 @@
 /** Blog posts: one entry per post, in the order the index shows them. Slugs are shared by both languages. */
 import type { Locale } from "@/lib/i18n";
 
-export type PostSlug = "halacha" | "how-it-works" | "training" | "first-version" | "about" | "story";
+export type PostSlug = "halacha" | "triennial" | "how-it-works" | "training" | "first-version" | "about" | "story";
 
 export interface PostMeta {
   slug: PostSlug;
@@ -19,6 +19,17 @@ export const POSTS: PostMeta[] = [
     description: {
       es: "Qué dice la responsa del CJLS de 2026 sobre qué hacer cuando nadie sabe leer la Torá, y cómo ayuda NavTorá a leer del rollo.",
       en: "What the 2026 CJLS responsum says about what to do when no one can read Torah, and how NavTorah helps read from the scroll.",
+    },
+  },
+  {
+    slug: "triennial",
+    title: {
+      es: "Qué es el ciclo trienal",
+      en: "What the triennial cycle is",
+    },
+    description: {
+      es: "De dónde viene leer la Torá en tres años, cómo lo llevó a hoy la Asamblea Rabínica y dónde leer más.",
+      en: "Where reading the Torah over three years comes from, how the Rabbinical Assembly brought it to today, and where to read more.",
     },
   },
   {

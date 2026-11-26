@@ -1,10 +1,10 @@
 "use client";
 
 import type { OcrResult, Placement } from "@navtora/core";
-import { aliyotLabel, capitalize, parashotLabel, versesLabel } from "@/lib/format";
+import { aliyotLabel, capitalize, parashotLabel, triennialAliyotLabel, versesLabel } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/context";
 import { linksFor } from "@/lib/links";
-import type { ScrollInfo } from "@/lib/target-types";
+import type { ScrollInfo, TriennialPlacement } from "@/lib/target-types";
 import { Links } from "./Links";
 import { ScrollMap } from "./ScrollMap";
 import { ActionBar } from "./ActionBar";
@@ -21,15 +21,18 @@ interface Props {
   ocr: OcrResult | null;
   meta: ScanMeta | null;
   scroll: ScrollInfo | null;
+  /** under the triennial cycle: the aliyah by this year's reading */
+  triennial?: TriennialPlacement | null;
   /** feedback and dedication, above the meta line */
   footer?: React.ReactNode;
   onAgain: () => void;
   onPickTarget: () => void;
 }
 
-export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, onPickTarget }: Props) {
+export function ResultCard({ placement: p, ocr, meta, scroll, triennial, footer, onAgain, onPickTarget }: Props) {
   const { t, lang } = useI18n();
   const col = p.standardColumn;
+  const aliyahStarts = triennial ? triennial.aliyot.some((a) => a.startsHere) : p.aliyot.some((a) => a.startsHere);
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 pt-6">
       <div className="flex items-center justify-between">
@@ -44,7 +47,13 @@ export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, o
           value={parashotLabel(p, lang, t)}
           hebrew={p.parashot.map((x) => x.name.he).join(" · ")}
         />
-        <Row label={t.result.aliyah} value={capitalize(aliyotLabel(p, t))} />
+        {!triennial && <Row label={t.result.aliyah} value={capitalize(aliyotLabel(p, t))} />}
+        {triennial && triennial.aliyot.length > 0 && (
+          <Row label={t.result.aliyah} value={capitalize(triennialAliyotLabel(triennial, t))} hint={t.result.triennialHint(triennial.year)} />
+        )}
+        {triennial && triennial.aliyot.length === 0 && (
+          <Row label={t.result.aliyah} value={t.result.outsideTriennial} hint={triennial.portions.map((x) => t.result.triennialPortion(x.name, x.summary)).join(" · ")} />
+        )}
         <Row label={t.result.verses} value={versesLabel(p, t)} />
         {col && <Row label={t.result.column} value={t.result.columnValue(col.column, col.fromColumnStart ? null : col.firstLine)} hint={t.result.columnHint} />}
       </section>
@@ -58,7 +67,7 @@ export function ResultCard({ placement: p, ocr, meta, scroll, footer, onAgain, o
       <section className="mt-4 rounded-2xl bg-panel p-5">
         <div className="text-xs uppercase tracking-wide text-muted">{t.result.startsWith}</div>
         <div className="hebrew mt-2 text-3xl leading-snug">{p.firstWordsVocalized ?? p.firstWords}</div>
-        {p.aliyot.some((a) => a.startsHere) && <div className="mt-3 text-sm text-accent">{t.result.aliyahStartsHere}</div>}
+        {aliyahStarts && <div className="mt-3 text-sm text-accent">{t.result.aliyahStartsHere}</div>}
         <div className="mt-4">
           <Links links={linksFor(p.verses.start, p.verses.end)} compact />
         </div>

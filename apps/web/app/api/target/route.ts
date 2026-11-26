@@ -33,6 +33,16 @@ export async function POST(req: Request): Promise<Response> {
   if (body.kind === "today" && body.date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(body.date)) {
     return NextResponse.json({ targets: [], error: "The date must be YYYY-MM-DD." }, { status: 400 });
   }
+  const cycles = [undefined, "annual", "triennial"];
+  if (body.kind !== "verse" && !cycles.includes(body.cycle)) {
+    return NextResponse.json({ targets: [], error: "cycle must be annual or triennial." }, { status: 400 });
+  }
+  if ((body.kind === "today" || body.kind === "holidays") && !cycles.includes(body.weekday)) {
+    return NextResponse.json({ targets: [], error: "weekday must be annual or triennial." }, { status: 400 });
+  }
+  if (body.kind === "aliyah" && body.triYear !== undefined && ![1, 2, 3].includes(body.triYear)) {
+    return NextResponse.json({ targets: [], error: "triYear must be 1, 2 or 3." }, { status: 400 });
+  }
   try {
     const res = resolveTargets(body, langFromRequest(req, body.lang));
     return NextResponse.json(res, { status: res.error && res.targets.length === 0 ? 404 : 200 });

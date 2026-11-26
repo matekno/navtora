@@ -3,7 +3,7 @@
  * one can read Torah. The responsum itself goes through the sources it rests
  * on, so the post cites only it, and the post's text summarizes it.
  */
-import type { Source } from "./SourceCard";
+import type { Source } from "../SourceCard";
 
 const RA = "https://www.rabbinicalassembly.org/sites/default/files";
 
