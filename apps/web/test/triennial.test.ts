@@ -64,10 +64,12 @@ describe("triennial cycle", () => {
     expect(tri.note).toBe(es.target.weekdayTriennialNote);
   });
 
-  it("adds the fourth aliyah on weekdays when the first three come to fewer than ten verses", () => {
-    // Ki Teitzei, year 3: 24:14-16, 24:17-19 and 24:20-22 are nine verses
+  it("reads the Shabbat's first three aliyot on weekdays as they are, even when they are short", () => {
+    // Ki Teitzei, year 3: nine verses, nothing added
     const tri = onDate("2028-08-28", { cycle: "triennial", weekday: "triennial" });
-    expect(tri.targets.map(range)).toEqual(["24:14-24:16", "24:17-24:19", "24:20-25:4"]);
+    expect(tri.targets.map(range)).toEqual(["24:14-24:16", "24:17-24:19", "24:20-24:22"]);
+    const shabbat = onDate("2028-09-02", { cycle: "triennial" });
+    expect(shabbat.targets.slice(0, 3).map(range)).toEqual(tri.targets.map(range));
   });
 
   it("leaves holidays as they are", () => {

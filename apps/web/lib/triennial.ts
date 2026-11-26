@@ -7,11 +7,8 @@
  * Only Shabbat with a parashah changes; holidays keep their readings. On
  * Monday and Thursday there are two customs (Dorff, "Annual and Triennial
  * Systems for Reading the Torah", CJLS 1987): keep the annual weekday reading,
- * or read the start of what will be read on Shabbat, at least ten verses in
- * three aliyot. For the second one NavTorah takes the first three aliyot of
- * the coming Shabbat and adds the next one to the third while they come to
- * fewer than ten verses, as Marsh suggests ("The Sequential Triennial Cycle",
- * AJR, 2015).
+ * or read the start of what will be read on Shabbat. For the second one
+ * NavTorah gives the first three aliyot of the coming Shabbat, as they are.
  */
 import "server-only";
 import { HDate, HebrewCalendar, flags, months, parshiot, type Event, type ParshaEvent } from "@hebcal/core";
@@ -104,14 +101,11 @@ export function shabbatReading(hd: HDate, il: boolean): TriennialShabbat | null 
   return { year: (r.yearNum ?? 0) + 1, aliyot: r.aliyot as HebcalAliyot };
 }
 
-const WEEKDAY_MIN_VERSES = 10;
-
 /**
  * Monday or Thursday by the triennial cycle: the first three aliyot of the
- * coming Shabbat's reading, adding the next aliyah to the third while they
- * come to fewer than ten verses. `parsha` is the parashah hebcal gives for
- * the weekday; null when the next Shabbat with a parashah reads another one,
- * as with Vezot Haberakhah between Yom Kippur and Sukkot.
+ * coming Shabbat's reading, as they are. `parsha` is the parashah hebcal gives
+ * for the weekday; null when the next Shabbat with a parashah reads another
+ * one, as with Vezot Haberakhah between Yom Kippur and Sukkot.
  */
 export function weekdayReading(hd: HDate, il: boolean, parsha: string[]): TriennialShabbat | null {
   const ev = parshaEvent(hd, il, true);
@@ -119,26 +113,10 @@ export function weekdayReading(hd: HDate, il: boolean, parsha: string[]): Trienn
   const shabbat = getTriennialForParshaHaShavua(ev, il);
   const all = shabbat.aliyot as HebcalAliyot | undefined;
   const first = [all?.["1"], all?.["2"], all?.["3"]];
-  if (!all || first.some((a) => !a)) return null;
-  const parts = first.map((a) => ({ ...a! }));
-  const spans = parts.map(verseSpan);
-  if (spans.some((s) => s === null)) return null;
-  let total = spans.reduce((sum, s) => sum + (s![1] - s![0] + 1), 0);
-  let lastEnd = spans[2]![1];
-  for (let k = 4; total < WEEKDAY_MIN_VERSES && k <= 7; k++) {
-    const next = all[String(k)];
-    const span = next ? verseSpan(next) : null;
-    // only an aliyah that goes straight on, so nothing is skipped
-    if (!next || !span || span[0] !== lastEnd + 1 || next.k !== parts[2]!.k) break;
-    parts[2]!.e = next.e;
-    total += span[1] - span[0] + 1;
-    lastEnd = span[1];
-  }
-  for (const p of parts) {
-    delete p.v;
-    delete p.reason;
-  }
-  return { year: (shabbat.yearNum ?? 0) + 1, aliyot: { "1": parts[0]!, "2": parts[1]!, "3": parts[2]! } };
+  if (first.some((a) => !a)) return null;
+  // copies without the verse count or reason, which belong to Shabbat
+  const [a1, a2, a3] = first.map((a) => ({ k: a!.k, b: a!.b, e: a!.e }));
+  return { year: (shabbat.yearNum ?? 0) + 1, aliyot: { "1": a1!, "2": a2!, "3": a3! } };
 }
 
 export interface TriennialParashaReading {
@@ -176,26 +154,36 @@ export function readingName(parashot: number[], lang: Locale): string {
   return parashot.map((n) => list[n - 1]?.name[lang] ?? String(n)).join("-");
 }
 
-/** "Bereshit 34:1 a 35:15", merging aliyot that follow one another; the maftir only when it is read elsewhere. */
+/**
+ * "Bereshit 34:1 a 35:15": the verses a reading covers, in the app's language.
+ * Aliyot that follow or overlap one another are merged, and one read again,
+ * like a maftir that repeats the seventh, is left out.
+ */
 export function readingSummary(aliyot: HebcalAliyot, t: Dictionary): string {
-  const ranges: Array<{ span: [number, number]; refs: { start: VerseRef; end: VerseRef } }> = [];
-  for (const key of ["1", "2", "3", "4", "5", "6", "7", "M"]) {
-    const a = aliyot[key];
-    const span = a ? verseSpan(a) : null;
-    const refs = a ? aliyahRefs(a) : null;
+  const ranges: Array<{ span: [number, number]; start: VerseRef; end: VerseRef }> = [];
+  // numbered aliyot come first, in order, then the maftir
+  for (const a of Object.values(aliyot)) {
+    const span = verseSpan(a);
+    const refs = aliyahRefs(a);
     if (!span || !refs) continue;
+    if (ranges.some((r) => span[0] >= r.span[0] && span[1] <= r.span[1])) continue;
     const last = ranges[ranges.length - 1];
-    if (key === "M" && ranges.some((r) => span[0] >= r.span[0] && span[1] <= r.span[1])) continue;
-    if (last && span[0] === last.span[1] + 1) {
+    if (last && span[0] >= last.span[0] && span[0] <= last.span[1] + 1) {
       last.span = [last.span[0], span[1]];
-      last.refs = { start: last.refs.start, end: refs.end };
+      last.end = refs.end;
     } else {
-      ranges.push({ span, refs });
+      ranges.push({ span, ...refs });
     }
   }
+  // the book is named once for ranges in a row from the same book, as in "Shemot 32:11 a 14, 34:1 a 10"
   return ranges
-    .map(({ refs: { start: s, end: e } }) => t.format.verseRange(BOOK_NAMES[s.book]?.[t.lang] ?? String(s.book), s.chapter, s.verse, e.chapter, e.verse))
-    .join("; ");
+    .map((r, i) => {
+      const sameBook = i > 0 && ranges[i - 1]!.start.book === r.start.book;
+      const book = sameBook ? "" : (BOOK_NAMES[r.start.book]?.[t.lang] ?? String(r.start.book));
+      const text = t.format.verseRange(book, r.start.chapter, r.start.verse, r.end.chapter, r.end.verse).trim();
+      return i === 0 ? text : `${sameBook ? ", " : "; "}${text}`;
+    })
+    .join("");
 }
 
 /**

@@ -154,7 +154,7 @@ function readingsForDate(hd: HDate, il: boolean, t: Dictionary, opts: CycleOptio
     readings.push({
       name: ley.name.en,
       type: ley.type,
-      summary: triennialYear ? readingSummary(aliyot, t) : ley.summary,
+      summary: readingSummary(aliyot, t) || ley.summary,
       targets,
       multipleBooks: books.size > 1,
       ...(triennialYear ? { triennialYear } : {}),
@@ -203,7 +203,7 @@ function nextReading(from: HDate, il: boolean, t: Dictionary, opts: CycleOptions
 }
 
 /** Dates in a Hebrew year with a festive or special reading. */
-function holidaysForYear(year: number, il: boolean): HolidayItem[] {
+function holidaysForYear(year: number, il: boolean, t: Dictionary): HolidayItem[] {
   const events = HebrewCalendar.calendar({ year, isHebrewYear: true, il, noModern: true, sedrot: false, candlelighting: false });
   const days = new Map<string, HDate>();
   for (const ev of events) days.set(ev.getDate().toString(), ev.getDate());
@@ -220,7 +220,7 @@ function holidaysForYear(year: number, il: boolean): HolidayItem[] {
       dateISO: isoDate(hd.greg()),
       hebrewDate: hd.render("he"),
       names: [...new Set(readings.map((r) => r.name.en))],
-      summary: readings.map((r) => r.summary).join(" · "),
+      summary: readings.map((r) => readingSummary(r.fullkriyah ?? r.weekday ?? {}, t) || r.summary).join(" · "),
     });
   }
   items.sort((a, b) => a.dateISO.localeCompare(b.dateISO));
@@ -246,7 +246,7 @@ export function resolveTargets(req: TargetRequest, lang: Locale, now: Date = new
     // during Elul people are preparing for Rosh Hashanah, so default to next year
     const defaultYear = today.getMonth() === 6 ? current + 1 : current;
     const year = req.year ?? defaultYear;
-    return { targets: [], year, years: [current - 1, current, current + 1, current + 2], holidays: holidaysForYear(year, il) };
+    return { targets: [], year, years: [current - 1, current, current + 1, current + 2], holidays: holidaysForYear(year, il, t) };
   }
   const il = req.il ?? false;
   const opts: CycleOptions = { cycle: req.cycle ?? "annual", weekday: req.weekday ?? "annual" };

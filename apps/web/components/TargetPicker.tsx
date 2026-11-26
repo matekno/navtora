@@ -179,9 +179,11 @@ export function TargetPicker({ prefs, onPrefs, onPick, onCancel }: Props) {
       )}
 
       {tab === "today" && cycle === "triennial" && (
-        <div className="mt-2 flex items-center justify-end gap-2 text-sm text-muted">
-          <span id="weekday-label">{t.target.weekdayLabel}</span>
-          <div role="radiogroup" aria-labelledby="weekday-label" className="flex rounded-xl bg-panel p-1">
+        <div className="mt-3 rounded-2xl bg-panel p-1">
+          <div id="weekday-label" className="px-3 pb-1 pt-2 text-xs text-muted">
+            {t.target.weekdayLabel}
+          </div>
+          <div role="radiogroup" aria-labelledby="weekday-label" className="grid grid-cols-2 gap-1">
             {(["annual", "triennial"] as const).map((c) => (
               <button
                 key={c}
@@ -189,9 +191,10 @@ export function TargetPicker({ prefs, onPrefs, onPick, onCancel }: Props) {
                 role="radio"
                 aria-checked={weekday === c}
                 onClick={() => onPrefs({ ...prefs, weekday: c })}
-                className={`h-9 whitespace-nowrap rounded-lg px-3 text-xs font-medium ${weekday === c ? "bg-accent text-ink" : "text-fg"}`}
+                className={`rounded-xl px-3 py-2 text-left ${weekday === c ? "bg-accent text-ink" : "text-fg"}`}
               >
-                {t.target.weekdayOptions[c]}
+                <span className="block text-sm font-medium">{t.target.weekdayOptions[c].title}</span>
+                <span className={`block text-xs ${weekday === c ? "text-ink/80" : "text-muted"}`}>{t.target.weekdayOptions[c].detail}</span>
               </button>
             ))}
           </div>
