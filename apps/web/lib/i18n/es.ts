@@ -126,6 +126,11 @@ export const es = {
     weekdayAnnualNote: "Lunes y jueves con el ciclo anual: el comienzo de la parashá.",
     weekdayTriennialNote: "Lunes y jueves con el ciclo trienal: las tres primeras aliot de la lectura del Shabat.",
     triennialYear: (year: number) => `Ciclo trienal, año ${year}`,
+    whatIsTriennial: "¿Qué es?",
+    shortWeekday: (verses: number) =>
+      `Estas tres aliot suman ${verses} pesukim, menos de los diez que se suelen leer cuando suben tres. Consultá con el rabino o el gabai de tu kehilá qué hacer.`,
+    shortWeekdayAnchor: "lunes-y-jueves",
+    shortWeekdayMore: "Ver las fuentes",
     yearChip: (year: number) => `Año ${year}`,
     thisYear: "este año",
     readOn: (date: string) => `Se lee el ${date}.`,

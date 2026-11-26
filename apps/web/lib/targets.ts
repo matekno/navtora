@@ -24,10 +24,14 @@ import {
   readingSummary,
   readingYear,
   shabbatReading,
+  verseCount,
   weekdayReading,
   type HebcalAliyah,
   type HebcalAliyot,
 } from "./triennial";
+
+/** Fewer verses than this on a day when three are called up gets a warning (Megillah 21b, Shulchan Arukh OC 137:1). */
+const WEEKDAY_MIN_VERSES = 10;
 
 /** How the community reads: annual or triennial, and on weekdays under the triennial cycle. */
 interface CycleOptions {
@@ -128,7 +132,13 @@ function aliyotTargets(aliyot: HebcalAliyot, idPrefix: string, name: string, t: 
 }
 
 /** The aliyot of a hebcal reading, switched to the triennial cycle when the community follows it. */
-function cycleAliyot(ley: HebcalReading, hd: HDate, il: boolean, opts: CycleOptions, t: Dictionary): { aliyot: HebcalAliyot; triennialYear?: number; note?: string } {
+function cycleAliyot(
+  ley: HebcalReading,
+  hd: HDate,
+  il: boolean,
+  opts: CycleOptions,
+  t: Dictionary,
+): { aliyot: HebcalAliyot; triennialYear?: number; note?: string; warning?: ReadingInfo["warning"] } {
   const annual = ley.fullkriyah ?? ley.weekday ?? {};
   if (opts.cycle !== "triennial") return { aliyot: annual };
   if (ley.type === "shabbat") {
@@ -138,7 +148,12 @@ function cycleAliyot(ley: HebcalReading, hd: HDate, il: boolean, opts: CycleOpti
   if (ley.type !== "weekday") return { aliyot: annual }; // holidays read the same in both cycles
   if (opts.weekday === "triennial" && ley.parsha) {
     const tri = weekdayReading(hd, il, ley.parsha);
-    if (tri) return { aliyot: tri.aliyot, triennialYear: tri.year, note: t.target.weekdayTriennialNote };
+    if (tri) {
+      const verses = verseCount(tri.aliyot);
+      // the app doesn't decide what to do: it says so, and points to the sources
+      const warning = verses < WEEKDAY_MIN_VERSES ? { text: t.target.shortWeekday(verses), href: `/${t.lang}/blog/triennial#${t.target.shortWeekdayAnchor}` } : undefined;
+      return { aliyot: tri.aliyot, triennialYear: tri.year, note: t.target.weekdayTriennialNote, ...(warning ? { warning } : {}) };
+    }
   }
   return { aliyot: annual, note: t.target.weekdayAnnualNote };
 }
@@ -147,7 +162,7 @@ function cycleAliyot(ley: HebcalReading, hd: HDate, il: boolean, opts: CycleOpti
 function readingsForDate(hd: HDate, il: boolean, t: Dictionary, opts: CycleOptions = ANNUAL): ReadingInfo[] {
   const readings: ReadingInfo[] = [];
   for (const ley of hebcalReadings(hd, il)) {
-    const { aliyot, triennialYear, note } = cycleAliyot(ley, hd, il, opts, t);
+    const { aliyot, triennialYear, note, warning } = cycleAliyot(ley, hd, il, opts, t);
     const idPrefix = `${isoDate(hd.greg())}-${ley.name.en}${triennialYear ? "-tri" : ""}`;
     const { targets, books } = aliyotTargets(aliyot, idPrefix, ley.name.en, t, { reading: ley.name.en });
     if (targets.length === 0) continue;
@@ -159,6 +174,7 @@ function readingsForDate(hd: HDate, il: boolean, t: Dictionary, opts: CycleOptio
       multipleBooks: books.size > 1,
       ...(triennialYear ? { triennialYear } : {}),
       ...(note ? { note } : {}),
+      ...(warning ? { warning } : {}),
     });
   }
   return readings;

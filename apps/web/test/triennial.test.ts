@@ -70,6 +70,9 @@ describe("triennial cycle", () => {
     expect(tri.targets.map(range)).toEqual(["24:14-24:16", "24:17-24:19", "24:20-24:22"]);
     const shabbat = onDate("2028-09-02", { cycle: "triennial" });
     expect(shabbat.targets.slice(0, 3).map(range)).toEqual(tri.targets.map(range));
+    // it doesn't decide what to do: it warns, and points to the sources
+    expect(tri.warning).toEqual({ text: es.target.shortWeekday(9), href: "/es/blog/triennial#lunes-y-jueves" });
+    expect(onDate("2026-11-30", { cycle: "triennial", weekday: "triennial" }).warning).toBeUndefined();
   });
 
   it("leaves holidays as they are", () => {

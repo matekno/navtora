@@ -124,6 +124,11 @@ export const en: Dictionary = {
     weekdayAnnualNote: "Monday and Thursday by the annual cycle: the start of the parashah.",
     weekdayTriennialNote: "Monday and Thursday by the triennial cycle: the first three aliyot of the Shabbat reading.",
     triennialYear: (year) => `Triennial cycle, year ${year}`,
+    whatIsTriennial: "What is it?",
+    shortWeekday: (verses) =>
+      `These three aliyot come to ${verses} verses, fewer than the ten usually read when three are called up. Ask your community's rabbi or gabbai what to do.`,
+    shortWeekdayAnchor: "monday-and-thursday",
+    shortWeekdayMore: "See the sources",
     yearChip: (year) => `Year ${year}`,
     thisYear: "this year",
     readOn: (date) => `Read on ${date}.`,

@@ -42,6 +42,8 @@ export interface ReadingInfo {
   triennialYear?: number;
   /** how this reading was chosen, e.g. that weekdays keep the annual cycle */
   note?: string;
+  /** something to check with the community, e.g. a weekday reading of fewer than ten verses */
+  warning?: { text: string; href: string };
 }
 
 /** Where a scan falls in this year's triennial reading. */

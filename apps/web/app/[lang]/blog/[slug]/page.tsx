@@ -6,6 +6,7 @@ import { Halacha } from "@/components/blog/halacha/Halacha";
 import { HowItWorks } from "@/components/blog/how-it-works/HowItWorks";
 import { Story } from "@/components/blog/story/Story";
 import { Training } from "@/components/blog/training/Training";
+import { Triennial } from "@/components/blog/triennial/Triennial";
 import { PostHeader } from "@/components/blog/PostHeader";
 import { TryApp } from "@/components/blog/TryApp";
 import { COVER, coverSrc, getPost, POSTS } from "@/lib/blog/posts";
@@ -52,6 +53,7 @@ export default async function PostPage({ params }: { params: Promise<{ lang: str
       <PostHeader post={post} lang={lang} wide={wide} />
       {post.slug === "how-it-works" && <HowItWorks lang={lang} />}
       {post.slug === "halacha" && <Halacha lang={lang} />}
+      {post.slug === "triennial" && <Triennial lang={lang} />}
       {post.slug === "training" && <Training lang={lang} />}
       {post.slug === "first-version" && <FirstVersion lang={lang} />}
       {post.slug === "story" && <Story lang={lang} />}

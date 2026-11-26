@@ -171,10 +171,16 @@ export function TargetPicker({ prefs, onPrefs, onPick, onCancel }: Props) {
               {t.target.israelCalendar}
             </label>
           )}
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={cycle === "triennial"} onChange={(e) => setCycle(e.target.checked ? "triennial" : "annual")} className="size-4 accent-accent" />
-            {t.target.triennialCycle}
-          </label>
+          <span className="flex items-center gap-2">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={cycle === "triennial"} onChange={(e) => setCycle(e.target.checked ? "triennial" : "annual")} className="size-4 accent-accent" />
+              {t.target.triennialCycle}
+            </label>
+            {/* a new tab, so the picker keeps what was chosen */}
+            <a href={`/${lang}/blog/triennial`} target="_blank" rel="noopener" className="text-accent underline-offset-2 hover:underline">
+              {t.target.whatIsTriennial}
+            </a>
+          </span>
         </div>
       )}
 
@@ -383,6 +389,14 @@ function ReadingBlock({ reading: r, onPick, bare = false }: { reading: ReadingIn
       <div className="text-xs text-muted">{r.summary}</div>
       {(r.triennialYear || r.note) && (
         <div className="mt-1 text-xs text-accent">{[r.triennialYear ? t.target.triennialYear(r.triennialYear) : null, r.note].filter(Boolean).join(" · ")}</div>
+      )}
+      {r.warning && (
+        <div role="note" className="mt-2 rounded-xl border border-warn/50 bg-warn/10 px-3 py-2 text-xs leading-relaxed text-warn">
+          {r.warning.text}{" "}
+          <a href={r.warning.href} target="_blank" rel="noopener" className="font-medium underline underline-offset-2">
+            {t.target.shortWeekdayMore}
+          </a>
+        </div>
       )}
       {r.multipleBooks && <div className="mt-1 text-xs text-warn">{t.target.multipleBooks}</div>}
       {r.targets

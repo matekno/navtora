@@ -58,6 +58,16 @@ function verseSpan(a: HebcalAliyah): [number, number] | null {
   return s >= 0 && e >= s ? [s, e] : null;
 }
 
+/** How many verses a reading's aliyot cover, counting each verse once. */
+export function verseCount(aliyot: HebcalAliyot): number {
+  const verses = new Set<number>();
+  for (const a of Object.values(aliyot)) {
+    const span = verseSpan(a);
+    if (span) for (let v = span[0]; v <= span[1]; v++) verses.add(v);
+  }
+  return verses.size;
+}
+
 /** Year 1, 2 or 3 of the cycle for a Hebrew year. */
 export function cycleYear(hebrewYear: number): number {
   return Triennial.getYearNumber(hebrewYear);
